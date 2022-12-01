@@ -2,6 +2,7 @@ package us.mytheria.blobrp.director.manager;
 
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.listeners.DropNonSoulOnDeath;
 
 public class ListenerManager extends RPManager {
 
@@ -11,6 +12,7 @@ public class ListenerManager extends RPManager {
 
     @Override
     public void loadInConstructor() {
-        //HERE GOES LISTENERS
+        if (getManagerDirector().getConfigManager().registerDropNonSoulOnDeath())
+            new DropNonSoulOnDeath();
     }
 }

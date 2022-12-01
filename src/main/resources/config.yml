@@ -1,5 +1,2 @@
-Setup:
-  RegisterWindmillListener: true
-  RegisterRegenablesListener: true
-Administrators:
-  Wand: WOODEN_SHOVEL
+Listeners:
+  DropNonSoulOnDeath: true

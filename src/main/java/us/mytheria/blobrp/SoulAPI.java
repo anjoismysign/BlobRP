@@ -66,10 +66,12 @@ public class SoulAPI {
      */
     public static void dropNonSouls(InventoryHolder inventoryHolder, Location dropLocation) {
         Inventory inventory = inventoryHolder.getInventory();
-        for (ItemStack itemStack : inventoryHolder.getInventory()) {
+        for (ItemStack itemStack : inventoryHolder.getInventory().getContents()) {
+            if (itemStack == null)
+                continue;
             if (isSoul(itemStack)) continue;
-            inventory.remove(itemStack);
-            dropLocation.getWorld().dropItemNaturally(dropLocation, itemStack);
+            dropLocation.getWorld().dropItemNaturally(dropLocation, itemStack.clone());
+            itemStack.setAmount(0);
         }
     }
 
