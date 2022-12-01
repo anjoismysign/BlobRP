@@ -1,0 +1,40 @@
+Message:
+  No-Permission: '&cI''m sorry, but you do not have permission to perform this command.
+    Please contact the server administrators if you believe that this is in error.'
+  Console-Not-Allowed-Command: '&cYou must be a player to perform this command'
+  Reload: '&aReloaded the config'
+  Player:
+    Not-Found: '&cPlayer not found'
+    Not-Console: '&cYou must perform this command through console'
+  Builder:
+    Number-Exception: '&cPlease enter a valid number'
+    World-Not-Found: "&cWorld '%world%' not found"
+    Material-Not-Found: "&cMaterial '%material%' not found"
+Title:
+  Builder:
+    World: "&f&lTYPE IN WORLD%split%&7You are currently in '%world%'"
+    World-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in a world'
+    Price: '&f&lTYPE IN PRICE%split%&7It can include decimals'
+    Price-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in a price'
+    Position-Timeout: '&c&lTIMEOUT%split%&7You took too long to select a position'
+    Delay: '&f&lTYPE IN DELAY%split%&7In seconds'
+    Delay-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in Delay'
+    Material: '&f&lTYPE IN MATERIAL%split%&7Type in an org.bukkit.Material'
+    Material-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in Material'
+    Key: '&f&lTYPE IN KEY%split%&7How you want it to be named'
+    Key-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in Key'
+    Period: '&f&lTYPE IN PERIOD%split%&7In seconds'
+    Period-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in Period'
+    ItemStack: '&f&lDROP ITEM%split%&7Drop an item to set ItemStack'
+    CustomModelData: '&f&lCUSTOMMODELDATA%split%&7Type in a number'
+    CustomModelData-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in CustomModelData'
+    BuyPrice: '&f&lBUY PRICE%split%&7Type in a number'
+    BuyPrice-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in BuyPrice'
+    SellPrice: '&f&lSELL PRICE%split%&7Type in a number'
+    SellPrice-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in SellPrice'
+
+Action-Bar:
+  Builder:
+    Pos1: '&7Click a block to set Pos1'
+    Pos2: '&7Click a block to set Pos2'
+    EntityType: '&7Select an EntityType. Close the inventory to cancel'
