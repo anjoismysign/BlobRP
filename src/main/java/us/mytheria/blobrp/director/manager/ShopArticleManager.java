@@ -4,7 +4,6 @@ import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
@@ -44,7 +43,10 @@ public class ShopArticleManager extends RPManager {
         loadInConstructor();
     }
 
-    @Nullable
+    /**
+     * @param key The key/fileName of the shop article
+     * @return The shop article if found, null otherwise
+     */
     public ShopArticle getShopArticle(String key) {
         return shopArticles.get(key);
     }

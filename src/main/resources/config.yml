@@ -1,2 +1,9 @@
 Listeners:
-  DropNonSoulOnDeath: true
+  DropNonSoulOnDeath:
+    Register: true
+  DropExperienceOnDeath:
+    Register: true
+    Amount: 0
+  KeepExperienceOnDeath:
+    Register: true
+    Keep: false

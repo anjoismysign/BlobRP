@@ -2,7 +2,9 @@ package us.mytheria.blobrp.director.manager;
 
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.listeners.DropExperienceOnDeath;
 import us.mytheria.blobrp.listeners.DropNonSoulOnDeath;
+import us.mytheria.blobrp.listeners.KeepExperienceOnDeath;
 
 public class ListenerManager extends RPManager {
 
@@ -12,7 +14,12 @@ public class ListenerManager extends RPManager {
 
     @Override
     public void loadInConstructor() {
-        if (getManagerDirector().getConfigManager().registerDropNonSoulOnDeath())
+        ConfigManager configManager = getManagerDirector().getConfigManager();
+        if (configManager.registerDropNonSoulOnDeath())
             new DropNonSoulOnDeath();
+        if (configManager.dropExperienceOnDeath().register())
+            new DropExperienceOnDeath(configManager);
+        if (configManager.keepExperienceOnDeath().register())
+            new KeepExperienceOnDeath(configManager);
     }
 }

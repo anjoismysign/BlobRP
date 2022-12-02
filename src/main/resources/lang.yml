@@ -11,6 +11,12 @@ Message:
     World-Not-Found: "&cWorld '%world%' not found"
     Material-Not-Found: "&cMaterial '%material%' not found"
 Title:
+  Soul:
+    Fail: "&c&lUNSUCCESSFUL%split%&7Couldn't proceed"
+    Hand-Success: '&a&lSUCCESSFUL%split%&7Item in your &fhand &7is now soul'
+    Offhand-Success: '&a&lSUCCESSFUL%split%&7Item in your &foffhand &7is now soul'
+    Inventory: '&f&lDONE%split%&7Attempted to soul all items in your inventory'
+
   Builder:
     World: "&f&lTYPE IN WORLD%split%&7You are currently in '%world%'"
     World-Timeout: '&c&lTIMEOUT%split%&7You took too long to type in a world'
