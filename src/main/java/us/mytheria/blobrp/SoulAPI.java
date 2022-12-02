@@ -11,6 +11,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SoulAPI {
     private static final BlobRP main = BlobRP.getInstance();
 
@@ -82,5 +85,27 @@ public class SoulAPI {
      */
     public static void dropNonSouls(Player player) {
         dropNonSouls(player, player.getLocation());
+    }
+
+    /**
+     * @param inventory The inventory you want to check.
+     * @return A list of all soul alike items in the inventory.
+     */
+    public static List<ItemStack> getSouls(Inventory inventory) {
+        List<ItemStack> souls = new ArrayList<>();
+        for (ItemStack itemStack : inventory.getContents()) {
+            if (itemStack == null)
+                continue;
+            if (isSoul(itemStack)) souls.add(itemStack);
+        }
+        return souls;
+    }
+
+    /**
+     * @param inventoryHolder The inventory holder you want to check.
+     * @return A list of all soul alike items from inventory holder.
+     */
+    public static List<ItemStack> getSouls(InventoryHolder inventoryHolder) {
+        return getSouls(inventoryHolder.getInventory());
     }
 }
