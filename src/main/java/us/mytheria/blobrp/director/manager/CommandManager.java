@@ -15,5 +15,6 @@ public class CommandManager extends RPManager {
     public void loadInConstructor() {
         new SoulCmd();
         new ShopArticleCmd();
+//        new BalloonCmd();
     }
 }

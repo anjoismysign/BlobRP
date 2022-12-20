@@ -8,9 +8,13 @@ import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.SimpleListener;
 
 public class ConfigManager extends RPManager {
-    private boolean registerDropNonSoulOnDeath;
-    private SimpleListener<Boolean> keepExperienceOnDeath;
-    private SimpleListener<Integer> dropExperienceOnDeath;
+    private SimpleListener<Boolean> dropNonSoulOnDeath;
+    private SimpleListener<Boolean> playerKeepExperienceOnDeath;
+    private SimpleListener<Integer> playerDropExperienceOnDeath;
+    private SimpleListener<Integer> entitiesDropExperienceOnDeath;
+    private SimpleListener<Boolean> entitiesClearDropsOnDeath;
+    private SimpleListener<Boolean> entityDropItem;
+
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -22,21 +26,36 @@ public class ConfigManager extends RPManager {
         FileConfiguration config = main.getConfig();
         config.options().copyDefaults(true);
         ConfigurationSection listeners = config.getConfigurationSection("Listeners");
-        registerDropNonSoulOnDeath = listeners.getBoolean("DropNonSoulOnDeath.Register");
-        keepExperienceOnDeath = SimpleListener.BOOLEAN(listeners.getConfigurationSection("KeepExperienceOnDeath"), "Keep");
-        dropExperienceOnDeath = SimpleListener.INTEGER(listeners.getConfigurationSection("DropExperienceOnDeath"), "Amount");
+        dropNonSoulOnDeath = SimpleListener.BOOLEAN(listeners.getConfigurationSection("DropNonSoulOnDeath"), "Drop");
+        playerKeepExperienceOnDeath = SimpleListener.BOOLEAN(listeners.getConfigurationSection("PlayerKeepExperienceOnDeath"), "Keep");
+        playerDropExperienceOnDeath = SimpleListener.INTEGER(listeners.getConfigurationSection("PlayerDropExperienceOnDeath"), "Amount");
+        entitiesDropExperienceOnDeath = SimpleListener.INTEGER(listeners.getConfigurationSection("EntitiesDropExperienceOnDeath"), "Amount");
+        entitiesClearDropsOnDeath = SimpleListener.BOOLEAN(listeners.getConfigurationSection("EntitiesClearDropsOnDeath"), "Clear");
+        entityDropItem = SimpleListener.BOOLEAN(listeners.getConfigurationSection("EntityDropItem"), "Cancel");
         main.saveConfig();
     }
 
-    public boolean registerDropNonSoulOnDeath() {
-        return registerDropNonSoulOnDeath;
+    public SimpleListener<Boolean> dropNonSoulOnDeath() {
+        return dropNonSoulOnDeath;
     }
 
-    public SimpleListener<Boolean> keepExperienceOnDeath() {
-        return keepExperienceOnDeath;
+    public SimpleListener<Boolean> playerKeepExperienceOnDeath() {
+        return playerKeepExperienceOnDeath;
     }
 
-    public SimpleListener<Integer> dropExperienceOnDeath() {
-        return dropExperienceOnDeath;
+    public SimpleListener<Integer> playerDropExperienceOnDeath() {
+        return playerDropExperienceOnDeath;
+    }
+
+    public SimpleListener<Integer> entitiesDropExperienceOnDeath() {
+        return entitiesDropExperienceOnDeath;
+    }
+
+    public SimpleListener<Boolean> entitiesClearDropsOnDeath() {
+        return entitiesClearDropsOnDeath;
+    }
+
+    public SimpleListener<Boolean> entityDropItem() {
+        return entityDropItem;
     }
 }

@@ -7,17 +7,17 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
-public class KeepExperienceOnDeath implements Listener {
-    private final boolean keepExperienceOnDeath;
+public class PlayerDropExperienceOnDeath implements Listener {
+    private final int exp;
 
-    public KeepExperienceOnDeath(ConfigManager configManager) {
+    public PlayerDropExperienceOnDeath(ConfigManager configManager) {
         BlobRP main = BlobRP.getInstance();
         Bukkit.getPluginManager().registerEvents(this, main);
-        this.keepExperienceOnDeath = configManager.playerKeepExperienceOnDeath().value();
+        this.exp = configManager.playerDropExperienceOnDeath().value();
     }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        e.setKeepLevel(keepExperienceOnDeath);
+        e.setDroppedExp(exp);
     }
 }

@@ -1,9 +1,19 @@
 Listeners:
   DropNonSoulOnDeath:
     Register: true
-  DropExperienceOnDeath:
+    Drop: true
+  PlayerDropExperienceOnDeath:
     Register: true
     Amount: 0
-  KeepExperienceOnDeath:
+  PlayerKeepExperienceOnDeath:
     Register: true
     Keep: false
+  EntitiesDropExperienceOnDeath:
+    Register: true
+    Amount: 0
+  EntitiesClearDropsOnDeath:
+    Register: true
+    Clear: true
+  EntityDropItem:
+    Register: true
+    Cancel: true
