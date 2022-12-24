@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.Optional;
 
 public class RewardReader {
-
     public static Reward read(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         String type = config.getString("Type");
