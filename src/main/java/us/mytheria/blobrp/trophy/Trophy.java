@@ -4,7 +4,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import us.mytheria.blobrp.reward.Reward;
-import us.mytheria.blobrp.trophy.requirements.TrophyRequirements;
+import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class Trophy {
     private final List<Reward> rewards;
 
     // The requirements that must be met in order to receive the reward for hunting the trophy
-    private final TrophyRequirements requirements;
+    private final TrophyRequirement requirements;
 
     /**
      * Constructs a new Trophy with the given type, reward, and requirements.
@@ -28,7 +28,7 @@ public class Trophy {
      * @param rewards      the rewards that are offered for hunting the trophy
      * @param requirements the requirements that must be met in order to receive the reward
      */
-    public Trophy(EntityType type, List<Reward> rewards, TrophyRequirements requirements) {
+    public Trophy(EntityType type, List<Reward> rewards, TrophyRequirement requirements) {
         this.type = type;
         this.rewards = rewards;
         this.requirements = requirements;
@@ -57,7 +57,7 @@ public class Trophy {
      *
      * @return the requirements that must be met in order to receive the reward
      */
-    public TrophyRequirements getRequirements() {
+    public TrophyRequirement getRequirements() {
         return requirements;
     }
 

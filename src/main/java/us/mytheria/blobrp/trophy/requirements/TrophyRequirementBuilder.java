@@ -5,11 +5,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Optional;
 
-public class TrophyRequirementsBuilder {
-    private final TrophyRequirements requirements;
+public class TrophyRequirementBuilder {
+    private final TrophyRequirement requirements;
 
-    public TrophyRequirementsBuilder() {
-        requirements = TrophyRequirements.EMPTY();
+    public TrophyRequirementBuilder() {
+        requirements = TrophyRequirement.EMPTY();
     }
 
     /**
@@ -18,7 +18,7 @@ public class TrophyRequirementsBuilder {
      * @param fireTicks the number of fire ticks the entity has remaining
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withFireTicks(int fireTicks) {
+    protected TrophyRequirementBuilder withFireTicks(int fireTicks) {
         this.requirements.fireTicks = Optional.of(fireTicks);
         return this;
     }
@@ -29,7 +29,7 @@ public class TrophyRequirementsBuilder {
      * @param freezeTicks the number of freeze ticks the entity has remaining
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withFreezeTicks(int freezeTicks) {
+    protected TrophyRequirementBuilder withFreezeTicks(int freezeTicks) {
         this.requirements.freezeTicks = Optional.of(freezeTicks);
         return this;
     }
@@ -40,7 +40,7 @@ public class TrophyRequirementsBuilder {
      * @param lastDamageCause the last damage cause that affected the entity
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withLastDamageCause(EntityDamageEvent.DamageCause lastDamageCause) {
+    protected TrophyRequirementBuilder withLastDamageCause(EntityDamageEvent.DamageCause lastDamageCause) {
         this.requirements.lastDamageCause = Optional.of(lastDamageCause);
         return this;
     }
@@ -51,7 +51,7 @@ public class TrophyRequirementsBuilder {
      * @param minimumPassengers the minimum number of passengers the entity can have
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withMinimumPassengers(int minimumPassengers) {
+    protected TrophyRequirementBuilder withMinimumPassengers(int minimumPassengers) {
         this.requirements.minimumPassengers = Optional.of(minimumPassengers);
         return this;
     }
@@ -62,7 +62,7 @@ public class TrophyRequirementsBuilder {
      * @param maximumPassengers the maximum number of passengers the entity can have
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withMaximumPassengers(int maximumPassengers) {
+    protected TrophyRequirementBuilder withMaximumPassengers(int maximumPassengers) {
         this.requirements.maximumPassengers = Optional.of(maximumPassengers);
         return this;
     }
@@ -73,7 +73,7 @@ public class TrophyRequirementsBuilder {
      * @param ticksLived the number of ticks the entity has lived for
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withTicksLived(int ticksLived) {
+    protected TrophyRequirementBuilder withTicksLived(int ticksLived) {
         this.requirements.ticksLived = Optional.of(ticksLived);
         return this;
     }
@@ -84,7 +84,7 @@ public class TrophyRequirementsBuilder {
      * @param vehicle the type of vehicle the entity is
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withVehicle(EntityType vehicle) {
+    protected TrophyRequirementBuilder withVehicle(EntityType vehicle) {
         this.requirements.vehicle = Optional.of(vehicle);
         return this;
     }
@@ -95,7 +95,7 @@ public class TrophyRequirementsBuilder {
      * @param isCustomNameVisible whether the entity's custom name is visible
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withCustomNameVisible(boolean isCustomNameVisible) {
+    protected TrophyRequirementBuilder withCustomNameVisible(boolean isCustomNameVisible) {
         this.requirements.isCustomNameVisible = Optional.of(isCustomNameVisible);
         return this;
     }
@@ -106,7 +106,7 @@ public class TrophyRequirementsBuilder {
      * @param isGlowing whether the entity is glowing
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withGlowing(boolean isGlowing) {
+    protected TrophyRequirementBuilder withGlowing(boolean isGlowing) {
         this.requirements.isGlowing = Optional.of(isGlowing);
         return this;
     }
@@ -117,7 +117,7 @@ public class TrophyRequirementsBuilder {
      * @param isInWater whether the entity is in water
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withInWater(boolean isInWater) {
+    protected TrophyRequirementBuilder withInWater(boolean isInWater) {
         this.requirements.isInWater = Optional.of(isInWater);
         return this;
     }
@@ -128,7 +128,7 @@ public class TrophyRequirementsBuilder {
      * @param isOnGround whether the entity is on the ground
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withOnGround(boolean isOnGround) {
+    protected TrophyRequirementBuilder withOnGround(boolean isOnGround) {
         this.requirements.isOnGround = Optional.of(isOnGround);
         return this;
     }
@@ -139,7 +139,7 @@ public class TrophyRequirementsBuilder {
      * @param isPersistent whether the entity is persistent
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withPersistent(boolean isPersistent) {
+    protected TrophyRequirementBuilder withPersistent(boolean isPersistent) {
         this.requirements.isPersistent = Optional.of(isPersistent);
         return this;
     }
@@ -150,7 +150,7 @@ public class TrophyRequirementsBuilder {
      * @param isSilent whether the entity is silent
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withSilent(boolean isSilent) {
+    protected TrophyRequirementBuilder withSilent(boolean isSilent) {
         this.requirements.isSilent = Optional.of(isSilent);
         return this;
     }
@@ -161,12 +161,12 @@ public class TrophyRequirementsBuilder {
      * @param customName the custom name of the entity
      * @return this TrophyRequirements object, for method chaining
      */
-    protected TrophyRequirementsBuilder withCustomName(String customName) {
+    protected TrophyRequirementBuilder withCustomName(String customName) {
         this.requirements.customName = Optional.of(customName);
         return this;
     }
 
-    public TrophyRequirements build() {
+    public TrophyRequirement build() {
         return requirements;
     }
 }

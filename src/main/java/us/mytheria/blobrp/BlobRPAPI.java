@@ -9,6 +9,7 @@ public final class BlobRPAPI extends JavaPlugin {
 
     static BlobRP main = BlobRP.getInstance();
 
+    //todo make inventories folder
     public static BlobInventory buildInventory(String path) {
         FileManager fileManager = main.getDirector().getFileManager();
         YamlConfiguration inventories = fileManager.getYml(fileManager.inventoriesFile());

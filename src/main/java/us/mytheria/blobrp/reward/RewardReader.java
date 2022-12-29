@@ -11,6 +11,8 @@ import java.util.Optional;
 public class RewardReader {
     public static Reward read(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        if (!config.contains("Type"))
+            throw new IllegalArgumentException("'Type' is required. Missing at: " + file.getPath());
         String type = config.getString("Type");
         boolean shouldDelay = config.getBoolean("ShouldDelay", false);
         Optional<Long> delay = config.contains("Delay") ? Optional.of(config.getLong("Delay")) : Optional.empty();

@@ -14,6 +14,8 @@ import java.util.Optional;
  * @param <T> the type of the reward
  */
 public abstract class Reward<T> {
+    private final String key;
+
     protected final T value;
 
     // If should delay the reward after it is given
@@ -37,8 +39,10 @@ public abstract class Reward<T> {
      * @param runAsync    whether the reward should be applied asynchronously
      * @param message     the message to send to the player when the reward is given
      */
-    public Reward(boolean shouldDelay, T value, Optional<Long> delay,
+    public Reward(String key,
+                  boolean shouldDelay, T value, Optional<Long> delay,
                   Optional<Boolean> runAsync, Optional<BlobMessage> message) {
+        this.key = key;
         this.shouldDelay = shouldDelay;
         this.value = value;
         this.delay = delay;
@@ -62,6 +66,10 @@ public abstract class Reward<T> {
     public void applyAndMessage(Player player) {
         apply(player);
         message.ifPresent(blobMessage -> blobMessage.send(player));
+    }
+
+    public String getKey() {
+        return key;
     }
 
     /**

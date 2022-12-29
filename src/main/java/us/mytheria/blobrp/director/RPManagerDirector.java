@@ -16,7 +16,9 @@ public class RPManagerDirector extends ManagerDirector {
         addManager("ConfigManager", new ConfigManager(this));
         fileManager = new FileManager(this);
         addManager("FileManager", fileManager);
-        addManager("DropsManager", new ShopArticleManager(this));
+        addManager("ShopArticleManager", new ShopArticleManager(this));
+        addManager("RewardManager", new RewardManager(this));
+        addManager("TrophyRequirementManager", new TrophyRequirementManager(this));
         addManager("ListenerManager", new ListenerManager(this));
         builderManager = new BuilderManager(this);
         addManager("BuilderManager", builderManager);
@@ -56,7 +58,15 @@ public class RPManagerDirector extends ManagerDirector {
     }
 
     public ShopArticleManager getDropsManager() {
-        return (ShopArticleManager) getManager("DropsManager");
+        return (ShopArticleManager) getManager("ShopArticleManager");
+    }
+
+    public RewardManager getRewardManager() {
+        return (RewardManager) getManager("RewardManager");
+    }
+
+    public TrophyRequirementManager getTrophyRequirementManager() {
+        return (TrophyRequirementManager) getManager("TrophyRequirementManager");
     }
 
     public CommandManager getCommandManager() {

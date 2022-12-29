@@ -6,16 +6,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.io.File;
 
-public class TrophyRequirementsReader {
+public class TrophyRequirementReader {
     /**
      * Reads the requirements from the given file.
      *
      * @param file the file to read from
      * @return the requirements read from the file
      */
-    public static TrophyRequirementsBuilder read(File file) {
+    public static TrophyRequirementBuilder read(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        TrophyRequirementsBuilder builder = new TrophyRequirementsBuilder();
+        TrophyRequirementBuilder builder = new TrophyRequirementBuilder();
         if (config.contains("FireTicks"))
             builder.withFireTicks(config.getInt("FireTicks"));
         if (config.contains("FreezeTicks"))

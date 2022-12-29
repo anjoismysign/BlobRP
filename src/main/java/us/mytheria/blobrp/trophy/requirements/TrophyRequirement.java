@@ -9,7 +9,9 @@ import java.util.Optional;
 /**
  * The TrophyRequirements class represents the requirements that must be met in order to receive the reward for hunting a trophy.
  */
-public class TrophyRequirements {
+public class TrophyRequirement {
+    private final String key;
+
     // The number of fire ticks the entity has remaining
     protected Optional<Integer> fireTicks;
 
@@ -52,8 +54,8 @@ public class TrophyRequirements {
     // The entity's custom name
     protected Optional<String> customName;
 
-    public static TrophyRequirements EMPTY() {
-        return new TrophyRequirements(
+    public static TrophyRequirement EMPTY(String key) {
+        return new TrophyRequirement(key,
                 Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),
@@ -88,20 +90,21 @@ public class TrophyRequirements {
      * @param isSilent            whether the entity is silent
      * @param customName          the entity's custom name
      */
-    public TrophyRequirements(Optional<Integer> fireTicks,
-                              Optional<Integer> freezeTicks,
-                              Optional<EntityDamageEvent.DamageCause> lastDamageCause,
-                              Optional<Integer> minimumPassengers,
-                              Optional<Integer> maximumPassengers,
-                              Optional<Integer> ticksLived,
-                              Optional<EntityType> vehicle,
-                              Optional<Boolean> isCustomNameVisible,
-                              Optional<Boolean> isGlowing,
-                              Optional<Boolean> isInWater,
-                              Optional<Boolean> isOnGround,
-                              Optional<Boolean> isPersistent,
-                              Optional<Boolean> isSilent,
-                              Optional<String> customName) {
+    public TrophyRequirement(String key, Optional<Integer> fireTicks,
+                             Optional<Integer> freezeTicks,
+                             Optional<EntityDamageEvent.DamageCause> lastDamageCause,
+                             Optional<Integer> minimumPassengers,
+                             Optional<Integer> maximumPassengers,
+                             Optional<Integer> ticksLived,
+                             Optional<EntityType> vehicle,
+                             Optional<Boolean> isCustomNameVisible,
+                             Optional<Boolean> isGlowing,
+                             Optional<Boolean> isInWater,
+                             Optional<Boolean> isOnGround,
+                             Optional<Boolean> isPersistent,
+                             Optional<Boolean> isSilent,
+                             Optional<String> customName) {
+        this.key = key;
         this.fireTicks = fireTicks;
         this.freezeTicks = freezeTicks;
         this.lastDamageCause = lastDamageCause;
@@ -172,6 +175,10 @@ public class TrophyRequirements {
 
     public Optional<String> getCustomName() {
         return customName;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     /**
