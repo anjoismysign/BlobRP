@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.entities.Balloon;
 import us.mytheria.blobrp.entities.ShipPart;
@@ -27,12 +28,12 @@ public class BalloonCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("blobrp.admin")) {
-            sender.sendMessage(main.getDirector().getLangManager().getLang("msg.No-Premission"));
+            BlobLibAPI.getMessage("System.No-Permission").toCommandSender(sender);
             return true;
         }
         Player player = instanceOfPlayer(sender);
         if (player == null) {
-            sender.sendMessage(main.getDirector().getLangManager().getLang("msg.Console-Not-Allowed-Command"));
+            BlobLibAPI.getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
             return true;
         }
         Balloon balloon = Balloon.build();

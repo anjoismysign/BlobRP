@@ -1,8 +1,8 @@
 package us.mytheria.blobrp.reward;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import us.mytheria.bloblib.entities.BlobMessageReader;
 import us.mytheria.bloblib.entities.message.BlobMessage;
-import us.mytheria.bloblib.entities.message.BlobMessageReader;
 import us.mytheria.bloblib.itemstack.ItemStackReader;
 
 import java.io.File;

@@ -16,7 +16,6 @@ public class RPManagerDirector extends ManagerDirector {
         addManager("ConfigManager", new ConfigManager(this));
         fileManager = new FileManager(this);
         addManager("FileManager", fileManager);
-        addManager("LangManager", new LangManager(this));
         addManager("DropsManager", new ShopArticleManager(this));
         addManager("ListenerManager", new ListenerManager(this));
         builderManager = new BuilderManager(this);
@@ -28,7 +27,6 @@ public class RPManagerDirector extends ManagerDirector {
         /*
         From top to bottom, follow the order.
          */
-        getLangManager().reload();
         getDropsManager().reload();
     }
 
@@ -46,10 +44,6 @@ public class RPManagerDirector extends ManagerDirector {
 
     public FileManager getFileManager() {
         return fileManager;
-    }
-
-    public LangManager getLangManager() {
-        return (LangManager) getManager("LangManager");
     }
 
 

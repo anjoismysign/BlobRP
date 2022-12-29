@@ -2,18 +2,14 @@ package us.mytheria.blobrp.director.manager;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
+import us.mytheria.bloblib.BlobLibDevAPI;
 import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
-import us.mytheria.bloblib.entities.listeners.BlobChatListener;
-import us.mytheria.bloblib.entities.listeners.BlobDropListener;
-import us.mytheria.bloblib.entities.listeners.BlobSelectorListener;
 import us.mytheria.bloblib.managers.ChatListenerManager;
 import us.mytheria.bloblib.managers.DropListenerManager;
 import us.mytheria.bloblib.managers.SelectorListenerManager;
@@ -22,9 +18,7 @@ import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.inventories.builder.ShopArticleBuilder;
-import us.mytheria.blobrp.util.BlobMessageLib;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -160,93 +154,30 @@ public class ShopArticleBuilderManager extends RPManager implements Listener {
     private void addListener(Player player, int type) {
         player.closeInventory();
         switch (type) {
-            case 0 -> chatManager.addChatListener(player, BlobChatListener.build(player, 300,
-                    () -> {
-                        String input = chatManager.getInput(player);
-                        chatManager.removeChatListener(player);
-                        Bukkit.getScheduler().runTask(main, () -> {
-                            if (player == null || !player.isOnline()) {
-                                return;
-                            }
-                            ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
-                            builder.setKey(input);
-                        });
-                    },
-                    () -> {
-                        chatManager.removeChatListener(player);
-                        getManagerDirector().getLangManager().title(player, "title.Builder.Key-Timeout");
-                    }, Collections.singletonList(BlobMessageLib.defaultLangManager("title.Builder.Key"))));
-            case 1 -> dropListenerManager.addDropListener(player, BlobDropListener.build(player, () -> {
-                ItemStack input = dropListenerManager.getInput(player);
-                dropListenerManager.removeDropListener(player);
-                Bukkit.getScheduler().runTask(main, () -> {
-                    if (player == null || !player.isOnline()) {
-                        return;
-                    }
-                    ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
-                    builder.setDisplay(input);
-                });
-            }, Collections.singletonList(BlobMessageLib.defaultLangManager("title.Builder.ItemStack"))));
-            case 2 -> chatManager.addChatListener(player, BlobChatListener.build(player, 300,
-                    () -> {
-                        String input = chatManager.getInput(player);
-                        chatManager.removeChatListener(player);
-                        Bukkit.getScheduler().runTask(main, () -> {
-                            if (player == null || !player.isOnline()) {
-                                return;
-                            }
-                            ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
-                            builder.setCustomModelData(input);
-                        });
-                    },
-                    () -> {
-                        chatManager.removeChatListener(player);
-                        getManagerDirector().getLangManager().title(player, "title.Builder.CustomModelData-Timeout");
-                    }, Collections.singletonList(BlobMessageLib.defaultLangManager("title.Builder.CustomModelData"))));
-            case 3 -> selectorListenerManager.addSelectorListener(player, BlobSelectorListener.build(player, () -> {
-                        Material input = (Material) selectorListenerManager.getInput(player);
-                        selectorListenerManager.removeSelectorListener(player);
-                        Bukkit.getScheduler().runTask(main, () -> {
-                            if (player == null || !player.isOnline()) {
-                                return;
-                            }
-                            ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
-                            builder.setMaterial(input);
-                        });
-                    }, Collections.singletonList(BlobMessageLib.defaultLangManager("title.Builder.Material")),
-                    ItemMaterialSelector.build(player.getUniqueId())));
-            case 4 -> chatManager.addChatListener(player, BlobChatListener.build(player, 300,
-                    () -> {
-                        String input = chatManager.getInput(player);
-                        chatManager.removeChatListener(player);
-                        Bukkit.getScheduler().runTask(main, () -> {
-                            if (player == null || !player.isOnline()) {
-                                return;
-                            }
-                            ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
-                            builder.setBuyPrice(input);
-                        });
-                    },
-                    () -> {
-                        chatManager.removeChatListener(player);
-                        getManagerDirector().getLangManager().title(player, "title.Builder.BuyPrice-Timeout");
-                    }, Collections.singletonList(BlobMessageLib.defaultLangManager("title.Builder.BuyPrice"))));
-            case 5 -> chatManager.addChatListener(player, BlobChatListener.build(player, 300,
-                    () -> {
-                        String input = chatManager.getInput(player);
-                        chatManager.removeChatListener(player);
-                        Bukkit.getScheduler().runTask(main, () -> {
-                            if (player == null || !player.isOnline()) {
-                                return;
-                            }
-                            ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
-                            builder.setSellPrice(input);
-                        });
-                    },
-                    () -> {
-                        chatManager.removeChatListener(player);
-                        getManagerDirector().getLangManager().title(player, "title.Builder.SellPrice-Timeout");
-                    }, Collections.singletonList(BlobMessageLib.defaultLangManager("title.Builder.SellPrice"))));
+            case 0 -> BlobLibDevAPI.addChatListener(player, 300, input -> {
+                ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
+                builder.setKey(input);
+            }, "Builder.Key-Timeout", "Builder.Key");
+            case 1 -> BlobLibDevAPI.addDropListener(player, input -> {
+                ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
+                builder.setDisplay(input);
+            }, "Builder.ItemStack");
+            case 2 -> BlobLibDevAPI.addChatListener(player, 300, input -> {
+                ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
+                builder.setCustomModelData(input);
+            }, "Builder.CustomModelData-Timeout", "Builder.CustomModelData");
+            case 3 -> BlobLibDevAPI.addSelectorListener(player, input -> {
+                ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
+                builder.setMaterial(input);
+            }, "Builder.Material", ItemMaterialSelector.build(player.getUniqueId()));
+            case 4 -> BlobLibDevAPI.addChatListener(player, 300, input -> {
+                ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
+                builder.setBuyPrice(input);
+            }, "Builder.BuyPrice-Timeout", "Builder.BuyPrice");
+            case 5 -> BlobLibDevAPI.addChatListener(player, 300, input -> {
+                ShopArticleBuilder builder = getOrDefault(player.getUniqueId());
+                builder.setSellPrice(input);
+            }, "Builder.SellPrice-Timeout", "Builder.SellPrice");
         }
     }
 }
