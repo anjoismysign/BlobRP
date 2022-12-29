@@ -13,15 +13,30 @@ public class CashReward extends Reward<Double> {
     /**
      * Constructs a new Reward with the given values.
      *
+     * @param key         how the file will be named
      * @param shouldDelay whether the reward should be delayed
      * @param amount      the amount of cash
      * @param delay       the delay before the reward is applied, in milliseconds
      * @param runAsync    whether the reward should be applied asynchronously
      * @param message     the message to send to the player when the reward is given
      */
-    public CashReward(boolean shouldDelay, Double amount, Optional<Long> delay,
-                      Optional<Boolean> runAsync, Optional<BlobMessage> message) {
-        super(shouldDelay, amount, delay, runAsync, message);
+    public static CashReward build(String key, boolean shouldDelay, Double amount, Optional<Long> delay,
+                                   Optional<Boolean> runAsync, Optional<BlobMessage> message) {
+        return new CashReward(key, shouldDelay, amount, delay, runAsync, message);
+    }
+
+    /**
+     * Constructs a new Reward with the given values.
+     *
+     * @param shouldDelay whether the reward should be delayed
+     * @param amount      the amount of cash
+     * @param delay       the delay before the reward is applied, in milliseconds
+     * @param runAsync    whether the reward should be applied asynchronously
+     * @param message     the message to send to the player when the reward is given
+     */
+    protected CashReward(String key, boolean shouldDelay, Double amount, Optional<Long> delay,
+                         Optional<Boolean> runAsync, Optional<BlobMessage> message) {
+        super(key, shouldDelay, amount, delay, runAsync, message);
     }
 
     @Override

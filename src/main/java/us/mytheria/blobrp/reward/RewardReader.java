@@ -1,5 +1,6 @@
 package us.mytheria.blobrp.reward;
 
+import global.warming.commons.io.FilenameUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import us.mytheria.bloblib.entities.BlobMessageReader;
 import us.mytheria.bloblib.entities.message.BlobMessage;
@@ -18,16 +19,17 @@ public class RewardReader {
         Optional<Long> delay = config.contains("Delay") ? Optional.of(config.getLong("Delay")) : Optional.empty();
         Optional<Boolean> runAsync = config.contains("RunAsync") ? Optional.of(config.getBoolean("RunAsync")) : Optional.empty();
         Optional<BlobMessage> message = BlobMessageReader.parse(config);
+        String key = FilenameUtils.removeExtension(file.getName());
         switch (type) {
             case "CASH" -> {
                 if (!config.contains("Amount"))
                     throw new IllegalArgumentException("'Amount' is required for CASH rewards.");
-                return new CashReward(shouldDelay, config.getDouble("Amount"), delay, runAsync, message);
+                return new CashReward(key, shouldDelay, config.getDouble("Amount"), delay, runAsync, message);
             }
             case "ITEM" -> {
                 if (!config.contains("Item"))
                     throw new IllegalArgumentException("'Item' is required for ITEM rewards.");
-                return new ItemStackReward(shouldDelay, ItemStackReader
+                return new ItemStackReward(key, shouldDelay, ItemStackReader
                         .read(config.getConfigurationSection("Item"))
                         .build(), delay, runAsync, message);
             }
@@ -36,7 +38,7 @@ public class RewardReader {
                     throw new IllegalArgumentException("'Permission' is required for PERMISSION rewards.");
                 Optional<String> world = config.contains("World") ? Optional.of(config.getString("World")) : Optional.empty();
                 Optional<Boolean> currentWorld = config.contains("CurrentWorld") ? Optional.of(config.getBoolean("CurrentWorld")) : Optional.empty();
-                return new PermissionReward(shouldDelay, config.getString("Permission"), delay, runAsync, message, world, currentWorld);
+                return new PermissionReward(key, shouldDelay, config.getString("Permission"), delay, runAsync, message, world, currentWorld);
             }
             default -> throw new IllegalArgumentException("Invalid reward type: " + type);
         }

@@ -13,16 +13,33 @@ public class ItemStackReward extends Reward<ItemStack> {
     /**
      * Constructs a new Reward with the given values.
      *
+     * @param key         how the file will be named
      * @param shouldDelay whether the reward should be delayed
      * @param itemStack   the itemStack
      * @param delay       the delay before the reward is applied, in milliseconds
      * @param runAsync    whether the reward should be applied asynchronously
      * @param message     the message to send to the player when the reward is given
      */
-    public ItemStackReward(boolean shouldDelay, ItemStack itemStack,
-                           Optional<Long> delay, Optional<Boolean> runAsync,
-                           Optional<BlobMessage> message) {
-        super(shouldDelay, itemStack, delay, runAsync, message);
+    public static ItemStackReward build(String key, boolean shouldDelay, ItemStack itemStack,
+                                        Optional<Long> delay, Optional<Boolean> runAsync,
+                                        Optional<BlobMessage> message) {
+        return new ItemStackReward(key, shouldDelay, itemStack, delay, runAsync, message);
+    }
+
+    /**
+     * Constructs a new Reward with the given values.
+     *
+     * @param key         how the file will be named
+     * @param shouldDelay whether the reward should be delayed
+     * @param itemStack   the itemStack
+     * @param delay       the delay before the reward is applied, in milliseconds
+     * @param runAsync    whether the reward should be applied asynchronously
+     * @param message     the message to send to the player when the reward is given
+     */
+    protected ItemStackReward(String key, boolean shouldDelay, ItemStack itemStack,
+                              Optional<Long> delay, Optional<Boolean> runAsync,
+                              Optional<BlobMessage> message) {
+        super(key, shouldDelay, itemStack, delay, runAsync, message);
     }
 
     @Override
