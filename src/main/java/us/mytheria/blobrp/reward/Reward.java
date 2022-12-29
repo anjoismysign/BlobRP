@@ -14,19 +14,19 @@ import java.util.Optional;
  * @param <T> the type of the reward
  */
 public abstract class Reward<T> {
-    private final T value;
+    protected final T value;
 
     // If should delay the reward after it is given
-    private final boolean shouldDelay;
+    protected final boolean shouldDelay;
 
     // The delay before the reward is applied, in milliseconds
-    private final Optional<Long> delay;
+    protected final Optional<Long> delay;
 
     // Whether the reward should be applied asynchronously
-    private final Optional<Boolean> runAsync;
+    protected final Optional<Boolean> runAsync;
 
     // The message to send to the player when the reward is given
-    private final Optional<BlobMessage> message;
+    protected final Optional<BlobMessage> message;
 
     /**
      * Constructs a new Reward with the given values.

@@ -15,7 +15,7 @@ public class RewardReader {
         boolean shouldDelay = config.getBoolean("ShouldDelay", false);
         Optional<Long> delay = config.contains("Delay") ? Optional.of(config.getLong("Delay")) : Optional.empty();
         Optional<Boolean> runAsync = config.contains("RunAsync") ? Optional.of(config.getBoolean("RunAsync")) : Optional.empty();
-        Optional<BlobMessage> message = config.contains("Message") ? Optional.of(BlobMessageReader.read(config.getConfigurationSection("BlobMessage"))) : Optional.empty();
+        Optional<BlobMessage> message = BlobMessageReader.parse(config);
         switch (type) {
             case "CASH" -> {
                 if (!config.contains("Amount"))

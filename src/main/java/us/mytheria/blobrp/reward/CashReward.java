@@ -2,7 +2,9 @@ package us.mytheria.blobrp.reward;
 
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.entities.BlobMessageModder;
 import us.mytheria.bloblib.entities.message.BlobMessage;
+import us.mytheria.bloblib.utilities.CashFormat;
 
 import java.util.Optional;
 
@@ -25,5 +27,21 @@ public class CashReward extends Reward<Double> {
     @Override
     public void apply(Player player) {
         BlobLibAPI.addCash(player, getValue());
+    }
+
+    /**
+     * Applies the reward to the given player
+     * and tries to send the reward message to the player.
+     *
+     * @param player
+     */
+    public void applyAndMessage(Player player) {
+        message.ifPresent(blobMessage -> {
+            BlobMessageModder<BlobMessage> modder = BlobMessageModder.mod(blobMessage);
+            modder.replace("%cash%", CashFormat.format(getValue()));
+            blobMessage = modder.get();
+            blobMessage.sendAndPlay(player);
+        });
+        apply(player);
     }
 }
