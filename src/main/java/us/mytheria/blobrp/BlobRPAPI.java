@@ -1,18 +1,15 @@
 package us.mytheria.blobrp;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-import us.mytheria.bloblib.entities.BlobFileManager;
+import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 
-public final class BlobRPAPI extends JavaPlugin {
-
+public final class BlobRPAPI {
     static BlobRP main = BlobRP.getInstance();
 
-    //todo make inventories folder
-    public static BlobInventory buildInventory(String path) {
-        BlobFileManager fileManager = main.getDirector().getFileManager();
-        YamlConfiguration inventories = fileManager.getYml(fileManager.inventoriesFile());
-        return BlobInventory.fromConfigurationSection(inventories.getConfigurationSection(path));
+    public static BlobInventory buildInventory(String fileName) {
+        BlobInventory inventory = BlobLibAPI.getInventoryManager().getInventory(fileName);
+        if (inventory == null)
+            throw new NullPointerException("Inventory '" + fileName + "' not found");
+        return inventory;
     }
 }
