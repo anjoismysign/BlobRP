@@ -30,7 +30,7 @@ public class TrophyReader {
         if (!section.contains("Requirements"))
             throw new IllegalArgumentException("'Requirements' is required. Missing at: " + file.getPath());
         String trophyRequirementKey = section.getString("Requirements");
-        TrophyRequirement trophyRequirement = BlobRP.getInstance().getDirector().getTrophyRequirementManager().getTrophyRequirement(trophyRequirementKey);
+        TrophyRequirement trophyRequirement = BlobRP.getInstance().getDirector().getTrophyRequirementDirector().getObjectManager().getObject(trophyRequirementKey);
         if (trophyRequirement == null)
             throw new IllegalArgumentException("TrophyRequirement not found: " + trophyRequirementKey);
         return new Trophy(type, rewards, trophyRequirement);

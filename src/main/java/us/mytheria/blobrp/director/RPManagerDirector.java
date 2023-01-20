@@ -19,6 +19,7 @@ import us.mytheria.blobrp.reward.RewardReader;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirementBuilder;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirementReader;
+import us.mytheria.blobrp.trophy.requirements.UIBuilder;
 
 public class RPManagerDirector extends ManagerDirector {
     public static RPManagerDirector getInstance() {
@@ -62,7 +63,7 @@ public class RPManagerDirector extends ManagerDirector {
                     TrophyRequirement requirement = builder.build();
                     return new Tuple2<>(requirement, requirement.getKey());
                 }).getBuilderManager().addBuilderFunction(
-                CashRewardBuilder::build));
+                UIBuilder::build));
     }
 
     /**
@@ -100,6 +101,10 @@ public class RPManagerDirector extends ManagerDirector {
 
     public ObjectDirector<Reward> getRewardDirector() {
         return (ObjectDirector<Reward>) getManager("RewardDirector");
+    }
+
+    public ObjectDirector<TrophyRequirement> getTrophyRequirementDirector() {
+        return (ObjectDirector<TrophyRequirement>) getManager("TrophyRequirementDirector");
     }
 
     public CommandManager getCommandManager() {
