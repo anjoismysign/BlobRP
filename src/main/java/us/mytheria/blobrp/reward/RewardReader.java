@@ -17,7 +17,7 @@ public class RewardReader {
         String type = config.getString("Type");
         boolean shouldDelay = config.getBoolean("ShouldDelay", false);
         Optional<Long> delay = config.contains("Delay") ? Optional.of(config.getLong("Delay")) : Optional.empty();
-        Optional<Boolean> runAsync = config.contains("RunAsync") ? Optional.of(config.getBoolean("RunAsync")) : Optional.empty();
+        boolean runAsync = config.getBoolean("RunAsync", false);
         Optional<BlobMessage> message = BlobMessageReader.parse(config);
         String key = FilenameUtils.removeExtension(file.getName());
         switch (type) {

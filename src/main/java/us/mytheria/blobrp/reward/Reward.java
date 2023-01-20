@@ -6,6 +6,7 @@ import org.bukkit.scheduler.BukkitTask;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.blobrp.BlobRP;
 
+import java.io.File;
 import java.util.Optional;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Optional;
  * @param <T> the type of the reward
  */
 public abstract class Reward<T> {
-    private final String key;
+    protected final String key;
 
     protected final T value;
 
@@ -24,8 +25,8 @@ public abstract class Reward<T> {
     // The delay before the reward is applied, in milliseconds
     protected final Optional<Long> delay;
 
-    // Whether the reward should be applied asynchronously
-    protected final Optional<Boolean> runAsync;
+    // Whether the reward should be ran asynchronously whenever delayed
+    protected final boolean runAsync;
 
     // The message to send to the player when the reward is given
     protected final Optional<BlobMessage> message;
@@ -41,7 +42,7 @@ public abstract class Reward<T> {
      */
     public Reward(String key,
                   boolean shouldDelay, T value, Optional<Long> delay,
-                  Optional<Boolean> runAsync, Optional<BlobMessage> message) {
+                  boolean runAsync, Optional<BlobMessage> message) {
         this.key = key;
         this.shouldDelay = shouldDelay;
         this.value = value;
@@ -104,7 +105,7 @@ public abstract class Reward<T> {
      *
      * @return true if the reward should be applied asynchronously, false otherwise
      */
-    public Optional<Boolean> isRunAsync() {
+    public boolean runsAsynchronously() {
         return runAsync;
     }
 
@@ -118,10 +119,6 @@ public abstract class Reward<T> {
         if (!delay.isPresent()) {
             throw new IllegalStateException("Cannot delay a reward that has no delay");
         }
-        if (!runAsync.isPresent()) {
-            throw new IllegalStateException("Cannot delay a reward that has not set runAsync");
-        }
-        boolean runAsync = this.runAsync.get();
         long delay = this.delay.get();
 
         if (runAsync)
@@ -143,4 +140,6 @@ public abstract class Reward<T> {
                 }
             }.runTaskLater(null, delay);
     }
+
+    public abstract File saveToFile();
 }

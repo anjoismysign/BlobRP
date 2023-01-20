@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class TrophyRequirementBuilder {
     private final TrophyRequirement requirements;
+    protected String key;
 
     public TrophyRequirementBuilder() {
         requirements = TrophyRequirement.EMPTY();
@@ -167,6 +168,7 @@ public class TrophyRequirementBuilder {
     }
 
     public TrophyRequirement build() {
+        requirements.key = this.key;
         return requirements;
     }
 }

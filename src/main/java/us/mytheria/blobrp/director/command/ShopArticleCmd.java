@@ -6,14 +6,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.entities.inventory.ObjectBuilder;
 import us.mytheria.blobrp.BlobRP;
-import us.mytheria.blobrp.inventories.builder.ShopArticleBuilder;
+import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopArticleCmd implements CommandExecutor, TabCompleter {
-    private BlobRP main;
+    private final BlobRP main;
 
     public ShopArticleCmd() {
         this.main = BlobRP.getInstance();
@@ -37,8 +38,8 @@ public class ShopArticleCmd implements CommandExecutor, TabCompleter {
                 BlobLibAPI.getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
                 return true;
             }
-            ShopArticleBuilder builder = main.getDirector()
-                    .getBuilderManager().getShopArticleBuilderManager().getOrDefault(player);
+            ObjectBuilder<ShopArticle> builder = main.getDirector().getShopArticleDirector()
+                    .getBuilderManager().getOrDefault(player);
             builder.openInventory();
             return true;
         }

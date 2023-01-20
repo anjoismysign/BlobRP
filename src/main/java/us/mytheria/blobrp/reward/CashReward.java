@@ -1,11 +1,14 @@
 package us.mytheria.blobrp.reward;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.bloblib.entities.BlobMessageModder;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.CashFormat;
+import us.mytheria.blobrp.BlobRP;
 
+import java.io.File;
 import java.util.Optional;
 
 public class CashReward extends Reward<Double> {
@@ -21,7 +24,7 @@ public class CashReward extends Reward<Double> {
      * @param message     the message to send to the player when the reward is given
      */
     public static CashReward build(String key, boolean shouldDelay, Double amount, Optional<Long> delay,
-                                   Optional<Boolean> runAsync, Optional<BlobMessage> message) {
+                                   boolean runAsync, Optional<BlobMessage> message) {
         return new CashReward(key, shouldDelay, amount, delay, runAsync, message);
     }
 
@@ -35,7 +38,7 @@ public class CashReward extends Reward<Double> {
      * @param message     the message to send to the player when the reward is given
      */
     protected CashReward(String key, boolean shouldDelay, Double amount, Optional<Long> delay,
-                         Optional<Boolean> runAsync, Optional<BlobMessage> message) {
+                         boolean runAsync, Optional<BlobMessage> message) {
         super(key, shouldDelay, amount, delay, runAsync, message);
     }
 
@@ -58,5 +61,24 @@ public class CashReward extends Reward<Double> {
             blobMessage.sendAndPlay(player);
         });
         apply(player);
+    }
+
+    @Override
+    public File saveToFile() {
+        File file = new File(BlobRP.getInstance().getDirector().getRewardDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set("Type", "CASH");
+        config.set("Value", value);
+        config.set("ShouldDelay", shouldDelay);
+        if (delay.isPresent()) {
+            config.set("Delay", delay.get());
+            config.set("RunAsynchronously", runAsync);
+        }
+        try {
+            config.save(file);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return file;
     }
 }

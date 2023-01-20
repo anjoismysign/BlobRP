@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 
+import java.io.File;
 import java.util.Optional;
 
 public class PermissionReward extends Reward<String> {
@@ -21,7 +22,7 @@ public class PermissionReward extends Reward<String> {
      * @param message     the message to send to the player when the reward is given
      */
     public static PermissionReward build(String key, boolean shouldDelay, String permission, Optional<Long> delay,
-                                         Optional<Boolean> runAsync, Optional<BlobMessage> message, Optional<String> world,
+                                         boolean runAsync, Optional<BlobMessage> message, Optional<String> world,
                                          Optional<Boolean> currentWorld) {
         return new PermissionReward(key, shouldDelay, permission, delay, runAsync, message, world, currentWorld);
     }
@@ -37,7 +38,7 @@ public class PermissionReward extends Reward<String> {
      * @param message     the message to send to the player when the reward is given
      */
     protected PermissionReward(String key, boolean shouldDelay, String permission,
-                               Optional<Long> delay, Optional<Boolean> runAsync,
+                               Optional<Long> delay, boolean runAsync,
                                Optional<BlobMessage> message, Optional<String> world,
                                Optional<Boolean> currentWorld) {
         super(key, shouldDelay, permission, delay, runAsync, message);
@@ -53,5 +54,10 @@ public class PermissionReward extends Reward<String> {
             BlobLibAPI.addPermission(player, getValue(), world.get());
         else
             BlobLibAPI.addPermission(player, getValue(), null);
+    }
+
+    @Override
+    public File saveToFile() {
+        return null;
     }
 }

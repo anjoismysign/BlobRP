@@ -7,6 +7,7 @@ import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.PlayerUtil;
 
+import java.io.File;
 import java.util.Optional;
 
 public class ItemStackReward extends Reward<ItemStack> {
@@ -21,7 +22,7 @@ public class ItemStackReward extends Reward<ItemStack> {
      * @param message     the message to send to the player when the reward is given
      */
     public static ItemStackReward build(String key, boolean shouldDelay, ItemStack itemStack,
-                                        Optional<Long> delay, Optional<Boolean> runAsync,
+                                        Optional<Long> delay, boolean runAsync,
                                         Optional<BlobMessage> message) {
         return new ItemStackReward(key, shouldDelay, itemStack, delay, runAsync, message);
     }
@@ -37,7 +38,7 @@ public class ItemStackReward extends Reward<ItemStack> {
      * @param message     the message to send to the player when the reward is given
      */
     protected ItemStackReward(String key, boolean shouldDelay, ItemStack itemStack,
-                              Optional<Long> delay, Optional<Boolean> runAsync,
+                              Optional<Long> delay, boolean runAsync,
                               Optional<BlobMessage> message) {
         super(key, shouldDelay, itemStack, delay, runAsync, message);
     }
@@ -61,5 +62,10 @@ public class ItemStackReward extends Reward<ItemStack> {
             blobMessage.sendAndPlay(player);
         });
         apply(player);
+    }
+
+    @Override
+    public File saveToFile() {
+        return null;
     }
 }

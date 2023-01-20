@@ -22,7 +22,7 @@ public class TrophyReader {
         List<String> rewardKeys = section.getStringList("Rewards");
         List<Reward> rewards = new ArrayList<>();
         rewardKeys.forEach(key -> {
-            Reward reward = BlobRP.getInstance().getDirector().getRewardManager().getReward(key);
+            Reward reward = BlobRP.getInstance().getDirector().getRewardDirector().getObjectManager().getObject(key);
             if (reward == null)
                 throw new IllegalArgumentException("Reward not found: " + key);
             rewards.add(reward);

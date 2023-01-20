@@ -1,5 +1,6 @@
 package us.mytheria.blobrp.trophy.requirements;
 
+import global.warming.commons.io.FilenameUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -16,6 +17,7 @@ public class TrophyRequirementReader {
     public static TrophyRequirementBuilder read(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         TrophyRequirementBuilder builder = new TrophyRequirementBuilder();
+        builder.key = FilenameUtils.removeExtension(file.getName());
         if (config.contains("FireTicks"))
             builder.withFireTicks(config.getInt("FireTicks"));
         if (config.contains("FreezeTicks"))

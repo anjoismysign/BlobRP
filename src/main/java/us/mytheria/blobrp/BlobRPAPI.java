@@ -2,8 +2,8 @@ package us.mytheria.blobrp;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.mytheria.bloblib.entities.BlobFileManager;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
-import us.mytheria.blobrp.director.manager.FileManager;
 
 public final class BlobRPAPI extends JavaPlugin {
 
@@ -11,7 +11,7 @@ public final class BlobRPAPI extends JavaPlugin {
 
     //todo make inventories folder
     public static BlobInventory buildInventory(String path) {
-        FileManager fileManager = main.getDirector().getFileManager();
+        BlobFileManager fileManager = main.getDirector().getFileManager();
         YamlConfiguration inventories = fileManager.getYml(fileManager.inventoriesFile());
         return BlobInventory.fromConfigurationSection(inventories.getConfigurationSection(path));
     }

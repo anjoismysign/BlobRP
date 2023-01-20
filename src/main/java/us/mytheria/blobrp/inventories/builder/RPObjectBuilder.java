@@ -8,7 +8,7 @@ import us.mytheria.blobrp.director.RPManagerDirector;
 import java.util.UUID;
 
 public abstract class RPObjectBuilder<T> extends ObjectBuilder<T> {
-    private BlobRP main;
+    private final BlobRP main;
 
     public RPObjectBuilder(BlobInventory blobInventory, UUID builderId) {
         super(blobInventory, builderId);

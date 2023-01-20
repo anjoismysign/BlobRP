@@ -10,7 +10,7 @@ import java.util.Optional;
  * The TrophyRequirements class represents the requirements that must be met in order to receive the reward for hunting a trophy.
  */
 public class TrophyRequirement {
-    private final String key;
+    protected String key;
 
     // The number of fire ticks the entity has remaining
     protected Optional<Integer> fireTicks;
@@ -54,8 +54,8 @@ public class TrophyRequirement {
     // The entity's custom name
     protected Optional<String> customName;
 
-    public static TrophyRequirement EMPTY(String key) {
-        return new TrophyRequirement(key,
+    public static TrophyRequirement EMPTY() {
+        return new TrophyRequirement("null",
                 Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),

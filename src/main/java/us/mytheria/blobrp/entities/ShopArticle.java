@@ -36,12 +36,12 @@ public record ShopArticle(Material material, boolean hasCustomModelData,
             Bukkit.getLogger().severe("Display is null! Inside file " + fileName);
             return null;
         }
-        String key = FilenameUtils.removeExtension(file.getName());
+        String key = FilenameUtils.removeExtension(fileName);
         return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice, sellPrice, display, key);
     }
 
-    public void saveToFile() {
-        File file = new File(BlobRP.getInstance().getDirector().getFileManager().getShopArticles().getPath() + "/" + key + ".yml");
+    public File saveToFile() {
+        File file = new File(BlobRP.getInstance().getDirector().getShopArticleDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("Material", material.name());
         config.set("BuyPrice", buyPrice);
@@ -55,6 +55,7 @@ public record ShopArticle(Material material, boolean hasCustomModelData,
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        return file;
     }
 
     public boolean matches(ItemStack itemStack) {
