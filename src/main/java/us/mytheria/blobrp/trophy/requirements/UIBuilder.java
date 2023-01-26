@@ -15,10 +15,10 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
     protected String key;
 
     public static UIBuilder build(UUID builderId) {
-        return new UIBuilder(BlobRPAPI.buildInventory("TrophyRequirementUIBuilder"), builderId);
+        return new UIBuilder(BlobRPAPI.buildInventory("TrophyRequirementBuilder"), builderId);
     }
 
-    public UIBuilder(BlobInventory blobInventory, UUID builderId) {
+    private UIBuilder(BlobInventory blobInventory, UUID builderId) {
         super(blobInventory, builderId);
         requirements = TrophyRequirement.EMPTY();
         updateDefaultButtons();
@@ -67,8 +67,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param fireTicks the number of fire ticks the entity has remaining
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withFireTicks(int fireTicks) {
-        this.requirements.fireTicks = Optional.of(fireTicks);
+    protected UIBuilder withFireTicks(Integer fireTicks) {
+        this.requirements.fireTicks = Optional.ofNullable(fireTicks);
         updateDefaultButton("FireTicks", "%fireTicks%",
                 this.requirements.fireTicks.map(integer -> integer + "").orElse("Not present"));
         openInventory();
@@ -81,8 +81,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param freezeTicks the number of freeze ticks the entity has remaining
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withFreezeTicks(int freezeTicks) {
-        this.requirements.freezeTicks = Optional.of(freezeTicks);
+    protected UIBuilder withFreezeTicks(Integer freezeTicks) {
+        this.requirements.freezeTicks = Optional.ofNullable(freezeTicks);
         updateDefaultButton("FreezeTicks", "%freezeTicks%",
                 this.requirements.freezeTicks.map(integer -> integer + "").orElse("Not present"));
         openInventory();
@@ -96,7 +96,7 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @return this TrophyRequirements object, for method chaining
      */
     protected UIBuilder withLastDamageCause(EntityDamageEvent.DamageCause lastDamageCause) {
-        this.requirements.lastDamageCause = Optional.of(lastDamageCause);
+        this.requirements.lastDamageCause = Optional.ofNullable(lastDamageCause);
         updateDefaultButton("LastDamageCause", "%lastDamageCause%",
                 this.requirements.lastDamageCause.map(damageCause -> damageCause + "").orElse("Not present"));
         openInventory();
@@ -109,8 +109,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param minimumPassengers the minimum number of passengers the entity can have
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withMinimumPassengers(int minimumPassengers) {
-        this.requirements.minimumPassengers = Optional.of(minimumPassengers);
+    protected UIBuilder withMinimumPassengers(Integer minimumPassengers) {
+        this.requirements.minimumPassengers = Optional.ofNullable(minimumPassengers);
         updateDefaultButton("MinimumPassengers", "%minimumPassengers%",
                 this.requirements.minimumPassengers.map(integer -> integer + "").orElse("Not present"));
         openInventory();
@@ -123,8 +123,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param maximumPassengers the maximum number of passengers the entity can have
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withMaximumPassengers(int maximumPassengers) {
-        this.requirements.maximumPassengers = Optional.of(maximumPassengers);
+    protected UIBuilder withMaximumPassengers(Integer maximumPassengers) {
+        this.requirements.maximumPassengers = Optional.ofNullable(maximumPassengers);
         updateDefaultButton("MaximumPassengers", "%maximumPassengers%",
                 this.requirements.maximumPassengers.map(integer -> integer + "").orElse("Not present"));
         openInventory();
@@ -137,8 +137,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param ticksLived the number of ticks the entity has lived for
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withTicksLived(int ticksLived) {
-        this.requirements.ticksLived = Optional.of(ticksLived);
+    protected UIBuilder withTicksLived(Integer ticksLived) {
+        this.requirements.ticksLived = Optional.ofNullable(ticksLived);
         updateDefaultButton("TicksLived", "%ticksLived%",
                 this.requirements.ticksLived.map(integer -> integer + "").orElse("Not present"));
         openInventory();
@@ -152,7 +152,7 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @return this TrophyRequirements object, for method chaining
      */
     protected UIBuilder withVehicle(EntityType vehicle) {
-        this.requirements.vehicle = Optional.of(vehicle);
+        this.requirements.vehicle = Optional.ofNullable(vehicle);
         updateDefaultButton("Vehicle", "%vehicle%",
                 this.requirements.vehicle.map(entityType -> entityType + "").orElse("Not present"));
         openInventory();
@@ -165,8 +165,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param isCustomNameVisible whether the entity's custom name is visible
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withCustomNameVisible(boolean isCustomNameVisible) {
-        this.requirements.isCustomNameVisible = Optional.of(isCustomNameVisible);
+    protected UIBuilder withCustomNameVisible(Boolean isCustomNameVisible) {
+        this.requirements.isCustomNameVisible = Optional.ofNullable(isCustomNameVisible);
         updateDefaultButton("CustomNameVisible", "%customNameVisible%",
                 this.requirements.isCustomNameVisible.map(aBoolean -> aBoolean + "").orElse("Not present"));
         openInventory();
@@ -179,8 +179,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param isGlowing whether the entity is glowing
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withGlowing(boolean isGlowing) {
-        this.requirements.isGlowing = Optional.of(isGlowing);
+    protected UIBuilder withGlowing(Boolean isGlowing) {
+        this.requirements.isGlowing = Optional.ofNullable(isGlowing);
         updateDefaultButton("Glowing", "%glowing%",
                 this.requirements.isGlowing.map(aBoolean -> aBoolean + "").orElse("Not present"));
         openInventory();
@@ -193,8 +193,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param isInWater whether the entity is in water
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withInWater(boolean isInWater) {
-        this.requirements.isInWater = Optional.of(isInWater);
+    protected UIBuilder withInWater(Boolean isInWater) {
+        this.requirements.isInWater = Optional.ofNullable(isInWater);
         updateDefaultButton("InWater", "%inWater%",
                 this.requirements.isInWater.map(aBoolean -> aBoolean + "").orElse("Not present"));
         openInventory();
@@ -207,8 +207,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param isOnGround whether the entity is on the ground
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withOnGround(boolean isOnGround) {
-        this.requirements.isOnGround = Optional.of(isOnGround);
+    protected UIBuilder withOnGround(Boolean isOnGround) {
+        this.requirements.isOnGround = Optional.ofNullable(isOnGround);
         updateDefaultButton("OnGround", "%onGround%",
                 this.requirements.isOnGround.map(aBoolean -> aBoolean + "").orElse("Not present"));
         openInventory();
@@ -221,8 +221,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param isPersistent whether the entity is persistent
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withPersistent(boolean isPersistent) {
-        this.requirements.isPersistent = Optional.of(isPersistent);
+    protected UIBuilder withPersistent(Boolean isPersistent) {
+        this.requirements.isPersistent = Optional.ofNullable(isPersistent);
         updateDefaultButton("Persistent", "%persistent%",
                 this.requirements.isPersistent.map(aBoolean -> aBoolean + "").orElse("Not present"));
         openInventory();
@@ -235,8 +235,8 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @param isSilent whether the entity is silent
      * @return this TrophyRequirements object, for method chaining
      */
-    protected UIBuilder withSilent(boolean isSilent) {
-        this.requirements.isSilent = Optional.of(isSilent);
+    protected UIBuilder withSilent(Boolean isSilent) {
+        this.requirements.isSilent = Optional.ofNullable(isSilent);
         updateDefaultButton("Silent", "%silent%",
                 this.requirements.isSilent.map(aBoolean -> aBoolean + "").orElse("Not present"));
         openInventory();
@@ -250,7 +250,7 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
      * @return this TrophyRequirements object, for method chaining
      */
     protected UIBuilder withCustomName(String customName) {
-        this.requirements.customName = Optional.of(customName);
+        this.requirements.customName = Optional.ofNullable(customName);
         updateDefaultButton("CustomName", "%customName%",
                 this.requirements.customName.map(s -> s + "").orElse("Not present"));
         openInventory();

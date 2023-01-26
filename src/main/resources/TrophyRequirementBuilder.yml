@@ -1,0 +1,146 @@
+Title: '&lARTICLE > BUILD'
+Size: 36
+Buttons:
+  Background:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 0-35
+  White-Background:
+    ItemStack:
+      Material: WHITE_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 1-7,10-16,19-25,28-34
+  Key:
+    ItemStack:
+      Material: BOOK
+      CustomModelData: 0
+      DisplayName: "&6Key"
+      Lore:
+        - "&7Selected: &f%key%"
+    Slot: 4
+  FireTicks:
+    ItemStack:
+      Material: CAMPFIRE
+      CustomModelData: 0
+      DisplayName: "&6Fire Ticks"
+      Lore:
+        - "&7%fireTicks%"
+    Slot: 10
+  FreezeTicks:
+    ItemStack:
+      Material: ICE
+      CustomModelData: 0
+      DisplayName: "&6Freeze Ticks"
+      Lore:
+        - "&7%freezeTicks%"
+    Slot: 11
+  LastDamageCause:
+    ItemStack:
+      Material: IRON_SWORD
+      CustomModelData: 0
+      DisplayName: "&6Last damage cause"
+      Lore:
+        - "&7%lastDamageCause%"
+    Slot: 12
+  MinimumPassengers:
+    ItemStack:
+      Material: SADDLE
+      CustomModelData: 0
+      DisplayName: "&6Minimum Passengers"
+      Lore:
+        - "&7%minimumPassengers%"
+    Slot: 13
+  MaximumPassengers:
+    ItemStack:
+      Material: SADDLE
+      CustomModelData: 0
+      DisplayName: "&6Maximum Passengers"
+      Lore:
+        - "&7%maximumPassengers%"
+    Slot: 14
+  TicksLived:
+    ItemStack:
+      Material: CLOCK
+      CustomModelData: 0
+      DisplayName: "&6Ticks Lived"
+      Lore:
+        - "&7%ticksLived%"
+    Slot: 15
+  Vehicle:
+    ItemStack:
+      Material: SADDLE
+      CustomModelData: 0
+      DisplayName: "&6Vehicle"
+      Lore:
+        - "&7%vehicle%"
+    Slot: 16
+  CustomNameVisible:
+    ItemStack:
+      Material: NAME_TAG
+      CustomModelData: 0
+      DisplayName: "&6Custom Name Visible"
+      Lore:
+        - "&7%customNameVisible%"
+    Slot: 19
+  Glowing:
+    ItemStack:
+      Material: SPECTRAL_ARROW
+      CustomModelData: 0
+      DisplayName: "&6Glowing"
+      Lore:
+        - "&7%glowing%"
+    Slot: 20
+  InWater:
+    ItemStack:
+      Material: WATER_BUCKET
+      CustomModelData: 0
+      DisplayName: "&6In Water"
+      Lore:
+        - "&7%inWater%"
+    Slot: 21
+  OnGround:
+    ItemStack:
+      Material: DIRT
+      CustomModelData: 0
+      DisplayName: "&6On Ground"
+      Lore:
+        - "&7%onGround%"
+    Slot: 22
+  Persistent:
+    ItemStack:
+      Material: COMMAND_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Persistent"
+      Lore:
+        - "&7%persistent%"
+    Slot: 23
+  Silent:
+    ItemStack:
+      Material: COMMAND_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Silent"
+      Lore:
+        - "&7%silent%"
+    Slot: 24
+  CustomName:
+    ItemStack:
+      Material: NAME_TAG
+      CustomModelData: 0
+      DisplayName: "&6Custom Name"
+      Lore:
+        - "&7%customName%"
+    Slot: 25
+  Build:
+    ItemStack:
+      Material: SLIME_BALL
+      CustomModelData: 0
+      DisplayName: "&6Build"
+      Lore:
+        - "&7Click to add article"
+        - "&7to the files."
+    Slot: 31
