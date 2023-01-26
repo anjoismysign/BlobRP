@@ -19,9 +19,9 @@ import java.util.UUID;
 
 public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
     /*
-    Cuando el atributo es de tipo boolean, usar un VariableSelector es tonto
-    debido a que solo tiene dos opciones, por lo que se usa un switch
-    que se activa al hacer click derecho.
+    When the attribute is of boolean type, using a VariableSelector is stupid
+    because it's a two state variable, so a switch is used
+    that is called by interacting (lets say by clicking through InventoryClickEvent).
     */
     private boolean hasCustomModelData;
 
@@ -31,30 +31,13 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
 
     private ShopArticleBuilder(BlobInventory blobInventory, UUID builderId) {
         super(blobInventory, builderId);
-        ObjectBuilderButton<String> keyButton = ObjectBuilderButtonBuilder.STRING("Key",
-                300, "Builder.Key-Timeout",
-                "Builder.Key", string -> {
-                    updateDefaultButton("Key", "%key%",
-                            string == null ? "N/A" : string);
-                    openInventory();
-                    return true;
-                });
-        ObjectBuilderButton<Material> materialButton = ObjectBuilderButtonBuilder.SELECTOR("Material",
-                "Builder.Material",
-                material -> {
-                    updateDefaultButton("Material", "%material%",
-                            material == null ? "N/A" : material.name());
-                    openInventory();
-                    return true;
-                }, ItemMaterialSelector.build(builderId));
-        ObjectBuilderButton<Integer> customModelDataButton = ObjectBuilderButtonBuilder.INTEGER("CustomModelData",
-                300, "Builder.CustomModelData-Timeout",
-                "Builder.CustomModelData", integer -> {
-                    updateDefaultButton("CustomModelData", "%customModelData%",
-                            "" + integer);
-                    openInventory();
-                    return true;
-                });
+        ObjectBuilderButton<String> keyButton = ObjectBuilderButtonBuilder.QUICK_STRING(
+                "Key", 300, this);
+        ObjectBuilderButton<Material> materialButton = ObjectBuilderButtonBuilder.QUICK_SELECTOR("Material",
+                ItemMaterialSelector.build(builderId),
+                Material::name, this);
+        ObjectBuilderButton<Integer> customModelDataButton = ObjectBuilderButtonBuilder.QUICK_INTEGER(
+                "CustomModelData", 300, this);
         ObjectBuilderButton<Double> buyPriceButton = ObjectBuilderButtonBuilder.DOUBLE("BuyPrice",
                 300, "Builder.BuyPrice-Timeout",
                 "Builder.BuyPrice", doble -> {

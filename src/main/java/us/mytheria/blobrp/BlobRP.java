@@ -13,7 +13,6 @@ public final class BlobRP extends JavaPlugin {
         return instance;
     }
 
-
     @Override
     public void onEnable() {
         instance = this;

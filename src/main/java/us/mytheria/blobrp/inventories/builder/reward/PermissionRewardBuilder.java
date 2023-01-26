@@ -24,7 +24,7 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
     private boolean useCurrentWorld;
 
     public static PermissionRewardBuilder build(UUID builderId) {
-        return new PermissionRewardBuilder(BlobRPAPI.buildInventory("CashRewardBuilder"), builderId);
+        return new PermissionRewardBuilder(BlobRPAPI.buildInventory("PermissionRewardBuilder"), builderId);
     }
 
     private PermissionRewardBuilder(BlobInventory blobInventory, UUID builderId) {
@@ -49,19 +49,28 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
                             openInventory();
                             return true;
                         });
-        ObjectBuilderButton<Long> delay = ObjectBuilderButtonBuilder.LONG("CustomModelData",
-                300, "Builder.CustomModelData-Timeout",
-                "Builder.CustomModelData", integer -> {
-                    updateDefaultButton("CustomModelData", "%customModelData%",
+        ObjectBuilderButton<Long> delay = ObjectBuilderButtonBuilder.LONG("Delay",
+                300, "Builder.Delay-Timeout",
+                "Builder.Delay", integer -> {
+                    updateDefaultButton("Delay", "%delay%",
                             "" + integer);
                     openInventory();
                     return true;
                 });
         ObjectBuilderButton<String> worldNameButton = ObjectBuilderButtonBuilder.STRING(
-                "CashValue",
-                300, "Builder.CashValue-Timeout",
-                "Builder.CashValue", value -> {
-                    updateDefaultButton("CashValue", "%cash%",
+                "World",
+                300, "Builder.World-Timeout",
+                "Builder.World", value -> {
+                    updateDefaultButton("World", "%world%",
+                            value == null ? "N/A" : value + value);
+                    openInventory();
+                    return true;
+                });
+        ObjectBuilderButton<String> permissionButton = ObjectBuilderButtonBuilder.STRING(
+                "PermissionValue",
+                300, "Builder.PermissionValue-Timeout",
+                "Builder.PermissionValue", value -> {
+                    updateDefaultButton("PermissionValue", "%permission%",
                             value == null ? "N/A" : value + value);
                     openInventory();
                     return true;

@@ -1,0 +1,94 @@
+Title: '&lARTICLE > BUILD'
+Size: 18
+Buttons:
+  Background:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 0-17
+  White-Background:
+    ItemStack:
+      Material: WHITE_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 1-7,10-16
+  Key:
+    ItemStack:
+      Material: BOOK
+      CustomModelData: 0
+      DisplayName: "&6Key"
+      Lore:
+        - "&7Selected: &f%key%"
+    Slot: 1
+  Display:
+    ItemStack:
+      Material: COMMAND_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Display"
+      Lore:
+        - "&7Selected: &f%display%"
+    Slot: 2
+  MatchDisplay:
+    ItemStack:
+      Material: STRUCTURE_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Match Display"
+      Lore:
+        - "&7Click to match the display."
+        - ""
+        - "&7Material, Has CustomModelData"
+        - "&7and CustomModelData will"
+        - "&7match/copy display attributes."
+    Slot: 3
+  HasCustomModelData:
+    ItemStack:
+      Material: COPPER_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Has CustomModelData"
+      Lore:
+        - "&7Selected: &f%hasCustomModelData%"
+    Slot: 5
+  CustomModelData:
+    ItemStack:
+      Material: IRON_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6CustomModelData"
+      Lore:
+        - "&7Selected: &f%customModelData%"
+    Slot: 6
+  Material:
+    ItemStack:
+      Material: NETHERITE_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Material"
+      Lore:
+        - "&7Selected: &f%material%"
+    Slot: 7
+  BuyPrice:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6Buy Price"
+      Lore:
+        - "&7Selected: &f%buyPrice%"
+    Slot: 10
+  SellPrice:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6Sell Price"
+      Lore:
+        - "&7Selected: &f%sellPrice%"
+    Slot: 11
+  Build:
+    ItemStack:
+      Material: SLIME_BALL
+      CustomModelData: 0
+      DisplayName: "&6Build"
+      Lore:
+        - "&7Click to add article"
+        - "&7to the files."
+    Slot: 13

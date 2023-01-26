@@ -14,17 +14,18 @@ import us.mytheria.blobrp.BlobRPAPI;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
 import us.mytheria.blobrp.reward.CashReward;
+import us.mytheria.blobrp.reward.ItemStackReward;
 import us.mytheria.blobrp.reward.Reward;
 
 import java.util.UUID;
 
-public class ItemStackRewardBuilder extends RPObjectBuilder<CashReward> {
+public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
     private boolean shouldDelay;
     private boolean runsAsynchronously;
     private boolean containsMessage;
 
     public static ItemStackRewardBuilder build(UUID builderId) {
-        return new ItemStackRewardBuilder(BlobRPAPI.buildInventory("CashRewardBuilder"), builderId);
+        return new ItemStackRewardBuilder(BlobRPAPI.buildInventory("ItemStackRewardBuilder"), builderId);
     }
 
     private ItemStackRewardBuilder(BlobInventory blobInventory, UUID builderId) {
