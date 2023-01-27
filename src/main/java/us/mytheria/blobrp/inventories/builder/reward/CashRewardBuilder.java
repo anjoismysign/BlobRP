@@ -14,12 +14,11 @@ import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
 import us.mytheria.blobrp.reward.CashReward;
 import us.mytheria.blobrp.reward.Reward;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
-    private boolean shouldDelay;
     private boolean runsAsynchronously;
-    private boolean containsMessage;
 
     public static CashRewardBuilder build(UUID builderId) {
         return new CashRewardBuilder(BlobRPAPI.buildInventory("CashRewardBuilder"), builderId);
@@ -27,45 +26,9 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
 
     private CashRewardBuilder(BlobInventory blobInventory, UUID builderId) {
         super(blobInventory, builderId);
-        ObjectBuilderButton<String> keyButton = ObjectBuilderButtonBuilder.STRING("Key",
-                300, "Builder.Key-Timeout",
-                "Builder.Key", string -> {
-                    updateDefaultButton("Key", "%key%",
-                            string == null ? "N/A" : string);
-                    openInventory();
-                    return true;
-                });
-        ObjectBuilderButton<ReferenceBlobMessage> messageButton =
-                ObjectBuilderButtonBuilder.MESSAGE(
-                        "Message",
-                        300,
-                        "Builder.Message-Timeout",
-                        "Builder.Message",
-                        message -> {
-                            updateDefaultButton("Message", "%message%",
-                                    message == null ? "N/A" : message.getReference());
-                            openInventory();
-                            return true;
-                        });
-        ObjectBuilderButton<Long> delay = ObjectBuilderButtonBuilder.LONG("CustomModelData",
-                300, "Builder.CustomModelData-Timeout",
-                "Builder.CustomModelData", integer -> {
-                    updateDefaultButton("CustomModelData", "%customModelData%",
-                            "" + integer);
-                    openInventory();
-                    return true;
-                });
-        ObjectBuilderButton<Double> valueButton = ObjectBuilderButtonBuilder.DOUBLE(
-                "CashValue",
-                300, "Builder.CashValue-Timeout",
-                "Builder.CashValue", value -> {
-                    updateDefaultButton("CashValue", "%cash%",
-                            value == -1 ? "N/A" : value + "");
-                    openInventory();
-                    return true;
-                });
-        addObjectBuilderButton(keyButton).addObjectBuilderButton(messageButton)
-                .addObjectBuilderButton(delay).addObjectBuilderButton(valueButton)
+        addQuickStringButton("Key", 300).addQuickMessageButton(
+                        "Message", 3000).addQuickOptionalLongButton("Delay", 300)
+                .addQuickOptionalDoubleButton("CashValue", 300)
                 .setFunction(builder -> {
                     CashReward build = builder.build();
                     if (build == null)
@@ -83,14 +46,25 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                 });
     }
 
-    public boolean shouldDelay() {
-        return shouldDelay;
-    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public CashReward build() {
+        ObjectBuilderButton<String> keyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Key");
+        ObjectBuilderButton<String> messageButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Message");
+        ObjectBuilderButton<Long> delayButton = (ObjectBuilderButton<Long>) getObjectBuilderButton("Delay");
+        ObjectBuilderButton<Double> cashValueButton = (ObjectBuilderButton<Double>) getObjectBuilderButton("CashValue");
 
-    public void setShouldDelay(boolean shouldDelay) {
-        this.shouldDelay = shouldDelay;
-        updateDefaultButton("ShouldDelay", "%shouldDelay%", shouldDelay() ? "Yes" : "No");
-        openInventory();
+        if (keyButton.get().isEmpty() || cashValueButton.get().isEmpty())
+            return null;
+
+        String key = keyButton.get().get();
+        Optional<String> message = messageButton.get();
+        Optional<Long> delay = delayButton.get();
+        boolean shouldDelay = delay.isPresent();
+        Double cashValue = cashValueButton.get().get();
+
+        return CashReward.build(key, shouldDelay, cashValue,
+                delay, runsAsynchronously, message.map(BlobLibAPI::getMessage));
     }
 
     public boolean runsAsynchronously() {
@@ -100,16 +74,6 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
     public void setRunsAsynchronously(boolean runsAsynchronously) {
         this.runsAsynchronously = runsAsynchronously;
         updateDefaultButton("RunsAsynchronously", "%runsAsynchronously%", runsAsynchronously() ? "Yes" : "No");
-        openInventory();
-    }
-
-    public boolean containsMessage() {
-        return containsMessage;
-    }
-
-    public void setContainsMessage(boolean containsMessage) {
-        this.containsMessage = containsMessage;
-        updateDefaultButton("ContainsMessage", "%containsMessage%", containsMessage() ? "Yes" : "No");
         openInventory();
     }
 }

@@ -1,16 +1,22 @@
 package us.mytheria.blobrp.trophy.requirements;
 
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
+import us.mytheria.bloblib.entities.message.BlobSound;
 import us.mytheria.blobrp.BlobRPAPI;
+import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
 import us.mytheria.blobrp.reward.CashReward;
+import us.mytheria.blobrp.reward.Reward;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class UIBuilder extends RPObjectBuilder<CashReward> {
+public class UIBuilder extends RPObjectBuilder<TrophyRequirement> {
     private final TrophyRequirement requirements;
     protected String key;
 
@@ -22,6 +28,26 @@ public class UIBuilder extends RPObjectBuilder<CashReward> {
         super(blobInventory, builderId);
         requirements = TrophyRequirement.EMPTY();
         updateDefaultButtons();
+        setFunction(builder -> {
+            TrophyRequirement build = builder.build();
+            if (build == null)
+                return null;
+            Player player = getPlayer();
+            BlobSound sound = BlobLibAPI.getSound("Builder.Build-Complete");
+            sound.play(player);
+            player.closeInventory();
+            TrophyRequirementWriter.from(build).saveToFile();
+            ObjectDirector<TrophyRequirement> director = RPManagerDirector
+                    .getInstance().getTrophyRequirementDirector();
+            director.getObjectManager().addObject(build.getKey(), build);
+            director.getBuilderManager().removeBuilder(player);
+            return build;
+        });
+    }
+
+    @Override
+    public TrophyRequirement build() {
+        return requirements;
     }
 
     public TrophyRequirement getRequirements() {

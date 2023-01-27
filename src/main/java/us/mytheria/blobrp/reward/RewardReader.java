@@ -37,8 +37,7 @@ public class RewardReader {
                 if (!config.contains("Permission"))
                     throw new IllegalArgumentException("'Permission' is required for PERMISSION rewards.");
                 Optional<String> world = config.contains("World") ? Optional.of(config.getString("World")) : Optional.empty();
-                Optional<Boolean> currentWorld = config.contains("CurrentWorld") ? Optional.of(config.getBoolean("CurrentWorld")) : Optional.empty();
-                return new PermissionReward(key, shouldDelay, config.getString("Permission"), delay, runAsync, message, world, currentWorld);
+                return new PermissionReward(key, shouldDelay, config.getString("Permission"), delay, runAsync, message, world);
             }
             default -> throw new IllegalArgumentException("Invalid reward type: " + type);
         }

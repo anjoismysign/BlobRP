@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public class PermissionReward extends Reward<String> {
     private final Optional<String> world;
-    private final Optional<Boolean> currentWorld;
 
     /**
      * Constructs a new Reward with the given values.
@@ -22,9 +21,8 @@ public class PermissionReward extends Reward<String> {
      * @param message     the message to send to the player when the reward is given
      */
     public static PermissionReward build(String key, boolean shouldDelay, String permission, Optional<Long> delay,
-                                         boolean runAsync, Optional<BlobMessage> message, Optional<String> world,
-                                         Optional<Boolean> currentWorld) {
-        return new PermissionReward(key, shouldDelay, permission, delay, runAsync, message, world, currentWorld);
+                                         boolean runAsync, Optional<BlobMessage> message, Optional<String> world) {
+        return new PermissionReward(key, shouldDelay, permission, delay, runAsync, message, world);
     }
 
     /**
@@ -39,21 +37,17 @@ public class PermissionReward extends Reward<String> {
      */
     protected PermissionReward(String key, boolean shouldDelay, String permission,
                                Optional<Long> delay, boolean runAsync,
-                               Optional<BlobMessage> message, Optional<String> world,
-                               Optional<Boolean> currentWorld) {
+                               Optional<BlobMessage> message, Optional<String> world) {
         super(key, shouldDelay, permission, delay, runAsync, message);
         this.world = world;
-        this.currentWorld = currentWorld;
     }
 
     @Override
     public void apply(Player player) {
-        if (currentWorld.isPresent() && currentWorld.get())
-            BlobLibAPI.addPermission(player, getValue());
         if (world.isPresent())
             BlobLibAPI.addPermission(player, getValue(), world.get());
         else
-            BlobLibAPI.addPermission(player, getValue(), null);
+            BlobLibAPI.addGlobalPermission(player, getValue());
     }
 
     @Override
