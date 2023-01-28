@@ -1,10 +1,10 @@
 package us.mytheria.blobrp;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.blobrp.director.RPManagerDirector;
 
-public final class BlobRP extends JavaPlugin {
+public final class BlobRP extends BlobPlugin {
     private RPManagerDirector director;
 
     public static BlobRP instance;
@@ -17,6 +17,7 @@ public final class BlobRP extends JavaPlugin {
     public void onEnable() {
         instance = this;
         director = new RPManagerDirector();
+        registerToBlobLib();
         Bukkit.getScheduler().runTask(this, () ->
                 director.postWorld());
 
@@ -24,10 +25,11 @@ public final class BlobRP extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        unregisterFromBlobLib();
     }
 
-    public RPManagerDirector getDirector() {
+    @Override
+    public RPManagerDirector getManagerDirector() {
         return director;
     }
 }

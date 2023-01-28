@@ -65,7 +65,7 @@ public class CashReward extends Reward<Double> {
 
     @Override
     public File saveToFile() {
-        File file = new File(BlobRP.getInstance().getDirector().getRewardDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
+        File file = new File(BlobRP.getInstance().getManagerDirector().getRewardDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("Type", "CASH");
         config.set("Value", value);

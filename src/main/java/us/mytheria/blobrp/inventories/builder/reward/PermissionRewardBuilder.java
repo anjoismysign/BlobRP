@@ -1,18 +1,14 @@
 package us.mytheria.blobrp.inventories.builder.reward;
 
 import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
-import us.mytheria.bloblib.entities.inventory.ObjectBuilder;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
-import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
 import us.mytheria.bloblib.entities.message.BlobSound;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.BlobRPAPI;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
-import us.mytheria.blobrp.reward.ItemStackReward;
 import us.mytheria.blobrp.reward.PermissionReward;
 import us.mytheria.blobrp.reward.Reward;
 
@@ -38,7 +34,7 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
                     if (build == null)
                         return null;
                     Player player = getPlayer();
-                    BlobSound sound = BlobLibAPI.getSound("Builder.Build-Complete");
+                    BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
                     sound.play(player);
                     player.closeInventory();
                     build.saveToFile();
@@ -68,7 +64,8 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
         String permission = permissionValueButton.get().get();
         Optional<String> world = worldButton.get();
 
-        return PermissionReward.build(key, delay.isPresent(), permission, delay, runsAsynchronously, message.map(BlobLibAPI::getMessage), world);
+        return PermissionReward.build(key, delay.isPresent(), permission, delay, runsAsynchronously,
+                message.map(BlobLibAssetAPI::getMessage), world);
     }
 
     public boolean runsAsynchronously() {

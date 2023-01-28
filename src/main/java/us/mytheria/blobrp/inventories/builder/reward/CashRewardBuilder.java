@@ -1,13 +1,11 @@
 package us.mytheria.blobrp.inventories.builder.reward;
 
 import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
-import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
 import us.mytheria.bloblib.entities.message.BlobSound;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.BlobRPAPI;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
@@ -34,7 +32,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                     if (build == null)
                         return null;
                     Player player = getPlayer();
-                    BlobSound sound = BlobLibAPI.getSound("Builder.Build-Complete");
+                    BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
                     sound.play(player);
                     player.closeInventory();
                     build.saveToFile();
@@ -64,7 +62,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
         Double cashValue = cashValueButton.get().get();
 
         return CashReward.build(key, shouldDelay, cashValue,
-                delay, runsAsynchronously, message.map(BlobLibAPI::getMessage));
+                delay, runsAsynchronously, message.map(BlobLibAssetAPI::getMessage));
     }
 
     public boolean runsAsynchronously() {

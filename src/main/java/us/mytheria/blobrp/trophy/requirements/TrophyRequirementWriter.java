@@ -16,7 +16,7 @@ public class TrophyRequirementWriter {
     }
 
     public File saveToFile() {
-        File file = new File(BlobRP.getInstance().getDirector().getTrophyRequirementDirector().getObjectManager().getLoadFilesPath() + "/" + requirement.key + ".yml");
+        File file = new File(BlobRP.getInstance().getManagerDirector().getTrophyRequirementDirector().getObjectManager().getLoadFilesPath() + "/" + requirement.key + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         requirement.fireTicks.ifPresent(integer -> config.set("FireTicks", integer));
         requirement.freezeTicks.ifPresent(integer -> config.set("FreezeTicks", integer));

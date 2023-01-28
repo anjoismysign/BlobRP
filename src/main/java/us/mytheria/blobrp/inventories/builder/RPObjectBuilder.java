@@ -16,6 +16,6 @@ public abstract class RPObjectBuilder<T> extends ObjectBuilder<T> {
     }
 
     public RPManagerDirector getManagerDirector() {
-        return main.getDirector();
+        return main.getManagerDirector();
     }
 }

@@ -119,7 +119,7 @@
         <dependency>
             <groupId>com.github.anjoismysign</groupId>
             <artifactId>BlobLib</artifactId>
-            <version>cc7bd51a87</version>
+            <version>edbd0045d1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

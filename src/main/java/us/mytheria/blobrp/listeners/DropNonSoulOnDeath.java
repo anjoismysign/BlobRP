@@ -9,7 +9,7 @@ import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.SoulAPI;
 
 public class DropNonSoulOnDeath implements Listener {
-    private BlobRP main;
+    private final BlobRP main;
 
     public DropNonSoulOnDeath() {
         this.main = BlobRP.getInstance();

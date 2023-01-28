@@ -3,7 +3,7 @@ package us.mytheria.blobrp.inventories.builder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
@@ -51,7 +51,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                     if (build == null)
                         return null;
                     Player player = getPlayer();
-                    BlobSound sound = BlobLibAPI.getSound("Builder.Build-Complete");
+                    BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
                     sound.play(player);
                     player.closeInventory();
                     build.saveToFile();

@@ -41,7 +41,7 @@ public record ShopArticle(Material material, boolean hasCustomModelData,
     }
 
     public File saveToFile() {
-        File file = new File(BlobRP.getInstance().getDirector().getShopArticleDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
+        File file = new File(BlobRP.getInstance().getManagerDirector().getShopArticleDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("Material", material.name());
         config.set("BuyPrice", buyPrice);

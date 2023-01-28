@@ -1,12 +1,9 @@
 package us.mytheria.blobrp.director;
 
 import me.anjoismysign.anjo.entities.Tuple2;
-import us.mytheria.bloblib.BlobLibDevAPI;
-import us.mytheria.bloblib.entities.BlobFileManager;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.ObjectDirectorData;
 import us.mytheria.bloblib.entities.manager.ManagerDirector;
-import us.mytheria.bloblib.utilities.Debug;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -25,17 +22,20 @@ import us.mytheria.blobrp.trophy.requirements.UIBuilder;
 
 public class RPManagerDirector extends ManagerDirector {
     public static RPManagerDirector getInstance() {
-        return BlobRP.getInstance().getDirector();
+        return BlobRP.getInstance().getManagerDirector();
     }
 
     public RPManagerDirector() {
-        super(BlobRP.getInstance(), "plugins/BlobRP");
+        super(BlobRP.getInstance());
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
         // ShopArticle \\
-        boolean registerShopArticleBuilderYml = BlobLibDevAPI.registerInventoryFile("ShopArticleBuilder", BlobRP.getInstance());
-        Debug.debug("Registered ShopArticleBuilder.yml: " + registerShopArticleBuilderYml);
+        detachInventoryAsset("ShopArticleBuilder", true);
+        detachInventoryAsset("TrophyRequirementBuilder", true);
+        detachInventoryAsset("CashRewardBuilder", true);
+        detachInventoryAsset("ItemStackRewardBuilder", true);
+        detachInventoryAsset("PermissionRewardBuilder", true);
         ObjectDirectorData shopArticleDirectorData = ObjectDirectorData.simple(getFileManager(), "ShopArticle");
         addManager("ShopArticleDirector",
                 new ObjectDirector<>(this, shopArticleDirectorData.objectBuilderKey(),
@@ -44,8 +44,6 @@ public class RPManagerDirector extends ManagerDirector {
                     return new Tuple2<>(article, article.key());
                 }).getBuilderManager().addBuilderFunction(ShopArticleBuilder::build));
         // Reward \\
-        boolean registerRewardBuilderYml = BlobLibDevAPI.registerInventoryFile("RewardBuilder", BlobRP.getInstance());
-        Debug.debug("Registered RewardBuilder.yml: " + registerRewardBuilderYml);
         ObjectDirectorData rewardDirectorData = ObjectDirectorData.simple(getFileManager(), "Reward");
         addManager("RewardDirector", new ObjectDirector<>(this,
                 rewardDirectorData.objectBuilderKey(),
@@ -60,8 +58,6 @@ public class RPManagerDirector extends ManagerDirector {
                 .addBuilderFunction("PermissionReward",
                         PermissionRewardBuilder::build));
         // TrophyRequirement \\
-        boolean registerTrophyRequirementBuilderYml = BlobLibDevAPI.registerInventoryFile("TrophyRequirementBuilder", BlobRP.getInstance());
-        Debug.debug("Registered TrophyRequirementBuilder.yml: " + registerTrophyRequirementBuilderYml);
         ObjectDirectorData trophyRequirementDirectorData = ObjectDirectorData.simple(getFileManager(), "TrophyRequirement");
         addManager("TrophyRequirementDirector", new ObjectDirector<>(this,
                 trophyRequirementDirectorData.objectBuilderKey(),
@@ -92,10 +88,6 @@ public class RPManagerDirector extends ManagerDirector {
 
     public ConfigManager getConfigManager() {
         return (ConfigManager) getManager("ConfigManager");
-    }
-
-    public BlobFileManager getFileManager() {
-        return getFileManager();
     }
 
 

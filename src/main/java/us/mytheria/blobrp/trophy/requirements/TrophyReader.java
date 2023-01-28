@@ -22,7 +22,7 @@ public class TrophyReader {
         List<String> rewardKeys = section.getStringList("Rewards");
         List<Reward> rewards = new ArrayList<>();
         rewardKeys.forEach(key -> {
-            Reward reward = BlobRP.getInstance().getDirector().getRewardDirector().getObjectManager().getObject(key);
+            Reward reward = BlobRP.getInstance().getManagerDirector().getRewardDirector().getObjectManager().getObject(key);
             if (reward == null)
                 throw new IllegalArgumentException("Reward not found: " + key);
             rewards.add(reward);
@@ -30,7 +30,7 @@ public class TrophyReader {
         if (!section.contains("Requirements"))
             throw new IllegalArgumentException("'Requirements' is required. Missing at: " + file.getPath());
         String trophyRequirementKey = section.getString("Requirements");
-        TrophyRequirement trophyRequirement = BlobRP.getInstance().getDirector().getTrophyRequirementDirector().getObjectManager().getObject(trophyRequirementKey);
+        TrophyRequirement trophyRequirement = BlobRP.getInstance().getManagerDirector().getTrophyRequirementDirector().getObjectManager().getObject(trophyRequirementKey);
         if (trophyRequirement == null)
             throw new IllegalArgumentException("TrophyRequirement not found: " + trophyRequirementKey);
         return new Trophy(type, rewards, trophyRequirement);
