@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilder;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.entities.ShopArticle;
@@ -35,22 +36,43 @@ public class ShopArticleCmd implements CommandExecutor, TabCompleter {
             return true;
         }
         String arg1 = args[0];
-        if (arg1.equalsIgnoreCase("add")) {
-            if (!(sender instanceof Player player)) {
-                BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
-                return true;
+        switch (arg1.toLowerCase()) {
+            case "add" -> {
+                if (!(sender instanceof Player player)) {
+                    BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
+                    return true;
+                }
+                try {
+                    ObjectBuilder<ShopArticle> builder = main.getManagerDirector().getShopArticleDirector()
+                            .getBuilderManager().getOrDefault(player);
+                    builder.openInventory();
+                    return true;
+                } catch (Exception exception) {
+                    Bukkit.getLogger().log(Level.SEVERE, exception.getMessage(), exception);
+                    return false;
+                }
             }
-            try {
-                ObjectBuilder<ShopArticle> builder = main.getManagerDirector().getShopArticleDirector()
-                        .getBuilderManager().getOrDefault(player);
-                builder.openInventory();
-                return true;
-            } catch (Exception exception) {
-                Bukkit.getLogger().log(Level.SEVERE, exception.getMessage(), exception);
+            case "opensellinventory" -> {
+                if (!(sender instanceof Player player)) {
+                    BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
+                    return true;
+                }
+                try {
+                    BlobInventory sellInventory = BlobLibAssetAPI.getBlobInventory("Sell-Articles");
+                    if (sellInventory == null)
+                        throw new Exception("Sell-Articles not found");
+                    sellInventory = sellInventory.clone();
+                    player.openInventory(sellInventory.getInventory());
+                    return true;
+                } catch (Exception exception) {
+                    Bukkit.getLogger().log(Level.SEVERE, exception.getMessage(), exception);
+                    return false;
+                }
+            }
+            default -> {
                 return false;
             }
         }
-        return false;
     }
 
     public void debug(CommandSender sender) {

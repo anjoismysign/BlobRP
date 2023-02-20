@@ -1,0 +1,25 @@
+Sell-Articles:
+  Title: '&lSELL JUNK'
+  Size: 27
+  Buttons:
+    Background:
+      ItemStack:
+        Material: BLACK_STAINED_GLASS_PANE
+        CustomModelData: 0
+        DisplayName: " "
+        Lore: [ ]
+      Slot: 18-26
+    Available:
+      ItemStack:
+        Material: AIR
+      Slot: 0-17
+    Key:
+      ItemStack:
+        Material: HOPPER
+        CustomModelData: 0
+        DisplayName: "&aSell"
+        Lore:
+          - "&7Click to sell selected items"
+          - ''
+          - "&7Profit: &a$%profit%"
+      Slot: 21
