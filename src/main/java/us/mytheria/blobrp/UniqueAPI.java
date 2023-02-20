@@ -29,7 +29,7 @@ public class UniqueAPI {
 
     /**
      * @param itemStack The item you want to set as a unique alike item.
-     * @return true if succesful, false if not.
+     * @return true if successful, false if not.
      */
     public static boolean setUnique(ItemStack itemStack) {
         if (itemStack == null) return false;

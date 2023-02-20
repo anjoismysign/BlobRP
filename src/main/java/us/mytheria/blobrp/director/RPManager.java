@@ -1,6 +1,6 @@
 package us.mytheria.blobrp.director;
 
-import us.mytheria.bloblib.entities.manager.Manager;
+import us.mytheria.bloblib.managers.Manager;
 
 public class RPManager extends Manager {
 

@@ -1,5 +1,6 @@
 package us.mytheria.blobrp.director.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,7 @@ import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class ShopArticleCmd implements CommandExecutor, TabCompleter {
     private final BlobRP main;
@@ -38,10 +40,15 @@ public class ShopArticleCmd implements CommandExecutor, TabCompleter {
                 BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
                 return true;
             }
-            ObjectBuilder<ShopArticle> builder = main.getManagerDirector().getShopArticleDirector()
-                    .getBuilderManager().getOrDefault(player);
-            builder.openInventory();
-            return true;
+            try {
+                ObjectBuilder<ShopArticle> builder = main.getManagerDirector().getShopArticleDirector()
+                        .getBuilderManager().getOrDefault(player);
+                builder.openInventory();
+                return true;
+            } catch (Exception exception) {
+                Bukkit.getLogger().log(Level.SEVERE, exception.getMessage(), exception);
+                return false;
+            }
         }
         return false;
     }

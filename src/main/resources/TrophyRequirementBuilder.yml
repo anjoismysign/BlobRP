@@ -1,4 +1,4 @@
-Title: '&lARTICLE > BUILD'
+Title: '&lTRR > BUILD'
 Size: 36
 Buttons:
   Background:
@@ -29,7 +29,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Fire Ticks"
       Lore:
-        - "&7%fireTicks%"
+        - "&7Selected: &f%fireTicks%"
     Slot: 10
   FreezeTicks:
     ItemStack:
@@ -37,7 +37,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Freeze Ticks"
       Lore:
-        - "&7%freezeTicks%"
+        - "&7Selected: &f%freezeTicks%"
     Slot: 11
   LastDamageCause:
     ItemStack:
@@ -45,7 +45,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Last damage cause"
       Lore:
-        - "&7%lastDamageCause%"
+        - "&7Selected: &f%lastDamageCause%"
     Slot: 12
   MinimumPassengers:
     ItemStack:
@@ -53,7 +53,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Minimum Passengers"
       Lore:
-        - "&7%minimumPassengers%"
+        - "&7Selected: &f%minimumPassengers%"
     Slot: 13
   MaximumPassengers:
     ItemStack:
@@ -61,7 +61,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Maximum Passengers"
       Lore:
-        - "&7%maximumPassengers%"
+        - "&7Selected: &f%maximumPassengers%"
     Slot: 14
   TicksLived:
     ItemStack:
@@ -69,7 +69,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Ticks Lived"
       Lore:
-        - "&7%ticksLived%"
+        - "&7Selected: &f%ticksLived%"
     Slot: 15
   Vehicle:
     ItemStack:
@@ -77,7 +77,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Vehicle"
       Lore:
-        - "&7%vehicle%"
+        - "&7Selected: &f%vehicle%"
     Slot: 16
   CustomNameVisible:
     ItemStack:
@@ -85,7 +85,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Custom Name Visible"
       Lore:
-        - "&7%customNameVisible%"
+        - "&7Selected: &f%customNameVisible%"
     Slot: 19
   Glowing:
     ItemStack:
@@ -93,7 +93,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Glowing"
       Lore:
-        - "&7%glowing%"
+        - "&7Selected: &f%glowing%"
     Slot: 20
   InWater:
     ItemStack:
@@ -101,7 +101,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6In Water"
       Lore:
-        - "&7%inWater%"
+        - "&7Selected: &f%inWater%"
     Slot: 21
   OnGround:
     ItemStack:
@@ -109,7 +109,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6On Ground"
       Lore:
-        - "&7%onGround%"
+        - "&7Selected: &f%onGround%"
     Slot: 22
   Persistent:
     ItemStack:
@@ -117,7 +117,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Persistent"
       Lore:
-        - "&7%persistent%"
+        - "&7Selected: &f%persistent%"
     Slot: 23
   Silent:
     ItemStack:
@@ -125,7 +125,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Silent"
       Lore:
-        - "&7%silent%"
+        - "&7Selected: &f%silent%"
     Slot: 24
   CustomName:
     ItemStack:
@@ -133,7 +133,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Custom Name"
       Lore:
-        - "&7%customName%"
+        - "&7Selected: &f%customName%"
     Slot: 25
   Build:
     ItemStack:

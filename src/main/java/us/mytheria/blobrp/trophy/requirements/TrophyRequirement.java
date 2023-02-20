@@ -3,13 +3,15 @@ package us.mytheria.blobrp.trophy.requirements;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
+import us.mytheria.bloblib.entities.BlobObject;
 
+import java.io.File;
 import java.util.Optional;
 
 /**
  * The TrophyRequirements class represents the requirements that must be met in order to receive the reward for hunting a trophy.
  */
-public class TrophyRequirement {
+public class TrophyRequirement implements BlobObject {
     protected String key;
 
     // The number of fire ticks the entity has remaining
@@ -179,6 +181,12 @@ public class TrophyRequirement {
 
     public String getKey() {
         return key;
+    }
+
+    @Override
+    public File saveToFile(File directory) {
+        TrophyRequirementWriter writer = TrophyRequirementWriter.from(this);
+        return writer.saveToFile(directory);
     }
 
     /**

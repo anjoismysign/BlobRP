@@ -6,7 +6,15 @@ depend: [ BlobLib ]
 authors: [ anjoismysign ]
 commands:
   shoparticle:
-    description: info shoparticle
+    description: made with BlobLib
+  cashreward:
+    description: made with BlobLib
+  itemstackreward:
+    description: made with BlobLib
+  permissionreward:
+    description: made with BlobLib
+  trophyrequirement:
+    description: made with BlobLib
   blobsoul:
     description: info soul
     aliases: [ soul ]

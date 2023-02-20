@@ -1,9 +1,10 @@
 package us.mytheria.blobrp.reward;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import us.mytheria.bloblib.entities.BlobMessageModder;
-import us.mytheria.bloblib.entities.message.BlobMessage;
+import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.PlayerUtil;
 
@@ -23,7 +24,7 @@ public class ItemStackReward extends Reward<ItemStack> {
      */
     public static ItemStackReward build(String key, boolean shouldDelay, ItemStack itemStack,
                                         Optional<Long> delay, boolean runAsync,
-                                        Optional<BlobMessage> message) {
+                                        Optional<ReferenceBlobMessage> message) {
         return new ItemStackReward(key, shouldDelay, itemStack, delay, runAsync, message);
     }
 
@@ -39,7 +40,7 @@ public class ItemStackReward extends Reward<ItemStack> {
      */
     protected ItemStackReward(String key, boolean shouldDelay, ItemStack itemStack,
                               Optional<Long> delay, boolean runAsync,
-                              Optional<BlobMessage> message) {
+                              Optional<ReferenceBlobMessage> message) {
         super(key, shouldDelay, itemStack, delay, runAsync, message);
     }
 
@@ -56,8 +57,8 @@ public class ItemStackReward extends Reward<ItemStack> {
      */
     public void applyAndMessage(Player player) {
         message.ifPresent(blobMessage -> {
-            BlobMessageModder<BlobMessage> modder = BlobMessageModder.mod(blobMessage);
-            modder.replace("%item%", ItemStackUtil.display(getValue()));
+            BlobMessageModder<ReferenceBlobMessage> modder = BlobMessageModder.mod(blobMessage);
+            modder.replace("%itemStack%", ItemStackUtil.display(getValue()));
             blobMessage = modder.get();
             blobMessage.sendAndPlay(player);
         });
@@ -65,7 +66,23 @@ public class ItemStackReward extends Reward<ItemStack> {
     }
 
     @Override
-    public File saveToFile() {
-        return null;
+    public File saveToFile(File directory) {
+        File file = new File(directory + "/" + key + ".yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set("Value", value);
+        config.set("ShouldDelay", shouldDelay);
+        if (delay.isPresent()) {
+            config.set("Delay", delay.get());
+            config.set("RunAsynchronously", runAsync);
+        }
+        if (message.isPresent()) {
+            config.set("Message", message.get().getReference());
+        }
+        try {
+            config.save(file);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return file;
     }
 }

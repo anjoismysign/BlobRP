@@ -1,0 +1,13 @@
+Reward:
+  Cash:
+    Sound: BLOCK_NOTE_BLOCK_PLING
+    Volume: 10.0
+    Pitch: 2.0
+  Permission:
+    Sound: BLOCK_NOTE_BLOCK_PLING
+    Volume: 10.0
+    Pitch: 2.0
+  Item:
+    Sound: UI_TOAST_CHALLENGE_COMPLETE
+    Volume: 10.0
+    Pitch: 2.0

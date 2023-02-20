@@ -1,9 +1,9 @@
 package us.mytheria.blobrp.director;
 
-import me.anjoismysign.anjo.entities.Tuple2;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.ObjectDirectorData;
-import us.mytheria.bloblib.entities.manager.ManagerDirector;
+import us.mytheria.bloblib.entities.ObjectDirectorManager;
+import us.mytheria.bloblib.managers.ManagerDirector;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -13,12 +13,16 @@ import us.mytheria.blobrp.inventories.builder.ShopArticleBuilder;
 import us.mytheria.blobrp.inventories.builder.reward.CashRewardBuilder;
 import us.mytheria.blobrp.inventories.builder.reward.ItemStackRewardBuilder;
 import us.mytheria.blobrp.inventories.builder.reward.PermissionRewardBuilder;
-import us.mytheria.blobrp.reward.Reward;
+import us.mytheria.blobrp.reward.CashReward;
+import us.mytheria.blobrp.reward.ItemStackReward;
+import us.mytheria.blobrp.reward.PermissionReward;
 import us.mytheria.blobrp.reward.RewardReader;
+import us.mytheria.blobrp.trophy.Trophy;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
-import us.mytheria.blobrp.trophy.requirements.TrophyRequirementBuilder;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirementReader;
 import us.mytheria.blobrp.trophy.requirements.UIBuilder;
+
+import java.util.HashMap;
 
 public class RPManagerDirector extends ManagerDirector {
     public static RPManagerDirector getInstance() {
@@ -31,43 +35,42 @@ public class RPManagerDirector extends ManagerDirector {
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
         // ShopArticle \\
-        detachInventoryAsset("ShopArticleBuilder", true);
-        detachInventoryAsset("TrophyRequirementBuilder", true);
-        detachInventoryAsset("CashRewardBuilder", true);
-        detachInventoryAsset("ItemStackRewardBuilder", true);
-        detachInventoryAsset("PermissionRewardBuilder", true);
         ObjectDirectorData shopArticleDirectorData = ObjectDirectorData.simple(getFileManager(), "ShopArticle");
         addManager("ShopArticleDirector",
-                new ObjectDirector<>(this, shopArticleDirectorData.objectBuilderKey(),
-                        shopArticleDirectorData.objectDirectory(), file -> {
-                    ShopArticle article = ShopArticle.fromFile(file);
-                    return new Tuple2<>(article, article.key());
-                }).getBuilderManager().addBuilderFunction(ShopArticleBuilder::build));
+                new ObjectDirector<>(this,
+                        shopArticleDirectorData, ShopArticle::fromFile));
+        getShopArticleDirector().getBuilderManager().setBuilderBiFunction(
+                ShopArticleBuilder::build);
         // Reward \\
-        ObjectDirectorData rewardDirectorData = ObjectDirectorData.simple(getFileManager(), "Reward");
-        addManager("RewardDirector", new ObjectDirector<>(this,
-                rewardDirectorData.objectBuilderKey(),
-                rewardDirectorData.objectDirectory(),
-                file -> {
-                    Reward reward = RewardReader.read(file);
-                    return new Tuple2<>(reward, reward.getKey());
-                }).getBuilderManager().addBuilderFunction("CashReward",
-                        CashRewardBuilder::build)
-                .addBuilderFunction("ItemStackReward",
-                        ItemStackRewardBuilder::build)
-                .addBuilderFunction("PermissionReward",
-                        PermissionRewardBuilder::build));
+        addManager("RewardDirectorManager", new ObjectDirectorManager(this,
+                HashMap::new));
+        ObjectDirectorData cashRewardDirectorData = ObjectDirectorData.simple(getFileManager(), "CashReward");
+        ObjectDirectorData itemStackRewardDirectorData = ObjectDirectorData.simple(getFileManager(), "ItemStackReward");
+        ObjectDirectorData permissionRewardDirectorData = ObjectDirectorData.simple(getFileManager(), "PermissionReward");
+        getRewardDirectorManager().addObjectDirector(CashReward.class, new ObjectDirector<>(this,
+                cashRewardDirectorData, RewardReader::readCash));
+        getRewardDirectorManager().addObjectDirector(ItemStackReward.class, new ObjectDirector<>(this,
+                itemStackRewardDirectorData, RewardReader::readItemStack));
+        getRewardDirectorManager().addObjectDirector(PermissionReward.class, new ObjectDirector<>(this,
+                permissionRewardDirectorData, RewardReader::readPermission));
+        getCashRewardDirector().getBuilderManager().setBuilderBiFunction(
+                CashRewardBuilder::build);
+        getItemStackRewardDirector().getBuilderManager().setBuilderBiFunction(
+                ItemStackRewardBuilder::build);
+        getPermissionRewardDirector().getBuilderManager().setBuilderBiFunction(
+                PermissionRewardBuilder::build);
         // TrophyRequirement \\
         ObjectDirectorData trophyRequirementDirectorData = ObjectDirectorData.simple(getFileManager(), "TrophyRequirement");
         addManager("TrophyRequirementDirector", new ObjectDirector<>(this,
-                trophyRequirementDirectorData.objectBuilderKey(),
-                trophyRequirementDirectorData.objectDirectory(),
-                file -> {
-                    TrophyRequirementBuilder builder = TrophyRequirementReader.read(file);
-                    TrophyRequirement requirement = builder.build();
-                    return new Tuple2<>(requirement, requirement.getKey());
-                }).getBuilderManager().addBuilderFunction(
-                UIBuilder::build));
+                trophyRequirementDirectorData,
+                file -> TrophyRequirementReader.read(file).build()));
+        getTrophyRequirementDirector().getBuilderManager().setBuilderBiFunction(
+                UIBuilder::build);
+        // Trophy \\
+//        ObjectDirectorData trophyDirectorData = ObjectDirectorData.simple(getFileManager(), "Trophy");
+//        addManager("TrophyDirector", new ObjectDirector<>(this,
+//                trophyDirectorData,
+//                TrophyReader::read));
     }
 
     /**
@@ -76,6 +79,10 @@ public class RPManagerDirector extends ManagerDirector {
     @Override
     public void reload() {
         getShopArticleDirector().reload();
+        getCashRewardDirector().reload();
+        getItemStackRewardDirector().reload();
+        getPermissionRewardDirector().reload();
+        getTrophyRequirementDirector().reload();
     }
 
     @Override
@@ -86,28 +93,46 @@ public class RPManagerDirector extends ManagerDirector {
     public void postWorld() {
     }
 
-    public ConfigManager getConfigManager() {
+    public final ConfigManager getConfigManager() {
         return (ConfigManager) getManager("ConfigManager");
     }
 
-
-    public ListenerManager getListenerManager() {
+    public final ListenerManager getListenerManager() {
         return (ListenerManager) getManager("ListenerManager");
     }
 
-    public ObjectDirector<ShopArticle> getShopArticleDirector() {
-        return (ObjectDirector<ShopArticle>) getManager("ShopArticleManager");
+    @SuppressWarnings("unchecked")
+    public final ObjectDirector<ShopArticle> getShopArticleDirector() {
+        return (ObjectDirector<ShopArticle>) getManager("ShopArticleDirector");
     }
 
-    public ObjectDirector<Reward> getRewardDirector() {
-        return (ObjectDirector<Reward>) getManager("RewardDirector");
+    public final ObjectDirectorManager getRewardDirectorManager() {
+        return (ObjectDirectorManager) getManager("RewardDirectorManager");
     }
 
-    public ObjectDirector<TrophyRequirement> getTrophyRequirementDirector() {
+    public final ObjectDirector<CashReward> getCashRewardDirector() {
+        return getRewardDirectorManager().getObjectDirector(CashReward.class);
+    }
+
+    public final ObjectDirector<ItemStackReward> getItemStackRewardDirector() {
+        return getRewardDirectorManager().getObjectDirector(ItemStackReward.class);
+    }
+
+    public final ObjectDirector<PermissionReward> getPermissionRewardDirector() {
+        return getRewardDirectorManager().getObjectDirector(PermissionReward.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final ObjectDirector<TrophyRequirement> getTrophyRequirementDirector() {
         return (ObjectDirector<TrophyRequirement>) getManager("TrophyRequirementDirector");
     }
 
-    public CommandManager getCommandManager() {
+    @SuppressWarnings("unchecked")
+    public final ObjectDirector<Trophy> getTrophyDirector() {
+        return (ObjectDirector<Trophy>) getManager("TrophyDirector");
+    }
+
+    public final CommandManager getCommandManager() {
         return (CommandManager) getManager("CommandManager");
     }
 }

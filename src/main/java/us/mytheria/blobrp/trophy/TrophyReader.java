@@ -1,17 +1,17 @@
-package us.mytheria.blobrp.trophy.requirements;
+package us.mytheria.blobrp.trophy;
 
+import global.warming.commons.io.FilenameUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.reward.Reward;
-import us.mytheria.blobrp.trophy.Trophy;
+import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrophyReader {
-
     public static Trophy read(File file) {
         YamlConfiguration section = YamlConfiguration.loadConfiguration(file);
         if (!section.contains("EntityType"))
@@ -22,10 +22,7 @@ public class TrophyReader {
         List<String> rewardKeys = section.getStringList("Rewards");
         List<Reward> rewards = new ArrayList<>();
         rewardKeys.forEach(key -> {
-            Reward reward = BlobRP.getInstance().getManagerDirector().getRewardDirector().getObjectManager().getObject(key);
-            if (reward == null)
-                throw new IllegalArgumentException("Reward not found: " + key);
-            rewards.add(reward);
+            Reward.ifReward(key, rewards::add);
         });
         if (!section.contains("Requirements"))
             throw new IllegalArgumentException("'Requirements' is required. Missing at: " + file.getPath());
@@ -33,6 +30,6 @@ public class TrophyReader {
         TrophyRequirement trophyRequirement = BlobRP.getInstance().getManagerDirector().getTrophyRequirementDirector().getObjectManager().getObject(trophyRequirementKey);
         if (trophyRequirement == null)
             throw new IllegalArgumentException("TrophyRequirement not found: " + trophyRequirementKey);
-        return new Trophy(type, rewards, trophyRequirement);
+        return new Trophy(type, rewards, trophyRequirement, FilenameUtils.removeExtension(file.getName()));
     }
 }

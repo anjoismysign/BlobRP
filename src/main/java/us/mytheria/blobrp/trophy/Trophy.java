@@ -3,15 +3,18 @@ package us.mytheria.blobrp.trophy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import us.mytheria.bloblib.entities.BlobObject;
 import us.mytheria.blobrp.reward.Reward;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 
+import java.io.File;
 import java.util.List;
 
 /**
  * The Trophy class represents a trophy that is hunted for money.
  */
-public class Trophy {
+public class Trophy implements BlobObject {
+    private final String key;
     // The type of entity that is being hunted (e.g. lion, elephant)
     private final EntityType type;
 
@@ -28,10 +31,12 @@ public class Trophy {
      * @param rewards      the rewards that are offered for hunting the trophy
      * @param requirements the requirements that must be met in order to receive the reward
      */
-    public Trophy(EntityType type, List<Reward> rewards, TrophyRequirement requirements) {
+    public Trophy(EntityType type, List<Reward> rewards, TrophyRequirement requirements,
+                  String key) {
         this.type = type;
         this.rewards = rewards;
         this.requirements = requirements;
+        this.key = key;
     }
 
     /**
@@ -81,5 +86,16 @@ public class Trophy {
         if (!requirements.meetsRequirements(entity))
             return;
         reward(player);
+    }
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public File saveToFile(File directory) {
+        TrophyWriter writer = TrophyWriter.from(this);
+        return writer.saveToFile(directory);
     }
 }

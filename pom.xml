@@ -9,8 +9,6 @@
     <version>0.2</version>
     <packaging>jar</packaging>
 
-    <name>BlobRP</name>
-
     <properties>
         <testServer>/Users/lbenav8095/Documents/Dev/Java/anjoismysign/1.19.2 Wild North</testServer>
         <java.version>16</java.version>
@@ -103,23 +101,19 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.anjoismysign</groupId>
-            <artifactId>BlobLib</artifactId>
-            <version>edbd0045d1</version>
+            <groupId>us.mytheria</groupId>
+            <artifactId>bloblib</artifactId>
+            <version>1.599l</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

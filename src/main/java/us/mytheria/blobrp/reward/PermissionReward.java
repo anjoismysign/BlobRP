@@ -1,8 +1,9 @@
 package us.mytheria.blobrp.reward;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
-import us.mytheria.bloblib.entities.message.BlobMessage;
+import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 
 import java.io.File;
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class PermissionReward extends Reward<String> {
      * @param message     the message to send to the player when the reward is given
      */
     public static PermissionReward build(String key, boolean shouldDelay, String permission, Optional<Long> delay,
-                                         boolean runAsync, Optional<BlobMessage> message, Optional<String> world) {
+                                         boolean runAsync, Optional<ReferenceBlobMessage> message, Optional<String> world) {
         return new PermissionReward(key, shouldDelay, permission, delay, runAsync, message, world);
     }
 
@@ -37,7 +38,7 @@ public class PermissionReward extends Reward<String> {
      */
     protected PermissionReward(String key, boolean shouldDelay, String permission,
                                Optional<Long> delay, boolean runAsync,
-                               Optional<BlobMessage> message, Optional<String> world) {
+                               Optional<ReferenceBlobMessage> message, Optional<String> world) {
         super(key, shouldDelay, permission, delay, runAsync, message);
         this.world = world;
     }
@@ -51,7 +52,26 @@ public class PermissionReward extends Reward<String> {
     }
 
     @Override
-    public File saveToFile() {
-        return null;
+    public File saveToFile(File directory) {
+        File file = new File(directory + "/" + key + ".yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set("Value", value);
+        config.set("ShouldDelay", shouldDelay);
+        if (delay.isPresent()) {
+            config.set("Delay", delay.get());
+            config.set("RunAsynchronously", runAsync);
+        }
+        if (message.isPresent()) {
+            config.set("Message", message.get().getReference());
+        }
+        if (world.isPresent()) {
+            config.set("World", world.get());
+        }
+        try {
+            config.save(file);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return file;
     }
 }

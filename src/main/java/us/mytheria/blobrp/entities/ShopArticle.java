@@ -6,16 +6,24 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import us.mytheria.blobrp.BlobRP;
-import us.mytheria.blobrp.util.ItemStackSerializer;
+import us.mytheria.bloblib.entities.BlobObject;
+import us.mytheria.bloblib.utilities.Debug;
+import us.mytheria.bloblib.utilities.ItemStackSerializer;
 
 import java.io.File;
 
-public record ShopArticle(Material material, boolean hasCustomModelData,
-                          int customModelData, double buyPrice,
-                          double sellPrice, ItemStack display, String key) {
+public class ShopArticle implements BlobObject {
+
+    private final Material material;
+    private final boolean hasCustomModelData;
+    private final int customModelData;
+    private final double buyPrice;
+    private final double sellPrice;
+    private final ItemStack display;
+    private final String key;
 
     public static ShopArticle fromFile(File file) {
+        Debug.debug("Loading ShopArticle " + file.getName());
         String fileName = file.getName();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         String inputMaterial = config.getString("Material");
@@ -37,19 +45,31 @@ public record ShopArticle(Material material, boolean hasCustomModelData,
             return null;
         }
         String key = FilenameUtils.removeExtension(fileName);
-        return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice, sellPrice, display, key);
+        return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice,
+                sellPrice, display, key);
     }
 
-    public File saveToFile() {
-        File file = new File(BlobRP.getInstance().getManagerDirector().getShopArticleDirector().getObjectManager().getLoadFilesPath() + "/" + key + ".yml");
+    public ShopArticle(Material material, boolean hasCustomModelData, int customModelData,
+                       double buyPrice, double sellPrice, ItemStack display, String key) {
+        this.material = material;
+        this.hasCustomModelData = hasCustomModelData;
+        this.customModelData = customModelData;
+        this.buyPrice = buyPrice;
+        this.sellPrice = sellPrice;
+        this.display = display;
+        this.key = key;
+    }
+
+    public File saveToFile(File directory) {
+        File file = new File(directory + "/" + getKey() + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("Material", material.name());
-        config.set("BuyPrice", buyPrice);
-        config.set("SellPrice", sellPrice);
-        config.set("HasCustomModelData", hasCustomModelData);
-        if (hasCustomModelData)
-            config.set("CustomModelData", customModelData);
-        ItemStackSerializer.serialize(display, config, "Display");
+        config.set("Material", getMaterial().name());
+        config.set("BuyPrice", getBuyPrice());
+        config.set("SellPrice", getSellPrice());
+        config.set("HasCustomModelData", hasCustomModelData());
+        if (hasCustomModelData())
+            config.set("CustomModelData", getCustomModelData());
+        ItemStackSerializer.serialize(getDisplay(), config, "Display");
         try {
             config.save(file);
         } catch (Exception exception) {
@@ -63,19 +83,13 @@ public record ShopArticle(Material material, boolean hasCustomModelData,
             return false;
             //Null itemStacks are not allowed to match.
         }
-        if (itemStack.getType() != material) {
+        if (itemStack.getType() != getMaterial()) {
             return false;
         }
         //Both display & itemStack match material type.
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        if (itemMeta == null && !hasCustomModelData) {
+        if (!itemStack.hasItemMeta() && !hasCustomModelData)
             return true;
-            /*
-            There's no way to check if the itemStack has a custom model data.
-            Since both of them don't have customModelData and match the material type,
-            they match.
-             */
-        }
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) {
             return false;
             /*
@@ -83,30 +97,52 @@ public record ShopArticle(Material material, boolean hasCustomModelData,
             Cannot match.
              */
         }
-        if (itemMeta.hasCustomModelData() && !hasCustomModelData) {
-            return false;
-            /*
-            ShopArticle doesn't have customModelData, but itemStack has customModelData.
-            Cannot match.
-             */
-        }
-        if (!itemMeta.hasCustomModelData() && hasCustomModelData) {
+        if (!itemMeta.hasCustomModelData() && hasCustomModelData()) {
             return false;
             /*
             ShopArticle has customModelData, but itemStack doesn't have customModelData.
             Cannot match.
              */
         }
-        return itemMeta.getCustomModelData() == customModelData;
+        return itemMeta.getCustomModelData() == getCustomModelData();
     }
 
     public ItemStack cloneDisplay(int amount) {
-        ItemStack clone = display.clone();
+        ItemStack clone = getDisplay().clone();
         clone.setAmount(amount);
         return clone;
     }
 
     public ItemStack cloneDisplay() {
-        return display.clone();
+        return getDisplay().clone();
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public boolean hasCustomModelData() {
+        return hasCustomModelData;
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    public double getBuyPrice() {
+        return buyPrice;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public ItemStack getDisplay() {
+        return display;
+    }
+
+    @Override
+    public String getKey() {
+        return key;
     }
 }

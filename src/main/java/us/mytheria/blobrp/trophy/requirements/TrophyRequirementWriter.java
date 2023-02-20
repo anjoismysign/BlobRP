@@ -1,7 +1,6 @@
 package us.mytheria.blobrp.trophy.requirements;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import us.mytheria.blobrp.BlobRP;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +14,8 @@ public class TrophyRequirementWriter {
         return writer;
     }
 
-    public File saveToFile() {
-        File file = new File(BlobRP.getInstance().getManagerDirector().getTrophyRequirementDirector().getObjectManager().getLoadFilesPath() + "/" + requirement.key + ".yml");
+    public File saveToFile(File directory) {
+        File file = new File(directory + "/" + requirement.key + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         requirement.fireTicks.ifPresent(integer -> config.set("FireTicks", integer));
         requirement.freezeTicks.ifPresent(integer -> config.set("FreezeTicks", integer));

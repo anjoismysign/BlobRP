@@ -1,5 +1,5 @@
-Title: '&lARTICLE > BUILD'
-Size: 36
+Title: '&lCASHREWARD > BUILD'
+Size: 18
 Buttons:
   Background:
     ItemStack:
@@ -7,14 +7,14 @@ Buttons:
       CustomModelData: 0
       DisplayName: " "
       Lore: [ ]
-    Slot: 0-35
+    Slot: 0-17
   White-Background:
     ItemStack:
       Material: WHITE_STAINED_GLASS_PANE
       CustomModelData: 0
       DisplayName: " "
       Lore: [ ]
-    Slot: 1-7,10-16,19-25,28-34
+    Slot: 1-7,10-16
   Key:
     ItemStack:
       Material: BOOK
@@ -22,125 +22,37 @@ Buttons:
       DisplayName: "&6Key"
       Lore:
         - "&7Selected: &f%key%"
-    Slot: 4
-  FireTicks:
+    Slot: 1
+  Message:
     ItemStack:
-      Material: CAMPFIRE
+      Material: BOOK
       CustomModelData: 0
-      DisplayName: "&6Fire Ticks"
+      DisplayName: "&6ReferenceBlobMessage"
       Lore:
-        - "&7%fireTicks%"
-    Slot: 10
-  FreezeTicks:
-    ItemStack:
-      Material: ICE
-      CustomModelData: 0
-      DisplayName: "&6Freeze Ticks"
-      Lore:
-        - "&7%freezeTicks%"
-    Slot: 11
-  LastDamageCause:
-    ItemStack:
-      Material: IRON_SWORD
-      CustomModelData: 0
-      DisplayName: "&6Last damage cause"
-      Lore:
-        - "&7%lastDamageCause%"
-    Slot: 12
-  MinimumPassengers:
-    ItemStack:
-      Material: SADDLE
-      CustomModelData: 0
-      DisplayName: "&6Minimum Passengers"
-      Lore:
-        - "&7%minimumPassengers%"
-    Slot: 13
-  MaximumPassengers:
-    ItemStack:
-      Material: SADDLE
-      CustomModelData: 0
-      DisplayName: "&6Maximum Passengers"
-      Lore:
-        - "&7%maximumPassengers%"
-    Slot: 14
-  TicksLived:
+        - "&7Selected: &f%message%"
+    Slot: 2
+  Delay:
     ItemStack:
       Material: CLOCK
       CustomModelData: 0
-      DisplayName: "&6Ticks Lived"
+      DisplayName: "&6Delay"
       Lore:
-        - "&7%ticksLived%"
-    Slot: 15
-  Vehicle:
+        - "&7Selected: &f%delay%"
+    Slot: 3
+  CashValue:
     ItemStack:
-      Material: SADDLE
+      Material: EMERALD
       CustomModelData: 0
-      DisplayName: "&6Vehicle"
+      DisplayName: "&6Reward (Cash)"
       Lore:
-        - "&7%vehicle%"
-    Slot: 16
-  CustomNameVisible:
-    ItemStack:
-      Material: NAME_TAG
-      CustomModelData: 0
-      DisplayName: "&6Custom Name Visible"
-      Lore:
-        - "&7%customNameVisible%"
-    Slot: 19
-  Glowing:
-    ItemStack:
-      Material: SPECTRAL_ARROW
-      CustomModelData: 0
-      DisplayName: "&6Glowing"
-      Lore:
-        - "&7%glowing%"
-    Slot: 20
-  InWater:
-    ItemStack:
-      Material: WATER_BUCKET
-      CustomModelData: 0
-      DisplayName: "&6In Water"
-      Lore:
-        - "&7%inWater%"
-    Slot: 21
-  OnGround:
-    ItemStack:
-      Material: DIRT
-      CustomModelData: 0
-      DisplayName: "&6On Ground"
-      Lore:
-        - "&7%onGround%"
-    Slot: 22
-  Persistent:
-    ItemStack:
-      Material: COMMAND_BLOCK
-      CustomModelData: 0
-      DisplayName: "&6Persistent"
-      Lore:
-        - "&7%persistent%"
-    Slot: 23
-  Silent:
-    ItemStack:
-      Material: COMMAND_BLOCK
-      CustomModelData: 0
-      DisplayName: "&6Silent"
-      Lore:
-        - "&7%silent%"
-    Slot: 24
-  CustomName:
-    ItemStack:
-      Material: NAME_TAG
-      CustomModelData: 0
-      DisplayName: "&6Custom Name"
-      Lore:
-        - "&7%customName%"
-    Slot: 25
+        - "&7Selected: &f%cashValue%"
+    Slot: 4
   Build:
     ItemStack:
       Material: SLIME_BALL
       CustomModelData: 0
       DisplayName: "&6Build"
       Lore:
-        - "&7Click to add article"
+        - "&7Click to add reward"
         - "&7to the files."
-    Slot: 31
+    Slot: 13

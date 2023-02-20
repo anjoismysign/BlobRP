@@ -6,11 +6,11 @@ import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.message.BlobSound;
+import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.BlobRPAPI;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
 import us.mytheria.blobrp.reward.PermissionReward;
-import us.mytheria.blobrp.reward.Reward;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -18,28 +18,32 @@ import java.util.UUID;
 public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
     private boolean runsAsynchronously;
 
-    public static PermissionRewardBuilder build(UUID builderId) {
-        return new PermissionRewardBuilder(BlobRPAPI.buildInventory("PermissionRewardBuilder"), builderId);
+    public static PermissionRewardBuilder build(UUID builderId,
+                                                ObjectDirector<PermissionReward> objectDirector) {
+        return new PermissionRewardBuilder(
+                BlobRPAPI.buildInventory("PermissionRewardBuilder"),
+                builderId, objectDirector);
     }
 
-    private PermissionRewardBuilder(BlobInventory blobInventory, UUID builderId) {
-        super(blobInventory, builderId);
+    private PermissionRewardBuilder(BlobInventory blobInventory, UUID builderId,
+                                    ObjectDirector<PermissionReward> objectDirector) {
+        super(blobInventory, builderId, objectDirector);
         addQuickStringButton("Key", 300)
                 .addQuickMessageButton("Message", 300)
-                .addQuickOptionalLongButton("Delay", 300)
-                .addQuickMessageButton("PermissionValue", 300)
-                .addQuickMessageButton("World", 300)
+                .addQuickLongButton("Delay", 300)
+                .addQuickStringButton("PermissionValue", 300)
+                .addQuickStringButton("World", 300)
                 .setFunction(builder -> {
-                    PermissionReward build = builder.build();
+                    PermissionReward build = builder.construct();
                     if (build == null)
                         return null;
                     Player player = getPlayer();
                     BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
                     sound.play(player);
                     player.closeInventory();
-                    build.saveToFile();
-                    ObjectDirector<Reward> director = RPManagerDirector
-                            .getInstance().getRewardDirector();
+                    ObjectDirector<PermissionReward> director = RPManagerDirector
+                            .getInstance().getPermissionRewardDirector();
+                    build.saveToFile(director.getObjectManager().getLoadFilesDirectory());
                     director.getObjectManager().addObject(build.getKey(), build);
                     director.getBuilderManager().removeBuilder(player);
                     return build;
@@ -48,9 +52,9 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public PermissionReward build() {
+    public PermissionReward construct() {
         ObjectBuilderButton<String> keyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Key");
-        ObjectBuilderButton<String> messageButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Message");
+        ObjectBuilderButton<ReferenceBlobMessage> messageButton = (ObjectBuilderButton<ReferenceBlobMessage>) getObjectBuilderButton("Message");
         ObjectBuilderButton<Long> delayButton = (ObjectBuilderButton<Long>) getObjectBuilderButton("Delay");
         ObjectBuilderButton<String> permissionValueButton = (ObjectBuilderButton<String>) getObjectBuilderButton("PermissionValue");
         ObjectBuilderButton<String> worldButton = (ObjectBuilderButton<String>) getObjectBuilderButton("World");
@@ -59,13 +63,13 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
             return null;
 
         String key = keyButton.get().get();
-        Optional<String> message = messageButton.get();
+        Optional<ReferenceBlobMessage> message = messageButton.get();
         Optional<Long> delay = delayButton.get();
         String permission = permissionValueButton.get().get();
         Optional<String> world = worldButton.get();
 
         return PermissionReward.build(key, delay.isPresent(), permission, delay, runsAsynchronously,
-                message.map(BlobLibAssetAPI::getMessage), world);
+                message, world);
     }
 
     public boolean runsAsynchronously() {

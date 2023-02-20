@@ -18,25 +18,27 @@ public class UIBuilder extends RPObjectBuilder<TrophyRequirement> {
     private final TrophyRequirement requirements;
     protected String key;
 
-    public static UIBuilder build(UUID builderId) {
-        return new UIBuilder(BlobRPAPI.buildInventory("TrophyRequirementBuilder"), builderId);
+    public static UIBuilder build(UUID builderId, ObjectDirector<TrophyRequirement> objectDirector) {
+        return new UIBuilder(BlobRPAPI.buildInventory(
+                "TrophyRequirementBuilder"), builderId, objectDirector);
     }
 
-    private UIBuilder(BlobInventory blobInventory, UUID builderId) {
-        super(blobInventory, builderId);
+    private UIBuilder(BlobInventory blobInventory, UUID builderId,
+                      ObjectDirector<TrophyRequirement> objectDirector) {
+        super(blobInventory, builderId, objectDirector);
         requirements = TrophyRequirement.EMPTY();
         updateDefaultButtons();
         setFunction(builder -> {
-            TrophyRequirement build = builder.build();
+            TrophyRequirement build = builder.construct();
             if (build == null)
                 return null;
             Player player = getPlayer();
             BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
             sound.play(player);
             player.closeInventory();
-            TrophyRequirementWriter.from(build).saveToFile();
             ObjectDirector<TrophyRequirement> director = RPManagerDirector
                     .getInstance().getTrophyRequirementDirector();
+            TrophyRequirementWriter.from(build).saveToFile(director.getObjectManager().getLoadFilesDirectory());
             director.getObjectManager().addObject(build.getKey(), build);
             director.getBuilderManager().removeBuilder(player);
             return build;
@@ -44,7 +46,7 @@ public class UIBuilder extends RPObjectBuilder<TrophyRequirement> {
     }
 
     @Override
-    public TrophyRequirement build() {
+    public TrophyRequirement construct() {
         return requirements;
     }
 

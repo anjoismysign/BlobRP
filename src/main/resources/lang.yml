@@ -1,5 +1,0 @@
-Soul:
-  Fail: "&c&lUNSUCCESSFUL%split%&7Couldn't proceed"
-  Hand-Success: '&a&lSUCCESSFUL%split%&7Item in your &fhand &7is now soul'
-  Offhand-Success: '&a&lSUCCESSFUL%split%&7Item in your &foffhand &7is now soul'
-  Inventory: '&f&lDONE%split%&7Attempted to soul all items in your inventory'
