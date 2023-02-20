@@ -14,6 +14,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
     private SimpleEventListener<Boolean> entitiesClearDropsOnDeath;
     private SimpleEventListener<Boolean> entityDropItem;
+    private SimpleEventListener<Double> sellArticles;
 
 
     public ConfigManager(RPManagerDirector managerDirector) {
@@ -32,6 +33,7 @@ public class ConfigManager extends RPManager {
         entitiesDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("EntitiesDropExperienceOnDeath"), "Amount");
         entitiesClearDropsOnDeath = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("EntitiesClearDropsOnDeath"), "Clear");
         entityDropItem = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("EntityDropItem"), "Cancel");
+        sellArticles = SimpleEventListener.DOUBLE(listeners.getConfigurationSection("SellArticles"), "DefaultPrice");
         main.saveConfig();
     }
 
@@ -57,5 +59,9 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<Boolean> entityDropItem() {
         return entityDropItem;
+    }
+
+    public SimpleEventListener<Double> sellArticles() {
+        return sellArticles;
     }
 }

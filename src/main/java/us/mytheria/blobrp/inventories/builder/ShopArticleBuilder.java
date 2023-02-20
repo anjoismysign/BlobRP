@@ -98,6 +98,6 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
         ItemStack display = displayButton.get().get();
 
         return new ShopArticle(material, hasCustomModelData,
-                customModelData.orElse(0), buyPrice, sellPrice, display, key);
+                customModelData.orElse(0), buyPrice, sellPrice, display, key, true);
     }
 }

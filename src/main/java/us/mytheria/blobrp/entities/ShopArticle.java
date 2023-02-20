@@ -21,6 +21,20 @@ public class ShopArticle implements BlobObject {
     private final double sellPrice;
     private final ItemStack display;
     private final String key;
+    private final boolean isDefault;
+
+    public static ShopArticle fromItemStack(double buyPrice, ItemStack itemStack) {
+        double sellPrice = buyPrice / 2;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) {
+            return new ShopArticle(itemStack.getType(), false,
+                    0, buyPrice, sellPrice, itemStack,
+                    "null", true);
+        }
+        return new ShopArticle(itemStack.getType(), itemMeta.hasCustomModelData(),
+                itemMeta.getCustomModelData(), buyPrice, sellPrice, itemStack,
+                "null", true);
+    }
 
     public static ShopArticle fromFile(File file) {
         Debug.debug("Loading ShopArticle " + file.getName());
@@ -46,11 +60,12 @@ public class ShopArticle implements BlobObject {
         }
         String key = FilenameUtils.removeExtension(fileName);
         return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice,
-                sellPrice, display, key);
+                sellPrice, display, key, false);
     }
 
     public ShopArticle(Material material, boolean hasCustomModelData, int customModelData,
-                       double buyPrice, double sellPrice, ItemStack display, String key) {
+                       double buyPrice, double sellPrice, ItemStack display, String key,
+                       boolean isDefault) {
         this.material = material;
         this.hasCustomModelData = hasCustomModelData;
         this.customModelData = customModelData;
@@ -58,6 +73,7 @@ public class ShopArticle implements BlobObject {
         this.sellPrice = sellPrice;
         this.display = display;
         this.key = key;
+        this.isDefault = isDefault;
     }
 
     public File saveToFile(File directory) {
@@ -144,5 +160,9 @@ public class ShopArticle implements BlobObject {
     @Override
     public String getKey() {
         return key;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
     }
 }

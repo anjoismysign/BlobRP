@@ -17,3 +17,6 @@ Listeners:
   EntityDropItem:
     Register: true
     Cancel: true
+  SellArticles:
+    Register: true
+    DefaultPrice: 1

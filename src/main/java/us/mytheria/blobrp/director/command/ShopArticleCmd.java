@@ -87,6 +87,7 @@ public class ShopArticleCmd implements CommandExecutor, TabCompleter {
                 List<String> l = new ArrayList<>();
                 if (args.length == 1) {
                     l.add("add");
+                    l.add("openSellInventory");
                 }
                 return l;
             }
