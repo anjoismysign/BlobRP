@@ -37,8 +37,8 @@ public class ShopArticle implements BlobObject {
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromItemStack(ItemStack display, double buyPrice) {
-        return fromItemStack(display, buyPrice, buyPrice / 10);
+    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key) {
+        return fromItemStack(display, buyPrice, key, buyPrice / 10);
     }
 
     /**
@@ -50,18 +50,20 @@ public class ShopArticle implements BlobObject {
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, double sellPrice) {
-        if (display == null)
+    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
+                                            double sellPrice) {
+        if (display == null) {
             return null;
+        }
         ItemMeta itemMeta = display.getItemMeta();
         if (itemMeta == null) {
             return new ShopArticle(display.getType(), false,
                     0, buyPrice, sellPrice, display,
-                    "null", false);
+                    key, false);
         }
         return new ShopArticle(display.getType(), itemMeta.hasCustomModelData(),
                 itemMeta.hasCustomModelData() ? itemMeta.getCustomModelData() : 0, buyPrice,
-                sellPrice, display, "null", false);
+                sellPrice, display, key, false);
     }
 
     public static ShopArticle fromFile(File file) {

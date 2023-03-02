@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>us.mytheria</groupId>
-    <artifactId>BlobRP</artifactId>
-    <version>0.2</version>
+    <artifactId>blobrp</artifactId>
+    <version>0.308s</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -21,6 +21,14 @@
         <url>https://github.com/anjoismysign/BlobRP</url>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub anjoismysign Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/anjoismysign/BlobRP</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>

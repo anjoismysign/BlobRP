@@ -9,11 +9,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
+import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.bloblib.utilities.PlayerUtil;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.entities.ShopArticle;
+import us.mytheria.blobrp.entities.ShopArticleTransaction;
+import us.mytheria.blobrp.events.ShopArticleSellEvent;
+import us.mytheria.blobrp.events.TransactionStatus;
+import us.mytheria.blobrp.events.TransactionType;
 import us.mytheria.blobrp.inventories.MerchantInventory;
 import us.mytheria.blobrp.listeners.RPListener;
 
@@ -63,16 +68,35 @@ public class MerchantListener extends RPListener {
                     return;
                 ShopArticle article = articleResult.value();
                 double price = article.getBuyPrice();
+                ReferenceBlobMessage referenceNotEnough = BlobLibAssetAPI.getMessage("Economy.Not-Enough");
                 if (!BlobLibAPI.hasCashAmount(player, price)) {
-                    BlobLibAssetAPI.getMessage("Economy.Not-Enough")
-                            .modify(string -> string.replace("%display%",
-                                    BlobLibAPI.getCash(player) - price + ""))
-                            .sendAndPlay(player);
+                    BlobMessage message = referenceNotEnough.modify(string -> string.replace("%display%",
+                            BlobLibAPI.getCash(player) - price + ""));
+                    ShopArticleSellEvent event = new ShopArticleSellEvent(
+                            new ShopArticleTransaction(article, 1),
+                            player, TransactionType.SELL, TransactionStatus.NOT_ENOUGH_MONEY,
+                            false, boughtMessage, referenceNotEnough, message, null,
+                            price);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled())
+                        return;
+                    if (event.getNotEnoughMessage() != null)
+                        event.getNotEnoughMessage().sendAndPlay(player);
                     player.closeInventory();
                     return;
                 }
                 BlobLibAPI.withdrawCash(player, price);
-                boughtMessage.sendAndPlay(player);
+                BlobMessage message = boughtMessage.modify(s -> s.replace("%display%", price + ""));
+                ShopArticleSellEvent event = new ShopArticleSellEvent(
+                        new ShopArticleTransaction(article, 1),
+                        player, TransactionType.SELL, TransactionStatus.SUCCESS,
+                        false, boughtMessage, referenceNotEnough, null, message,
+                        price);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled())
+                    return;
+                if (event.getSuccessMessage() != null)
+                    event.getSuccessMessage().sendAndPlay(player);
                 PlayerUtil.giveItemToInventoryOrDrop(player, article.cloneDisplay());
             }
             default -> {

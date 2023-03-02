@@ -19,7 +19,8 @@ import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.ShopArticleTransaction;
-import us.mytheria.blobrp.events.AsyncMultipleShopArticleTransactionEvent;
+import us.mytheria.blobrp.events.AsyncMultipleShopArticleSellEvent;
+import us.mytheria.blobrp.events.TransactionType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,10 +93,11 @@ public class ShopArticleSell extends RPListener {
                 if (!matches)
                     transactionList.add(new ShopArticleTransaction(ShopArticle
                             .fromItemStack(itemStack, sellArticlesEvent.value(),
+                                    "null",
                                     sellArticlesEvent.value()), amount));
             }
-            AsyncMultipleShopArticleTransactionEvent event = new AsyncMultipleShopArticleTransactionEvent(
-                    transactionList, player);
+            AsyncMultipleShopArticleSellEvent event = new AsyncMultipleShopArticleSellEvent(
+                    transactionList, player, TransactionType.SELL);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 return;

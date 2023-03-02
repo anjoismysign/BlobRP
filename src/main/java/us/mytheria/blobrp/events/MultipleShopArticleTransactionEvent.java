@@ -12,13 +12,18 @@ import java.util.Collection;
 public abstract class MultipleShopArticleTransactionEvent extends Event implements Cancellable {
     private boolean cancelled;
     private final Collection<ShopArticleTransaction> transaction;
+    private final TransactionType transactionType;
     private final Player player;
     private static final HandlerList HANDLERS_LIST = new HandlerList();
 
-    public MultipleShopArticleTransactionEvent(Collection<ShopArticleTransaction> transaction, Player player, boolean isAsync) {
+    public MultipleShopArticleTransactionEvent(Collection<ShopArticleTransaction> transaction,
+                                               Player player,
+                                               TransactionType transactionType,
+                                               boolean isAsync) {
         super(isAsync);
         this.transaction = transaction;
         this.player = player;
+        this.transactionType = transactionType;
     }
 
     @Override
@@ -38,6 +43,11 @@ public abstract class MultipleShopArticleTransactionEvent extends Event implemen
     @NotNull
     public Player getPlayer() {
         return player;
+    }
+
+    @NotNull
+    public TransactionType getTransactionType() {
+        return transactionType;
     }
 
     @Override

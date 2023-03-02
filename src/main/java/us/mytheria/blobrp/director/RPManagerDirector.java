@@ -12,6 +12,7 @@ import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.director.manager.ListenerManager;
 import us.mytheria.blobrp.entities.ShopArticle;
+import us.mytheria.blobrp.events.AsyncShopArticleReloadEvent;
 import us.mytheria.blobrp.inventories.CashRewardBuilder;
 import us.mytheria.blobrp.inventories.ItemStackRewardBuilder;
 import us.mytheria.blobrp.inventories.PermissionRewardBuilder;
@@ -142,6 +143,8 @@ public class RPManagerDirector extends ManagerDirector {
         getListenerManager().reload();
         getShopArticleDirector().reload();
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
+            AsyncShopArticleReloadEvent event = new AsyncShopArticleReloadEvent();
+            Bukkit.getPluginManager().callEvent(event);
             getMerchantManager().reload();
         });
         getCashRewardDirector().reload();
