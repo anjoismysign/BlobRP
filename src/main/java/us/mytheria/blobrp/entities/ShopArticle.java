@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.BlobObject;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
-import us.mytheria.bloblib.utilities.Debug;
 import us.mytheria.bloblib.utilities.ItemStackSerializer;
 
 import java.io.File;
@@ -27,6 +26,7 @@ public class ShopArticle implements BlobObject {
     private final ItemStack display;
     private final String key;
     private final boolean isDefault;
+    private final boolean isTransient;
 
     /**
      * Creates a ShopArticle from an ItemStack.
@@ -37,8 +37,9 @@ public class ShopArticle implements BlobObject {
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key) {
-        return fromItemStack(display, buyPrice, key, buyPrice / 10);
+    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
+                                            boolean isTransient) {
+        return fromItemStack(display, buyPrice, key, buyPrice / 10, isTransient);
     }
 
     /**
@@ -51,7 +52,7 @@ public class ShopArticle implements BlobObject {
      */
     @Nullable
     public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
-                                            double sellPrice) {
+                                            double sellPrice, boolean isTransient) {
         if (display == null) {
             return null;
         }
@@ -59,15 +60,14 @@ public class ShopArticle implements BlobObject {
         if (itemMeta == null) {
             return new ShopArticle(display.getType(), false,
                     0, buyPrice, sellPrice, display,
-                    key, false);
+                    key, false, isTransient);
         }
         return new ShopArticle(display.getType(), itemMeta.hasCustomModelData(),
                 itemMeta.hasCustomModelData() ? itemMeta.getCustomModelData() : 0, buyPrice,
-                sellPrice, display, key, false);
+                sellPrice, display, key, false, isTransient);
     }
 
     public static ShopArticle fromFile(File file) {
-        Debug.debug("Loading ShopArticle " + file.getName());
         String fileName = file.getName();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         String inputMaterial = config.getString("Material");
@@ -90,12 +90,12 @@ public class ShopArticle implements BlobObject {
         }
         String key = FilenameUtils.removeExtension(fileName);
         return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice,
-                sellPrice, display, key, false);
+                sellPrice, display, key, false, false);
     }
 
     public ShopArticle(Material material, boolean hasCustomModelData, int customModelData,
                        double buyPrice, double sellPrice, ItemStack display, String key,
-                       boolean isDefault) {
+                       boolean isDefault, boolean isTransient) {
         this.material = material;
         this.hasCustomModelData = hasCustomModelData;
         this.customModelData = customModelData;
@@ -104,9 +104,12 @@ public class ShopArticle implements BlobObject {
         this.display = display;
         this.key = key;
         this.isDefault = isDefault;
+        this.isTransient = isTransient;
     }
 
     public File saveToFile(File directory) {
+        if (isTransient)
+            return null;
         File file = new File(directory + "/" + getKey() + ".yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("Material", getMaterial().name());

@@ -94,7 +94,7 @@ public class ShopArticleSell extends RPListener {
                     transactionList.add(new ShopArticleTransaction(ShopArticle
                             .fromItemStack(itemStack, sellArticlesEvent.value(),
                                     "null",
-                                    sellArticlesEvent.value()), amount));
+                                    sellArticlesEvent.value(), true), amount));
             }
             AsyncMultipleShopArticleSellEvent event = new AsyncMultipleShopArticleSellEvent(
                     transactionList, player, TransactionType.SELL);
