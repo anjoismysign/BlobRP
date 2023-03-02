@@ -17,13 +17,9 @@ public final class BlobRP extends BlobPlugin {
     public void onEnable() {
         instance = this;
         director = new RPManagerDirector();
+        new BlobRPAPI(director);
         Bukkit.getScheduler().runTask(this, () ->
                 director.postWorld());
-    }
-
-    @Override
-    public void onDisable() {
-        unregisterFromBlobLib();
     }
 
     @Override

@@ -2,18 +2,23 @@ package us.mytheria.blobrp.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDeathEvent;
-import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
-public class EntitiesDropExperienceOnDeath implements Listener {
-    private final int exp;
+public class EntitiesDropExperienceOnDeath extends RPListener {
+    private int exp;
 
     public EntitiesDropExperienceOnDeath(ConfigManager configManager) {
-        BlobRP main = BlobRP.getInstance();
-        Bukkit.getPluginManager().registerEvents(this, main);
-        this.exp = configManager.entitiesDropExperienceOnDeath().value();
+        super(configManager);
+    }
+
+    public void reload() {
+        HandlerList.unregisterAll(this);
+        if (getConfigManager().entitiesDropExperienceOnDeath().register()) {
+            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
+            exp = getConfigManager().entitiesDropExperienceOnDeath().value();
+        }
     }
 
     @EventHandler

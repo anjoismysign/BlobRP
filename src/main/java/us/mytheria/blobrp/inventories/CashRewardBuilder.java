@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.inventories.builder.reward;
+package us.mytheria.blobrp.inventories;
 
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAssetAPI;
@@ -7,9 +7,8 @@ import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.message.BlobSound;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
-import us.mytheria.blobrp.BlobRPAPI;
+import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
-import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
 import us.mytheria.blobrp.reward.CashReward;
 
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
     public static CashRewardBuilder build(UUID builderId,
                                           ObjectDirector<CashReward> objectDirector) {
         return new CashRewardBuilder(
-                BlobRPAPI.buildInventory("CashRewardBuilder"),
+                RPShortcut.buildInventory("CashRewardBuilder"),
                 builderId, objectDirector);
     }
 

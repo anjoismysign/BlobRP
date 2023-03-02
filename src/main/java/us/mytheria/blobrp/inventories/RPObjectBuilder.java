@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.inventories.builder;
+package us.mytheria.blobrp.inventories;
 
 import us.mytheria.bloblib.entities.BlobObject;
 import us.mytheria.bloblib.entities.ObjectDirector;

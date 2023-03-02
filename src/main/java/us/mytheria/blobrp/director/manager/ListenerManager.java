@@ -1,44 +1,43 @@
 package us.mytheria.blobrp.director.manager;
 
-import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.listeners.*;
+import us.mytheria.blobrp.merchant.MerchantListener;
 
 public class ListenerManager extends RPManager {
-    private ArticleSell articleSell;
+    private final DropNonSoulOnDeath dropNonSoulOnDeath;
+    private final EntitiesClearDropsOnDeath entitiesClearDropsOnDeath;
+    private final EntitiesDropExperienceOnDeath entitiesDropExperienceOnDeath;
+    private final EntityDropItem entityDropItem;
+    private final KeepExperienceOnDeath keepExperienceOnDeath;
+    private final PlayerDropExperienceOnDeath playerDropExperienceOnDeath;
+    private final ShopArticleSell shopArticleSell;
+    private final MerchantListener merchantListener;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
+        ConfigManager configManager = managerDirector.getConfigManager();
+        dropNonSoulOnDeath = new DropNonSoulOnDeath(configManager);
+        entitiesClearDropsOnDeath = new EntitiesClearDropsOnDeath(configManager);
+        entitiesDropExperienceOnDeath = new EntitiesDropExperienceOnDeath(configManager);
+        entityDropItem = new EntityDropItem(configManager);
+        keepExperienceOnDeath = new KeepExperienceOnDeath(configManager);
+        playerDropExperienceOnDeath = new PlayerDropExperienceOnDeath(configManager);
+        shopArticleSell = new ShopArticleSell(configManager);
+        merchantListener = new MerchantListener(configManager);
+        reload();
     }
 
     @Override
     public void reload() {
-        if (articleSell != null)
-            articleSell.reload();
-    }
-
-    @Override
-    public void loadInConstructor() {
-        ConfigManager configManager = getManagerDirector().getConfigManager();
-        SimpleEventListener<Boolean> dropNonSoulOnDeath = configManager.dropNonSoulOnDeath();
-        if (dropNonSoulOnDeath.register() && dropNonSoulOnDeath.value())
-            new DropNonSoulOnDeath();
-        if (configManager.playerDropExperienceOnDeath().register())
-            new PlayerDropExperienceOnDeath(configManager);
-        if (configManager.playerKeepExperienceOnDeath().register())
-            new KeepExperienceOnDeath(configManager);
-        SimpleEventListener<Integer> entitiesDropExperienceOnDeath = configManager.entitiesDropExperienceOnDeath();
-        if (entitiesDropExperienceOnDeath.register())
-            new EntitiesDropExperienceOnDeath(configManager);
-        SimpleEventListener<Boolean> entitiesClearDropsOnDeath = configManager.entitiesClearDropsOnDeath();
-        if (entitiesClearDropsOnDeath.register() && entitiesClearDropsOnDeath.value())
-            new EntitiesClearDropsOnDeath(configManager);
-        SimpleEventListener<Boolean> entityDropItem = configManager.entityDropItem();
-        if (entityDropItem.register())
-            new EntityDropItem(configManager);
-        SimpleEventListener<Double> sellArticles = configManager.sellArticles();
-        if (sellArticles.register())
-            articleSell = new ArticleSell(sellArticles.value());
+        dropNonSoulOnDeath.reload();
+        entitiesClearDropsOnDeath.reload();
+        entitiesDropExperienceOnDeath.reload();
+        entityDropItem.reload();
+        keepExperienceOnDeath.reload();
+        playerDropExperienceOnDeath.reload();
+        shopArticleSell.reload();
+        merchantListener.reload();
     }
 }

@@ -47,3 +47,8 @@ Reward:
     Type: ACTIONBAR
     Message: '&7You have found &6%itemStack%'
     BlobSound: Reward.Item
+Merchant:
+  Not-Found:
+    Type: TITLE
+    Title: '&c&lNOT FOUND'
+    Subtitle: '&7Merchant not found'

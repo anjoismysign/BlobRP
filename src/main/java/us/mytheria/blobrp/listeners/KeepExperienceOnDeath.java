@@ -2,18 +2,23 @@ package us.mytheria.blobrp.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
-public class KeepExperienceOnDeath implements Listener {
-    private final boolean keepExperienceOnDeath;
+public class KeepExperienceOnDeath extends RPListener {
+    private boolean keepExperienceOnDeath;
 
     public KeepExperienceOnDeath(ConfigManager configManager) {
-        BlobRP main = BlobRP.getInstance();
-        Bukkit.getPluginManager().registerEvents(this, main);
-        this.keepExperienceOnDeath = configManager.playerKeepExperienceOnDeath().value();
+        super(configManager);
+    }
+
+    public void reload() {
+        HandlerList.unregisterAll(this);
+        if (getConfigManager().playerKeepExperienceOnDeath().register()) {
+            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
+            keepExperienceOnDeath = getConfigManager().playerKeepExperienceOnDeath().value();
+        }
     }
 
     @EventHandler

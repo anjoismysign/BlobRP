@@ -15,11 +15,10 @@ Sell-Articles:
       Slot: 0-17
     Key:
       ItemStack:
-        Material: HOPPER
+        Material: BOOK
         CustomModelData: 0
-        DisplayName: "&aSell"
+        DisplayName: "&eInfo"
         Lore:
-          - "&7Click to sell selected items"
-          - ''
-          - "&7Profit: &a$%profit%"
-      Slot: 21
+          - "&7Drag items here to sell them"
+          - '&7Close to get your money'
+      Slot: 22

@@ -1,12 +1,17 @@
 package us.mytheria.blobrp.entities;
 
 import global.warming.commons.io.FilenameUtils;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.Nullable;
+import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.BlobObject;
+import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.utilities.Debug;
 import us.mytheria.bloblib.utilities.ItemStackSerializer;
 
@@ -23,17 +28,40 @@ public class ShopArticle implements BlobObject {
     private final String key;
     private final boolean isDefault;
 
-    public static ShopArticle fromItemStack(double buyPrice, ItemStack itemStack) {
-        double sellPrice = buyPrice / 2;
-        ItemMeta itemMeta = itemStack.getItemMeta();
+    /**
+     * Creates a ShopArticle from an ItemStack.
+     * Sell price is 10% of the buy price.
+     *
+     * @param display  The ItemStack to create the ShopArticle from
+     * @param buyPrice The buy price
+     * @return The ShopArticle
+     */
+    @Nullable
+    public static ShopArticle fromItemStack(ItemStack display, double buyPrice) {
+        return fromItemStack(display, buyPrice, buyPrice / 10);
+    }
+
+    /**
+     * Creates a ShopArticle from an ItemStack
+     *
+     * @param display   The ItemStack to create the ShopArticle from
+     * @param buyPrice  The buy price
+     * @param sellPrice The sell price
+     * @return The ShopArticle
+     */
+    @Nullable
+    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, double sellPrice) {
+        if (display == null)
+            return null;
+        ItemMeta itemMeta = display.getItemMeta();
         if (itemMeta == null) {
-            return new ShopArticle(itemStack.getType(), false,
-                    0, buyPrice, sellPrice, itemStack,
-                    "null", true);
+            return new ShopArticle(display.getType(), false,
+                    0, buyPrice, sellPrice, display,
+                    "null", false);
         }
-        return new ShopArticle(itemStack.getType(), itemMeta.hasCustomModelData(),
-                itemMeta.getCustomModelData(), buyPrice, sellPrice, itemStack,
-                "null", true);
+        return new ShopArticle(display.getType(), itemMeta.hasCustomModelData(),
+                itemMeta.hasCustomModelData() ? itemMeta.getCustomModelData() : 0, buyPrice,
+                sellPrice, display, "null", false);
     }
 
     public static ShopArticle fromFile(File file) {
@@ -164,5 +192,24 @@ public class ShopArticle implements BlobObject {
 
     public boolean isDefault() {
         return isDefault;
+    }
+
+    public static void openSellInventory(Player player) {
+        BlobInventory sellInventory = BlobLibAssetAPI.getBlobInventory("Sell-Articles");
+        sellInventory = sellInventory.copy();
+        player.openInventory(sellInventory.getInventory());
+    }
+
+    public String display() {
+        ItemStack display = getDisplay();
+        String defaultDisplay = new TranslatableComponent(display.getTranslationKey()).toPlainText();
+        if (!display.hasItemMeta())
+            return defaultDisplay;
+        ItemMeta itemMeta = display.getItemMeta();
+        if (itemMeta == null)
+            return defaultDisplay;
+        if (!itemMeta.hasDisplayName())
+            return defaultDisplay;
+        return itemMeta.getDisplayName();
     }
 }

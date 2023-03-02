@@ -17,6 +17,12 @@ Listeners:
   EntityDropItem:
     Register: true
     Cancel: true
-  SellArticles:
+  SellArticlesEvent:
     Register: true
     DefaultPrice: 1
+  ManageSellArticles:
+    Register: true
+    PermissionMultiplier: false
+  Merchants:
+    Register: true
+    BoughtMessage: Economy.Received-Withdrawal

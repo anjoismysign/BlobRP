@@ -1,18 +1,34 @@
 package us.mytheria.blobrp;
 
-import org.bukkit.Bukkit;
-import us.mytheria.bloblib.BlobLibAssetAPI;
-import us.mytheria.bloblib.entities.inventory.BlobInventory;
+import org.bukkit.inventory.ItemStack;
+import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.ShopArticle;
+import us.mytheria.blobrp.inventories.MerchantInventory;
 
-public final class BlobRPAPI {
-    static BlobRP main = BlobRP.getInstance();
+public class BlobRPAPI {
+    private static BlobRPAPI instance;
 
-    public static BlobInventory buildInventory(String fileName) {
-        BlobInventory inventory = BlobLibAssetAPI.getInventoryManager().cloneInventory(fileName);
-        if (inventory == null) {
-            Bukkit.getLogger().info("Inventory " + fileName + " not found");
-            throw new NullPointerException("Inventory '" + fileName + "' not found");
-        }
-        return inventory;
+    private final RPManagerDirector director;
+
+    protected BlobRPAPI(RPManagerDirector director) {
+        this.director = director;
+        instance = this;
+    }
+
+    public static boolean addShopArticle(ItemStack display, double buyPrice, double sellPrice) {
+        ShopArticle shopArticle = ShopArticle.fromItemStack(display, buyPrice, sellPrice);
+        if (shopArticle == null)
+            return false;
+        instance.director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle);
+        return true;
+    }
+
+    public static boolean addShopArticle(ItemStack display, double buyPrice) {
+        return addShopArticle(display, buyPrice, buyPrice / 10);
+    }
+
+    public static void reloadMerchants() {
+        instance.director.getMerchantManager().getMerchants().values()
+                .forEach(MerchantInventory::loadShopArticles);
     }
 }

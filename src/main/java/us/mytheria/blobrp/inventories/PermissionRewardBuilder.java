@@ -1,48 +1,47 @@
-package us.mytheria.blobrp.inventories.builder.reward;
+package us.mytheria.blobrp.inventories;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.message.BlobSound;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
-import us.mytheria.blobrp.BlobRPAPI;
+import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
-import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
-import us.mytheria.blobrp.reward.ItemStackReward;
+import us.mytheria.blobrp.reward.PermissionReward;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
+public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
     private boolean runsAsynchronously;
 
-    public static ItemStackRewardBuilder build(UUID builderId,
-                                               ObjectDirector<ItemStackReward> objectDirector) {
-        return new ItemStackRewardBuilder(
-                BlobRPAPI.buildInventory("ItemStackRewardBuilder"),
+    public static PermissionRewardBuilder build(UUID builderId,
+                                                ObjectDirector<PermissionReward> objectDirector) {
+        return new PermissionRewardBuilder(
+                RPShortcut.buildInventory("PermissionRewardBuilder"),
                 builderId, objectDirector);
     }
 
-    private ItemStackRewardBuilder(BlobInventory blobInventory, UUID builderId,
-                                   ObjectDirector<ItemStackReward> objectDirector) {
+    private PermissionRewardBuilder(BlobInventory blobInventory, UUID builderId,
+                                    ObjectDirector<PermissionReward> objectDirector) {
         super(blobInventory, builderId, objectDirector);
         addQuickStringButton("Key", 300)
                 .addQuickMessageButton("Message", 300)
                 .addQuickLongButton("Delay", 300)
-                .addQuickItemButton("ItemStack")
+                .addQuickStringButton("PermissionValue", 300)
+                .addQuickStringButton("World", 300)
                 .setFunction(builder -> {
-                    ItemStackReward build = builder.construct();
+                    PermissionReward build = builder.construct();
                     if (build == null)
                         return null;
                     Player player = getPlayer();
                     BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
                     sound.play(player);
                     player.closeInventory();
-                    ObjectDirector<ItemStackReward> director = RPManagerDirector
-                            .getInstance().getItemStackRewardDirector();
+                    ObjectDirector<PermissionReward> director = RPManagerDirector
+                            .getInstance().getPermissionRewardDirector();
                     build.saveToFile(director.getObjectManager().getLoadFilesDirectory());
                     director.getObjectManager().addObject(build.getKey(), build);
                     director.getBuilderManager().removeBuilder(player);
@@ -52,23 +51,24 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public ItemStackReward construct() {
+    public PermissionReward construct() {
         ObjectBuilderButton<String> keyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Key");
         ObjectBuilderButton<ReferenceBlobMessage> messageButton = (ObjectBuilderButton<ReferenceBlobMessage>) getObjectBuilderButton("Message");
         ObjectBuilderButton<Long> delayButton = (ObjectBuilderButton<Long>) getObjectBuilderButton("Delay");
-        ObjectBuilderButton<ItemStack> itemStackButton =
-                (ObjectBuilderButton<ItemStack>) getObjectBuilderButton("ItemStack");
+        ObjectBuilderButton<String> permissionValueButton = (ObjectBuilderButton<String>) getObjectBuilderButton("PermissionValue");
+        ObjectBuilderButton<String> worldButton = (ObjectBuilderButton<String>) getObjectBuilderButton("World");
 
-        if (keyButton.get().isEmpty() || itemStackButton.get().isEmpty())
+        if (keyButton.get().isEmpty() || permissionValueButton.get().isEmpty())
             return null;
 
         String key = keyButton.get().get();
         Optional<ReferenceBlobMessage> message = messageButton.get();
         Optional<Long> delay = delayButton.get();
-        ItemStack itemStack = itemStackButton.get().get();
+        String permission = permissionValueButton.get().get();
+        Optional<String> world = worldButton.get();
 
-        return ItemStackReward.build(key, delay.isPresent(),
-                itemStack, delay, runsAsynchronously, message);
+        return PermissionReward.build(key, delay.isPresent(), permission, delay, runsAsynchronously,
+                message, world);
     }
 
     public boolean runsAsynchronously() {

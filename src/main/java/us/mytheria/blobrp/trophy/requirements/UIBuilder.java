@@ -7,9 +7,9 @@ import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.message.BlobSound;
-import us.mytheria.blobrp.BlobRPAPI;
+import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
-import us.mytheria.blobrp.inventories.builder.RPObjectBuilder;
+import us.mytheria.blobrp.inventories.RPObjectBuilder;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class UIBuilder extends RPObjectBuilder<TrophyRequirement> {
     protected String key;
 
     public static UIBuilder build(UUID builderId, ObjectDirector<TrophyRequirement> objectDirector) {
-        return new UIBuilder(BlobRPAPI.buildInventory(
+        return new UIBuilder(RPShortcut.buildInventory(
                 "TrophyRequirementBuilder"), builderId, objectDirector);
     }
 

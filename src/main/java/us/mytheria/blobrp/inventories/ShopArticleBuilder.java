@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.inventories.builder;
+package us.mytheria.blobrp.inventories;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,8 +10,7 @@ import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
 import us.mytheria.bloblib.entities.message.BlobSound;
-import us.mytheria.blobrp.BlobRPAPI;
-import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.Optional;
@@ -27,7 +26,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
     public static ShopArticleBuilder build(UUID builderId,
                                            ObjectDirector<ShopArticle> objectDirector) {
         return new ShopArticleBuilder(
-                BlobRPAPI.buildInventory("ShopArticleBuilder"), builderId,
+                RPShortcut.buildInventory("ShopArticleBuilder"), builderId,
                 objectDirector);
     }
 
@@ -66,10 +65,9 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                     BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
                     sound.play(player);
                     player.closeInventory();
-                    ObjectDirector<ShopArticle> director = RPManagerDirector.getInstance().getShopArticleDirector();
-                    build.saveToFile(director.getObjectManager().getLoadFilesDirectory());
-                    director.getObjectManager().addObject(build.getKey(), build);
-                    director.getBuilderManager().removeBuilder(player);
+                    build.saveToFile(objectDirector.getObjectManager().getLoadFilesDirectory());
+                    objectDirector.getObjectManager().addObject(build.getKey(), build);
+                    objectDirector.getBuilderManager().removeBuilder(player);
                     return build;
                 });
 
