@@ -8,6 +8,8 @@ import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 
+import java.util.List;
+
 public class ConfigManager extends RPManager {
     private final BlobPlugin main;
     private FileConfiguration configuration;
@@ -21,6 +23,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<Double> sellArticlesEvent;
     private SimpleEventListener<Boolean> sellArticlesListener;
     private SimpleEventListener<String> merchants;
+    private SimpleEventListener<List<String>> merchantsView;
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -45,6 +48,7 @@ public class ConfigManager extends RPManager {
         sellArticlesEvent = SimpleEventListener.DOUBLE(listeners.getConfigurationSection("SellArticlesEvent"), "DefaultPrice");
         sellArticlesListener = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("ManageSellArticles"), "PermissionMultiplier");
         merchants = SimpleEventListener.STRING(listeners.getConfigurationSection("Merchants"), "BoughtMessage");
+        merchantsView = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("MerchantsView"), "Add");
     }
 
     public FileConfiguration getConfiguration() {
@@ -85,5 +89,9 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<String> merchants() {
         return merchants;
+    }
+
+    public SimpleEventListener<List<String>> merchantsView() {
+        return merchantsView;
     }
 }

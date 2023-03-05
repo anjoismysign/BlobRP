@@ -26,3 +26,8 @@ Listeners:
   Merchants:
     Register: true
     BoughtMessage: Economy.Received-Withdrawal
+  MerchantsView:
+    Register: true
+    Add:
+      - ''
+      - '&7Price &r%format%'

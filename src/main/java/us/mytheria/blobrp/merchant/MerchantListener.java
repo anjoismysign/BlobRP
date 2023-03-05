@@ -81,7 +81,7 @@ public class MerchantListener extends RPListener {
                     if (event.isCancelled())
                         return;
                     if (event.getNotEnoughMessage() != null)
-                        event.getNotEnoughMessage().sendAndPlay(player);
+                        event.getNotEnoughMessage().sendAndPlayInWorld(player);
                     player.closeInventory();
                     return;
                 }
@@ -96,11 +96,11 @@ public class MerchantListener extends RPListener {
                 if (event.isCancelled())
                     return;
                 if (event.getSuccessMessage() != null)
-                    event.getSuccessMessage().sendAndPlay(player);
+                    event.getSuccessMessage().sendAndPlayInWorld(player);
                 PlayerUtil.giveItemToInventoryOrDrop(player, article.cloneDisplay());
             }
             default -> {
-                BlobLibAssetAPI.getMessage("System.Error").sendAndPlay(player);
+                BlobLibAssetAPI.getMessage("System.Error").sendAndPlayInWorld(player);
                 Bukkit.getLogger().info("Unknown meta " + meta);
             }
         }

@@ -121,8 +121,8 @@ public class RPManagerDirector extends ManagerDirector {
                 PermissionRewardBuilder::build);
         // TrophyRequirement \\
         ObjectDirectorData trophyRequirementDirectorData = ObjectDirectorData.simple(getFileManager(), "TrophyRequirement");
-        addManager("TrophyRequirementDirector", new ObjectDirector<>(this,
-                trophyRequirementDirectorData,
+        addManager("TrophyRequirementDirector", new ObjectDirector<>(
+                this, trophyRequirementDirectorData,
                 file -> TrophyRequirementReader.read(file).build()));
         getTrophyRequirementDirector().getBuilderManager().setBuilderBiFunction(
                 UIBuilder::build);

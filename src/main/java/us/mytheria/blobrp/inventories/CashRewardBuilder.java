@@ -37,7 +37,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                             return null;
                         Player player = getPlayer();
                         BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
-                        sound.play(player);
+                        sound.playInWorld(player.getLocation());
                         player.closeInventory();
                         ObjectDirector<CashReward> director = RPManagerDirector
                                 .getInstance().getCashRewardDirector();

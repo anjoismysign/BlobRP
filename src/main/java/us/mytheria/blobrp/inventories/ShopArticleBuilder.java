@@ -63,7 +63,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                         return null;
                     Player player = getPlayer();
                     BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
-                    sound.play(player);
+                    sound.playInWorld(player.getLocation());
                     player.closeInventory();
                     build.saveToFile(objectDirector.getObjectManager().getLoadFilesDirectory());
                     objectDirector.getObjectManager().addObject(build.getKey(), build);

@@ -153,6 +153,13 @@ public class ShopArticle implements BlobObject {
             Cannot match.
              */
         }
+        if (!hasCustomModelData() && !itemMeta.hasCustomModelData()) {
+            return true;
+            /*
+            ShopArticle doesn't have customModelData, and itemStack doesn't have customModelData.
+            Match.
+             */
+        }
         return itemMeta.getCustomModelData() == getCustomModelData();
     }
 

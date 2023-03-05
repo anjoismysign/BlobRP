@@ -57,7 +57,7 @@ public class CashReward extends Reward<Double> {
             BlobMessageModder<ReferenceBlobMessage> modder = BlobMessageModder.mod(blobMessage);
             modder.replace("%cash%", CashFormat.format(getValue()));
             blobMessage = modder.get();
-            blobMessage.sendAndPlay(player);
+            blobMessage.sendAndPlayInWorld(player);
         });
         apply(player);
     }
@@ -72,9 +72,7 @@ public class CashReward extends Reward<Double> {
             config.set("Delay", delay.get());
             config.set("RunAsynchronously", runAsync);
         }
-        if (message.isPresent()) {
-            config.set("Message", message.get().getReference());
-        }
+        message.ifPresent(referenceBlobMessage -> config.set("Message", referenceBlobMessage.getReference()));
         try {
             config.save(file);
         } catch (Exception exception) {

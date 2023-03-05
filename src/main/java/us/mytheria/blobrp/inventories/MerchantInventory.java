@@ -3,13 +3,19 @@ package us.mytheria.blobrp.inventories;
 import global.warming.commons.io.FilenameUtils;
 import me.anjoismysign.anjo.entities.Result;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.inventory.MetaBlobInventory;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.managers.BlobPlugin;
+import us.mytheria.bloblib.utilities.TextColor;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.io.File;
+import java.util.List;
 
 public class MerchantInventory extends MetaBlobInventory {
     public final static String SHOPARTICLE_META = "BLOBRP_SHOPARTICLE";
@@ -68,7 +74,27 @@ public class MerchantInventory extends MetaBlobInventory {
             if (!result.isValid())
                 return;
             ShopArticle article = result.value();
-            button.setDisplay(article.cloneDisplay(), this);
+            ItemStack itemStack = article.cloneDisplay();
+            SimpleEventListener<List<String>> merchantsView = director.getConfigManager().merchantsView();
+            if (merchantsView.register()) {
+                List<String> parseLore = merchantsView.value()
+                        .stream().map(TextColor::PARSE)
+                        .map(s -> s.replace("%format%",
+                                BlobLibAPI.format(article.getBuyPrice())))
+                        .toList();
+                ItemMeta itemMeta = itemStack.getItemMeta();
+                if (itemMeta == null)
+                    button.setDisplay(itemStack, this);
+                if (itemMeta.hasLore()) {
+                    List<String> lore = itemMeta.getLore();
+                    lore.addAll(parseLore);
+                    itemMeta.setLore(lore);
+                } else {
+                    itemMeta.setLore(parseLore);
+                }
+                itemStack.setItemMeta(itemMeta);
+            }
+            button.setDisplay(itemStack, this);
         });
     }
 }
