@@ -29,15 +29,15 @@ public class MerchantManager extends RPManager {
     }
 
     private void loadInventories() {
-        Optional<MetaInventoryShard> optional = BlobLibAssetAPI.hasMetaInventoryShard("WARPGOLEM");
+        Optional<MetaInventoryShard> optional = BlobLibAssetAPI.hasMetaInventoryShard("MERCHANT");
         if (optional.isEmpty()) {
-            getPlugin().getLogger().info("There are no WarpGolem inventories to load.");
+            getPlugin().getAnjoLogger().singleError("There are no MERCHANT inventories to load.");
             return;
         }
         MetaInventoryShard shard = optional.get();
-        shard.entrySet().forEach(entry -> {
-            MerchantInventory merchantInventory = MerchantInventory.fromMetaBlobInventory(entry.getValue(),
-                    getManagerDirector(), entry.getKey());
+        shard.allInventories().forEach(referenceMetaBlobInventory -> {
+            MerchantInventory merchantInventory = MerchantInventory.of(referenceMetaBlobInventory,
+                    getManagerDirector());
             merchants.put(merchantInventory.getKey(), merchantInventory);
             merchantsByTitle.put(merchantInventory.getTitle(), merchantInventory);
         });

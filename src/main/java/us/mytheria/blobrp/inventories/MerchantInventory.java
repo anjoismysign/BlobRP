@@ -5,40 +5,33 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
-import us.mytheria.bloblib.entities.inventory.MetaBlobInventory;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
-import us.mytheria.bloblib.managers.BlobPlugin;
+import us.mytheria.bloblib.entities.inventory.ReferenceMetaBlobInventory;
 import us.mytheria.bloblib.utilities.TextColor;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.List;
 
-public class MerchantInventory extends MetaBlobInventory {
+public class MerchantInventory extends ReferenceMetaBlobInventory {
     public final static String SHOPARTICLE_META = "BLOBRP_SHOPARTICLE";
 
     private final RPManagerDirector director;
-    private final BlobPlugin plugin;
-    private final String key;
 
-    public static MerchantInventory fromMetaBlobInventory(MetaBlobInventory metaBlobInventory,
-                                                          RPManagerDirector director,
-                                                          String key) {
-        MerchantInventory inventory = new MerchantInventory(director, key, metaBlobInventory);
+    public static MerchantInventory of(ReferenceMetaBlobInventory referenceMetaBlobInventory,
+                                       RPManagerDirector director) {
+        MerchantInventory inventory = new MerchantInventory(director,
+                referenceMetaBlobInventory);
         inventory.loadShopArticles();
         return inventory;
     }
 
-    public MerchantInventory(RPManagerDirector director, String key, MetaBlobInventory metaInventory) {
-        super(metaInventory.getTitle(), metaInventory.getSize(), metaInventory.getButtonManager(),
-                metaInventory.getType());
+    public MerchantInventory(RPManagerDirector director, ReferenceMetaBlobInventory referenceMetaBlobInventory) {
+        super(referenceMetaBlobInventory.getTitle(), referenceMetaBlobInventory.getSize(),
+                referenceMetaBlobInventory.getButtonManager(),
+                referenceMetaBlobInventory.getType(),
+                referenceMetaBlobInventory.getKey());
         this.director = director;
-        this.plugin = director.getPlugin();
-        this.key = key;
-    }
-
-    public String getKey() {
-        return key;
     }
 
     public Result<ShopArticle> isLinked(MetaInventoryButton button) {
