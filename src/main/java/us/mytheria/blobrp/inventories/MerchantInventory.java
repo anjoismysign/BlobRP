@@ -14,7 +14,7 @@ import us.mytheria.blobrp.entities.ShopArticle;
 import java.util.List;
 
 public class MerchantInventory extends ReferenceMetaBlobInventory {
-    public final static String SHOPARTICLE_META = "BLOBRP_SHOPARTICLE";
+    public final static String META = "BLOBRP_SHOPARTICLE";
 
     private final RPManagerDirector director;
 
@@ -44,7 +44,7 @@ public class MerchantInventory extends ReferenceMetaBlobInventory {
         getButtonManager().getAllButtons().forEach(button -> {
             if (!button.hasMeta())
                 return;
-            if (!button.getMeta().equals(SHOPARTICLE_META))
+            if (!button.getMeta().equals(META))
                 return;
             Result<ShopArticle> result = isLinked(button);
             if (!result.isValid())
