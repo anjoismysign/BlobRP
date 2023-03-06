@@ -18,20 +18,13 @@ public class MerchantInventory extends ReferenceMetaBlobInventory {
 
     private final RPManagerDirector director;
 
-    public static MerchantInventory of(ReferenceMetaBlobInventory referenceMetaBlobInventory,
-                                       RPManagerDirector director) {
-        MerchantInventory inventory = new MerchantInventory(director,
-                referenceMetaBlobInventory);
-        inventory.loadShopArticles();
-        return inventory;
-    }
-
     public MerchantInventory(RPManagerDirector director, ReferenceMetaBlobInventory referenceMetaBlobInventory) {
         super(referenceMetaBlobInventory.getTitle(), referenceMetaBlobInventory.getSize(),
                 referenceMetaBlobInventory.getButtonManager(),
                 referenceMetaBlobInventory.getType(),
                 referenceMetaBlobInventory.getKey());
         this.director = director;
+        loadShopArticles();
     }
 
     public Result<ShopArticle> isLinked(MetaInventoryButton button) {

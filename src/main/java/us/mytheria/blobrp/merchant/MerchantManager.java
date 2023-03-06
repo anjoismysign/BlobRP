@@ -36,8 +36,8 @@ public class MerchantManager extends RPManager {
         }
         MetaInventoryShard shard = optional.get();
         shard.allInventories().forEach(referenceMetaBlobInventory -> {
-            MerchantInventory merchantInventory = MerchantInventory.of(referenceMetaBlobInventory,
-                    getManagerDirector());
+            MerchantInventory merchantInventory = new MerchantInventory(getManagerDirector(),
+                    referenceMetaBlobInventory);
             merchants.put(merchantInventory.getKey(), merchantInventory);
             merchantsByTitle.put(merchantInventory.getTitle(), merchantInventory);
         });
