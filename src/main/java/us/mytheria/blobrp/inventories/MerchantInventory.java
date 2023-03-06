@@ -1,8 +1,6 @@
 package us.mytheria.blobrp.inventories;
 
-import global.warming.commons.io.FilenameUtils;
 import me.anjoismysign.anjo.entities.Result;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import us.mytheria.bloblib.BlobLibAPI;
@@ -14,7 +12,6 @@ import us.mytheria.bloblib.utilities.TextColor;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
-import java.io.File;
 import java.util.List;
 
 public class MerchantInventory extends MetaBlobInventory {
@@ -22,33 +19,26 @@ public class MerchantInventory extends MetaBlobInventory {
 
     private final RPManagerDirector director;
     private final BlobPlugin plugin;
-    private final String id;
+    private final String key;
 
-    public static MerchantInventory fromFile(File file, RPManagerDirector director) {
-        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
-        String id = FilenameUtils.removeExtension(file.getName());
-        if (!yamlConfiguration.isString("Type"))
-            return null;
-        if (!yamlConfiguration.getString("Type").equals("MERCHANT"))
-            return null;
-        MetaBlobInventory blobInventory = MetaBlobInventory.fromConfigurationSection(yamlConfiguration);
-        if (blobInventory == null) {
-            return null;
-        }
-        MerchantInventory inventory = new MerchantInventory(director, id, blobInventory);
+    public static MerchantInventory fromMetaBlobInventory(MetaBlobInventory metaBlobInventory,
+                                                          RPManagerDirector director,
+                                                          String key) {
+        MerchantInventory inventory = new MerchantInventory(director, key, metaBlobInventory);
         inventory.loadShopArticles();
         return inventory;
     }
 
-    public MerchantInventory(RPManagerDirector director, String id, MetaBlobInventory metaInventory) {
-        super(metaInventory.getTitle(), metaInventory.getSize(), metaInventory.getButtonManager());
+    public MerchantInventory(RPManagerDirector director, String key, MetaBlobInventory metaInventory) {
+        super(metaInventory.getTitle(), metaInventory.getSize(), metaInventory.getButtonManager(),
+                metaInventory.getType());
         this.director = director;
         this.plugin = director.getPlugin();
-        this.id = id;
+        this.key = key;
     }
 
-    public String getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
     public Result<ShopArticle> isLinked(MetaInventoryButton button) {
