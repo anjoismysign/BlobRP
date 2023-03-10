@@ -1,3 +1,8 @@
+System:
+  Welcome:
+    Type: MESSAGE
+    Message: '&7Welcome to OUR SERVER, &f%player%'
+    Sound: System.Welcome
 Soul:
   Fail:
     Type: TITLE

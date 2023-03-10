@@ -31,3 +31,6 @@ Listeners:
     Add:
       - ''
       - '&7Price &r%format%'
+  WelcomePlayers:
+    Register: true
+    Message: System.Welcome

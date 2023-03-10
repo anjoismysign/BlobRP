@@ -1,13 +1,18 @@
+System:
+  Welcome:
+    Sound: BLOCK_NOTE_BLOCK_BELL
+    Volume: 1.0
+    Pitch: 1.25
 Reward:
   Cash:
     Sound: BLOCK_NOTE_BLOCK_PLING
-    Volume: 10.0
+    Volume: 2.0
     Pitch: 2.0
   Permission:
     Sound: BLOCK_NOTE_BLOCK_PLING
-    Volume: 10.0
+    Volume: 2.0
     Pitch: 2.0
   Item:
     Sound: UI_TOAST_CHALLENGE_COMPLETE
-    Volume: 10.0
+    Volume: 2.0
     Pitch: 2.0
