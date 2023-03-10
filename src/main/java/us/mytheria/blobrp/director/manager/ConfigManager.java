@@ -24,6 +24,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<Boolean> sellArticlesListener;
     private SimpleEventListener<String> merchants;
     private SimpleEventListener<List<String>> merchantsView;
+    private SimpleEventListener<String> welcomePlayers;
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -49,6 +50,7 @@ public class ConfigManager extends RPManager {
         sellArticlesListener = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("ManageSellArticles"), "PermissionMultiplier");
         merchants = SimpleEventListener.STRING(listeners.getConfigurationSection("Merchants"), "BoughtMessage");
         merchantsView = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("MerchantsView"), "Add");
+        welcomePlayers = SimpleEventListener.STRING(listeners.getConfigurationSection("WelcomePlayers"), "Message");
     }
 
     public FileConfiguration getConfiguration() {
@@ -93,5 +95,9 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<List<String>> merchantsView() {
         return merchantsView;
+    }
+
+    public SimpleEventListener<String> welcomePlayers() {
+        return welcomePlayers;
     }
 }

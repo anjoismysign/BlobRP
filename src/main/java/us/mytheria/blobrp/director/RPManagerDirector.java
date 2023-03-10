@@ -38,6 +38,7 @@ public class RPManagerDirector extends ManagerDirector {
 
     public RPManagerDirector() {
         super(BlobRP.getInstance());
+        registerAndUpdateBlobInventory("WelcomeInventory");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));

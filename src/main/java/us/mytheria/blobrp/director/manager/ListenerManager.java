@@ -14,6 +14,7 @@ public class ListenerManager extends RPManager {
     private final PlayerDropExperienceOnDeath playerDropExperienceOnDeath;
     private final ShopArticleSell shopArticleSell;
     private final MerchantListener merchantListener;
+    private final WelcomePlayer welcomePlayer;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -26,6 +27,7 @@ public class ListenerManager extends RPManager {
         playerDropExperienceOnDeath = new PlayerDropExperienceOnDeath(configManager);
         shopArticleSell = new ShopArticleSell(configManager);
         merchantListener = new MerchantListener(configManager);
+        welcomePlayer = new WelcomePlayer(configManager);
         reload();
     }
 
@@ -39,5 +41,6 @@ public class ListenerManager extends RPManager {
         playerDropExperienceOnDeath.reload();
         shopArticleSell.reload();
         merchantListener.reload();
+        welcomePlayer.reload();
     }
 }
