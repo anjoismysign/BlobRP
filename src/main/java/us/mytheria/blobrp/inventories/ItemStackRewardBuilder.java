@@ -6,7 +6,6 @@ import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
-import us.mytheria.bloblib.entities.message.BlobSound;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -37,8 +36,8 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
                     if (build == null)
                         return null;
                     Player player = getPlayer();
-                    BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
-                    sound.playInWorld(player.getLocation());
+                    BlobLibAssetAPI.getSound("Builder.Build-Complete")
+                            .handle(player);
                     player.closeInventory();
                     ObjectDirector<ItemStackReward> director = RPManagerDirector
                             .getInstance().getItemStackRewardDirector();

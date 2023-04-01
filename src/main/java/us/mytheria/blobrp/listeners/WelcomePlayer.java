@@ -36,8 +36,10 @@ public class WelcomePlayer extends RPListener {
         if (player.hasPlayedBefore())
             return;
         ReferenceBlobMessage message = BlobLibAssetAPI.getMessage(welcomePlayers.value());
-        message.modify(string -> string.replace("%player%", player.getName()));
-        message.sendAndPlayInWorld(player);
+        message.modder()
+                .replace("%player%", player.getName())
+                .get()
+                .handle(player);
         BlobPlayerInventoryHolder.fromInventoryBuilderCarrier
                 (carrier, player.getUniqueId());
     }

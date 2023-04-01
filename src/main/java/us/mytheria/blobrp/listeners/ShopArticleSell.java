@@ -1,6 +1,7 @@
 package us.mytheria.blobrp.listeners;
 
 import me.anjoismysign.anjo.entities.Uber;
+import net.milkbowl.vault.economy.IdentityEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,10 +65,10 @@ public class ShopArticleSell extends RPListener {
     }
 
     @EventHandler
-    public void onClose(InventoryCloseEvent e) {
-        if (!e.getView().getTitle().equals(blobInventory.getTitle()))
+    public void onClose(InventoryCloseEvent event) {
+        if (!event.getView().getTitle().equals(blobInventory.getTitle()))
             return;
-        Player player = (Player) e.getPlayer();
+        Player player = (Player) event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(BlobRP.getInstance(), () -> {
             if (!player.isOnline())
                 return;
@@ -76,7 +77,7 @@ public class ShopArticleSell extends RPListener {
                 throw new NullPointerException("'Available' slots not found");
             List<ShopArticleTransaction> transactionList = new ArrayList<>();
             for (int slot : slots) {
-                ItemStack itemStack = e.getInventory().getItem(slot);
+                ItemStack itemStack = event.getInventory().getItem(slot);
                 if (itemStack == null)
                     continue;
                 int amount = itemStack.getAmount();
@@ -94,12 +95,13 @@ public class ShopArticleSell extends RPListener {
                     transactionList.add(new ShopArticleTransaction(ShopArticle
                             .fromItemStack(itemStack, sellArticlesEvent.value(),
                                     "null",
-                                    sellArticlesEvent.value(), true), amount));
+                                    sellArticlesEvent.value(), true,
+                                    null, null), amount));
             }
-            AsyncMultipleShopArticleSellEvent event = new AsyncMultipleShopArticleSellEvent(
+            AsyncMultipleShopArticleSellEvent sellEvent = new AsyncMultipleShopArticleSellEvent(
                     transactionList, player, TransactionType.SELL);
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
+            Bukkit.getPluginManager().callEvent(sellEvent);
+            if (sellEvent.isCancelled())
                 return;
             if (!manageSellArticles.register())
                 return;
@@ -122,7 +124,9 @@ public class ShopArticleSell extends RPListener {
                     sellPrice.talk(sellPrice.thanks() * multiplier.thanks());
                 }
                 double money = sellPrice.thanks() * amount;
-                BlobLibAPI.addCash(player, money);
+                IdentityEconomy economy = BlobLibAPI.getElasticEconomy()
+                        .map(shopArticle.getSellingCurrency());
+                economy.deposit(player.getUniqueId(), money);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(BlobRP.getInstance(), () -> {
                     if (!player.isOnline())
                         return;

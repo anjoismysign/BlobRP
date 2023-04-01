@@ -25,6 +25,8 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> merchants;
     private SimpleEventListener<List<String>> merchantsView;
     private SimpleEventListener<String> welcomePlayers;
+    private SimpleEventListener<Boolean> playerHunger;
+    private SimpleEventListener<List<String>> iceFormation;
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -51,6 +53,8 @@ public class ConfigManager extends RPManager {
         merchants = SimpleEventListener.STRING(listeners.getConfigurationSection("Merchants"), "BoughtMessage");
         merchantsView = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("MerchantsView"), "Add");
         welcomePlayers = SimpleEventListener.STRING(listeners.getConfigurationSection("WelcomePlayers"), "Message");
+        playerHunger = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("PlayerHunger"), "RequiresPermission");
+        iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("IceFormation"), "WorldWhitelist");
     }
 
     public FileConfiguration getConfiguration() {
@@ -99,5 +103,13 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<String> welcomePlayers() {
         return welcomePlayers;
+    }
+
+    public SimpleEventListener<Boolean> playerHunger() {
+        return playerHunger;
+    }
+
+    public SimpleEventListener<List<String>> iceFormation() {
+        return iceFormation;
     }
 }

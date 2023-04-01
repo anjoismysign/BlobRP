@@ -1,5 +1,6 @@
 package us.mytheria.blobrp;
 
+import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -19,14 +20,19 @@ public class BlobRPAPI {
     /**
      * Adds a transient ShopArticle to the shop.
      *
-     * @param display   The ItemStack to create the ShopArticle from
-     * @param buyPrice  The buy price
-     * @param key       The key
-     * @param sellPrice The sell price
+     * @param display         The ItemStack to create the ShopArticle from
+     * @param buyPrice        The buy price
+     * @param key             The key
+     * @param sellPrice       The sell price
+     * @param buyingCurrency  The buying currency. if null, the default currency is used.
+     * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return Whether the ShopArticle was added successfully
      */
-    public static boolean addShopArticle(ItemStack display, double buyPrice, NamespacedKey key, double sellPrice) {
-        ShopArticle shopArticle = ShopArticle.fromItemStack(display, buyPrice, key.toString(), sellPrice, true);
+    public static boolean addComplexShopArticle(ItemStack display, double buyPrice, NamespacedKey key,
+                                                double sellPrice, @Nullable String buyingCurrency,
+                                                @Nullable String sellingCurrency) {
+        ShopArticle shopArticle = ShopArticle.fromItemStack(display, buyPrice, key.toString(),
+                sellPrice, true, buyingCurrency, sellingCurrency);
         if (shopArticle == null)
             return false;
         instance.director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle);
@@ -42,8 +48,9 @@ public class BlobRPAPI {
      * @param key      The key
      * @return Whether the ShopArticle was added successfully
      */
-    public static boolean addShopArticle(ItemStack display, double buyPrice, NamespacedKey key) {
-        return addShopArticle(display, buyPrice, key, buyPrice / 10);
+    public static boolean addComplexShopArticle(ItemStack display, double buyPrice, NamespacedKey key) {
+        return addComplexShopArticle(display, buyPrice, key, buyPrice / 10,
+                null, null);
     }
 
     /**

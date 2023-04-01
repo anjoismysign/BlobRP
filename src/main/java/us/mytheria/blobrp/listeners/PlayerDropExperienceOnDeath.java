@@ -22,7 +22,7 @@ public class PlayerDropExperienceOnDeath extends RPListener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent e) {
-        e.setDroppedExp(exp);
+    public void onDeath(PlayerDeathEvent event) {
+        event.setDroppedExp(exp);
     }
 }

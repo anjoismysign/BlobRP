@@ -15,6 +15,8 @@ public class ListenerManager extends RPManager {
     private final ShopArticleSell shopArticleSell;
     private final MerchantListener merchantListener;
     private final WelcomePlayer welcomePlayer;
+    private final PlayerHunger playerHunger;
+    private final IceFormation iceFormation;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -28,6 +30,8 @@ public class ListenerManager extends RPManager {
         shopArticleSell = new ShopArticleSell(configManager);
         merchantListener = new MerchantListener(configManager);
         welcomePlayer = new WelcomePlayer(configManager);
+        playerHunger = new PlayerHunger(configManager);
+        iceFormation = new IceFormation(configManager);
         reload();
     }
 
@@ -42,5 +46,7 @@ public class ListenerManager extends RPManager {
         shopArticleSell.reload();
         merchantListener.reload();
         welcomePlayer.reload();
+        playerHunger.reload();
+        iceFormation.reload();
     }
 }

@@ -1,8 +1,8 @@
 System:
   Welcome:
-    Type: MESSAGE
-    Message: '&7Welcome to OUR SERVER, &f%player%'
-    Sound: System.Welcome
+    Type: CHAT
+    Message: '&7Welcome, &f%player%'
+    BlobSound: System.Welcome
 Soul:
   Fail:
     Type: TITLE

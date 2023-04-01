@@ -1,5 +1,5 @@
 Title: '&lARTICLE > BUILD'
-Size: 18
+Size: 27
 Buttons:
   Background:
     ItemStack:
@@ -7,14 +7,14 @@ Buttons:
       CustomModelData: 0
       DisplayName: " "
       Lore: [ ]
-    Slot: 0-17
+    Slot: 0-26
   White-Background:
     ItemStack:
       Material: WHITE_STAINED_GLASS_PANE
       CustomModelData: 0
       DisplayName: " "
       Lore: [ ]
-    Slot: 1-7,10-16
+    Slot: 1-7,10-16,19-25
   Key:
     ItemStack:
       Material: BOOK
@@ -63,6 +63,22 @@ Buttons:
       Lore:
         - "&7Selected: &f%material%"
     Slot: 7
+  BuyingCurrency:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6Buying Currency"
+      Lore:
+        - "&7Selected: &f%buyingCurrency%"
+    Slot: 10
+  SellingCurrency:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6Buying Currency"
+      Lore:
+        - "&7Selected: &f%sellingCurrency%"
+    Slot: 11
   Build:
     ItemStack:
       Material: SLIME_BALL
@@ -71,4 +87,4 @@ Buttons:
       Lore:
         - "&7Click to add article"
         - "&7to the files."
-    Slot: 13
+    Slot: 22

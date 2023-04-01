@@ -1,5 +1,6 @@
 package us.mytheria.blobrp.events;
 
+import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -27,14 +28,18 @@ public class AsyncShopArticleReloadEvent extends Event {
      * It's not needed to reload merchants because
      * it is automatically done after this event.
      *
-     * @param display   The display item of the article
-     * @param buyPrice  The buy price of the article
-     * @param key       The NamespacedKey of the article
-     * @param sellPrice The sell price of the article
+     * @param display         The display item of the article
+     * @param buyPrice        The buy price of the article
+     * @param key             The NamespacedKey of the article
+     * @param buyingCurrency  The buying currency. if null, the default currency is used.
+     * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return Whether the article was added successfully or not
      */
-    public boolean addShopArticle(ItemStack display, double buyPrice, NamespacedKey key, double sellPrice) {
-        return BlobRPAPI.addShopArticle(display, buyPrice, key, sellPrice);
+    public boolean addComplexShopArticle(ItemStack display, double buyPrice, double sellPrice,
+                                         NamespacedKey key,
+                                         @Nullable String buyingCurrency,
+                                         @Nullable String sellingCurrency) {
+        return BlobRPAPI.addComplexShopArticle(display, buyPrice, key, sellPrice, buyingCurrency, sellingCurrency);
     }
 
     /**
@@ -49,6 +54,6 @@ public class AsyncShopArticleReloadEvent extends Event {
      * @return Whether the article was added successfully or not
      */
     public boolean addShopArticle(ItemStack display, double buyPrice, NamespacedKey key) {
-        return BlobRPAPI.addShopArticle(display, buyPrice, key);
+        return BlobRPAPI.addComplexShopArticle(display, buyPrice, key);
     }
 }

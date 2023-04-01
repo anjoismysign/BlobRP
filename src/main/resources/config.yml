@@ -1,4 +1,11 @@
 Listeners:
+  IceFormation:
+    Register: true
+    WorldWhitelist:
+      - world
+  PlayerHunger:
+    Register: true
+    RequiresPermission: false
   DropNonSoulOnDeath:
     Register: true
     Drop: true

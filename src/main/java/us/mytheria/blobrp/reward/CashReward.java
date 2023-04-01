@@ -1,16 +1,17 @@
 package us.mytheria.blobrp.reward;
 
+import net.milkbowl.vault.economy.IdentityEconomy;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
-import us.mytheria.bloblib.entities.BlobMessageModder;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
-import us.mytheria.bloblib.utilities.CashFormat;
+import us.mytheria.bloblib.vault.multieconomy.ElasticEconomy;
 
 import java.io.File;
 import java.util.Optional;
 
 public class CashReward extends Reward<Double> {
+    private final Optional<String> currency;
 
     /**
      * Constructs a new Reward with the given values.
@@ -23,8 +24,9 @@ public class CashReward extends Reward<Double> {
      * @param message     the message to send to the player when the reward is given
      */
     public static CashReward build(String key, boolean shouldDelay, Double amount, Optional<Long> delay,
-                                   boolean runAsync, Optional<ReferenceBlobMessage> message) {
-        return new CashReward(key, shouldDelay, amount, delay, runAsync, message);
+                                   boolean runAsync, Optional<ReferenceBlobMessage> message,
+                                   Optional<String> currency) {
+        return new CashReward(key, shouldDelay, amount, delay, runAsync, message, currency);
     }
 
     /**
@@ -37,27 +39,33 @@ public class CashReward extends Reward<Double> {
      * @param message     the message to send to the player when the reward is given
      */
     protected CashReward(String key, boolean shouldDelay, Double amount, Optional<Long> delay,
-                         boolean runAsync, Optional<ReferenceBlobMessage> message) {
+                         boolean runAsync, Optional<ReferenceBlobMessage> message,
+                         Optional<String> currency) {
         super(key, shouldDelay, amount, delay, runAsync, message);
+        this.currency = currency;
     }
 
     @Override
     public void apply(Player player) {
-        BlobLibAPI.addCash(player, getValue());
+        IdentityEconomy economy = BlobLibAPI.getElasticEconomy().map(currency);
+        economy.deposit(player.getUniqueId(), getValue());
     }
 
     /**
      * Applies the reward to the given player
      * and tries to send the reward message to the player.
      *
-     * @param player
+     * @param player the player to apply the reward to
      */
     public void applyAndMessage(Player player) {
+        ElasticEconomy economy = BlobLibAPI.getElasticEconomy();
         message.ifPresent(blobMessage -> {
-            BlobMessageModder<ReferenceBlobMessage> modder = BlobMessageModder.mod(blobMessage);
-            modder.replace("%cash%", CashFormat.format(getValue()));
-            blobMessage = modder.get();
-            blobMessage.sendAndPlayInWorld(player);
+            blobMessage.modder()
+                    .replace("%cash%", getCurrency().isPresent() ?
+                            economy.getImplementation(getCurrency().get()).format(getValue()) :
+                            economy.getDefault().format(getValue()))
+                    .get()
+                    .handle(player);
         });
         apply(player);
     }
@@ -72,12 +80,17 @@ public class CashReward extends Reward<Double> {
             config.set("Delay", delay.get());
             config.set("RunAsynchronously", runAsync);
         }
-        message.ifPresent(referenceBlobMessage -> config.set("Message", referenceBlobMessage.getReference()));
+        currency.ifPresent(string -> config.set("Currency", string));
+        message.ifPresent(message -> config.set("Message", message.getReference()));
         try {
             config.save(file);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
         return file;
+    }
+
+    public Optional<String> getCurrency() {
+        return currency;
     }
 }

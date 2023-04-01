@@ -22,7 +22,7 @@ public class KeepExperienceOnDeath extends RPListener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent e) {
-        e.setKeepLevel(keepExperienceOnDeath);
+    public void onDeath(PlayerDeathEvent event) {
+        event.setKeepLevel(keepExperienceOnDeath);
     }
 }

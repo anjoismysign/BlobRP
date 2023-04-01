@@ -60,7 +60,7 @@ public class ItemStackReward extends Reward<ItemStack> {
             BlobMessageModder<ReferenceBlobMessage> modder = BlobMessageModder.mod(blobMessage);
             modder.replace("%itemStack%", ItemStackUtil.display(getValue()));
             blobMessage = modder.get();
-            blobMessage.sendAndPlayInWorld(player);
+            blobMessage.handle(player);
         });
         apply(player);
     }

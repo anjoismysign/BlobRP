@@ -5,7 +5,6 @@ import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
-import us.mytheria.bloblib.entities.message.BlobSound;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -28,16 +27,17 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                               ObjectDirector<CashReward> objectDirector) {
         super(blobInventory, builderId, objectDirector);
         try {
-            addQuickStringButton("Key", 300).addQuickMessageButton(
-                            "Message", 300).addQuickLongButton("Delay", 300)
+            addQuickStringButton("Key", 300)
+                    .addQuickMessageButton("Message", 300)
+                    .addQuickStringButton("Currency", 300)
+                    .addQuickLongButton("Delay", 300)
                     .addQuickDoubleButton("CashValue", 300)
                     .setFunction(builder -> {
                         CashReward build = builder.construct();
                         if (build == null)
                             return null;
                         Player player = getPlayer();
-                        BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
-                        sound.playInWorld(player.getLocation());
+                        BlobLibAssetAPI.getSound("Builder.Build-Complete").handle(player);
                         player.closeInventory();
                         ObjectDirector<CashReward> director = RPManagerDirector
                                 .getInstance().getCashRewardDirector();
@@ -55,6 +55,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
     @Override
     public CashReward construct() {
         ObjectBuilderButton<String> keyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Key");
+        ObjectBuilderButton<String> currencyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Currency");
         ObjectBuilderButton<ReferenceBlobMessage> messageButton = (ObjectBuilderButton<ReferenceBlobMessage>) getObjectBuilderButton("Message");
         ObjectBuilderButton<Long> delayButton = (ObjectBuilderButton<Long>) getObjectBuilderButton("Delay");
         ObjectBuilderButton<Double> cashValueButton = (ObjectBuilderButton<Double>) getObjectBuilderButton("CashValue");
@@ -69,7 +70,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
         Double cashValue = cashValueButton.get().get();
 
         return CashReward.build(key, shouldDelay, cashValue,
-                delay, runsAsynchronously, message);
+                delay, runsAsynchronously, message, currencyButton.get());
     }
 
     public boolean runsAsynchronously() {

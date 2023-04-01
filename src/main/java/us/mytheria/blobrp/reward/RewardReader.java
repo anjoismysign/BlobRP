@@ -12,13 +12,17 @@ public class RewardReader {
     public static CashReward readCash(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         boolean shouldDelay = config.getBoolean("ShouldDelay", false);
-        Optional<Long> delay = config.contains("Delay") ? Optional.of(config.getLong("Delay")) : Optional.empty();
+        Optional<Long> delay = config.isLong("Delay") ? Optional.of(config.getLong("Delay")) : Optional.empty();
         boolean runAsync = config.getBoolean("RunAsync", false);
         Optional<ReferenceBlobMessage> message = BlobMessageReader.readReference(config);
+        Optional<String> currency = Optional.empty();
+        if (config.isString("Currency"))
+            currency = Optional.ofNullable(config.getString("Currency"));
         String key = FilenameUtils.removeExtension(file.getName());
         if (!config.contains("Value") || !config.isDouble("Value"))
             throw new IllegalArgumentException("'Value' is required for CASH rewards.");
-        return new CashReward(key, shouldDelay, config.getDouble("Value"), delay, runAsync, message);
+        return new CashReward(key, shouldDelay, config.getDouble("Value"), delay,
+                runAsync, message, currency);
     }
 
     public static ItemStackReward readItemStack(File file) {

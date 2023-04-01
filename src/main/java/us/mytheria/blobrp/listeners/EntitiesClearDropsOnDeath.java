@@ -21,11 +21,11 @@ public class EntitiesClearDropsOnDeath extends RPListener {
     }
 
     @EventHandler
-    public void onDeath(EntityDeathEvent e) {
-        if (e.getEntity().getType() == EntityType.PLAYER) {
+    public void onDeath(EntityDeathEvent event) {
+        if (event.getEntity().getType() == EntityType.PLAYER) {
             Debug.debug("Player died, not dropping items");
             return;
         }
-        e.getDrops().clear();
+        event.getDrops().clear();
     }
 }

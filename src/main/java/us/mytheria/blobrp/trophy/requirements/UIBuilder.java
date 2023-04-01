@@ -34,7 +34,7 @@ public class UIBuilder extends RPObjectBuilder<TrophyRequirement> {
                 return null;
             Player player = getPlayer();
             BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
-            sound.playInWorld(player.getLocation());
+            sound.handle(player);
             player.closeInventory();
             ObjectDirector<TrophyRequirement> director = RPManagerDirector
                     .getInstance().getTrophyRequirementDirector();

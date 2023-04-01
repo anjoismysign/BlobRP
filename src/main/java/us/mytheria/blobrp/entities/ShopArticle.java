@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.BlobObject;
@@ -15,6 +16,7 @@ import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.utilities.ItemStackSerializer;
 
 import java.io.File;
+import java.util.Optional;
 
 public class ShopArticle implements BlobObject {
 
@@ -27,6 +29,8 @@ public class ShopArticle implements BlobObject {
     private final String key;
     private final boolean isDefault;
     private final boolean isTransient;
+    private Optional<String> sellingCurrency;
+    private Optional<String> buyingCurrency;
 
     /**
      * Creates a ShopArticle from an ItemStack.
@@ -39,32 +43,40 @@ public class ShopArticle implements BlobObject {
     @Nullable
     public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
                                             boolean isTransient) {
-        return fromItemStack(display, buyPrice, key, buyPrice / 10, isTransient);
+        return fromItemStack(display, buyPrice, key, buyPrice / 10, isTransient, null, null);
     }
 
     /**
      * Creates a ShopArticle from an ItemStack
      *
-     * @param display   The ItemStack to create the ShopArticle from
-     * @param buyPrice  The buy price
-     * @param sellPrice The sell price
+     * @param display         The ItemStack to create the ShopArticle from
+     * @param buyPrice        The buy price
+     * @param sellPrice       The sell price
+     * @param buyingCurrency  The buying currency. if null, the default currency is used.
+     * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return The ShopArticle
      */
     @Nullable
     public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
-                                            double sellPrice, boolean isTransient) {
+                                            double sellPrice, boolean isTransient,
+                                            @Nullable String buyingCurrency,
+                                            @Nullable String sellingCurrency) {
         if (display == null) {
             return null;
         }
+        Optional<String> buyingCurrencyOptional = Optional.ofNullable(buyingCurrency);
+        Optional<String> sellingCurrencyOptional = Optional.ofNullable(sellingCurrency);
         ItemMeta itemMeta = display.getItemMeta();
         if (itemMeta == null) {
             return new ShopArticle(display.getType(), false,
                     0, buyPrice, sellPrice, display,
-                    key, false, isTransient);
+                    key, false, isTransient,
+                    buyingCurrencyOptional, sellingCurrencyOptional);
         }
         return new ShopArticle(display.getType(), itemMeta.hasCustomModelData(),
                 itemMeta.hasCustomModelData() ? itemMeta.getCustomModelData() : 0, buyPrice,
-                sellPrice, display, key, false, isTransient);
+                sellPrice, display, key, false, isTransient,
+                buyingCurrencyOptional, sellingCurrencyOptional);
     }
 
     public static ShopArticle fromFile(File file) {
@@ -88,14 +100,22 @@ public class ShopArticle implements BlobObject {
             Bukkit.getLogger().severe("Display is null! Inside file " + fileName);
             return null;
         }
+        Optional<String> buyingCurrency = Optional.empty();
+        if (config.isString("Buying-Currency"))
+            buyingCurrency = Optional.ofNullable(config.getString("Buying-Currency"));
+        Optional<String> sellingCurrency = Optional.empty();
+        if (config.isString("Selling-Currency"))
+            sellingCurrency = Optional.ofNullable(config.getString("Selling-Currency"));
         String key = FilenameUtils.removeExtension(fileName);
         return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice,
-                sellPrice, display, key, false, false);
+                sellPrice, display, key, false, false,
+                buyingCurrency, sellingCurrency);
     }
 
     public ShopArticle(Material material, boolean hasCustomModelData, int customModelData,
                        double buyPrice, double sellPrice, ItemStack display, String key,
-                       boolean isDefault, boolean isTransient) {
+                       boolean isDefault, boolean isTransient,
+                       Optional<String> buyingCurrency, Optional<String> sellingCurrency) {
         this.material = material;
         this.hasCustomModelData = hasCustomModelData;
         this.customModelData = customModelData;
@@ -105,6 +125,8 @@ public class ShopArticle implements BlobObject {
         this.key = key;
         this.isDefault = isDefault;
         this.isTransient = isTransient;
+        this.buyingCurrency = buyingCurrency;
+        this.sellingCurrency = sellingCurrency;
     }
 
     public File saveToFile(File directory) {
@@ -223,5 +245,25 @@ public class ShopArticle implements BlobObject {
         if (!itemMeta.hasDisplayName())
             return defaultDisplay;
         return itemMeta.getDisplayName();
+    }
+
+    /**
+     * If empty, it's meant to use default currency (regarding VaultAPI2's MultiEconomy)
+     *
+     * @return the optional
+     */
+    @NotNull
+    public Optional<String> getBuyingCurrency() {
+        return buyingCurrency;
+    }
+
+    /**
+     * If empty, it's meant to use default currency (regarding VaultAPI2's MultiEconomy)
+     *
+     * @return the optional
+     */
+    @NotNull
+    public Optional<String> getSellingCurrency() {
+        return sellingCurrency;
     }
 }

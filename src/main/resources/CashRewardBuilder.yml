@@ -47,6 +47,14 @@ Buttons:
       Lore:
         - "&7Selected: &f%cashValue%"
     Slot: 4
+  Currency:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6Currency"
+      Lore:
+        - "&7Selected: &f%currency%"
+    Slot: 5
   Build:
     ItemStack:
       Material: SLIME_BALL

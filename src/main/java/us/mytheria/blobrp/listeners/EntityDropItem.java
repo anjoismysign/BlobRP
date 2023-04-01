@@ -22,7 +22,7 @@ public class EntityDropItem extends RPListener {
     }
 
     @EventHandler
-    public void onSpawn(EntityDropItemEvent e) {
-        e.setCancelled(cancel);
+    public void onSpawn(EntityDropItemEvent event) {
+        event.setCancelled(cancel);
     }
 }

@@ -94,7 +94,7 @@ public abstract class Reward<T> implements BlobObject {
      */
     public void applyAndMessage(Player player) {
         apply(player);
-        message.ifPresent(blobMessage -> blobMessage.send(player));
+        message.ifPresent(blobMessage -> blobMessage.handle(player));
     }
 
     public String getKey() {

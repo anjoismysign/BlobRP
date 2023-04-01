@@ -22,7 +22,7 @@ public class EntitiesDropExperienceOnDeath extends RPListener {
     }
 
     @EventHandler
-    public void onDeath(EntityDeathEvent e) {
-        e.setDroppedExp(exp);
+    public void onDeath(EntityDeathEvent event) {
+        event.setDroppedExp(exp);
     }
 }
