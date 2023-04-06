@@ -1,6 +1,6 @@
 ComplexListeners:
   PlayerSpectateOnDeath:
-    Register: true
+    Register: false
     Values:
       Length: 5
       BlobMessages:

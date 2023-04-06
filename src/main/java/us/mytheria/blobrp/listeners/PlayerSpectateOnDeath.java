@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -49,7 +48,7 @@ public class PlayerSpectateOnDeath extends RPListener {
         });
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         GameRule<Boolean> immediateRespawn = GameRule.DO_IMMEDIATE_RESPAWN;
         Player player = event.getEntity();
@@ -59,7 +58,7 @@ public class PlayerSpectateOnDeath extends RPListener {
                 player.spigot().respawn());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         event.setRespawnLocation(player.getLocation());

@@ -17,6 +17,7 @@ public class ListenerManager extends RPManager {
     private final WelcomePlayer welcomePlayer;
     private final PlayerHunger playerHunger;
     private final IceFormation iceFormation;
+    private final PlayerSpectateOnDeath playerSpectateOnDeath;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -32,6 +33,7 @@ public class ListenerManager extends RPManager {
         welcomePlayer = new WelcomePlayer(configManager);
         playerHunger = new PlayerHunger(configManager);
         iceFormation = new IceFormation(configManager);
+        playerSpectateOnDeath = new PlayerSpectateOnDeath(configManager);
         reload();
     }
 
@@ -48,5 +50,6 @@ public class ListenerManager extends RPManager {
         welcomePlayer.reload();
         playerHunger.reload();
         iceFormation.reload();
+        playerSpectateOnDeath.reload();
     }
 }
