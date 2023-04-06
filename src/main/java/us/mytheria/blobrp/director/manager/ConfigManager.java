@@ -28,6 +28,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> welcomePlayers;
     private SimpleEventListener<Boolean> playerHunger;
     private SimpleEventListener<List<String>> iceFormation;
+    private SimpleEventListener<String> forceGamemode;
 
     private ComplexEventListener playerSpectateOnDeath;
 
@@ -60,6 +61,7 @@ public class ConfigManager extends RPManager {
         playerHunger = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("PlayerHunger"), "RequiresPermission");
         iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("IceFormation"), "WorldWhitelist");
         playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("PlayerSpectateOnDeath"));
+        forceGamemode = SimpleEventListener.STRING(listeners.getConfigurationSection("ForceGamemode"), "Gamemode");
     }
 
     public FileConfiguration getConfiguration() {
@@ -120,5 +122,9 @@ public class ConfigManager extends RPManager {
 
     public ComplexEventListener playerSpectateOnDeath() {
         return playerSpectateOnDeath;
+    }
+
+    public SimpleEventListener<String> forceGamemode() {
+        return forceGamemode;
     }
 }

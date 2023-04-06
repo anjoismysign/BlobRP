@@ -18,6 +18,7 @@ public class ListenerManager extends RPManager {
     private final PlayerHunger playerHunger;
     private final IceFormation iceFormation;
     private final PlayerSpectateOnDeath playerSpectateOnDeath;
+    private final ForceGamemodeOnJoin forceGamemodeOnJoin;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -34,6 +35,7 @@ public class ListenerManager extends RPManager {
         playerHunger = new PlayerHunger(configManager);
         iceFormation = new IceFormation(configManager);
         playerSpectateOnDeath = new PlayerSpectateOnDeath(configManager);
+        forceGamemodeOnJoin = new ForceGamemodeOnJoin(configManager);
         reload();
     }
 
@@ -51,5 +53,6 @@ public class ListenerManager extends RPManager {
         playerHunger.reload();
         iceFormation.reload();
         playerSpectateOnDeath.reload();
+        forceGamemodeOnJoin.reload();
     }
 }

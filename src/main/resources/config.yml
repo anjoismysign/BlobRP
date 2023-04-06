@@ -51,3 +51,6 @@ Listeners:
   WelcomePlayers:
     Register: true
     Message: System.Welcome
+  ForceGamemode:
+    Register: true
+    Gamemode: ADVENTURE
