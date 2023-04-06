@@ -57,3 +57,20 @@ Merchant:
     Type: TITLE
     Title: '&c&lNOT FOUND'
     Subtitle: '&7Merchant not found'
+Spectator:
+  Oof:
+    Type: TITLE
+    Title: '&c&lOOF'
+    Subtitle: '&7You are now a spectator'
+  Wasted:
+    Type: TITLE
+    Title: '&c&lWASTED'
+    Subtitle: '&7Probably next time'
+  Dead:
+    Type: TITLE
+    Title: '&c&lDEAD'
+    Subtitle: '&7Death reached you'
+  Keep-Alive:
+    Type: TITLE
+    Title: '&c&lTIMED OUT'
+    Subtitle: '&7Your keep alive has timed out'

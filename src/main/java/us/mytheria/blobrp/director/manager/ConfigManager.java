@@ -2,6 +2,7 @@ package us.mytheria.blobrp.director.manager;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import us.mytheria.bloblib.entities.ComplexEventListener;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.blobrp.BlobRP;
@@ -28,6 +29,8 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<Boolean> playerHunger;
     private SimpleEventListener<List<String>> iceFormation;
 
+    private ComplexEventListener playerSpectateOnDeath;
+
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
         main = BlobRP.getInstance();
@@ -42,6 +45,7 @@ public class ConfigManager extends RPManager {
         main.saveConfig();
         configuration = main.getConfig();
         ConfigurationSection listeners = configuration.getConfigurationSection("Listeners");
+        ConfigurationSection complexListeners = configuration.getConfigurationSection("ComplexListeners");
         dropNonSoulOnDeath = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("DropNonSoulOnDeath"), "Drop");
         playerKeepExperienceOnDeath = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("PlayerKeepExperienceOnDeath"), "Keep");
         playerDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("PlayerDropExperienceOnDeath"), "Amount");
@@ -55,6 +59,7 @@ public class ConfigManager extends RPManager {
         welcomePlayers = SimpleEventListener.STRING(listeners.getConfigurationSection("WelcomePlayers"), "Message");
         playerHunger = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("PlayerHunger"), "RequiresPermission");
         iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("IceFormation"), "WorldWhitelist");
+        playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("PlayerSpectateOnDeath"));
     }
 
     public FileConfiguration getConfiguration() {
@@ -111,5 +116,9 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<List<String>> iceFormation() {
         return iceFormation;
+    }
+
+    public ComplexEventListener playerSpectateOnDeath() {
+        return playerSpectateOnDeath;
     }
 }

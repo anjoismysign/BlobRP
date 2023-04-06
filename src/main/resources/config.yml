@@ -1,3 +1,13 @@
+ComplexListeners:
+  PlayerSpectateOnDeath:
+    Register: true
+    Values:
+      Length: 5
+      BlobMessages:
+        - Spectator.Oof
+        - Spectator.Wasted
+        - Spectator.Dead
+        - Spectator.Keep-Alive
 Listeners:
   IceFormation:
     Register: true
