@@ -2,6 +2,7 @@ package us.mytheria.blobrp.listeners;
 
 import me.anjoismysign.anjo.entities.Uber;
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,8 +51,12 @@ public class PlayerSpectateOnDeath extends RPListener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent event) {
+        GameRule<Boolean> immediateRespawn = GameRule.DO_IMMEDIATE_RESPAWN;
+        Player player = event.getEntity();
+        if (Boolean.TRUE.equals(player.getWorld().getGameRuleValue(immediateRespawn)))
+            return;
         Bukkit.getScheduler().runTask(getConfigManager().getPlugin(), () ->
-                event.getEntity().spigot().respawn());
+                player.spigot().respawn());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
