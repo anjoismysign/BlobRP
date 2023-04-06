@@ -3,8 +3,10 @@ package us.mytheria.blobrp.listeners;
 import me.anjoismysign.anjo.entities.Uber;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -58,11 +60,12 @@ public class PlayerSpectateOnDeath extends RPListener {
                 player.spigot().respawn());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
+        Location repawnLocation = event.getRespawnLocation().clone();
         event.setRespawnLocation(player.getLocation());
-        new Spectator(player, length);
+        new Spectator(player, length, repawnLocation);
         randomMessage().handle(player);
     }
 
