@@ -35,10 +35,11 @@ public class CloudInventoryManager extends RPManager implements Listener {
         super(managerDirector);
         this.map = new HashMap<>();
         this.saving = new HashSet<>();
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
         crudManager = BlobCrudManagerBuilder.PLAYER(getPlugin(), "cloudinventory", crudable -> crudable, true);
         ComplexEventListener cloudInventory = getManagerDirector().getConfigManager().cloudInventory();
-        serializerType = Optional.of(cloudInventory.getString("serializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
-        driverType = Optional.of(cloudInventory.getString("driver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
+        serializerType = Optional.of(cloudInventory.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
+        driverType = Optional.of(cloudInventory.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
     }
 
     private InventoryDriver generate(BlobCrudable crudable,
@@ -58,16 +59,18 @@ public class CloudInventoryManager extends RPManager implements Listener {
     public void reload() {
         unload();
         ComplexEventListener cloudInventory = getManagerDirector().getConfigManager().cloudInventory();
-        serializerType = Optional.of(cloudInventory.getString("serializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
-        driverType = Optional.of(cloudInventory.getString("driver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
+        serializerType = Optional.of(cloudInventory.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
+        driverType = Optional.of(cloudInventory.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getClickedInventory() == null || event.getClickedInventory().getType() != InventoryType.PLAYER)
+        if (event.getClickedInventory() == null ||
+                event.getClickedInventory().getType() != InventoryType.PLAYER) {
             return;
+        }
         Player player = (Player) event.getWhoClicked();
-        int slot = event.getRawSlot();
+        int slot = event.getSlot();
         isInventoryDriver(player).ifPresent(driver -> {
             event.setCancelled(driver.isInsideInventoryMenu(slot));
         });
@@ -105,8 +108,9 @@ public class CloudInventoryManager extends RPManager implements Listener {
         CloudInventorySerializeEvent quitEvent = new CloudInventorySerializeEvent(serializable, driverType, serializable.getInventoryBuilder());
         Bukkit.getPluginManager().callEvent(quitEvent);
         saving.add(uuid);
+        BlobCrudable crudable = serializable.serializeAllAttributes();
         Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
-            crudManager.update(serializable.serializeAllAttributes());
+            crudManager.update(crudable);
             removeObject(uuid);
             saving.remove(uuid);
         });

@@ -36,8 +36,6 @@ public class DefaultInventoryDriver extends InventoryDriver {
     }
 
     private void upgrade(UUID uuid) {
-        if (isUpgraded)
-            return;
         isUpgraded = true;
         InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("EventPlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, uuid);
@@ -52,8 +50,6 @@ public class DefaultInventoryDriver extends InventoryDriver {
     }
 
     private void downgrade(UUID uuid) {
-        if (!isUpgraded)
-            return;
         isUpgraded = false;
         InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("PlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, uuid);
