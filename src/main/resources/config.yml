@@ -8,6 +8,11 @@ ComplexListeners:
         - Spectator.Wasted
         - Spectator.Dead
         - Spectator.Keep-Alive
+  CloudInventory:
+    Register: false
+    Values:
+      PlayerSerializer: SIMPLE
+      InventoryDriver: SIMPLE
 Listeners:
   IceFormation:
     Register: true

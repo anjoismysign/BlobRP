@@ -1,9 +1,12 @@
 package us.mytheria.blobrp.entities;
 
 import org.bson.Document;
+import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.entities.BlobCrudable;
+import us.mytheria.bloblib.utilities.ItemStackUtil;
+import us.mytheria.bloblib.utilities.SerializationLib;
 
 public class SimplePlayerSerializer implements PlayerSerializer {
     @Override
@@ -11,6 +14,7 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         BlobCrudable crudable = new BlobCrudable(player.getUniqueId().toString());
         Document document = crudable.getDocument();
         document.put("Name", player.getName());
+        document.put("UniqueId", player.getUniqueId().toString());
         document.put("Health", player.getHealth());
         document.put("MaxHealth", player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         document.put("FoodLevel", player.getFoodLevel());
@@ -25,6 +29,10 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         document.put("MaximumAir", player.getMaximumAir());
         document.put("AllowFlight", player.getAllowFlight());
         document.put("Flying", player.isFlying());
+        document.put("Gamemode", player.getGameMode().name());
+        document.put("Location", SerializationLib.serialize(player.getLocation()));
+        document.put("Inventory", ItemStackUtil.itemStackArrayToBase64(player.getInventory().getContents()));
+        document.put("Armor", ItemStackUtil.itemStackArrayToBase64(player.getInventory().getArmorContents()));
         return crudable;
     }
 
@@ -44,5 +52,9 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         player.setMaximumAir(crudable.hasInteger("MaximumAir").orElse(20));
         player.setAllowFlight(crudable.hasBoolean("AllowFlight").orElse(false));
         player.setFlying(crudable.hasBoolean("Flying").orElse(false));
+        crudable.hasString("Gamemode").ifPresent(gamemode -> player.setGameMode(GameMode.valueOf(gamemode)));
+        crudable.hasString("Location").ifPresent(location -> player.teleport(SerializationLib.deserializeLocation(location)));
+        crudable.hasString("Inventory").ifPresent(inventory -> player.getInventory().setContents(ItemStackUtil.itemStackArrayFromBase64(inventory)));
+        crudable.hasString("Armor").ifPresent(armor -> player.getInventory().setArmorContents(ItemStackUtil.itemStackArrayFromBase64(armor)));
     }
 }

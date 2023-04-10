@@ -1,0 +1,18 @@
+Title: ''
+Size: 36
+Buttons:
+  White-Background:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 9-26
+  Donor-Info:
+    ItemStack:
+      Material: RED_STAINED_GLASS_PANE
+      CustomModelData: 1
+      DisplayName: "&cLocked"
+      Lore:
+        - "&7Exclusive to event contributors"
+    Slot: 27-31

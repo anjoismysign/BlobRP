@@ -3,6 +3,7 @@ package us.mytheria.blobrp;
 import org.bukkit.Bukkit;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.PlayerSerializer;
 
 public final class BlobRP extends BlobPlugin {
     private RPManagerDirector director;
@@ -25,5 +26,8 @@ public final class BlobRP extends BlobPlugin {
     @Override
     public RPManagerDirector getManagerDirector() {
         return director;
+    }
+
+    public PlayerSerializer getPlayerSerializer() {
     }
 }
