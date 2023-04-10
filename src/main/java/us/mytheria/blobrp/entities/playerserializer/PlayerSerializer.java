@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.entities;
+package us.mytheria.blobrp.entities.playerserializer;
 
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.entities.BlobCrudable;

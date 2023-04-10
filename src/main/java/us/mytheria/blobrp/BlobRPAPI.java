@@ -2,9 +2,12 @@ package us.mytheria.blobrp;
 
 import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
+import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 import us.mytheria.blobrp.inventories.MerchantInventory;
 
 public class BlobRPAPI {
@@ -63,5 +66,18 @@ public class BlobRPAPI {
         }
         director.getMerchantManager().getMerchants().values()
                 .forEach(MerchantInventory::loadShopArticles);
+    }
+
+    public static BlobCrudable serialize(Player player, PlayerSerializerType type) {
+        if (type != PlayerSerializerType.SIMPLE)
+            throw new IllegalArgumentException("Only PlayerSerializerType.SIMPLE is supported at the moment.");
+        return BlobRP.getInstance().simplePlayerSerializer.serialize(player);
+    }
+
+    public static void deserialize(Player player, BlobCrudable crudable,
+                                   PlayerSerializerType type) {
+        if (type != PlayerSerializerType.SIMPLE)
+            throw new IllegalArgumentException("Only PlayerSerializerType.SIMPLE is supported at the moment.");
+        BlobRP.getInstance().simplePlayerSerializer.deserialize(player, crudable);
     }
 }

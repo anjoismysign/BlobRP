@@ -1,29 +1,26 @@
-package us.mytheria.blobrp.entities;
+package us.mytheria.blobrp.entities.inventorydriver;
 
 import org.bson.Document;
-import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
-import us.mytheria.bloblib.entities.BlobSerializable;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
+import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 
 import java.util.UUID;
 
-public class RolePlayInventoryHolder implements BlobSerializable {
-    private final BlobCrudable crudable;
+public class DefaultInventoryDriver extends InventoryDriver {
     private MetaBlobPlayerInventoryBuilder inventoryHolder;
     private boolean isUpgraded;
 
-    public RolePlayInventoryHolder(BlobCrudable crudable) {
-        this.crudable = crudable;
+    public DefaultInventoryDriver(BlobCrudable crudable, PlayerSerializerType type) {
+        super(crudable, type);
         boolean isUpgraded = crudable.hasBoolean("isUpgraded").orElse(false);
-        Player player = getPlayer();
         if (isUpgraded) {
-            upgrade(player.getUniqueId());
+            upgrade(getPlayer().getUniqueId());
         } else {
-            downgrade(player.getUniqueId());
+            downgrade(getPlayer().getUniqueId());
         }
     }
 
@@ -60,12 +57,8 @@ public class RolePlayInventoryHolder implements BlobSerializable {
     }
 
     @Override
-    public BlobCrudable blobCrudable() {
-        return crudable;
-    }
-
-    @Override
     public BlobCrudable serializeAllAttributes() {
+        BlobCrudable crudable = super.serializeAllAttributes();
         Document document = crudable.getDocument();
         document.put("isUpgraded", isUpgraded);
         return crudable;

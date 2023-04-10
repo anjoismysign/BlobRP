@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.entities;
+package us.mytheria.blobrp.entities.playerserializer;
 
 import org.bson.Document;
 import org.bukkit.GameMode;
