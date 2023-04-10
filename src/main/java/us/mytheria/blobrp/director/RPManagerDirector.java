@@ -8,6 +8,7 @@ import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.*;
 import us.mytheria.bloblib.managers.ManagerDirector;
 import us.mytheria.blobrp.BlobRP;
+import us.mytheria.blobrp.director.manager.CloudInventoryManager;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.director.manager.ListenerManager;
@@ -39,9 +40,12 @@ public class RPManagerDirector extends ManagerDirector {
     public RPManagerDirector() {
         super(BlobRP.getInstance());
         registerAndUpdateBlobInventory("WelcomeInventory");
+        registerAndUpdateBlobInventory("PlayerInventory");
+        registerAndUpdateBlobInventory("EventPlayerInventory");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
+        addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         ObjectDirectorData shopArticleDirectorData = ObjectDirectorData.simple(getFileManager(), "ShopArticle");
         addManager("ShopArticleDirector",

@@ -2,6 +2,7 @@ package us.mytheria.blobrp.entities.inventorydriver;
 
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.BlobSerializable;
+import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.blobrp.BlobRPAPI;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 
@@ -34,4 +35,8 @@ public abstract class InventoryDriver implements BlobSerializable {
     public PlayerSerializerType getSerializerType() {
         return serializerType;
     }
+
+    public abstract MetaBlobPlayerInventoryBuilder getInventoryBuilder();
+
+    public abstract boolean isInsideInventoryMenu(int slot);
 }

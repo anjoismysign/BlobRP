@@ -31,6 +31,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> forceGamemode;
 
     private ComplexEventListener playerSpectateOnDeath;
+    private ComplexEventListener cloudInventory;
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -62,6 +63,7 @@ public class ConfigManager extends RPManager {
         iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("IceFormation"), "WorldWhitelist");
         playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("PlayerSpectateOnDeath"));
         forceGamemode = SimpleEventListener.STRING(listeners.getConfigurationSection("ForceGamemode"), "Gamemode");
+        cloudInventory = new ComplexEventListener(complexListeners.getConfigurationSection("CloudInventory"));
     }
 
     public FileConfiguration getConfiguration() {
@@ -126,5 +128,9 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<String> forceGamemode() {
         return forceGamemode;
+    }
+
+    public ComplexEventListener cloudInventory() {
+        return cloudInventory;
     }
 }

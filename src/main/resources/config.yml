@@ -12,7 +12,7 @@ ComplexListeners:
     Register: false
     Values:
       PlayerSerializer: SIMPLE
-      InventoryDriver: SIMPLE
+      InventoryDriver: DEFAULT
 Listeners:
   IceFormation:
     Register: true

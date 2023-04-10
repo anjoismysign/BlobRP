@@ -8,11 +8,13 @@ import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 public class DefaultInventoryDriver extends InventoryDriver {
     private MetaBlobPlayerInventoryBuilder inventoryHolder;
     private boolean isUpgraded;
+    private HashSet<Integer> cache;
 
     public DefaultInventoryDriver(BlobCrudable crudable, PlayerSerializerType type) {
         super(crudable, type);
@@ -24,6 +26,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
         }
     }
 
+    @Override
     public MetaBlobPlayerInventoryBuilder getInventoryBuilder() {
         return inventoryHolder;
     }
@@ -38,6 +41,10 @@ public class DefaultInventoryDriver extends InventoryDriver {
         isUpgraded = true;
         InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("EventPlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, uuid);
+        cache = new HashSet<>();
+        inventoryHolder.getKeys().forEach(key -> {
+            cache.addAll(inventoryHolder.getButton(key).getSlots());
+        });
     }
 
     public void upgrade() {
@@ -50,6 +57,11 @@ public class DefaultInventoryDriver extends InventoryDriver {
         isUpgraded = false;
         InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("PlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, uuid);
+        cache = new HashSet<>();
+        inventoryHolder.getKeys().forEach(key -> {
+            cache.addAll(inventoryHolder.getButton(key).getSlots());
+        });
+
     }
 
     public void downgrade() {
@@ -62,5 +74,10 @@ public class DefaultInventoryDriver extends InventoryDriver {
         Document document = crudable.getDocument();
         document.put("isUpgraded", isUpgraded);
         return crudable;
+    }
+
+    @Override
+    public boolean isInsideInventoryMenu(int slot) {
+        return cache.contains(slot);
     }
 }
