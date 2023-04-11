@@ -19,7 +19,6 @@ public abstract class InventoryDriver implements BlobSerializable {
     public InventoryDriver(BlobCrudable crudable, PlayerSerializerType serializerType) {
         this.crudable = crudable;
         this.serializerType = serializerType;
-        BlobRPAPI.deserialize(getPlayer(), crudable, serializerType);
     }
 
     @Override

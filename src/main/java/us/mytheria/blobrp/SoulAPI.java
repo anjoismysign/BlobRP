@@ -40,6 +40,27 @@ public class SoulAPI {
     }
 
     /**
+     * Sets all items in the ItemStack array to be soul alike.
+     *
+     * @param array The ItemStack array you want to set the items as soul alike.
+     */
+    public static void setSoul(ItemStack[] array) {
+        for (ItemStack itemStack : array) {
+            setSoul(itemStack);
+        }
+    }
+
+    /**
+     * Sets all items in the inventory to be soul alike.
+     *
+     * @param player The player you want to set the items as soul alike.
+     */
+    public static void setSoul(Player player) {
+        setSoul(player.getInventory().getContents());
+        setSoul(player.getInventory().getArmorContents());
+    }
+
+    /**
      * @param holder The PersistentDataHolder you want to check.
      * @return true if the PersistentDataHolder is soul alike, false if not.
      */

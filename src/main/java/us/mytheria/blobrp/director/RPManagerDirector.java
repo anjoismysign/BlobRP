@@ -160,10 +160,15 @@ public class RPManagerDirector extends ManagerDirector {
 
     @Override
     public void unload() {
+        getCloudInventoryManager().unload();
     }
 
     @Override
     public void postWorld() {
+    }
+
+    public final CloudInventoryManager getCloudInventoryManager() {
+        return (CloudInventoryManager) getManager("CloudInventoryManager");
     }
 
     public final MerchantManager getMerchantManager() {

@@ -10,9 +10,9 @@ Buttons:
     Slot: 9-26
   Donor-Info:
     ItemStack:
-      Material: RED_STAINED_GLASS_PANE
+      Material: WHITE_STAINED_GLASS_PANE
       CustomModelData: 1
-      DisplayName: "&cLocked"
+      DisplayName: "&fLocked"
       Lore:
         - "&7Exclusive to event contributors"
     Slot: 27-31

@@ -10,6 +10,8 @@ import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 import us.mytheria.blobrp.inventories.MerchantInventory;
 
+import java.util.function.Consumer;
+
 public class BlobRPAPI {
     private static BlobRPAPI instance;
 
@@ -38,7 +40,7 @@ public class BlobRPAPI {
                 sellPrice, true, buyingCurrency, sellingCurrency);
         if (shopArticle == null)
             return false;
-        instance.director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle);
+        instance.director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle, null);
         return true;
     }
 
@@ -75,9 +77,14 @@ public class BlobRPAPI {
     }
 
     public static void deserialize(Player player, BlobCrudable crudable,
-                                   PlayerSerializerType type) {
+                                   PlayerSerializerType type, Consumer<Player> consumer) {
         if (type != PlayerSerializerType.SIMPLE)
             throw new IllegalArgumentException("Only PlayerSerializerType.SIMPLE is supported at the moment.");
-        BlobRP.getInstance().simplePlayerSerializer.deserialize(player, crudable);
+        BlobRP.getInstance().simplePlayerSerializer.deserialize(player, crudable, consumer);
+    }
+
+    public static void deserialize(Player player, BlobCrudable crudable,
+                                   PlayerSerializerType type) {
+        deserialize(player, crudable, type, null);
     }
 }

@@ -7,10 +7,13 @@ import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.SerializationLib;
 import us.mytheria.blobrp.BlobRP;
+
+import java.util.function.Consumer;
 
 public class SimplePlayerSerializer implements PlayerSerializer {
     @Override
@@ -37,11 +40,13 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         document.put("Location", SerializationLib.serialize(player.getLocation()));
         document.put("Inventory", ItemStackUtil.itemStackArrayToBase64(player.getInventory().getContents()));
         document.put("Armor", ItemStackUtil.itemStackArrayToBase64(player.getInventory().getArmorContents()));
+        document.put("HeldItemSlot", player.getInventory().getHeldItemSlot());
+        document.put("HasPlayedBefore", true);
         return crudable;
     }
 
     @Override
-    public void deserialize(Player player, BlobCrudable crudable) {
+    public void deserialize(Player player, BlobCrudable crudable, Consumer<Player> consumer) {
         double maxHealth = crudable.hasDouble("MaxHealth").orElse(20.0);
         double health = crudable.hasDouble("Health").orElse(20.0);
         int foodLevel = crudable.hasInteger("FoodLevel").orElse(20);
@@ -60,6 +65,7 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         Location location = crudable.hasString("Location").map(SerializationLib::deserializeLocation).orElse(null);
         ItemStack[] inventory = crudable.hasString("Inventory").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
         ItemStack[] armor = crudable.hasString("Armor").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
+        int heldItemSlot = crudable.hasInteger("HeldItemSlot").orElse(player.getInventory().getHeldItemSlot());
         Bukkit.getScheduler().runTask(BlobRP.getInstance(), () -> {
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
             player.setHealth(health);
@@ -79,12 +85,16 @@ public class SimplePlayerSerializer implements PlayerSerializer {
             if (location != null) {
                 player.teleport(location);
             }
+            PlayerInventory playerInventory = player.getInventory();
             if (inventory != null) {
-                player.getInventory().setContents(inventory);
+                playerInventory.setContents(inventory);
             }
             if (armor != null) {
-                player.getInventory().setArmorContents(armor);
+                playerInventory.setArmorContents(armor);
             }
+            playerInventory.setHeldItemSlot(heldItemSlot);
+            if (consumer != null)
+                consumer.accept(player);
         });
     }
 }

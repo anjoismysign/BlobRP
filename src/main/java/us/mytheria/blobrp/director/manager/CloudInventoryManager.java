@@ -2,16 +2,23 @@ package us.mytheria.blobrp.director.manager;
 
 import me.anjoismysign.anjo.crud.CrudManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.ComplexEventListener;
+import us.mytheria.bloblib.entities.inventory.BlobPlayerInventoryHolder;
+import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
+import us.mytheria.bloblib.entities.inventory.InventoryButton;
+import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.BlobCrudManagerBuilder;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -25,21 +32,21 @@ import us.mytheria.blobrp.events.CloudInventorySerializeEvent;
 import java.util.*;
 
 public class CloudInventoryManager extends RPManager implements Listener {
+    private BlobMessage welcomeMessage;
     private final Map<UUID, InventoryDriver> map;
     private final HashSet<UUID> saving;
+    private final InventoryBuilderCarrier<InventoryButton> carrier;
     protected CrudManager<BlobCrudable> crudManager;
     private PlayerSerializerType serializerType;
     private InventoryDriverType driverType;
 
     public CloudInventoryManager(RPManagerDirector managerDirector) {
         super(managerDirector);
+        this.carrier = BlobLibAssetAPI.getInventoryBuilderCarrier("WelcomeInventory");
         this.map = new HashMap<>();
         this.saving = new HashSet<>();
-        Bukkit.getPluginManager().registerEvents(this, getPlugin());
-        crudManager = BlobCrudManagerBuilder.PLAYER(getPlugin(), "cloudinventory", crudable -> crudable, true);
-        ComplexEventListener cloudInventory = getManagerDirector().getConfigManager().cloudInventory();
-        serializerType = Optional.of(cloudInventory.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
-        driverType = Optional.of(cloudInventory.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
+        this.crudManager = BlobCrudManagerBuilder.PLAYER(getPlugin(), "alternativesaving", crudable -> crudable, true);
+        reload();
     }
 
     private InventoryDriver generate(BlobCrudable crudable,
@@ -57,10 +64,18 @@ public class CloudInventoryManager extends RPManager implements Listener {
 
     @Override
     public void reload() {
-        unload();
-        ComplexEventListener cloudInventory = getManagerDirector().getConfigManager().cloudInventory();
-        serializerType = Optional.of(cloudInventory.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
-        driverType = Optional.of(cloudInventory.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
+        HandlerList.unregisterAll(this);
+        ComplexEventListener alternativeSaving = getManagerDirector().getConfigManager().alternativeSaving();
+        alternativeSaving.ifRegister(eventListener -> {
+            Bukkit.getPluginManager().registerEvents(this, getPlugin());
+            ConfigurationSection welcomePlayers = alternativeSaving.getConfigurationSection("WelcomePlayers");
+            if (welcomePlayers.getBoolean("Register"))
+                welcomeMessage = BlobLibAssetAPI.getMessage(welcomePlayers.getString("Message"));
+            else
+                welcomeMessage = null;
+            serializerType = Optional.of(alternativeSaving.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
+            driverType = Optional.of(alternativeSaving.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
+        });
     }
 
     @EventHandler
@@ -90,7 +105,19 @@ public class CloudInventoryManager extends RPManager implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             if (player == null || !player.isOnline())
                 return;
-            InventoryDriver applied = generate(crudManager.read(uuid.toString()), serializerType, driverType);
+            BlobCrudable crudable = crudManager.read(uuid.toString());
+            boolean hasPlayedBefore = crudable.hasBoolean("HasPlayedBefore").orElse(false);
+            InventoryDriver applied = generate(crudable, serializerType, driverType);
+            if (!hasPlayedBefore) {
+                if (welcomeMessage != null) {
+                    welcomeMessage.modder()
+                            .replace("%player%", player.getName())
+                            .get()
+                            .handle(player);
+                    BlobPlayerInventoryHolder.fromInventoryBuilderCarrier
+                            (carrier, player.getUniqueId());
+                }
+            }
             map.put(uuid, applied);
             CloudInventoryDeserializeEvent deserializeEvent = new CloudInventoryDeserializeEvent(applied, driverType, applied.getInventoryBuilder());
             Bukkit.getPluginManager().callEvent(deserializeEvent);

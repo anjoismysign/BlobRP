@@ -26,6 +26,11 @@ public final class BlobRP extends BlobPlugin {
     }
 
     @Override
+    public void onDisable() {
+        getManagerDirector().unload();
+    }
+
+    @Override
     public RPManagerDirector getManagerDirector() {
         return director;
     }

@@ -16,11 +16,14 @@ ComplexListeners:
         - Spectator.Wasted
         - Spectator.Dead
         - Spectator.Keep-Alive
-  CloudInventory:
+  AlternativeSaving:
     Register: false
     Values:
       PlayerSerializer: SIMPLE
       InventoryDriver: DEFAULT
+      WelcomePlayers:
+        Register: true
+        Message: System.Welcome
 Listeners:
   IceFormation:
     Register: true
