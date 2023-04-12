@@ -15,6 +15,7 @@ import us.mytheria.bloblib.entities.logger.BlobPluginLogger;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.entities.Spectator;
+import us.mytheria.blobrp.events.SpectatorStartEvent;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -65,6 +66,9 @@ public class PlayerSpectateOnDeath extends RPListener {
         Player player = event.getPlayer();
         Location repawnLocation = event.getRespawnLocation().clone();
         event.setRespawnLocation(player.getLocation());
+        SpectatorStartEvent spectatorStartEvent = new SpectatorStartEvent(player, false);
+        Bukkit.getPluginManager().callEvent(spectatorStartEvent);
+        if (spectatorStartEvent.isCancelled()) return;
         new Spectator(player, length, repawnLocation);
         randomMessage().handle(player);
     }

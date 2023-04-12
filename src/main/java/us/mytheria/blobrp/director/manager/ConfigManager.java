@@ -29,6 +29,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<Boolean> playerHunger;
     private SimpleEventListener<List<String>> iceFormation;
     private SimpleEventListener<String> forceGamemode;
+    private SimpleEventListener<Integer> globalSlowDigging;
 
     private ComplexEventListener playerSpectateOnDeath;
     private ComplexEventListener alternativeSaving;
@@ -64,6 +65,7 @@ public class ConfigManager extends RPManager {
         playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("PlayerSpectateOnDeath"));
         forceGamemode = SimpleEventListener.STRING(listeners.getConfigurationSection("ForceGamemode"), "Gamemode");
         alternativeSaving = new ComplexEventListener(complexListeners.getConfigurationSection("AlternativeSaving"));
+        globalSlowDigging = SimpleEventListener.INTEGER(listeners.getConfigurationSection("Global-Slow-Digging"), "Level");
     }
 
     public FileConfiguration getConfiguration() {
@@ -132,5 +134,9 @@ public class ConfigManager extends RPManager {
 
     public ComplexEventListener alternativeSaving() {
         return alternativeSaving;
+    }
+
+    public SimpleEventListener<Integer> globalSlowDigging() {
+        return globalSlowDigging;
     }
 }

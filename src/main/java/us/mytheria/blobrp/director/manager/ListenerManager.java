@@ -19,6 +19,7 @@ public class ListenerManager extends RPManager {
     private final IceFormation iceFormation;
     private final PlayerSpectateOnDeath playerSpectateOnDeath;
     private final ForceGamemodeOnJoin forceGamemodeOnJoin;
+    private final GlobalSlowDigging globalSlowDigging;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -36,6 +37,7 @@ public class ListenerManager extends RPManager {
         iceFormation = new IceFormation(configManager);
         playerSpectateOnDeath = new PlayerSpectateOnDeath(configManager);
         forceGamemodeOnJoin = new ForceGamemodeOnJoin(configManager);
+        globalSlowDigging = new GlobalSlowDigging(configManager);
         reload();
     }
 
@@ -54,5 +56,6 @@ public class ListenerManager extends RPManager {
         iceFormation.reload();
         playerSpectateOnDeath.reload();
         forceGamemodeOnJoin.reload();
+        globalSlowDigging.reload();
     }
 }

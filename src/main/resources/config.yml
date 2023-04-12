@@ -68,5 +68,8 @@ Listeners:
     Register: true
     Message: System.Welcome
   ForceGamemode:
-    Register: true
+    Register: false
     Gamemode: ADVENTURE
+  Global-Slow-Digging:
+    Register: false
+    Level: 1
