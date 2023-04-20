@@ -73,3 +73,9 @@ Listeners:
   Global-Slow-Digging:
     Register: false
     Level: 1
+  OnJoinMessage:
+    Register: true
+    Message: System.Join
+  OnQuitMessage:
+    Register: true
+    Message: System.Quit

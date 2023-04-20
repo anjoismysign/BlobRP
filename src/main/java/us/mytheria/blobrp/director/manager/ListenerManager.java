@@ -20,6 +20,8 @@ public class ListenerManager extends RPManager {
     private final PlayerSpectateOnDeath playerSpectateOnDeath;
     private final ForceGamemodeOnJoin forceGamemodeOnJoin;
     private final GlobalSlowDigging globalSlowDigging;
+    private final OnJoinMessage onJoinMessage;
+    private final OnQuitMessage onQuitMessage;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -38,6 +40,8 @@ public class ListenerManager extends RPManager {
         playerSpectateOnDeath = new PlayerSpectateOnDeath(configManager);
         forceGamemodeOnJoin = new ForceGamemodeOnJoin(configManager);
         globalSlowDigging = new GlobalSlowDigging(configManager);
+        onJoinMessage = new OnJoinMessage(configManager);
+        onQuitMessage = new OnQuitMessage(configManager);
         reload();
     }
 
@@ -57,5 +61,7 @@ public class ListenerManager extends RPManager {
         playerSpectateOnDeath.reload();
         forceGamemodeOnJoin.reload();
         globalSlowDigging.reload();
+        onJoinMessage.reload();
+        onQuitMessage.reload();
     }
 }
