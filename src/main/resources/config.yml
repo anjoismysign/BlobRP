@@ -24,6 +24,7 @@ ComplexListeners:
       WelcomePlayers:
         Register: true
         Message: System.Welcome
+        Inventory-Is-Soul: false
 Listeners:
   IceFormation:
     Register: true
@@ -33,7 +34,7 @@ Listeners:
     Register: true
     RequiresPermission: false
   DropNonSoulOnDeath:
-    Register: true
+    Register: false
     Drop: true
   PlayerDropExperienceOnDeath:
     Register: true

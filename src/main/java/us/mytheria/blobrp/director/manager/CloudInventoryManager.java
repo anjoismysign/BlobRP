@@ -20,6 +20,7 @@ import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.InventoryButton;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.BlobCrudManagerBuilder;
+import us.mytheria.blobrp.SoulAPI;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.inventorydriver.DefaultInventoryDriver;
@@ -33,6 +34,7 @@ import java.util.*;
 
 public class CloudInventoryManager extends RPManager implements Listener {
     private BlobMessage welcomeMessage;
+    private boolean soulInventory;
     private final Map<UUID, InventoryDriver> map;
     private final HashSet<UUID> saving;
     private final InventoryBuilderCarrier<InventoryButton> carrier;
@@ -64,14 +66,16 @@ public class CloudInventoryManager extends RPManager implements Listener {
 
     @Override
     public void reload() {
+        soulInventory = false;
         HandlerList.unregisterAll(this);
         ComplexEventListener alternativeSaving = getManagerDirector().getConfigManager().alternativeSaving();
         alternativeSaving.ifRegister(eventListener -> {
             Bukkit.getPluginManager().registerEvents(this, getPlugin());
             ConfigurationSection welcomePlayers = alternativeSaving.getConfigurationSection("WelcomePlayers");
-            if (welcomePlayers.getBoolean("Register"))
+            if (welcomePlayers.getBoolean("Register")) {
                 welcomeMessage = BlobLibAssetAPI.getMessage(welcomePlayers.getString("Message"));
-            else
+                soulInventory = welcomePlayers.getBoolean("Inventory-Is-Soul");
+            } else
                 welcomeMessage = null;
             serializerType = Optional.of(alternativeSaving.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
             driverType = Optional.of(alternativeSaving.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
@@ -116,10 +120,13 @@ public class CloudInventoryManager extends RPManager implements Listener {
                             .handle(player);
                     BlobPlayerInventoryHolder.fromInventoryBuilderCarrier
                             (carrier, player.getUniqueId());
+                    if (soulInventory)
+                        SoulAPI.setSoul(player);
                 }
             }
             map.put(uuid, applied);
-            CloudInventoryDeserializeEvent deserializeEvent = new CloudInventoryDeserializeEvent(applied, driverType, applied.getInventoryBuilder());
+            CloudInventoryDeserializeEvent deserializeEvent = new CloudInventoryDeserializeEvent(applied,
+                    driverType, applied.getInventoryBuilder(), hasPlayedBefore);
             Bukkit.getPluginManager().callEvent(deserializeEvent);
         });
     }

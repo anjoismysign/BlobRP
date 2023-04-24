@@ -11,11 +11,14 @@ import java.util.function.Consumer;
 
 public class CloudInventoryDeserializeEvent extends CloudInventoryIOEvent {
     private final List<Consumer<Player>> ifStillOnline = new ArrayList<>();
+    private final boolean hasPlayedBefore;
 
     public CloudInventoryDeserializeEvent(InventoryDriver driver,
                                           InventoryDriverType driverType,
-                                          MetaBlobPlayerInventoryBuilder inventoryBuilder) {
+                                          MetaBlobPlayerInventoryBuilder inventoryBuilder,
+                                          boolean hasPlayedBefore) {
         super(driver, driverType, true, inventoryBuilder);
+        this.hasPlayedBefore = hasPlayedBefore;
     }
 
     /**
@@ -32,5 +35,12 @@ public class CloudInventoryDeserializeEvent extends CloudInventoryIOEvent {
      */
     public List<Consumer<Player>> fetch() {
         return new ArrayList<>(ifStillOnline);
+    }
+
+    /**
+     * @return Whether the player has played before.
+     */
+    public boolean hasPlayedBefore() {
+        return hasPlayedBefore;
     }
 }
