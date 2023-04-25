@@ -12,6 +12,7 @@ import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MerchantInventory extends ReferenceMetaBlobInventory {
     public final static String META = "BLOBRP_SHOPARTICLE";
@@ -51,12 +52,16 @@ public class MerchantInventory extends ReferenceMetaBlobInventory {
                 return;
             ShopArticle article = result.value();
             ItemStack itemStack = article.cloneDisplay();
+            Optional<String> buyingCurrency = article.getBuyingCurrency();
+            double price = article.getBuyPrice();
             SimpleEventListener<List<String>> merchantsView = director.getConfigManager().merchantsView();
             if (merchantsView.register()) {
                 List<String> parseLore = merchantsView.value()
                         .stream().map(TextColor::PARSE)
                         .map(s -> s.replace("%format%",
-                                BlobLibAPI.format(article.getBuyPrice())))
+                                BlobLibAPI.getElasticEconomy()
+                                        .map(buyingCurrency)
+                                        .format(price)))
                         .toList();
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 if (itemMeta == null)

@@ -75,7 +75,7 @@ Buttons:
     ItemStack:
       Material: EMERALD
       CustomModelData: 0
-      DisplayName: "&6Buying Currency"
+      DisplayName: "&6Selling Currency"
       Lore:
         - "&7Selected: &f%sellingCurrency%"
     Slot: 11

@@ -4,11 +4,13 @@ import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 import us.mytheria.blobrp.inventories.MerchantInventory;
+import us.mytheria.blobrp.merchant.MerchantManager;
 
 import java.util.function.Consumer;
 
@@ -68,6 +70,25 @@ public class BlobRPAPI {
         }
         director.getMerchantManager().getMerchants().values()
                 .forEach(MerchantInventory::loadShopArticles);
+    }
+
+    /**
+     * Will get a MerchantInventory by its key.
+     * It will fail fast if the MerchantManager is not enabled
+     * or if key doesn't point to a tracked MerchantInventory.
+     *
+     * @param key The key
+     * @return The MerchantInventory
+     */
+    @NotNull
+    public static MerchantInventory getMerchantInventory(String key) {
+        RPManagerDirector director = instance.director;
+        MerchantManager manager = director.getMerchantManager();
+        if (manager == null)
+            throw new IllegalStateException("MerchantManager is not enabled.");
+        if (!manager.getMerchants().containsKey(key))
+            throw new NullPointerException("Merchant with key " + key + " does not exist.");
+        return manager.getMerchants().get(key);
     }
 
     public static BlobCrudable serialize(Player player, PlayerSerializerType type) {

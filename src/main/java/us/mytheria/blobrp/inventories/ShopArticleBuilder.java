@@ -55,6 +55,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
         addObjectBuilderButton(keyButton).addObjectBuilderButton(materialButton)
                 .addObjectBuilderButton(customModelDataButton).addObjectBuilderButton(buyPriceButton)
                 .addObjectBuilderButton(sellPriceButton).addObjectBuilderButton(itemStackButton)
+                .addObjectBuilderButton(buyingCurrencyButton).addObjectBuilderButton(sellingCurrencyButton)
                 .setFunction(builder -> {
                     ShopArticle build = builder.construct();
                     if (build == null)

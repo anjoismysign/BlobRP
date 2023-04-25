@@ -97,18 +97,22 @@ public class CloudInventoryManager extends RPManager implements Listener {
                     .map(key -> driver.getInventoryBuilder().getButton(key))
                     .filter(button -> button.containsSlot(slot))
                     .findFirst().orElse(null);
-            if (inventoryButton == null)
+            if (inventoryButton == null) {
                 return;
+            }
             String meta = inventoryButton.getMeta().toLowerCase();
             String subMeta = inventoryButton.getSubMeta();
-            if (subMeta == null)
+            if (subMeta == null) {
                 return;
+            }
             subMeta = subMeta.toLowerCase();
             switch (meta) {
-                case "BLOBRP#PLAYER" -> {
+                case "blobrp#player" -> {
+                    player.closeInventory();
                     player.performCommand(subMeta.replace("%player%", player.getName()));
                 }
-                case "BLOBRP#CONSOLE" -> {
+                case "blobrp#console" -> {
+                    player.closeInventory();
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), subMeta.replace("%player%", player.getName()));
                 }
                 default -> {
@@ -143,7 +147,11 @@ public class CloudInventoryManager extends RPManager implements Listener {
                     BlobPlayerInventoryHolder.fromInventoryBuilderCarrier
                             (carrier, player.getUniqueId());
                     if (soulInventory)
-                        SoulAPI.setSoul(player);
+                        Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                            if (player == null || !player.isOnline())
+                                return;
+                            SoulAPI.setSoul(player);
+                        });
                 }
             }
             map.put(uuid, applied);

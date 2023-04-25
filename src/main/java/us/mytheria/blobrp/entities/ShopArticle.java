@@ -140,6 +140,10 @@ public class ShopArticle implements BlobObject {
         config.set("HasCustomModelData", hasCustomModelData());
         if (hasCustomModelData())
             config.set("CustomModelData", getCustomModelData());
+        if (buyingCurrency.isPresent())
+            config.set("Buying-Currency", buyingCurrency.get());
+        if (sellingCurrency.isPresent())
+            config.set("Selling-Currency", sellingCurrency.get());
         ItemStackSerializer.serialize(getDisplay(), config, "Display");
         try {
             config.save(file);
