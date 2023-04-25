@@ -18,6 +18,7 @@ import us.mytheria.bloblib.entities.ComplexEventListener;
 import us.mytheria.bloblib.entities.inventory.BlobPlayerInventoryHolder;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.InventoryButton;
+import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.BlobCrudManagerBuilder;
 import us.mytheria.blobrp.SoulAPI;
@@ -92,6 +93,27 @@ public class CloudInventoryManager extends RPManager implements Listener {
         int slot = event.getSlot();
         isInventoryDriver(player).ifPresent(driver -> {
             event.setCancelled(driver.isInsideInventoryMenu(slot));
+            MetaInventoryButton inventoryButton = driver.getInventoryBuilder().getKeys().stream()
+                    .map(key -> driver.getInventoryBuilder().getButton(key))
+                    .filter(button -> button.containsSlot(slot))
+                    .findFirst().orElse(null);
+            if (inventoryButton == null)
+                return;
+            String meta = inventoryButton.getMeta().toLowerCase();
+            String subMeta = inventoryButton.getSubMeta();
+            if (subMeta == null)
+                return;
+            subMeta = subMeta.toLowerCase();
+            switch (meta) {
+                case "BLOBRP#PLAYER" -> {
+                    player.performCommand(subMeta.replace("%player%", player.getName()));
+                }
+                case "BLOBRP#CONSOLE" -> {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), subMeta.replace("%player%", player.getName()));
+                }
+                default -> {
+                }
+            }
         });
     }
 
@@ -128,6 +150,14 @@ public class CloudInventoryManager extends RPManager implements Listener {
             CloudInventoryDeserializeEvent deserializeEvent = new CloudInventoryDeserializeEvent(applied,
                     driverType, applied.getInventoryBuilder(), hasPlayedBefore);
             Bukkit.getPluginManager().callEvent(deserializeEvent);
+            deserializeEvent.fetchAsynchronous().forEach(consumer ->
+                    consumer.accept(player));
+            deserializeEvent.fetch().forEach(consumer ->
+                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                        if (player == null || !player.isOnline())
+                            return;
+                        consumer.accept(player);
+                    }));
         });
     }
 

@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 public class CloudInventoryDeserializeEvent extends CloudInventoryIOEvent {
     private final List<Consumer<Player>> ifStillOnline = new ArrayList<>();
+    private final List<Consumer<Player>> ifStillOnlineAsynchronous = new ArrayList<>();
     private final boolean hasPlayedBefore;
 
     public CloudInventoryDeserializeEvent(InventoryDriver driver,
@@ -35,6 +36,22 @@ public class CloudInventoryDeserializeEvent extends CloudInventoryIOEvent {
      */
     public List<Consumer<Player>> fetch() {
         return new ArrayList<>(ifStillOnline);
+    }
+
+    /**
+     * Adds a consumer to be executed if the player is still online.
+     *
+     * @param consumer The consumer to be executed.
+     */
+    public void ifStillOnlineAsynchronous(Consumer<Player> consumer) {
+        this.ifStillOnlineAsynchronous.add(consumer);
+    }
+
+    /**
+     * @return A list of consumers to be executed if the player is still online.
+     */
+    public List<Consumer<Player>> fetchAsynchronous() {
+        return new ArrayList<>(ifStillOnlineAsynchronous);
     }
 
     /**

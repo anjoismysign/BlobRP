@@ -47,7 +47,6 @@ public class DefaultInventoryDriver extends InventoryDriver {
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
         cache = new HashSet<>();
         inventoryHolder.getKeys().forEach(key -> cache.addAll(inventoryHolder.getButton(key).getSlots()));
-        //Sets the default inventory as soul
         Set<Integer> slots = new HashSet<>();
         getInventoryBuilder().getKeys().forEach(key ->
                 slots.addAll(getInventoryBuilder().getButton(key)
@@ -64,13 +63,16 @@ public class DefaultInventoryDriver extends InventoryDriver {
         InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("PlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
         cache = new HashSet<>();
-        inventoryHolder.getKeys().forEach(key -> cache.addAll(inventoryHolder.getButton(key).getSlots()));
-        //Sets the default inventory as soul
+        for (String key : inventoryHolder.getKeys()) {
+            cache.addAll(inventoryHolder.getButton(key).getSlots());
+        }
         Set<Integer> slots = new HashSet<>();
-        getInventoryBuilder().getKeys().forEach(key ->
-                slots.addAll(getInventoryBuilder().getButton(key)
-                        .getSlots()));
-        slots.forEach(slot -> SoulAPI.setSoul(player.getInventory().getItem(slot)));
+        for (String key : getInventoryBuilder().getKeys()) {
+            slots.addAll(getInventoryBuilder().getButton(key).getSlots());
+        }
+        for (int slot : slots) {
+            SoulAPI.setSoul(player.getInventory().getItem(slot));
+        }
     }
 
     public void downgrade() {

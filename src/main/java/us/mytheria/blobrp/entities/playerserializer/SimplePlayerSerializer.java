@@ -67,6 +67,8 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         ItemStack[] armor = crudable.hasString("Armor").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
         int heldItemSlot = crudable.hasInteger("HeldItemSlot").orElse(player.getInventory().getHeldItemSlot());
         Bukkit.getScheduler().runTask(BlobRP.getInstance(), () -> {
+            if (player == null || !player.isOnline())
+                return;
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
             player.setHealth(health);
             player.setFoodLevel(foodLevel);
