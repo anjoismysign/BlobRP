@@ -166,7 +166,7 @@ public class RPManagerDirector extends ManagerDirector {
     }
 
     public final CloudInventoryManager getCloudInventoryManager() {
-        return (CloudInventoryManager) getManager("CloudInventoryManager");
+        return getManager("CloudInventoryManager", CloudInventoryManager.class);
     }
 
     public final MerchantManager getMerchantManager() {
@@ -174,19 +174,19 @@ public class RPManagerDirector extends ManagerDirector {
     }
 
     public final ConfigManager getConfigManager() {
-        return (ConfigManager) getManager("ConfigManager");
+        return getManager("ConfigManager", ConfigManager.class);
     }
 
     public final ListenerManager getListenerManager() {
-        return (ListenerManager) getManager("ListenerManager");
+        return getManager("ListenerManager", ListenerManager.class);
     }
 
     public final ObjectDirector<ShopArticle> getShopArticleDirector() {
-        return getDirector("ShopArticleDirector", ShopArticle.class);
+        return getDirector("ShopArticle", ShopArticle.class);
     }
 
     public final ObjectDirectorManager getRewardDirectorManager() {
-        return (ObjectDirectorManager) getManager("RewardDirectorManager");
+        return getManager("RewardDirectorManager", ObjectDirectorManager.class);
     }
 
     public final ObjectDirector<CashReward> getCashRewardDirector() {
@@ -201,17 +201,15 @@ public class RPManagerDirector extends ManagerDirector {
         return getRewardDirectorManager().getObjectDirector(PermissionReward.class);
     }
 
-    @SuppressWarnings("unchecked")
     public final ObjectDirector<TrophyRequirement> getTrophyRequirementDirector() {
-        return (ObjectDirector<TrophyRequirement>) getManager("TrophyRequirementDirector");
+        return getDirector("TrophyRequirement", TrophyRequirement.class);
     }
 
-    @SuppressWarnings("unchecked")
     public final ObjectDirector<Trophy> getTrophyDirector() {
-        return (ObjectDirector<Trophy>) getManager("TrophyDirector");
+        return getDirector("Trophy", Trophy.class);
     }
 
     public final CommandManager getCommandManager() {
-        return (CommandManager) getManager("CommandManager");
+        return getManager("CommandManager", CommandManager.class);
     }
 }
