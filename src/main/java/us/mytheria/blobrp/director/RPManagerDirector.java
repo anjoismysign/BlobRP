@@ -48,9 +48,7 @@ public class RPManagerDirector extends ManagerDirector {
         addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         ObjectDirectorData shopArticleDirectorData = ObjectDirectorData.simple(getFileManager(), "ShopArticle");
-        addManager("ShopArticleDirector",
-                new ObjectDirector<>(this,
-                        shopArticleDirectorData, ShopArticle::fromFile));
+        addDirector("ShopArticle", ShopArticle::fromFile);
         getShopArticleDirector().getBuilderManager().setBuilderBiFunction(
                 ShopArticleBuilder::build);
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> addManager("MerchantManager", new MerchantManager(this)));
@@ -172,7 +170,7 @@ public class RPManagerDirector extends ManagerDirector {
     }
 
     public final MerchantManager getMerchantManager() {
-        return (MerchantManager) getManager("MerchantManager");
+        return getManager("MerchantManager", MerchantManager.class);
     }
 
     public final ConfigManager getConfigManager() {
@@ -183,9 +181,8 @@ public class RPManagerDirector extends ManagerDirector {
         return (ListenerManager) getManager("ListenerManager");
     }
 
-    @SuppressWarnings("unchecked")
     public final ObjectDirector<ShopArticle> getShopArticleDirector() {
-        return (ObjectDirector<ShopArticle>) getManager("ShopArticleDirector");
+        return getDirector("ShopArticleDirector", ShopArticle.class);
     }
 
     public final ObjectDirectorManager getRewardDirectorManager() {

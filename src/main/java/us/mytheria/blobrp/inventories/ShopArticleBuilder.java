@@ -69,7 +69,6 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                     objectDirector.getBuilderManager().removeBuilder(player);
                     return build;
                 });
-
     }
 
     @SuppressWarnings("unchecked")

@@ -8,10 +8,6 @@ public class CommandManager extends RPManager {
 
     public CommandManager(RPManagerDirector managerDirector) {
         super(managerDirector);
-    }
-
-    @Override
-    public void loadInConstructor() {
         new SoulCmd();
 //        new BalloonCmd();
     }
