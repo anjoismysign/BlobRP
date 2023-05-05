@@ -5,6 +5,8 @@ api-version: 1.16
 depend: [ BlobLib ]
 authors: [ anjoismysign ]
 commands:
+  discord:
+    description: discordcmd
   shoparticle:
     description: made with BlobLib
   cashreward:

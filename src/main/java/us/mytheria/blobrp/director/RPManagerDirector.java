@@ -47,7 +47,6 @@ public class RPManagerDirector extends ManagerDirector {
         addManager("ListenerManager", new ListenerManager(this));
         addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
-        ObjectDirectorData shopArticleDirectorData = ObjectDirectorData.simple(getFileManager(), "ShopArticle");
         addDirector("ShopArticle", ShopArticle::fromFile);
         getShopArticleDirector().getBuilderManager().setBuilderBiFunction(
                 ShopArticleBuilder::build);

@@ -22,6 +22,9 @@ public class ListenerManager extends RPManager {
     private final GlobalSlowDigging globalSlowDigging;
     private final OnJoinMessage onJoinMessage;
     private final OnQuitMessage onQuitMessage;
+    private final DiscordCmd discordCmd;
+    private final KillMessageWeapon killMessageWeapon;
+    private final PlayerDeathMessage playerDeathMessage;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -42,6 +45,9 @@ public class ListenerManager extends RPManager {
         globalSlowDigging = new GlobalSlowDigging(configManager);
         onJoinMessage = new OnJoinMessage(configManager);
         onQuitMessage = new OnQuitMessage(configManager);
+        discordCmd = new DiscordCmd(configManager);
+        killMessageWeapon = new KillMessageWeapon(configManager);
+        playerDeathMessage = new PlayerDeathMessage(configManager);
         reload();
     }
 
@@ -63,5 +69,8 @@ public class ListenerManager extends RPManager {
         globalSlowDigging.reload();
         onJoinMessage.reload();
         onQuitMessage.reload();
+        discordCmd.reload();
+        killMessageWeapon.reload();
+        playerDeathMessage.reload();
     }
 }

@@ -32,9 +32,12 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<Integer> globalSlowDigging;
     private SimpleEventListener<String> onJoinMessage;
     private SimpleEventListener<String> onQuitMessage;
+    private SimpleEventListener<String> killWeaponMessage;
+    private SimpleEventListener<String> playerDeathMessage;
 
     private ComplexEventListener playerSpectateOnDeath;
     private ComplexEventListener alternativeSaving;
+    private ComplexEventListener discordCmd;
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -70,6 +73,9 @@ public class ConfigManager extends RPManager {
         globalSlowDigging = SimpleEventListener.INTEGER(listeners.getConfigurationSection("Global-Slow-Digging"), "Level");
         onJoinMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("OnJoinMessage"), "Message");
         onQuitMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("OnQuitMessage"), "Message");
+        killWeaponMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("KillMessageWeapon"), "Message");
+        playerDeathMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("PlayerDeathMessage"), "Message");
+        discordCmd = new ComplexEventListener(complexListeners.getConfigurationSection("DiscordCmd"));
     }
 
     public FileConfiguration getConfiguration() {
@@ -150,5 +156,17 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<String> onQuitMessage() {
         return onQuitMessage;
+    }
+
+    public SimpleEventListener<String> killWeaponMessage() {
+        return killWeaponMessage;
+    }
+
+    public SimpleEventListener<String> playerDeathMessage() {
+        return playerDeathMessage;
+    }
+
+    public ComplexEventListener discordCmd() {
+        return discordCmd;
     }
 }

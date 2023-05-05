@@ -7,6 +7,11 @@ Database:
   Username: admin
   Password: password
 ComplexListeners:
+  DiscordCmd:
+    Register: false
+    Values:
+      Message: '&7Click here to join our discord server!'
+      URL: 'https://discord.gg/invite'
   PlayerSpectateOnDeath:
     Register: false
     Values:
@@ -59,6 +64,7 @@ Listeners:
     PermissionMultiplier: false
   Merchants:
     Register: true
+    # If you wish to remove the message, leave it as ''
     BoughtMessage: Economy.Received-Withdrawal
   MerchantsView:
     Register: true
@@ -67,6 +73,7 @@ Listeners:
       - '&7Price &r%format%'
   WelcomePlayers:
     Register: true
+    # If you wish to remove the message, leave it as ''
     Message: System.Welcome
   ForceGamemode:
     Register: false
@@ -76,7 +83,16 @@ Listeners:
     Level: 1
   OnJoinMessage:
     Register: true
+    # If you wish to remove the message, leave it as ''
     Message: System.Join
   OnQuitMessage:
     Register: true
+    # If you wish to remove the message, leave it as ''
     Message: System.Quit
+  KillMessageWeapon:
+    Register: false
+    Message: '&7%attacker% &c☠ %victim%'
+  PlayerDeathMessage:
+    Register: false
+    # If you wish to remove the message, leave it as ''
+    Message: '&c☠ %victim%'
