@@ -67,7 +67,7 @@ public class ItemStackReward extends Reward<ItemStack> {
 
     @Override
     public File saveToFile(File directory) {
-        File file = new File(directory + "/" + key + ".yml");
+        File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("Value", value);
         config.set("ShouldDelay", shouldDelay);

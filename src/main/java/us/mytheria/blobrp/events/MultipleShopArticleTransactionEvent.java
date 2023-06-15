@@ -3,7 +3,6 @@ package us.mytheria.blobrp.events;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import us.mytheria.blobrp.entities.ShopArticleTransaction;
 
@@ -14,7 +13,6 @@ public abstract class MultipleShopArticleTransactionEvent extends Event implemen
     private final Collection<ShopArticleTransaction> transaction;
     private final TransactionType transactionType;
     private final Player player;
-    private static final HandlerList HANDLERS_LIST = new HandlerList();
 
     public MultipleShopArticleTransactionEvent(Collection<ShopArticleTransaction> transaction,
                                                Player player,
@@ -24,15 +22,6 @@ public abstract class MultipleShopArticleTransactionEvent extends Event implemen
         this.transaction = transaction;
         this.player = player;
         this.transactionType = transactionType;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS_LIST;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLERS_LIST;
     }
 
     @NotNull

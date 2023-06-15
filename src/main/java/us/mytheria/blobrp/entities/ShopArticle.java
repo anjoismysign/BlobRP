@@ -132,7 +132,7 @@ public class ShopArticle implements BlobObject {
     public File saveToFile(File directory) {
         if (isTransient)
             return null;
-        File file = new File(directory + "/" + getKey() + ".yml");
+        File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("Material", getMaterial().name());
         config.set("BuyPrice", getBuyPrice());
