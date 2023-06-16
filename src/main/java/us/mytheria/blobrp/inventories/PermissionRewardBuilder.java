@@ -17,15 +17,18 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
     private boolean runsAsynchronously;
 
     public static PermissionRewardBuilder build(UUID builderId,
-                                                ObjectDirector<PermissionReward> objectDirector) {
+                                                ObjectDirector<PermissionReward> objectDirector,
+                                                RPManagerDirector managerDirector) {
         return new PermissionRewardBuilder(
                 RPShortcut.buildInventory("PermissionRewardBuilder"),
-                builderId, objectDirector);
+                builderId, objectDirector,
+                managerDirector);
     }
 
     private PermissionRewardBuilder(BlobInventory blobInventory, UUID builderId,
-                                    ObjectDirector<PermissionReward> objectDirector) {
-        super(blobInventory, builderId, objectDirector);
+                                    ObjectDirector<PermissionReward> objectDirector,
+                                    RPManagerDirector managerDirector) {
+        super(blobInventory, builderId, objectDirector, managerDirector);
         addQuickStringButton("Key", 300)
                 .addQuickMessageButton("Message", 300)
                 .addQuickLongButton("Delay", 300)
@@ -39,8 +42,8 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
                     BlobLibAssetAPI.getSound("Builder.Build-Complete")
                             .handle(player);
                     player.closeInventory();
-                    ObjectDirector<PermissionReward> director = RPManagerDirector
-                            .getInstance().getPermissionRewardDirector();
+                    ObjectDirector<PermissionReward> director = managerDirector
+                            .getPermissionRewardDirector();
                     build.saveToFile(director.getObjectManager().getLoadFilesDirectory());
                     director.getObjectManager().addObject(build.getKey(), build);
                     director.getBuilderManager().removeBuilder(player);

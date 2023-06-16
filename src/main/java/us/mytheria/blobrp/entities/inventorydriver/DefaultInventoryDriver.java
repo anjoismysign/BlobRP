@@ -22,7 +22,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
 
     public DefaultInventoryDriver(BlobCrudable crudable, PlayerSerializerType type) {
         super(crudable, type);
-        BlobRPAPI.deserialize(getPlayer(), crudable, getSerializerType(), player -> {
+        BlobRPAPI.INSTANCE.deserialize(getPlayer(), crudable, getSerializerType(), player -> {
             boolean isUpgraded = crudable.hasBoolean("isUpgraded").orElse(false);
             if (isUpgraded) {
                 upgrade(player);

@@ -18,15 +18,18 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
     private boolean runsAsynchronously;
 
     public static ItemStackRewardBuilder build(UUID builderId,
-                                               ObjectDirector<ItemStackReward> objectDirector) {
+                                               ObjectDirector<ItemStackReward> objectDirector,
+                                               RPManagerDirector managerDirector) {
         return new ItemStackRewardBuilder(
                 RPShortcut.buildInventory("ItemStackRewardBuilder"),
-                builderId, objectDirector);
+                builderId, objectDirector,
+                managerDirector);
     }
 
     private ItemStackRewardBuilder(BlobInventory blobInventory, UUID builderId,
-                                   ObjectDirector<ItemStackReward> objectDirector) {
-        super(blobInventory, builderId, objectDirector);
+                                   ObjectDirector<ItemStackReward> objectDirector,
+                                   RPManagerDirector managerDirector) {
+        super(blobInventory, builderId, objectDirector, managerDirector);
         addQuickStringButton("Key", 300)
                 .addQuickMessageButton("Message", 300)
                 .addQuickLongButton("Delay", 300)
@@ -39,8 +42,8 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
                     BlobLibAssetAPI.getSound("Builder.Build-Complete")
                             .handle(player);
                     player.closeInventory();
-                    ObjectDirector<ItemStackReward> director = RPManagerDirector
-                            .getInstance().getItemStackRewardDirector();
+                    ObjectDirector<ItemStackReward> director = managerDirector
+                            .getItemStackRewardDirector();
                     build.saveToFile(director.getObjectManager().getLoadFilesDirectory());
                     director.getObjectManager().addObject(build.getKey(), build);
                     director.getBuilderManager().removeBuilder(player);

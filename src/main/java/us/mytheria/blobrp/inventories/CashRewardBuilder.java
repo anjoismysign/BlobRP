@@ -17,15 +17,18 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
     private boolean runsAsynchronously;
 
     public static CashRewardBuilder build(UUID builderId,
-                                          ObjectDirector<CashReward> objectDirector) {
+                                          ObjectDirector<CashReward> objectDirector,
+                                          RPManagerDirector managerDirector) {
         return new CashRewardBuilder(
                 RPShortcut.buildInventory("CashRewardBuilder"),
-                builderId, objectDirector);
+                builderId, objectDirector,
+                managerDirector);
     }
 
     private CashRewardBuilder(BlobInventory blobInventory, UUID builderId,
-                              ObjectDirector<CashReward> objectDirector) {
-        super(blobInventory, builderId, objectDirector);
+                              ObjectDirector<CashReward> objectDirector,
+                              RPManagerDirector managerDirector) {
+        super(blobInventory, builderId, objectDirector, managerDirector);
         try {
             addQuickStringButton("Key", 300)
                     .addQuickMessageButton("Message", 300)
@@ -39,8 +42,8 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                         Player player = getPlayer();
                         BlobLibAssetAPI.getSound("Builder.Build-Complete").handle(player);
                         player.closeInventory();
-                        ObjectDirector<CashReward> director = RPManagerDirector
-                                .getInstance().getCashRewardDirector();
+                        ObjectDirector<CashReward> director = managerDirector
+                                .getCashRewardDirector();
                         build.saveToFile(director.getObjectManager().getLoadFilesDirectory());
                         director.getObjectManager().addObject(build.getKey(), build);
                         director.getBuilderManager().removeBuilder(player);
@@ -68,7 +71,6 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
         Optional<Long> delay = delayButton.get();
         boolean shouldDelay = delay.isPresent();
         Double cashValue = cashValueButton.get().get();
-
         return CashReward.build(key, shouldDelay, cashValue,
                 delay, runsAsynchronously, message, currencyButton.get());
     }

@@ -10,6 +10,7 @@ import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
 import us.mytheria.blobrp.RPShortcut;
+import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.Optional;
@@ -18,15 +19,18 @@ import java.util.UUID;
 public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
 
     public static ShopArticleBuilder build(UUID builderId,
-                                           ObjectDirector<ShopArticle> objectDirector) {
+                                           ObjectDirector<ShopArticle> objectDirector,
+                                           RPManagerDirector managerDirector) {
         return new ShopArticleBuilder(
                 RPShortcut.buildInventory("ShopArticleBuilder"), builderId,
-                objectDirector);
+                objectDirector,
+                managerDirector);
     }
 
     private ShopArticleBuilder(BlobInventory blobInventory, UUID builderId,
-                               ObjectDirector<ShopArticle> objectDirector) {
-        super(blobInventory, builderId, objectDirector);
+                               ObjectDirector<ShopArticle> objectDirector,
+                               RPManagerDirector managerDirector) {
+        super(blobInventory, builderId, objectDirector, managerDirector);
         ObjectBuilderButton<String> keyButton = ObjectBuilderButtonBuilder.QUICK_STRING(
                 "Key", 300, this);
         ObjectBuilderButton<Material> materialButton = ObjectBuilderButtonBuilder.QUICK_SELECTOR(

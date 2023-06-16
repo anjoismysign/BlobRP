@@ -45,7 +45,7 @@ public class MerchantListener extends RPListener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         String invname = e.getView().getTitle();
-        HashMap<String, MerchantInventory> merchants = plugin.getManagerDirector().getMerchantManager().getMerchantsByTitle();
+        HashMap<String, MerchantInventory> merchants = getManagerDirector().getMerchantManager().getMerchantsByTitle();
         if (!merchants.containsKey(invname))
             return;
         e.setCancelled(true);

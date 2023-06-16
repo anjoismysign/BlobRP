@@ -2,11 +2,13 @@ package us.mytheria.blobrp;
 
 import org.bukkit.Bukkit;
 import us.mytheria.bloblib.managers.BlobPlugin;
+import us.mytheria.bloblib.managers.IManagerDirector;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.playerserializer.SimplePlayerSerializer;
 
-public final class BlobRP extends BlobPlugin {
+public class BlobRP extends BlobPlugin {
     private RPManagerDirector director;
+    private IManagerDirector proxy;
     protected SimplePlayerSerializer simplePlayerSerializer;
 
     public static BlobRP instance;
@@ -27,12 +29,11 @@ public final class BlobRP extends BlobPlugin {
 
     @Override
     public void onDisable() {
-        getManagerDirector().unload();
+        director.unload();
     }
 
-    @Override
-    public RPManagerDirector getManagerDirector() {
-        return director;
+    public IManagerDirector getManagerDirector() {
+        return proxy;
     }
 
     public SimplePlayerSerializer getSimplePlayerSerializer() {

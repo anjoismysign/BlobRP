@@ -1,14 +1,12 @@
 package us.mytheria.blobrp.reward;
 
-import me.anjoismysign.anjo.entities.Result;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import us.mytheria.bloblib.entities.BlobObject;
-import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.BlobRP;
-import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.BlobRPAPI;
 
 import java.io.File;
 import java.util.Optional;
@@ -22,25 +20,17 @@ import java.util.function.Consumer;
 public abstract class Reward<T> implements BlobObject {
     private static final BlobRP main = BlobRP.getInstance();
 
+    /**
+     * Checks if a generic reward is being tracked.
+     * If so, it will be passed to the consumer.
+     *
+     * @param key      The key
+     * @param consumer The consumer
+     * @deprecated Use {@link BlobRPAPI#ifReward(String, Consumer)} instead
+     */
+    @Deprecated
     public static void ifReward(String key, Consumer<Reward<?>> consumer) {
-        RPManagerDirector director = main.getManagerDirector();
-        ObjectDirector<CashReward> cashRewardObjectDirector = director.getCashRewardDirector();
-        Result<CashReward> cashRewardResult = cashRewardObjectDirector.getObjectManager().searchObject(key);
-        if (cashRewardResult.isValid()) {
-            consumer.accept(cashRewardResult.value());
-            return;
-        }
-        ObjectDirector<ItemStackReward> itemStackRewardObjectDirector = director.getItemStackRewardDirector();
-        Result<ItemStackReward> itemStackRewardResult = itemStackRewardObjectDirector.getObjectManager().searchObject(key);
-        if (itemStackRewardResult.isValid()) {
-            consumer.accept(itemStackRewardResult.value());
-            return;
-        }
-        ObjectDirector<PermissionReward> permissionRewardObjectDirector = director.getPermissionRewardDirector();
-        Result<PermissionReward> permissionRewardResult = permissionRewardObjectDirector.getObjectManager().searchObject(key);
-        if (permissionRewardResult.isValid()) {
-            consumer.accept(permissionRewardResult.value());
-        }
+        BlobRPAPI.INSTANCE.ifReward(key, consumer);
     }
 
     protected final String key;

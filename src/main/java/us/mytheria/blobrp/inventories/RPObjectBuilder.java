@@ -10,15 +10,20 @@ import us.mytheria.blobrp.director.RPManagerDirector;
 import java.util.UUID;
 
 public abstract class RPObjectBuilder<T extends BlobObject> extends ObjectBuilder<T> {
-    private final BlobRP main;
+    private final RPManagerDirector director;
 
     public RPObjectBuilder(BlobInventory blobInventory, UUID builderId,
-                           ObjectDirector<T> objectDirector) {
+                           ObjectDirector<T> objectDirector,
+                           RPManagerDirector director) {
         super(blobInventory, builderId, objectDirector);
-        this.main = BlobRP.getInstance();
+        this.director = director;
     }
 
     public RPManagerDirector getManagerDirector() {
-        return main.getManagerDirector();
+        return director;
+    }
+
+    public BlobRP getPlugin() {
+        return getManagerDirector().getPlugin();
     }
 }

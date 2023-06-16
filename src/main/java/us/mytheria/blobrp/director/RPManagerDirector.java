@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.*;
-import us.mytheria.bloblib.managers.ManagerDirector;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.manager.CloudInventoryManager;
 import us.mytheria.blobrp.director.manager.CommandManager;
@@ -26,16 +25,13 @@ import us.mytheria.blobrp.reward.RewardReader;
 import us.mytheria.blobrp.trophy.Trophy;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirementReader;
-import us.mytheria.blobrp.trophy.requirements.UIBuilder;
+import us.mytheria.blobrp.trophy.requirements.TrophyRequirementUIBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RPManagerDirector extends ManagerDirector {
-    public static RPManagerDirector getInstance() {
-        return BlobRP.getInstance().getManagerDirector();
-    }
+public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public RPManagerDirector() {
         super(BlobRP.getInstance());
@@ -48,8 +44,8 @@ public class RPManagerDirector extends ManagerDirector {
         addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
-        getShopArticleDirector().getBuilderManager().setBuilderBiFunction(
-                ShopArticleBuilder::build);
+        getShopArticleDirector().getBuilderManager().setBuilderBiFunction((uuid, shopArticleObjectDirector) ->
+                ShopArticleBuilder.build(uuid, shopArticleObjectDirector, this));
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> addManager("MerchantManager", new MerchantManager(this)));
         getShopArticleDirector().addAdminChildCommand(data -> {
             String[] args = data.args();
@@ -106,9 +102,9 @@ public class RPManagerDirector extends ManagerDirector {
         // Reward \\
         addManager("RewardDirectorManager", new ObjectDirectorManager(this,
                 HashMap::new));
-        ObjectDirectorData cashRewardDirectorData = ObjectDirectorData.simple(getFileManager(), "CashReward");
-        ObjectDirectorData itemStackRewardDirectorData = ObjectDirectorData.simple(getFileManager(), "ItemStackReward");
-        ObjectDirectorData permissionRewardDirectorData = ObjectDirectorData.simple(getFileManager(), "PermissionReward");
+        ObjectDirectorData cashRewardDirectorData = ObjectDirectorData.simple(getRealFileManager(), "CashReward");
+        ObjectDirectorData itemStackRewardDirectorData = ObjectDirectorData.simple(getRealFileManager(), "ItemStackReward");
+        ObjectDirectorData permissionRewardDirectorData = ObjectDirectorData.simple(getRealFileManager(), "PermissionReward");
         getRewardDirectorManager().addObjectDirector(CashReward.class, new ObjectDirector<>(this,
                 cashRewardDirectorData, RewardReader::readCash));
         getRewardDirectorManager().addObjectDirector(ItemStackReward.class, new ObjectDirector<>(this,
@@ -116,18 +112,16 @@ public class RPManagerDirector extends ManagerDirector {
         getRewardDirectorManager().addObjectDirector(PermissionReward.class, new ObjectDirector<>(this,
                 permissionRewardDirectorData, RewardReader::readPermission));
         getCashRewardDirector().getBuilderManager().setBuilderBiFunction(
-                CashRewardBuilder::build);
+                (uuid, cashRewardObjectDirector) -> CashRewardBuilder.build(uuid, cashRewardObjectDirector, this));
         getItemStackRewardDirector().getBuilderManager().setBuilderBiFunction(
-                ItemStackRewardBuilder::build);
+                (uuid, itemStackRewardObjectDirector) -> ItemStackRewardBuilder.build(uuid, itemStackRewardObjectDirector, this));
         getPermissionRewardDirector().getBuilderManager().setBuilderBiFunction(
-                PermissionRewardBuilder::build);
+                (uuid, permissionRewardObjectDirector) -> PermissionRewardBuilder.build(uuid, permissionRewardObjectDirector, this));
         // TrophyRequirement \\
-        ObjectDirectorData trophyRequirementDirectorData = ObjectDirectorData.simple(getFileManager(), "TrophyRequirement");
-        addManager("TrophyRequirementDirector", new ObjectDirector<>(
-                this, trophyRequirementDirectorData,
-                file -> TrophyRequirementReader.read(file).build()));
+        addDirector("TrophyRequirement", file ->
+                TrophyRequirementReader.read(file).build());
         getTrophyRequirementDirector().getBuilderManager().setBuilderBiFunction(
-                UIBuilder::build);
+                (uuid, trophyRequirementObjectDirector) -> TrophyRequirementUIBuilder.build(uuid, trophyRequirementObjectDirector, this));
         // Trophy \\
 //        ObjectDirectorData trophyDirectorData = ObjectDirectorData.simple(getFileManager(), "Trophy");
 //        addManager("TrophyDirector", new ObjectDirector<>(this,
