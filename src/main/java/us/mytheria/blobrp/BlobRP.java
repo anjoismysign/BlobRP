@@ -1,6 +1,7 @@
 package us.mytheria.blobrp;
 
 import org.bukkit.Bukkit;
+import us.mytheria.bloblib.entities.proxy.BlobProxifier;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.bloblib.managers.IManagerDirector;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -22,6 +23,7 @@ public class BlobRP extends BlobPlugin {
         instance = this;
         simplePlayerSerializer = new SimplePlayerSerializer();
         director = new RPManagerDirector();
+        proxy = BlobProxifier.PROXY(director);
         new BlobRPAPI(director);
         Bukkit.getScheduler().runTask(this, () ->
                 director.postWorld());
