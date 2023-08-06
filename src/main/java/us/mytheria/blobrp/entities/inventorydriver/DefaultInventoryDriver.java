@@ -22,7 +22,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
 
     public DefaultInventoryDriver(BlobCrudable crudable, PlayerSerializerType type) {
         super(crudable, type);
-        BlobRPAPI.INSTANCE.deserialize(getPlayer(), crudable, getSerializerType(), player -> {
+        BlobRPAPI.getInstance().deserialize(getPlayer(), crudable, getSerializerType(), player -> {
             boolean isUpgraded = crudable.hasBoolean("isUpgraded").orElse(false);
             if (isUpgraded) {
                 upgrade(player);
@@ -51,7 +51,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
         getInventoryBuilder().getKeys().forEach(key ->
                 slots.addAll(getInventoryBuilder().getButton(key)
                         .getSlots()));
-        slots.forEach(slot -> SoulAPI.setSoul(player.getInventory().getItem(slot)));
+        slots.forEach(slot -> SoulAPI.getInstance().setSoul(player.getInventory().getItem(slot)));
     }
 
     public void upgrade() {
@@ -71,7 +71,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
             slots.addAll(getInventoryBuilder().getButton(key).getSlots());
         }
         for (int slot : slots) {
-            SoulAPI.setSoul(player.getInventory().getItem(slot));
+            SoulAPI.getInstance().setSoul(player.getInventory().getItem(slot));
         }
     }
 

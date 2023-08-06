@@ -10,19 +10,36 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
+import us.mytheria.blobrp.director.RPManagerDirector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SoulAPI {
-    private static final BlobRP main = BlobRP.getInstance();
+    private static SoulAPI instance;
+    private final NamespacedKey soulItemKey;
 
-    private static final NamespacedKey soulItemKey = new NamespacedKey(main, "soul");
+    private SoulAPI(RPManagerDirector director) {
+        this.soulItemKey = new NamespacedKey(director.getPlugin(), "soul");
+    }
+
+    public static SoulAPI getInstance(RPManagerDirector director) {
+        if (instance == null) {
+            if (director == null)
+                throw new NullPointerException("injected dependency is null");
+            SoulAPI.instance = new SoulAPI(director);
+        }
+        return instance;
+    }
+
+    public static SoulAPI getInstance() {
+        return getInstance(null);
+    }
 
     /**
      * Sets a PersistentDataHolder to be soul alike.
      */
-    public static void setSoul(PersistentDataHolder holder) {
+    public void setSoul(PersistentDataHolder holder) {
         holder.getPersistentDataContainer().set(soulItemKey, PersistentDataType.BYTE, (byte) 1);
     }
 
@@ -30,7 +47,7 @@ public class SoulAPI {
      * @param itemStack The item you want to set as a soul alike item.
      * @return true if succesful, false if not.
      */
-    public static boolean setSoul(ItemStack itemStack) {
+    public boolean setSoul(ItemStack itemStack) {
         if (itemStack == null) return false;
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return false;
@@ -44,7 +61,7 @@ public class SoulAPI {
      *
      * @param array The ItemStack array you want to set the items as soul alike.
      */
-    public static void setSoul(ItemStack[] array) {
+    public void setSoul(ItemStack[] array) {
         for (ItemStack itemStack : array) {
             setSoul(itemStack);
         }
@@ -55,7 +72,7 @@ public class SoulAPI {
      *
      * @param player The player you want to set the items as soul alike.
      */
-    public static void setSoul(Player player) {
+    public void setSoul(Player player) {
         setSoul(player.getInventory().getContents());
         setSoul(player.getInventory().getArmorContents());
     }
@@ -64,7 +81,7 @@ public class SoulAPI {
      * @param holder The PersistentDataHolder you want to check.
      * @return true if the PersistentDataHolder is soul alike, false if not.
      */
-    public static boolean isSoul(PersistentDataHolder holder) {
+    public boolean isSoul(PersistentDataHolder holder) {
         PersistentDataContainer container = holder.getPersistentDataContainer();
         if (!container.has(soulItemKey, PersistentDataType.BYTE))
             return false;
@@ -75,7 +92,7 @@ public class SoulAPI {
      * @param itemStack The item you want to check.
      * @return true if the item is soul alike, false if not.
      */
-    public static boolean isSoul(ItemStack itemStack) {
+    public boolean isSoul(ItemStack itemStack) {
         if (itemStack == null) return false;
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return false;
@@ -88,7 +105,7 @@ public class SoulAPI {
      * @param inventoryHolder The inventory holder you want to drop the items from.
      * @param dropLocation    The location where the items will be dropped.
      */
-    public static void dropNonSouls(InventoryHolder inventoryHolder, Location dropLocation) {
+    public void dropNonSouls(InventoryHolder inventoryHolder, Location dropLocation) {
         Inventory inventory = inventoryHolder.getInventory();
         for (ItemStack itemStack : inventoryHolder.getInventory().getContents()) {
             if (itemStack == null)
@@ -104,7 +121,7 @@ public class SoulAPI {
      *
      * @param player The player you want to drop the items from.
      */
-    public static void dropNonSouls(Player player) {
+    public void dropNonSouls(Player player) {
         dropNonSouls(player, player.getLocation());
     }
 
@@ -112,7 +129,7 @@ public class SoulAPI {
      * @param inventory The inventory you want to check.
      * @return A list of all soul alike items in the inventory.
      */
-    public static List<ItemStack> getSouls(Inventory inventory) {
+    public List<ItemStack> getSouls(Inventory inventory) {
         List<ItemStack> souls = new ArrayList<>();
         for (ItemStack itemStack : inventory.getContents()) {
             if (itemStack == null)
@@ -126,7 +143,7 @@ public class SoulAPI {
      * @param inventoryHolder The inventory holder you want to check.
      * @return A list of all soul alike items from inventory holder.
      */
-    public static List<ItemStack> getSouls(InventoryHolder inventoryHolder) {
+    public List<ItemStack> getSouls(InventoryHolder inventoryHolder) {
         return getSouls(inventoryHolder.getInventory());
     }
 }

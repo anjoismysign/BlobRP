@@ -18,6 +18,6 @@ public class TrophyReader {
      */
     @Deprecated
     public static Trophy read(File file) {
-        return BlobRPAPI.INSTANCE.readTrophy(file);
+        return BlobRPAPI.getInstance().readTrophy(file);
     }
 }

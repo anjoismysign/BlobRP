@@ -29,13 +29,24 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class BlobRPAPI {
-    public static BlobRPAPI INSTANCE;
-
+    private static BlobRPAPI instance;
     private final RPManagerDirector director;
 
-    protected BlobRPAPI(RPManagerDirector director) {
+    private BlobRPAPI(RPManagerDirector director) {
         this.director = director;
-        INSTANCE = this;
+    }
+
+    public static BlobRPAPI getInstance(RPManagerDirector director) {
+        if (instance == null) {
+            if (director == null)
+                throw new NullPointerException("injected dependency is null");
+            BlobRPAPI.instance = new BlobRPAPI(director);
+        }
+        return instance;
+    }
+
+    public static BlobRPAPI getInstance() {
+        return getInstance(null);
     }
 
     /**
@@ -56,7 +67,7 @@ public class BlobRPAPI {
                 sellPrice, true, buyingCurrency, sellingCurrency);
         if (shopArticle == null)
             return false;
-        INSTANCE.director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle, null);
+        director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle, null);
         return true;
     }
 
@@ -164,7 +175,7 @@ public class BlobRPAPI {
         List<String> rewardKeys = section.getStringList("Rewards");
         List<Reward> rewards = new ArrayList<>();
         rewardKeys.forEach(key -> {
-            BlobRPAPI.INSTANCE.ifReward(key, rewards::add);
+            ifReward(key, rewards::add);
         });
         if (!section.contains("Requirements"))
             throw new IllegalArgumentException("'Requirements' is required. Missing at: " + file.getPath());

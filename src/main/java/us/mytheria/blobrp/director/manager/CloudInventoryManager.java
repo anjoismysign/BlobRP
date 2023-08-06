@@ -150,7 +150,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
                         Bukkit.getScheduler().runTask(getPlugin(), () -> {
                             if (player == null || !player.isOnline())
                                 return;
-                            SoulAPI.setSoul(player);
+                            SoulAPI.getInstance().setSoul(player);
                         });
                 }
             }

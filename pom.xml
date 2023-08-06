@@ -6,7 +6,7 @@
 
     <groupId>us.mytheria</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.43</version>
+    <version>0.44</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -74,7 +74,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>${testServer}/plugins/${project.artifactId}.jar
+                            <outputFile>${testServer}/plugins/${project.artifactId}-${project.version}.jar
                             </outputFile>
                             <filters>
                                 <filter>

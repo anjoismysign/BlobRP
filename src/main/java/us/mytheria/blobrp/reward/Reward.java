@@ -30,7 +30,7 @@ public abstract class Reward<T> implements BlobObject {
      */
     @Deprecated
     public static void ifReward(String key, Consumer<Reward<?>> consumer) {
-        BlobRPAPI.INSTANCE.ifReward(key, consumer);
+        BlobRPAPI.getInstance().ifReward(key, consumer);
     }
 
     protected final String key;

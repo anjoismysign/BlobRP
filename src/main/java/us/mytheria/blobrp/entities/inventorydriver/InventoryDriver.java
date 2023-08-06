@@ -23,7 +23,7 @@ public abstract class InventoryDriver implements BlobSerializable {
 
     @Override
     public BlobCrudable serializeAllAttributes() {
-        return BlobRPAPI.INSTANCE.serialize(getPlayer(), serializerType);
+        return BlobRPAPI.getInstance().serialize(getPlayer(), serializerType);
     }
 
     @Override

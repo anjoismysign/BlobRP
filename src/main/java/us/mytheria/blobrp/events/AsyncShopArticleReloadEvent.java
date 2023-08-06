@@ -39,7 +39,7 @@ public class AsyncShopArticleReloadEvent extends Event {
                                          NamespacedKey key,
                                          @Nullable String buyingCurrency,
                                          @Nullable String sellingCurrency) {
-        return BlobRPAPI.INSTANCE.addComplexShopArticle(display, buyPrice, key, sellPrice, buyingCurrency, sellingCurrency);
+        return BlobRPAPI.getInstance().addComplexShopArticle(display, buyPrice, key, sellPrice, buyingCurrency, sellingCurrency);
     }
 
     /**
@@ -54,6 +54,6 @@ public class AsyncShopArticleReloadEvent extends Event {
      * @return Whether the article was added successfully or not
      */
     public boolean addShopArticle(ItemStack display, double buyPrice, NamespacedKey key) {
-        return BlobRPAPI.INSTANCE.addComplexShopArticle(display, buyPrice, key);
+        return BlobRPAPI.getInstance().addComplexShopArticle(display, buyPrice, key);
     }
 }
