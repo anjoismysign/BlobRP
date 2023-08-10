@@ -7,7 +7,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
 public class KeepExperienceOnDeath extends RPListener {
-    private boolean keepExperienceOnDeath;
 
     public KeepExperienceOnDeath(ConfigManager configManager) {
         super(configManager);
@@ -17,12 +16,11 @@ public class KeepExperienceOnDeath extends RPListener {
         HandlerList.unregisterAll(this);
         if (getConfigManager().playerKeepExperienceOnDeath().register()) {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-            keepExperienceOnDeath = getConfigManager().playerKeepExperienceOnDeath().value();
         }
     }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        event.setKeepLevel(keepExperienceOnDeath);
+        event.setKeepLevel(true);
     }
 }
