@@ -30,5 +30,8 @@ public class PlayerHunger extends RPListener {
                 event.setCancelled(false);
             else
                 event.setCancelled(true);
+        else
+            event.setCancelled(true);
+
     }
 }
