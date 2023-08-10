@@ -6,7 +6,7 @@
 
     <groupId>us.mytheria</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.45</version>
+    <version>0.46</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -115,13 +115,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19.3-R0.1-SNAPSHOT</version>
+            <version>1.20.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.690.1cs</version>
+            <version>1.690.4d</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

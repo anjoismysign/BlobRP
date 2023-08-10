@@ -37,7 +37,7 @@ public class PlayerSpectateOnDeath extends RPListener {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
             PlayerSpectateOnDeath.this.length =
                     complexEventListener.getInt("Length");
-            complexEventListener.getStringList("BlobMessages").forEach(key -> {
+            complexEventListener.getStringList("Blob-Messages").forEach(key -> {
                 BlobMessage message = BlobLibAssetAPI.getMessage(key);
                 if (message == null) {
                     logger.error("Message " + key + " not found.");

@@ -4,6 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import us.mytheria.bloblib.entities.ComplexEventListener;
 import us.mytheria.bloblib.entities.SimpleEventListener;
+import us.mytheria.bloblib.entities.TinyEventListener;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.RPManager;
@@ -15,12 +16,12 @@ public class ConfigManager extends RPManager {
     private final BlobPlugin main;
     private FileConfiguration configuration;
 
-    private SimpleEventListener<Boolean> dropNonSoulOnDeath;
-    private SimpleEventListener<Boolean> playerKeepExperienceOnDeath;
+    private TinyEventListener dropNonSoulOnDeath;
+    private TinyEventListener playerKeepExperienceOnDeath;
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
-    private SimpleEventListener<Boolean> entitiesClearDropsOnDeath;
-    private SimpleEventListener<Boolean> entityDropItem;
+    private TinyEventListener entitiesClearDropsOnDeath;
+    private TinyEventListener entityDropItem;
     private SimpleEventListener<Double> sellArticlesEvent;
     private SimpleEventListener<Boolean> sellArticlesListener;
     private SimpleEventListener<String> merchants;
@@ -54,39 +55,39 @@ public class ConfigManager extends RPManager {
         configuration = main.getConfig();
         ConfigurationSection listeners = configuration.getConfigurationSection("Listeners");
         ConfigurationSection complexListeners = configuration.getConfigurationSection("ComplexListeners");
-        dropNonSoulOnDeath = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("DropNonSoulOnDeath"), "Drop");
-        playerKeepExperienceOnDeath = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("PlayerKeepExperienceOnDeath"), "Keep");
-        playerDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("PlayerDropExperienceOnDeath"), "Amount");
+        dropNonSoulOnDeath = TinyEventListener.READ(listeners, "Drop-Non-Soul-On-Death");
+        playerKeepExperienceOnDeath = TinyEventListener.READ(listeners, "Player-Keep-Experience-On-Death");
+        playerDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("Player-Drop-Experience-On-Death"), "Amount");
         entitiesDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("EntitiesDropExperienceOnDeath"), "Amount");
-        entitiesClearDropsOnDeath = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("EntitiesClearDropsOnDeath"), "Clear");
-        entityDropItem = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("EntityDropItem"), "Cancel");
-        sellArticlesEvent = SimpleEventListener.DOUBLE(listeners.getConfigurationSection("SellArticlesEvent"), "DefaultPrice");
-        sellArticlesListener = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("ManageSellArticles"), "PermissionMultiplier");
-        merchants = SimpleEventListener.STRING(listeners.getConfigurationSection("Merchants"), "BoughtMessage");
-        merchantsView = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("MerchantsView"), "Add");
-        welcomePlayers = SimpleEventListener.STRING(listeners.getConfigurationSection("WelcomePlayers"), "Message");
-        playerHunger = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("PlayerHunger"), "RequiresPermission");
-        iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("IceFormation"), "WorldWhitelist");
-        playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("PlayerSpectateOnDeath"));
-        forceGamemode = SimpleEventListener.STRING(listeners.getConfigurationSection("ForceGamemode"), "Gamemode");
-        alternativeSaving = new ComplexEventListener(complexListeners.getConfigurationSection("AlternativeSaving"));
+        entitiesClearDropsOnDeath = TinyEventListener.READ(listeners, "Entities-Clear-Drops-On-Death");
+        entityDropItem = TinyEventListener.READ(listeners, "Entity-Drop-Item");
+        sellArticlesEvent = SimpleEventListener.DOUBLE(listeners.getConfigurationSection("Sell-Articles-Event"), "Default-Price");
+        sellArticlesListener = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("Manage-Sell-Articles"), "Permission-Multiplier");
+        merchants = SimpleEventListener.STRING(listeners.getConfigurationSection("Merchants"), "Bought-Message");
+        merchantsView = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("Merchants-View"), "Add");
+        welcomePlayers = SimpleEventListener.STRING(listeners.getConfigurationSection("Welcome-Players"), "Message");
+        playerHunger = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("Remove-Player-Hunger"), "Requires-Permission");
+        iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("Prevent-Ice-Formation"), "World-Whitelist");
+        playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("Player-Spectate-On-Death"));
+        forceGamemode = SimpleEventListener.STRING(listeners.getConfigurationSection("Force-Gamemode"), "Gamemode");
+        alternativeSaving = new ComplexEventListener(complexListeners.getConfigurationSection("Alternative-Saving"));
         globalSlowDigging = SimpleEventListener.INTEGER(listeners.getConfigurationSection("Global-Slow-Digging"), "Level");
-        onJoinMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("OnJoinMessage"), "Message");
-        onQuitMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("OnQuitMessage"), "Message");
-        killWeaponMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("KillMessageWeapon"), "Message");
-        playerDeathMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("PlayerDeathMessage"), "Message");
-        discordCmd = new ComplexEventListener(complexListeners.getConfigurationSection("DiscordCmd"));
+        onJoinMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("On-Join-Message"), "Message");
+        onQuitMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("On-Quit-Message"), "Message");
+        killWeaponMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("Kill-Message-Weapon"), "Message");
+        playerDeathMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("Player-Death-Message"), "Message");
+        discordCmd = new ComplexEventListener(complexListeners.getConfigurationSection("Discord-Cmd"));
     }
 
     public FileConfiguration getConfiguration() {
         return configuration;
     }
 
-    public SimpleEventListener<Boolean> dropNonSoulOnDeath() {
+    public TinyEventListener dropNonSoulOnDeath() {
         return dropNonSoulOnDeath;
     }
 
-    public SimpleEventListener<Boolean> playerKeepExperienceOnDeath() {
+    public TinyEventListener playerKeepExperienceOnDeath() {
         return playerKeepExperienceOnDeath;
     }
 
@@ -98,11 +99,11 @@ public class ConfigManager extends RPManager {
         return entitiesDropExperienceOnDeath;
     }
 
-    public SimpleEventListener<Boolean> entitiesClearDropsOnDeath() {
+    public TinyEventListener entitiesClearDropsOnDeath() {
         return entitiesClearDropsOnDeath;
     }
 
-    public SimpleEventListener<Boolean> entityDropItem() {
+    public TinyEventListener entityDropItem() {
         return entityDropItem;
     }
 

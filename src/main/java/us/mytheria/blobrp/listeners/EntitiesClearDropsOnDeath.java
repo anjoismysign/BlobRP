@@ -5,7 +5,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDeathEvent;
-import us.mytheria.bloblib.utilities.Debug;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
 public class EntitiesClearDropsOnDeath extends RPListener {
@@ -22,10 +21,8 @@ public class EntitiesClearDropsOnDeath extends RPListener {
 
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
-        if (event.getEntity().getType() == EntityType.PLAYER) {
-            Debug.debug("Player died, not dropping items");
+        if (event.getEntity().getType() == EntityType.PLAYER)
             return;
-        }
         event.getDrops().clear();
     }
 }

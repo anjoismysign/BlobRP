@@ -72,14 +72,14 @@ public class CloudInventoryManager extends RPManager implements Listener {
         ComplexEventListener alternativeSaving = getManagerDirector().getConfigManager().alternativeSaving();
         alternativeSaving.ifRegister(eventListener -> {
             Bukkit.getPluginManager().registerEvents(this, getPlugin());
-            ConfigurationSection welcomePlayers = alternativeSaving.getConfigurationSection("WelcomePlayers");
+            ConfigurationSection welcomePlayers = alternativeSaving.getConfigurationSection("Welcome-Players");
             if (welcomePlayers.getBoolean("Register")) {
                 welcomeMessage = BlobLibAssetAPI.getMessage(welcomePlayers.getString("Message"));
                 soulInventory = welcomePlayers.getBoolean("Inventory-Is-Soul");
             } else
                 welcomeMessage = null;
-            serializerType = Optional.of(alternativeSaving.getString("PlayerSerializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
-            driverType = Optional.of(alternativeSaving.getString("InventoryDriver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
+            serializerType = Optional.of(alternativeSaving.getString("Player-Serializer")).map(PlayerSerializerType::valueOf).orElse(PlayerSerializerType.SIMPLE);
+            driverType = Optional.of(alternativeSaving.getString("Inventory-Driver")).map(InventoryDriverType::valueOf).orElse(InventoryDriverType.DEFAULT);
         });
     }
 

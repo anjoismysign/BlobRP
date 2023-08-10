@@ -7,92 +7,84 @@ Database:
   Username: admin
   Password: password
 ComplexListeners:
-  DiscordCmd:
+  Discord-Cmd:
     Register: false
     Values:
       Message: '&7Click here to join our discord server!'
       URL: 'https://discord.gg/invite'
-  PlayerSpectateOnDeath:
+  Player-Spectate-On-Death:
     Register: false
     Values:
       Length: 5
-      BlobMessages:
+      Blob-Messages:
         - Spectator.Oof
         - Spectator.Wasted
         - Spectator.Dead
         - Spectator.Keep-Alive
-  AlternativeSaving:
+  Alternative-Saving:
     Register: false
     Values:
-      PlayerSerializer: SIMPLE
-      InventoryDriver: DEFAULT
-      WelcomePlayers:
+      Player-Serializer: SIMPLE
+      Inventory-Driver: DEFAULT
+      Welcome-Players:
         Register: true
         Message: System.Welcome
         Inventory-Is-Soul: false
 Listeners:
-  IceFormation:
+  Ice-Formation:
     Register: true
-    WorldWhitelist:
+    World-Whitelist:
       - world
-  PlayerHunger:
-    Register: true
-    RequiresPermission: false
-  DropNonSoulOnDeath:
+  Remove-Player-Hunger:
     Register: false
-    Drop: true
-  PlayerDropExperienceOnDeath:
-    Register: true
+    Requires-Permission: false
+  Drop-Non-Soul-On-Death: false
+  Player-Drop-Experience-On-Death:
+    Register: false
     Amount: 0
-  PlayerKeepExperienceOnDeath:
-    Register: true
-    Keep: false
-  EntitiesDropExperienceOnDeath:
-    Register: true
+  Player-Keep-Experience-On-Death: false
+  Entities-Drop-Experience-On-Death:
+    Register: false
     Amount: 0
-  EntitiesClearDropsOnDeath:
-    Register: true
-    Clear: true
-  EntityDropItem:
-    Register: true
-    Cancel: true
-  SellArticlesEvent:
+  Entities-Clear-Drops-On-Death: false
+  Entity-Drop-Item: true
+  Sell-Articles-Event:
     Register: true
     DefaultPrice: 1
-  ManageSellArticles:
+  Manage-Sell-Articles:
     Register: true
-    PermissionMultiplier: false
+    Permission-Multiplier: false
   Merchants:
     Register: true
     # If you wish to remove the message, leave it as ''
-    BoughtMessage: Economy.Received-Withdrawal
-  MerchantsView:
+    Bought-Message: Economy.Received-Withdrawal
+  Merchants-View:
     Register: true
     Add:
       - ''
       - '&7Price &r%format%'
-  WelcomePlayers:
+  Welcome-Players:
     Register: true
     # If you wish to remove the message, leave it as ''
     Message: System.Welcome
-  ForceGamemode:
+  Force-Gamemode:
     Register: false
     Gamemode: ADVENTURE
   Global-Slow-Digging:
     Register: false
     Level: 1
-  OnJoinMessage:
+  On-Join-Message:
     Register: true
     # If you wish to remove the message, leave it as ''
     Message: System.Join
-  OnQuitMessage:
+  On-Quit-Message:
     Register: true
     # If you wish to remove the message, leave it as ''
     Message: System.Quit
-  KillMessageWeapon:
+  Kill-Message-Weapon:
     Register: false
     Message: '&7%attacker% &c☠ %victim%'
-  PlayerDeathMessage:
+  Player-Death-Message:
     Register: false
     # If you wish to remove the message, leave it as ''
     Message: '&c☠ %victim%'
