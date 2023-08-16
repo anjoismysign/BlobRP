@@ -1,12 +1,12 @@
 package us.mytheria.blobrp.director;
 
-import me.anjoismysign.anjo.entities.Result;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAssetAPI;
-import us.mytheria.bloblib.entities.*;
+import us.mytheria.bloblib.entities.GenericManagerDirector;
+import us.mytheria.bloblib.entities.ObjectDirector;
+import us.mytheria.bloblib.entities.ObjectDirectorData;
+import us.mytheria.bloblib.entities.ObjectDirectorManager;
 import us.mytheria.blobrp.BlobRP;
+import us.mytheria.blobrp.director.command.OpenSellInventory;
 import us.mytheria.blobrp.director.manager.CloudInventoryManager;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -27,17 +27,15 @@ import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirementReader;
 import us.mytheria.blobrp.trophy.requirements.TrophyRequirementUIBuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public RPManagerDirector() {
         super(BlobRP.getInstance());
-        registerAndUpdateBlobInventory("WelcomeInventory");
-        registerAndUpdateMetaBlobInventory("PlayerInventory");
-        registerAndUpdateMetaBlobInventory("EventPlayerInventory");
+        registerMetaBlobInventory("WelcomeInventory");
+        registerMetaBlobInventory("PlayerInventory");
+        registerMetaBlobInventory("EventPlayerInventory");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
@@ -47,58 +45,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         getShopArticleDirector().getBuilderManager().setBuilderBiFunction((uuid, shopArticleObjectDirector) ->
                 ShopArticleBuilder.build(uuid, shopArticleObjectDirector, this));
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> addManager("MerchantManager", new MerchantManager(this)));
-        getShopArticleDirector().addAdminChildCommand(data -> {
-            String[] args = data.args();
-            BlobExecutor executor = data.executor();
-            CommandSender sender = data.sender();
-            Result<BlobChildCommand> result = executor
-                    .isChildCommand("opensellinventory", args);
-            if (result.isValid()) {
-                switch (args.length) {
-                    case 1 -> {
-                        return executor.ifInstanceOfPlayer(sender, ShopArticle::openSellInventory);
-                    }
-                    case 2 -> {
-                        String playerName = args[1];
-                        Player input = Bukkit.getPlayer(playerName);
-                        if (input == null) {
-                            BlobLibAssetAPI.getMessage("Player.Not-Found").toCommandSender(sender);
-                            return true;
-                        }
-                        ShopArticle.openSellInventory(input);
-                        return true;
-                    }
-                    default -> {
-                        return false;
-                    }
-                }
-
-            }
-            return false;
-        });
-        getShopArticleDirector().addAdminChildTabCompleter(data -> {
-            String[] args = data.args();
-            List<String> suggestions = new ArrayList<>();
-            switch (args.length) {
-                case 1 -> {
-                    suggestions.add("openSellInventory");
-                    return suggestions;
-                }
-                case 2 -> {
-                    BlobExecutor executor = data.executor();
-                    Result<BlobChildCommand> result = executor
-                            .isChildCommand("opensellinventory", args);
-                    if (!result.isValid())
-                        return null;
-                    Bukkit.getOnlinePlayers().forEach(player -> suggestions.add(player.getName()));
-                    executor.ifInstanceOfPlayer(data.sender(), player -> suggestions.remove(player.getName()));
-                    return suggestions;
-                }
-                default -> {
-                    return suggestions;
-                }
-            }
-        });
+        getShopArticleDirector().addAdminChildCommand(OpenSellInventory::command);
         // Reward \\
         addManager("RewardDirectorManager", new ObjectDirectorManager(this,
                 HashMap::new));

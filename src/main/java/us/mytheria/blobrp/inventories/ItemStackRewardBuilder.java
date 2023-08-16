@@ -7,7 +7,6 @@ import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
-import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.reward.ItemStackReward;
 
@@ -21,7 +20,7 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
                                                ObjectDirector<ItemStackReward> objectDirector,
                                                RPManagerDirector managerDirector) {
         return new ItemStackRewardBuilder(
-                RPShortcut.buildInventory("ItemStackRewardBuilder"),
+                BlobLibAssetAPI.buildInventory("ItemStackRewardBuilder"),
                 builderId, objectDirector,
                 managerDirector);
     }

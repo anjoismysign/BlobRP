@@ -6,7 +6,6 @@ import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
-import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.reward.CashReward;
 
@@ -20,7 +19,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                                           ObjectDirector<CashReward> objectDirector,
                                           RPManagerDirector managerDirector) {
         return new CashRewardBuilder(
-                RPShortcut.buildInventory("CashRewardBuilder"),
+                BlobLibAssetAPI.buildInventory("CashRewardBuilder"),
                 builderId, objectDirector,
                 managerDirector);
     }

@@ -190,13 +190,13 @@ public class ShopArticle implements BlobObject {
     }
 
     public ItemStack cloneDisplay(int amount) {
-        ItemStack clone = getDisplay().clone();
+        ItemStack clone = cloneDisplay();
         clone.setAmount(amount);
         return clone;
     }
 
     public ItemStack cloneDisplay() {
-        return getDisplay().clone();
+        return new ItemStack(getDisplay());
     }
 
     public Material getMaterial() {

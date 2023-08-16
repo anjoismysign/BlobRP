@@ -15,12 +15,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.ComplexEventListener;
-import us.mytheria.bloblib.entities.inventory.BlobPlayerInventoryHolder;
+import us.mytheria.bloblib.entities.inventory.ButtonManager;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
-import us.mytheria.bloblib.entities.inventory.InventoryButton;
+import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.BlobCrudManagerBuilder;
+import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.SoulAPI;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -35,17 +36,17 @@ import java.util.*;
 
 public class CloudInventoryManager extends RPManager implements Listener {
     private BlobMessage welcomeMessage;
-    private boolean soulInventory;
+    private boolean soulInventory, isConverted;
     private final Map<UUID, InventoryDriver> map;
     private final HashSet<UUID> saving;
-    private final InventoryBuilderCarrier<InventoryButton> carrier;
+    private InventoryBuilderCarrier<MetaInventoryButton> carrier;
     protected CrudManager<BlobCrudable> crudManager;
     private PlayerSerializerType serializerType;
     private InventoryDriverType driverType;
 
-    public CloudInventoryManager(RPManagerDirector managerDirector) {
-        super(managerDirector);
-        this.carrier = BlobLibAssetAPI.getInventoryBuilderCarrier("WelcomeInventory");
+    public CloudInventoryManager(RPManagerDirector director) {
+        super(director);
+        this.carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("WelcomeInventory");
         this.map = new HashMap<>();
         this.saving = new HashSet<>();
         this.crudManager = BlobCrudManagerBuilder.PLAYER(getPlugin(), "alternativesaving", crudable -> crudable, true);
@@ -144,7 +145,14 @@ public class CloudInventoryManager extends RPManager implements Listener {
                             .replace("%player%", player.getName())
                             .get()
                             .handle(player);
-                    BlobPlayerInventoryHolder.fromInventoryBuilderCarrier
+                    if (!isConverted) {
+                        isConverted = true;
+                        InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("WelcomeInventory");
+                        ButtonManager<MetaInventoryButton> buttonManager = RPShortcut.getInstance().rewriteShopArticles(x.buttonManager());
+                        this.carrier = new InventoryBuilderCarrier<>(x.title(), x.size(), buttonManager,
+                                x.type(), x.reference());
+                    }
+                    MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                             (carrier, player.getUniqueId());
                     if (soulInventory)
                         Bukkit.getScheduler().runTask(getPlugin(), () -> {

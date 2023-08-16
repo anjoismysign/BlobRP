@@ -92,8 +92,9 @@ public class BlobRPAPI {
         if (director.getMerchantManager() == null) {
             return;
         }
-        director.getMerchantManager().getMerchants().values()
-                .forEach(MerchantInventory::loadShopArticles);
+        director.getMerchantManager().getMerchants()
+                .forEach((x, y) ->
+                        y.loadShopArticles());
     }
 
     /**

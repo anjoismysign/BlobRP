@@ -6,7 +6,6 @@ import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
-import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.reward.PermissionReward;
 
@@ -20,7 +19,7 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
                                                 ObjectDirector<PermissionReward> objectDirector,
                                                 RPManagerDirector managerDirector) {
         return new PermissionRewardBuilder(
-                RPShortcut.buildInventory("PermissionRewardBuilder"),
+                BlobLibAssetAPI.buildInventory("PermissionRewardBuilder"),
                 builderId, objectDirector,
                 managerDirector);
     }

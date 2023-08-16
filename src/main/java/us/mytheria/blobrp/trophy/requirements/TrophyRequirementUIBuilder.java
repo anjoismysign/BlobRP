@@ -7,7 +7,6 @@ import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.message.BlobSound;
-import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.RPObjectBuilder;
 
@@ -21,7 +20,7 @@ public class TrophyRequirementUIBuilder extends RPObjectBuilder<TrophyRequiremen
     public static TrophyRequirementUIBuilder build(UUID builderId,
                                                    ObjectDirector<TrophyRequirement> objectDirector,
                                                    RPManagerDirector managerDirector) {
-        return new TrophyRequirementUIBuilder(RPShortcut.buildInventory(
+        return new TrophyRequirementUIBuilder(BlobLibAssetAPI.buildInventory(
                 "TrophyRequirementBuilder"), builderId, objectDirector,
                 managerDirector);
     }

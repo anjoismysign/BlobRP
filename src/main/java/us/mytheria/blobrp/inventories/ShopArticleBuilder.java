@@ -9,7 +9,6 @@ import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
-import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
@@ -22,7 +21,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                                            ObjectDirector<ShopArticle> objectDirector,
                                            RPManagerDirector managerDirector) {
         return new ShopArticleBuilder(
-                RPShortcut.buildInventory("ShopArticleBuilder"), builderId,
+                BlobLibAssetAPI.buildInventory("ShopArticleBuilder"), builderId,
                 objectDirector,
                 managerDirector);
     }

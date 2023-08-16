@@ -7,19 +7,23 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerJoinEvent;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
-import us.mytheria.bloblib.entities.inventory.BlobPlayerInventoryHolder;
+import us.mytheria.bloblib.entities.inventory.ButtonManager;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
-import us.mytheria.bloblib.entities.inventory.InventoryButton;
+import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
+import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
+import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
 public class WelcomePlayer extends RPListener {
     private SimpleEventListener<String> welcomePlayers;
-    private final InventoryBuilderCarrier<InventoryButton> carrier;
+    private InventoryBuilderCarrier<MetaInventoryButton> carrier;
+    private boolean isConverted;
 
     public WelcomePlayer(ConfigManager configManager) {
         super(configManager);
-        carrier = BlobLibAssetAPI.getInventoryBuilderCarrier("WelcomeInventory");
+        this.carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("WelcomeInventory");
+        isConverted = false;
     }
 
     public void reload() {
@@ -40,7 +44,14 @@ public class WelcomePlayer extends RPListener {
                 .replace("%player%", player.getName())
                 .get()
                 .handle(player);
-        BlobPlayerInventoryHolder.fromInventoryBuilderCarrier
+        if (!isConverted) {
+            isConverted = true;
+            InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("WelcomeInventory");
+            ButtonManager<MetaInventoryButton> buttonManager = RPShortcut.getInstance().rewriteShopArticles(x.buttonManager());
+            this.carrier = new InventoryBuilderCarrier<>(x.title(), x.size(), buttonManager,
+                    x.type(), x.reference());
+        }
+        MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                 (carrier, player.getUniqueId());
     }
 }

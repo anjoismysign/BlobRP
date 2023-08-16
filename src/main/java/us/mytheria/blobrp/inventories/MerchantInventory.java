@@ -15,7 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class MerchantInventory extends ReferenceMetaBlobInventory {
-    public final static String META = "BLOBRP_SHOPARTICLE";
+    private final static String META = "BLOBRP_SHOPARTICLE";
+
+    public static String META() {
+        return META;
+    }
 
     private final RPManagerDirector director;
 
