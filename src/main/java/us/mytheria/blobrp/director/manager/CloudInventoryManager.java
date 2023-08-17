@@ -116,6 +116,16 @@ public class CloudInventoryManager extends RPManager implements Listener {
                     player.closeInventory();
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), subMeta.replace("%player%", player.getName()));
                 }
+                case "blobrp#player_null_cursor" -> {
+                    event.setCursor(null);
+                    player.closeInventory();
+                    player.performCommand(subMeta.replace("%player%", player.getName()));
+                }
+                case "blobrp#console_null_cursor" -> {
+                    event.setCursor(null);
+                    player.closeInventory();
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), subMeta.replace("%player%", player.getName()));
+                }
                 default -> {
                 }
             }
