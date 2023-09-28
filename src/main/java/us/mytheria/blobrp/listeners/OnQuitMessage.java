@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerQuitEvent;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -30,7 +30,7 @@ public class OnQuitMessage extends RPListener {
         Player player = event.getPlayer();
         event.setQuitMessage(null);
         if (onQuitMessage.value() != null) {
-            ReferenceBlobMessage message = BlobLibAssetAPI.getMessage(onQuitMessage.value());
+            ReferenceBlobMessage message = BlobLibMessageAPI.getInstance().getMessage(onQuitMessage.value());
             Bukkit.getOnlinePlayers().forEach(player1 -> {
                 message.modder()
                         .replace("%player%", player.getName())

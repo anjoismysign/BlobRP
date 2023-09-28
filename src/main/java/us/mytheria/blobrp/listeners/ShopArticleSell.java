@@ -12,8 +12,9 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import us.mytheria.bloblib.BlobLibAPI;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibEconomyAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.blobrp.BlobRP;
@@ -38,7 +39,7 @@ public class ShopArticleSell extends RPListener {
     }
 
     public void reload() {
-        blobInventory = BlobLibAssetAPI.getBlobInventory("Sell-Articles");
+        blobInventory = BlobLibInventoryAPI.getInstance().getBlobInventory("Sell-Articles");
         if (blobInventory == null)
             throw new NullPointerException("Inventory not found");
         HandlerList.unregisterAll(this);
@@ -124,13 +125,13 @@ public class ShopArticleSell extends RPListener {
                     sellPrice.talk(sellPrice.thanks() * multiplier.thanks());
                 }
                 double money = sellPrice.thanks() * amount;
-                IdentityEconomy economy = BlobLibAPI.getElasticEconomy()
+                IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy()
                         .map(shopArticle.getSellingCurrency());
                 economy.deposit(player.getUniqueId(), money);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(BlobRP.getInstance(), () -> {
                     if (!player.isOnline())
                         return;
-                    BlobLibAssetAPI.getSound("Reward.Cash").play(player);
+                    BlobLibSoundAPI.getInstance().getSound("Reward.Cash").play(player);
                 }, interval.thanks());
                 interval.talk(interval.thanks() + 1);
             });

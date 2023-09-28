@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
@@ -25,7 +25,7 @@ public class PlayerDeathMessage extends RPListener {
             if (value.isEmpty())
                 message = null;
             else
-                message = Objects.requireNonNull(BlobLibAssetAPI.getMessage(value), "Message not found: " + value);
+                message = Objects.requireNonNull(BlobLibMessageAPI.getInstance().getMessage(value), "Message not found: " + value);
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
         }
     }

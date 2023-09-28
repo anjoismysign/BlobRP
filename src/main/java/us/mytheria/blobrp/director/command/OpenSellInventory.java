@@ -4,7 +4,7 @@ import me.anjoismysign.anjo.entities.Result;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.BlobChildCommand;
 import us.mytheria.bloblib.entities.BlobExecutor;
 import us.mytheria.bloblib.entities.ExecutorData;
@@ -27,7 +27,7 @@ public class OpenSellInventory {
                     String playerName = args[1];
                     Player input = Bukkit.getPlayer(playerName);
                     if (input == null) {
-                        BlobLibAssetAPI.getMessage("Player.Not-Found").toCommandSender(sender);
+                        BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found").toCommandSender(sender);
                         return true;
                     }
                     ShopArticle.openSellInventory(input);

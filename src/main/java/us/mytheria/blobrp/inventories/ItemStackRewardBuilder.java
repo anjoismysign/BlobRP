@@ -3,6 +3,7 @@ package us.mytheria.blobrp.inventories;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
@@ -38,7 +39,7 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
                     if (build == null)
                         return null;
                     Player player = getPlayer();
-                    BlobLibAssetAPI.getSound("Builder.Build-Complete")
+                    BlobLibSoundAPI.getInstance().getSound("Builder.Build-Complete")
                             .handle(player);
                     player.closeInventory();
                     ObjectDirector<ItemStackReward> director = managerDirector

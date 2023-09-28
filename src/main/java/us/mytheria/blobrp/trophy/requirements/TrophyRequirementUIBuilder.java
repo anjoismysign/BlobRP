@@ -4,6 +4,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.message.BlobSound;
@@ -36,7 +37,7 @@ public class TrophyRequirementUIBuilder extends RPObjectBuilder<TrophyRequiremen
             if (build == null)
                 return null;
             Player player = getPlayer();
-            BlobSound sound = BlobLibAssetAPI.getSound("Builder.Build-Complete");
+            BlobSound sound = BlobLibSoundAPI.getInstance().getSound("Builder.Build-Complete");
             sound.handle(player);
             player.closeInventory();
             ObjectDirector<TrophyRequirement> director = managerDirector

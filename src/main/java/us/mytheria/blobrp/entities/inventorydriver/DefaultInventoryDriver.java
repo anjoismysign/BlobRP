@@ -2,7 +2,7 @@ package us.mytheria.blobrp.entities.inventorydriver;
 
 import org.bson.Document;
 import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
@@ -43,7 +43,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
 
     private void upgrade(Player player) {
         isUpgraded = true;
-        InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("EventPlayerInventory");
+        InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("EventPlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
         cache = new HashSet<>();
         inventoryHolder.getKeys().forEach(key -> cache.addAll(inventoryHolder.getButton(key).getSlots()));
@@ -60,7 +60,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
 
     private void downgrade(Player player) {
         isUpgraded = false;
-        InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("PlayerInventory");
+        InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("PlayerInventory");
         this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
         cache = new HashSet<>();
         for (String key : inventoryHolder.getKeys()) {

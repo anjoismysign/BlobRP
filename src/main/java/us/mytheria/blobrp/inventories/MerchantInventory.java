@@ -3,7 +3,7 @@ package us.mytheria.blobrp.inventories;
 import me.anjoismysign.anjo.entities.Result;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.api.BlobLibEconomyAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.entities.inventory.ReferenceMetaBlobInventory;
@@ -63,7 +63,7 @@ public class MerchantInventory extends ReferenceMetaBlobInventory {
                 List<String> parseLore = merchantsView.value()
                         .stream().map(TextColor::PARSE)
                         .map(s -> s.replace("%format%",
-                                BlobLibAPI.getElasticEconomy()
+                                BlobLibEconomyAPI.getInstance().getElasticEconomy()
                                         .map(buyingCurrency)
                                         .format(price)))
                         .toList();

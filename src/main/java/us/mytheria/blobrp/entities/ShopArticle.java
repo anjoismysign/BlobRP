@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.entities.BlobObject;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.utilities.ItemStackSerializer;
@@ -233,7 +233,7 @@ public class ShopArticle implements BlobObject {
     }
 
     public static void openSellInventory(Player player) {
-        BlobInventory sellInventory = BlobLibAssetAPI.getBlobInventory("Sell-Articles");
+        BlobInventory sellInventory = BlobLibInventoryAPI.getInstance().getBlobInventory("Sell-Articles");
         sellInventory = sellInventory.copy();
         player.openInventory(sellInventory.getInventory());
     }

@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.inventories.MerchantInventory;
@@ -28,7 +28,7 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!sender.hasPermission("blobrp.admin")) {
-            BlobLibAssetAPI.getMessage("System.No-Permission").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance().getMessage("System.No-Permission").toCommandSender(sender);
             return true;
         }
         if (args.length < 1) {
@@ -46,7 +46,7 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
         }
         String key = args[1];
         if (!director.getMerchantManager().getMerchants().containsKey(key)) {
-            BlobLibAssetAPI.getMessage("Merchant.Not-Found").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance().getMessage("Merchant.Not-Found").toCommandSender(sender);
             return true;
         }
         MerchantInventory inventory = director.getMerchantManager().getMerchants().get(key);
@@ -59,7 +59,7 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
         } else {
             player = Bukkit.getPlayer(args[2]);
             if (player == null) {
-                BlobLibAssetAPI.getMessage("Player.Not-Found").toCommandSender(sender);
+                BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found").toCommandSender(sender);
                 return true;
             }
         }

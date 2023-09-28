@@ -8,7 +8,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.SoulAPI;
 
@@ -27,7 +27,7 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("blobrp.admin")) {
-            BlobLibAssetAPI.getMessage("System.No-Permission").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance().getMessage("System.No-Permission").toCommandSender(sender);
             return true;
         }
         if (args.length < 1) {
@@ -44,9 +44,9 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 ItemStack itemStack = inventory.getItemInMainHand();
                 boolean success = SoulAPI.getInstance().setSoul(itemStack);
                 if (success)
-                    BlobLibAssetAPI.getMessage("Soul.Hand-Success").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance().getMessage("Soul.Hand-Success").toCommandSender(sender);
                 else
-                    BlobLibAssetAPI.getMessage("Soul.Fail").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance().getMessage("Soul.Fail").toCommandSender(sender);
                 return true;
             }
             case "offhand" -> {
@@ -56,9 +56,9 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 ItemStack itemStack = inventory.getItemInOffHand();
                 boolean success = SoulAPI.getInstance().setSoul(itemStack);
                 if (success)
-                    BlobLibAssetAPI.getMessage("Soul.Offhand-Success").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance().getMessage("Soul.Offhand-Success").toCommandSender(sender);
                 else
-                    BlobLibAssetAPI.getMessage("Soul.Fail").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance().getMessage("Soul.Fail").toCommandSender(sender);
                 return true;
             }
             case "inventory" -> {
@@ -68,7 +68,7 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 for (ItemStack itemStack : inventory.getContents()) {
                     SoulAPI.getInstance().setSoul(itemStack);
                 }
-                BlobLibAssetAPI.getMessage("Soul.Inventory").toCommandSender(sender);
+                BlobLibMessageAPI.getInstance().getMessage("Soul.Inventory").toCommandSender(sender);
                 return true;
             }
             default -> {

@@ -6,7 +6,7 @@
 
     <groupId>us.mytheria</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.2</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.690.4p</version>
+            <version>1.696.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

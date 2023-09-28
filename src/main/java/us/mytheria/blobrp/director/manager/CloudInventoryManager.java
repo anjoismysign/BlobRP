@@ -12,7 +12,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.ComplexEventListener;
 import us.mytheria.bloblib.entities.inventory.ButtonManager;
@@ -20,7 +21,7 @@ import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.entities.message.BlobMessage;
-import us.mytheria.bloblib.utilities.BlobCrudManagerBuilder;
+import us.mytheria.bloblib.utilities.BlobCrudManagerFactory;
 import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.SoulAPI;
 import us.mytheria.blobrp.director.RPManager;
@@ -46,10 +47,10 @@ public class CloudInventoryManager extends RPManager implements Listener {
 
     public CloudInventoryManager(RPManagerDirector director) {
         super(director);
-        this.carrier = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("WelcomeInventory");
+        this.carrier = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("WelcomeInventory");
         this.map = new HashMap<>();
         this.saving = new HashSet<>();
-        this.crudManager = BlobCrudManagerBuilder.PLAYER(getPlugin(), "alternativesaving", crudable -> crudable, true);
+        this.crudManager = BlobCrudManagerFactory.PLAYER(getPlugin(), "alternativesaving", crudable -> crudable, true);
         reload();
     }
 
@@ -75,7 +76,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
             Bukkit.getPluginManager().registerEvents(this, getPlugin());
             ConfigurationSection welcomePlayers = alternativeSaving.getConfigurationSection("Welcome-Players");
             if (welcomePlayers.getBoolean("Register")) {
-                welcomeMessage = BlobLibAssetAPI.getMessage(welcomePlayers.getString("Message"));
+                welcomeMessage = BlobLibMessageAPI.getInstance().getMessage(welcomePlayers.getString("Message"));
                 soulInventory = welcomePlayers.getBoolean("Inventory-Is-Soul");
             } else
                 welcomeMessage = null;
@@ -157,7 +158,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
                             .handle(player);
                     if (!isConverted) {
                         isConverted = true;
-                        InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibAssetAPI.getMetaInventoryBuilderCarrier("WelcomeInventory");
+                        InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("WelcomeInventory");
                         ButtonManager<MetaInventoryButton> buttonManager = RPShortcut.getInstance().rewriteShopArticles(x.buttonManager());
                         this.carrier = new InventoryBuilderCarrier<>(x.title(), x.size(), buttonManager,
                                 x.type(), x.reference());

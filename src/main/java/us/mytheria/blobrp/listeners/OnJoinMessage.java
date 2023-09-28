@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerJoinEvent;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -30,7 +30,7 @@ public class OnJoinMessage extends RPListener {
         Player player = event.getPlayer();
         event.setJoinMessage(null);
         if (onJoinMessage.value() != null) {
-            ReferenceBlobMessage message = BlobLibAssetAPI.getMessage(onJoinMessage.value());
+            ReferenceBlobMessage message = BlobLibMessageAPI.getInstance().getMessage(onJoinMessage.value());
             Bukkit.getOnlinePlayers().forEach(player1 -> {
                 message.modder()
                         .replace("%player%", player.getName())

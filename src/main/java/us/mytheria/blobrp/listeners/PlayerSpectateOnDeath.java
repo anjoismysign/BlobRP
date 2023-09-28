@@ -10,7 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.logger.BlobPluginLogger;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -38,7 +38,7 @@ public class PlayerSpectateOnDeath extends RPListener {
             PlayerSpectateOnDeath.this.length =
                     complexEventListener.getInt("Length");
             complexEventListener.getStringList("Blob-Messages").forEach(key -> {
-                BlobMessage message = BlobLibAssetAPI.getMessage(key);
+                BlobMessage message = BlobLibMessageAPI.getInstance().getMessage(key);
                 if (message == null) {
                     logger.error("Message " + key + " not found.");
                     return;

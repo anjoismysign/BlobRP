@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.ComplexEventListener;
 import us.mytheria.bloblib.utilities.TextColor;
 import us.mytheria.blobrp.director.manager.ConfigManager;
@@ -41,7 +41,7 @@ public class DiscordCmd extends RPListener implements CommandExecutor {
         int length = args.length;
         if (length < 1) {
             if (!(sender instanceof Player player)) {
-                BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
+                BlobLibMessageAPI.getInstance().getMessage("System.Console-Not-Allowed-Command")
                         .toCommandSender(sender);
                 return true;
             }
@@ -50,7 +50,7 @@ public class DiscordCmd extends RPListener implements CommandExecutor {
         }
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            BlobLibAssetAPI.getMessage("Player.Not-Found")
+            BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found")
                     .toCommandSender(sender);
             return true;
         }

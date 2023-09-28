@@ -1,8 +1,8 @@
 package us.mytheria.blobrp.director.manager;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import us.mytheria.bloblib.entities.ComplexEventListener;
+import us.mytheria.bloblib.entities.ListenersSection;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.TinyEventListener;
 import us.mytheria.bloblib.managers.BlobPlugin;
@@ -48,35 +48,31 @@ public class ConfigManager extends RPManager {
 
     @Override
     public void reload() {
-        main.reloadConfig();
-        main.saveDefaultConfig();
-        main.getConfig().options().copyDefaults(true);
-        main.saveConfig();
-        configuration = main.getConfig();
-        ConfigurationSection listeners = configuration.getConfigurationSection("Listeners");
-        ConfigurationSection complexListeners = configuration.getConfigurationSection("ComplexListeners");
-        dropNonSoulOnDeath = TinyEventListener.READ(listeners, "Drop-Non-Soul-On-Death");
-        playerKeepExperienceOnDeath = TinyEventListener.READ(listeners, "Player-Keep-Experience-On-Death");
-        playerDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("Player-Drop-Experience-On-Death"), "Amount");
-        entitiesDropExperienceOnDeath = SimpleEventListener.INTEGER(listeners.getConfigurationSection("EntitiesDropExperienceOnDeath"), "Amount");
-        entitiesClearDropsOnDeath = TinyEventListener.READ(listeners, "Entities-Clear-Drops-On-Death");
-        entityDropItem = TinyEventListener.READ(listeners, "Entity-Drop-Item");
-        sellArticlesEvent = SimpleEventListener.DOUBLE(listeners.getConfigurationSection("Sell-Articles-Event"), "Default-Price");
-        sellArticlesListener = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("Manage-Sell-Articles"), "Permission-Multiplier");
-        merchants = SimpleEventListener.STRING(listeners.getConfigurationSection("Merchants"), "Bought-Message");
-        merchantsView = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("Merchants-View"), "Add");
-        welcomePlayers = SimpleEventListener.STRING(listeners.getConfigurationSection("Welcome-Players"), "Message");
-        playerHunger = SimpleEventListener.BOOLEAN(listeners.getConfigurationSection("Remove-Player-Hunger"), "Requires-Permission");
-        iceFormation = SimpleEventListener.STRING_LIST(listeners.getConfigurationSection("Prevent-Ice-Formation"), "World-Whitelist");
-        playerSpectateOnDeath = new ComplexEventListener(complexListeners.getConfigurationSection("Player-Spectate-On-Death"));
-        forceGamemode = SimpleEventListener.STRING(listeners.getConfigurationSection("Force-Gamemode"), "Gamemode");
-        alternativeSaving = new ComplexEventListener(complexListeners.getConfigurationSection("Alternative-Saving"));
-        globalSlowDigging = SimpleEventListener.INTEGER(listeners.getConfigurationSection("Global-Slow-Digging"), "Level");
-        onJoinMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("On-Join-Message"), "Message");
-        onQuitMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("On-Quit-Message"), "Message");
-        killWeaponMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("Kill-Message-Weapon"), "Message");
-        playerDeathMessage = SimpleEventListener.STRING(listeners.getConfigurationSection("Player-Death-Message"), "Message");
-        discordCmd = new ComplexEventListener(complexListeners.getConfigurationSection("Discord-Cmd"));
+        ListenersSection listenersSection = main.getConfigDecorator().reloadAndGetListeners();
+        dropNonSoulOnDeath = listenersSection.tinyEventListener("Drop-Non-Soul-On-Death");
+        playerKeepExperienceOnDeath = listenersSection.tinyEventListener("Player-Keep-Experience-On-Death");
+        entitiesClearDropsOnDeath = listenersSection.tinyEventListener("Entities-Clear-Drops-On-Death");
+        entityDropItem = listenersSection.tinyEventListener("Cancel-Entity-Drop-Item");
+
+        playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
+        entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
+        sellArticlesEvent = listenersSection.simpleEventListenerDouble("Sell-Articles-Event", "Default-Price");
+        sellArticlesListener = listenersSection.simpleEventListenerBoolean("Manage-Sell-Articles", "Permission-Multiplier");
+        merchants = listenersSection.simpleEventListenerString("Merchants", "Bought-Message");
+        merchantsView = listenersSection.simpleEventListenerStringList("Merchants-View", "Add");
+        welcomePlayers = listenersSection.simpleEventListenerString("Welcome-Players", "Message");
+        playerHunger = listenersSection.simpleEventListenerBoolean("Remove-Player-Hunger", "Requires-Permission");
+        iceFormation = listenersSection.simpleEventListenerStringList("Prevent-Ice-Formation", "World-Whitelist");
+        forceGamemode = listenersSection.simpleEventListenerString("Force-Gamemode", "Gamemode");
+        globalSlowDigging = listenersSection.simpleEventListenerInteger("Global-Slow-Digging", "Level");
+        onJoinMessage = listenersSection.simpleEventListenerString("On-Join-Message", "Message");
+        onQuitMessage = listenersSection.simpleEventListenerString("On-Quit-Message", "Message");
+        killWeaponMessage = listenersSection.simpleEventListenerString("Kill-Message-Weapon", "Message");
+        playerDeathMessage = listenersSection.simpleEventListenerString("Player-Death-Message", "Message");
+
+        playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
+        alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
+        discordCmd = listenersSection.complexEventListener("Discord-Cmd");
     }
 
     public FileConfiguration getConfiguration() {

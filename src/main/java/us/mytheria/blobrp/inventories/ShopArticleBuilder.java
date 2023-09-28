@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
@@ -64,7 +65,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                     if (build == null)
                         return null;
                     Player player = getPlayer();
-                    BlobLibAssetAPI.getSound("Builder.Build-Complete")
+                    BlobLibSoundAPI.getInstance().getSound("Builder.Build-Complete")
                             .handle(player);
                     player.closeInventory();
                     build.saveToFile(objectDirector.getObjectManager().getLoadFilesDirectory());

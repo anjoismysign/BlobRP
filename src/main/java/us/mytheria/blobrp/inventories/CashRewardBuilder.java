@@ -2,6 +2,7 @@ package us.mytheria.blobrp.inventories;
 
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
@@ -39,7 +40,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
                         if (build == null)
                             return null;
                         Player player = getPlayer();
-                        BlobLibAssetAPI.getSound("Builder.Build-Complete").handle(player);
+                        BlobLibSoundAPI.getInstance().getSound("Builder.Build-Complete").handle(player);
                         player.closeInventory();
                         ObjectDirector<CashReward> director = managerDirector
                                 .getCashRewardDirector();

@@ -3,7 +3,7 @@ package us.mytheria.blobrp.reward;
 import net.milkbowl.vault.economy.IdentityEconomy;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAPI;
+import us.mytheria.bloblib.api.BlobLibEconomyAPI;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.bloblib.vault.multieconomy.ElasticEconomy;
 
@@ -47,7 +47,7 @@ public class CashReward extends Reward<Double> {
 
     @Override
     public void apply(Player player) {
-        IdentityEconomy economy = BlobLibAPI.getElasticEconomy().map(currency);
+        IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(currency);
         economy.deposit(player.getUniqueId(), getValue());
     }
 
@@ -58,7 +58,7 @@ public class CashReward extends Reward<Double> {
      * @param player the player to apply the reward to
      */
     public void applyAndMessage(Player player) {
-        ElasticEconomy economy = BlobLibAPI.getElasticEconomy();
+        ElasticEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy();
         message.ifPresent(blobMessage -> {
             blobMessage.modder()
                     .replace("%cash%", getCurrency().isPresent() ?

@@ -8,7 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import us.mytheria.bloblib.BlobLibAPI;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibEconomyAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
@@ -38,7 +39,7 @@ public class MerchantListener extends RPListener {
         HandlerList.unregisterAll(this);
         if (getConfigManager().merchants().register()) {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-            boughtMessage = BlobLibAssetAPI.getMessage(getConfigManager().merchants().value());
+            boughtMessage = BlobLibMessageAPI.getInstance().getMessage(getConfigManager().merchants().value());
         }
     }
 
@@ -69,8 +70,8 @@ public class MerchantListener extends RPListener {
                     return;
                 ShopArticle article = articleResult.value();
                 double price = article.getBuyPrice();
-                ReferenceBlobMessage referenceNotEnough = BlobLibAssetAPI.getMessage("Economy.Not-Enough");
-                IdentityEconomy economy = BlobLibAPI.getElasticEconomy().map(article.getBuyingCurrency());
+                ReferenceBlobMessage referenceNotEnough = BlobLibMessageAPI.getInstance().getMessage("Economy.Not-Enough");
+                IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(article.getBuyingCurrency());
                 if (!economy.has(player.getUniqueId(), price)) {
                     BlobMessage message = referenceNotEnough
                             .modder()
@@ -107,7 +108,7 @@ public class MerchantListener extends RPListener {
                 PlayerUtil.giveItemToInventoryOrDrop(player, article.cloneDisplay());
             }
             default -> {
-                BlobLibAssetAPI.getMessage("System.Error").handle(player);
+                BlobLibMessageAPI.getInstance().getMessage("System.Error").handle(player);
                 Bukkit.getLogger().info("Unknown meta " + meta);
             }
         }
