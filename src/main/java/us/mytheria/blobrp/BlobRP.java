@@ -30,7 +30,7 @@ public class BlobRP extends BlobPlugin {
         instance = this;
         updater = generateGitHubUpdater("anjoismysign", "BlobRP");
         simplePlayerSerializer = new SimplePlayerSerializer();
-        director = new RPManagerDirector();
+        director = new RPManagerDirector(this);
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
         shortcut = RPShortcut.getInstance(director);

@@ -1,6 +1,6 @@
 package us.mytheria.blobrp.merchant;
 
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.bloblib.managers.MetaInventoryShard;
 import us.mytheria.blobrp.director.RPManager;
@@ -29,7 +29,7 @@ public class MerchantManager extends RPManager {
     }
 
     private void loadInventories() {
-        Optional<MetaInventoryShard> optional = BlobLibAssetAPI.hasMetaInventoryShard("MERCHANT");
+        Optional<MetaInventoryShard> optional = BlobLibInventoryAPI.getInstance().hasMetaInventoryShard("MERCHANT");
         if (optional.isEmpty()) {
             getPlugin().getAnjoLogger().singleError("There are no MERCHANT inventories to load.");
             return;

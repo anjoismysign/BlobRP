@@ -1,8 +1,9 @@
 package us.mytheria.blobrp.inventories;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
@@ -20,8 +21,9 @@ public class ItemStackRewardBuilder extends RPObjectBuilder<ItemStackReward> {
     public static ItemStackRewardBuilder build(UUID builderId,
                                                ObjectDirector<ItemStackReward> objectDirector,
                                                RPManagerDirector managerDirector) {
+        Player player = Bukkit.getPlayer(builderId);
         return new ItemStackRewardBuilder(
-                BlobLibAssetAPI.buildInventory("ItemStackRewardBuilder"),
+                BlobLibInventoryAPI.getInstance().buildInventory("ItemStackRewardBuilder", player.getLocale()),
                 builderId, objectDirector,
                 managerDirector);
     }

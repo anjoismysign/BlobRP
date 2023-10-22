@@ -1,9 +1,10 @@
 package us.mytheria.blobrp.trophy.requirements;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
@@ -21,8 +22,9 @@ public class TrophyRequirementUIBuilder extends RPObjectBuilder<TrophyRequiremen
     public static TrophyRequirementUIBuilder build(UUID builderId,
                                                    ObjectDirector<TrophyRequirement> objectDirector,
                                                    RPManagerDirector managerDirector) {
-        return new TrophyRequirementUIBuilder(BlobLibAssetAPI.buildInventory(
-                "TrophyRequirementBuilder"), builderId, objectDirector,
+        Player player = Bukkit.getPlayer(builderId);
+        return new TrophyRequirementUIBuilder(BlobLibInventoryAPI.getInstance().buildInventory(
+                "TrophyRequirementBuilder", player.getLocale()), builderId, objectDirector,
                 managerDirector);
     }
 

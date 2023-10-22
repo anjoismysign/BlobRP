@@ -31,8 +31,8 @@ import java.util.HashMap;
 
 public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
-    public RPManagerDirector() {
-        super(BlobRP.getInstance());
+    public RPManagerDirector(BlobRP plugin) {
+        super(plugin);
         registerMetaBlobInventory("WelcomeInventory");
         registerMetaBlobInventory("PlayerInventory");
         registerMetaBlobInventory("EventPlayerInventory");

@@ -40,17 +40,21 @@ public class WelcomePlayer extends RPListener {
         Player player = event.getPlayer();
         if (player.hasPlayedBefore())
             return;
-        ReferenceBlobMessage message = BlobLibMessageAPI.getInstance().getMessage(welcomePlayers.value());
+        ReferenceBlobMessage message = BlobLibMessageAPI.getInstance()
+                .getMessage(welcomePlayers.value(), player);
         message.modder()
                 .replace("%player%", player.getName())
                 .get()
                 .handle(player);
         if (!isConverted) {
             isConverted = true;
-            InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("WelcomeInventory");
+            InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibInventoryAPI
+                    .getInstance()
+                    .getMetaInventoryBuilderCarrier("WelcomeInventory",
+                            player.getLocale());
             ButtonManager<MetaInventoryButton> buttonManager = RPShortcut.getInstance().rewriteShopArticles(x.buttonManager());
             this.carrier = new InventoryBuilderCarrier<>(x.title(), x.size(), buttonManager,
-                    x.type(), x.reference());
+                    x.type(), x.reference(), x.locale());
         }
         MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                 (carrier, player.getUniqueId());

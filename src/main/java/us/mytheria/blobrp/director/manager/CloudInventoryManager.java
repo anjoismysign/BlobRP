@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -158,10 +159,12 @@ public class CloudInventoryManager extends RPManager implements Listener {
                             .handle(player);
                     if (!isConverted) {
                         isConverted = true;
-                        InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("WelcomeInventory");
+                        InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibInventoryAPI
+                                .getInstance()
+                                .getMetaInventoryBuilderCarrier("WelcomeInventory", player.getLocale());
                         ButtonManager<MetaInventoryButton> buttonManager = RPShortcut.getInstance().rewriteShopArticles(x.buttonManager());
                         this.carrier = new InventoryBuilderCarrier<>(x.title(), x.size(), buttonManager,
-                                x.type(), x.reference());
+                                x.type(), x.reference(), x.locale());
                     }
                     MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                             (carrier, player.getUniqueId());
@@ -188,7 +191,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();

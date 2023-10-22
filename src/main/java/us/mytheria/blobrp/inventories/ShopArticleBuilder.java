@@ -1,9 +1,10 @@
 package us.mytheria.blobrp.inventories;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
@@ -21,8 +22,9 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
     public static ShopArticleBuilder build(UUID builderId,
                                            ObjectDirector<ShopArticle> objectDirector,
                                            RPManagerDirector managerDirector) {
+        Player player = Bukkit.getPlayer(builderId);
         return new ShopArticleBuilder(
-                BlobLibAssetAPI.buildInventory("ShopArticleBuilder"), builderId,
+                BlobLibInventoryAPI.getInstance().buildInventory("ShopArticleBuilder", player.getLocale()), builderId,
                 objectDirector,
                 managerDirector);
     }

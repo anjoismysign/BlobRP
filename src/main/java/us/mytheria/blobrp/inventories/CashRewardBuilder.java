@@ -1,7 +1,8 @@
 package us.mytheria.blobrp.inventories;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
@@ -19,8 +20,9 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
     public static CashRewardBuilder build(UUID builderId,
                                           ObjectDirector<CashReward> objectDirector,
                                           RPManagerDirector managerDirector) {
+        Player player = Bukkit.getPlayer(builderId);
         return new CashRewardBuilder(
-                BlobLibAssetAPI.buildInventory("CashRewardBuilder"),
+                BlobLibInventoryAPI.getInstance().buildInventory("CashRewardBuilder", player.getLocale()),
                 builderId, objectDirector,
                 managerDirector);
     }
