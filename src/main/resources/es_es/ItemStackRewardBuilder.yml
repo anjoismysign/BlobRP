@@ -1,4 +1,5 @@
-Title: '&lITEMREWARD > BUILD'
+Locale: es_es
+Title: '&lITEMREWARD > CONSTRUIR'
 Size: 18
 Buttons:
   Background:
@@ -21,7 +22,7 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6Key"
       Lore:
-        - "&7Selected: &f%key%"
+        - "&7Seleccionado: &f%key%"
     Slot: 1
   Message:
     ItemStack:
@@ -29,30 +30,30 @@ Buttons:
       CustomModelData: 0
       DisplayName: "&6BlobMessage"
       Lore:
-        - "&7Selected: &f%message%"
+        - "&7Seleccionado: &f%message%"
     Slot: 2
   Delay:
     ItemStack:
       Material: CLOCK
       CustomModelData: 0
-      DisplayName: "&6Delay"
+      DisplayName: "&6Retraso"
       Lore:
-        - "&7Selected: &f%delay%"
+        - "&7Seleccionado: &f%delay%"
     Slot: 3
   ItemStack:
     ItemStack:
       Material: ITEM_FRAME
       CustomModelData: 0
-      DisplayName: "&6Reward (ItemStack)"
+      DisplayName: "&6Recompensa (ItemStack)"
       Lore:
-        - "&7Selected: &f%itemStack%"
+        - "&7Seleccionado: &f%itemStack%"
     Slot: 4
   Build:
     ItemStack:
       Material: SLIME_BALL
       CustomModelData: 0
-      DisplayName: "&6Build"
+      DisplayName: "&6Construir"
       Lore:
-        - "&7Click to add reward"
-        - "&7to the files."
+        - "&7Click para agregar"
+        - "&7a los archivos"
     Slot: 13

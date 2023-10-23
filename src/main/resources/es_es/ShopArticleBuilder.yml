@@ -1,0 +1,91 @@
+Locale: es_es
+Title: '&lARTICLE > CONSTRUIR'
+Size: 27
+Buttons:
+  Background:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 0-26
+  White-Background:
+    ItemStack:
+      Material: WHITE_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 1-7,10-16,19-25
+  Key:
+    ItemStack:
+      Material: BOOK
+      CustomModelData: 0
+      DisplayName: "&6Key"
+      Lore:
+        - "&7Seleccionado: &f%key%"
+    Slot: 1
+  Display:
+    ItemStack:
+      Material: ITEM_FRAME
+      CustomModelData: 0
+      DisplayName: "&6Display"
+      Lore:
+        - "&7Seleccionado: &f%display%"
+    Slot: 2
+  BuyPrice:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6BuyPrice"
+      Lore:
+        - "&7Seleccionado: &f%buyPrice%"
+    Slot: 3
+  SellPrice:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6SellPrice"
+      Lore:
+        - "&7Seleccionado: &f%sellPrice%"
+    Slot: 4
+  CustomModelData:
+    ItemStack:
+      Material: COPPER_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6CustomModelData"
+      Lore:
+        - "&7Seleccionado: &f%customModelData%"
+    Slot: 6
+  Material:
+    ItemStack:
+      Material: IRON_BLOCK
+      CustomModelData: 0
+      DisplayName: "&6Material"
+      Lore:
+        - "&7Seleccionado: &f%material%"
+    Slot: 7
+  BuyingCurrency:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6BuyingCurrency"
+      Lore:
+        - "&7Seleccionado: &f%buyingCurrency%"
+    Slot: 10
+  SellingCurrency:
+    ItemStack:
+      Material: EMERALD
+      CustomModelData: 0
+      DisplayName: "&6SellingCurrency"
+      Lore:
+        - "&7Seleccionado: &f%sellingCurrency%"
+    Slot: 11
+  Build:
+    ItemStack:
+      Material: SLIME_BALL
+      CustomModelData: 0
+      DisplayName: "&6Construir"
+      Lore:
+        - "&7Click para agregar"
+        - "&7a los archivos"
+    Slot: 22

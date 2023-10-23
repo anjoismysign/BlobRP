@@ -1,6 +1,5 @@
 package us.mytheria.blobrp.director.command;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,12 +27,16 @@ public class BalloonCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.hasPermission("blobrp.admin")) {
-            BlobLibMessageAPI.getInstance().getMessage("System.No-Permission").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance()
+                    .getMessage("System.No-Permission", sender)
+                    .toCommandSender(sender);
             return true;
         }
         Player player = instanceOfPlayer(sender);
         if (player == null) {
-            BlobLibMessageAPI.getInstance().getMessage("System.Console-Not-Allowed-Command").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance()
+                    .getMessage("System.Console-Not-Allowed-Command", sender)
+                    .toCommandSender(sender);
             return true;
         }
         Balloon balloon = Balloon.build();
@@ -46,7 +49,9 @@ public class BalloonCmd implements CommandExecutor, TabCompleter {
 
     private Player instanceOfPlayer(CommandSender sender) {
         if (!(sender instanceof Player player)) {
-            Bukkit.getLogger().info("You must be a player to use this command");
+            BlobLibMessageAPI.getInstance()
+                    .getMessage("System.Console-Not-Allowed-Command", sender)
+                    .toCommandSender(sender);
             return null;
         }
         return player;

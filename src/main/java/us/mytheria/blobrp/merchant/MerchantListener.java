@@ -28,7 +28,8 @@ import java.util.HashMap;
 
 public class MerchantListener extends RPListener {
     private final BlobRP plugin;
-    private ReferenceBlobMessage boughtMessage;
+    private String boughtMessage;
+    private boolean isValid;
 
     public MerchantListener(ConfigManager configManager) {
         super(configManager);
@@ -39,7 +40,12 @@ public class MerchantListener extends RPListener {
         HandlerList.unregisterAll(this);
         if (getConfigManager().merchants().register()) {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-            boughtMessage = BlobLibMessageAPI.getInstance().getMessage(getConfigManager().merchants().value());
+            boughtMessage = getConfigManager().merchants().value();
+            isValid = true;
+            if (BlobLibMessageAPI.getInstance().getMessage(boughtMessage, "en_us") == null) {
+                getConfigManager().getPlugin().getAnjoLogger().singleError("BlobMessage '" + boughtMessage + "' doesn't exist");
+                isValid = false;
+            }
         }
     }
 
@@ -70,7 +76,8 @@ public class MerchantListener extends RPListener {
                     return;
                 ShopArticle article = articleResult.value();
                 double price = article.getBuyPrice();
-                ReferenceBlobMessage referenceNotEnough = BlobLibMessageAPI.getInstance().getMessage("Economy.Not-Enough");
+                ReferenceBlobMessage referenceNotEnough = BlobLibMessageAPI.getInstance()
+                        .getMessage("Economy.Not-Enough", player);
                 IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(article.getBuyingCurrency());
                 if (!economy.has(player.getUniqueId(), price)) {
                     BlobMessage message = referenceNotEnough
@@ -80,7 +87,7 @@ public class MerchantListener extends RPListener {
                     ShopArticleSellEvent event = new ShopArticleSellEvent(
                             new ShopArticleTransaction(article, 1),
                             player, TransactionType.SELL, TransactionStatus.NOT_ENOUGH_MONEY,
-                            false, boughtMessage, referenceNotEnough, message, null,
+                            false, boughtMessage, "Economy.Not-Enough", message, null,
                             price);
                     Bukkit.getPluginManager().callEvent(event);
                     if (event.isCancelled())
@@ -92,13 +99,14 @@ public class MerchantListener extends RPListener {
                 }
                 economy.withdraw(player.getUniqueId(), price);
                 BlobMessage message =
-                        boughtMessage.modder()
+                        BlobLibMessageAPI.getInstance().getMessage(boughtMessage, player)
+                                .modder()
                                 .replace("%display%", price + "")
                                 .get();
                 ShopArticleSellEvent event = new ShopArticleSellEvent(
                         new ShopArticleTransaction(article, 1),
                         player, TransactionType.SELL, TransactionStatus.SUCCESS,
-                        false, boughtMessage, referenceNotEnough, null, message,
+                        false, boughtMessage, "Economy.Not-Enough", null, message,
                         price);
                 Bukkit.getPluginManager().callEvent(event);
                 if (event.isCancelled())

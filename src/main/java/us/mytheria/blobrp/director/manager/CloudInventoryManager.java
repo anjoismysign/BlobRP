@@ -12,18 +12,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.ComplexEventListener;
-import us.mytheria.bloblib.entities.inventory.ButtonManager;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
-import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.utilities.BlobCrudManagerFactory;
-import us.mytheria.blobrp.RPShortcut;
 import us.mytheria.blobrp.SoulAPI;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
@@ -37,18 +35,18 @@ import us.mytheria.blobrp.events.CloudInventorySerializeEvent;
 import java.util.*;
 
 public class CloudInventoryManager extends RPManager implements Listener {
-    private BlobMessage welcomeMessage;
-    private boolean soulInventory, isConverted;
+    private String welcomeMessage;
+    private boolean soulInventory;
     private final Map<UUID, InventoryDriver> map;
     private final HashSet<UUID> saving;
-    private InventoryBuilderCarrier<MetaInventoryButton> carrier;
+    private String reference;
     protected CrudManager<BlobCrudable> crudManager;
     private PlayerSerializerType serializerType;
     private InventoryDriverType driverType;
 
     public CloudInventoryManager(RPManagerDirector director) {
         super(director);
-        this.carrier = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("WelcomeInventory");
+        this.reference = "WelcomeInventory";
         this.map = new HashMap<>();
         this.saving = new HashSet<>();
         this.crudManager = BlobCrudManagerFactory.PLAYER(getPlugin(), "alternativesaving", crudable -> crudable, true);
@@ -77,7 +75,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
             Bukkit.getPluginManager().registerEvents(this, getPlugin());
             ConfigurationSection welcomePlayers = alternativeSaving.getConfigurationSection("Welcome-Players");
             if (welcomePlayers.getBoolean("Register")) {
-                welcomeMessage = BlobLibMessageAPI.getInstance().getMessage(welcomePlayers.getString("Message"));
+                welcomeMessage = welcomePlayers.getString("Message");
                 soulInventory = welcomePlayers.getBoolean("Inventory-Is-Soul");
             } else
                 welcomeMessage = null;
@@ -142,6 +140,16 @@ public class CloudInventoryManager extends RPManager implements Listener {
     }
 
     @EventHandler
+    public void onLocale(PlayerLocaleChangeEvent event) {
+        Player player = event.getPlayer();
+        InventoryDriver driver = map.get(player.getUniqueId());
+        if (driver == null)
+            return; // it seems that on join event this is called
+        DefaultInventoryDriver defaultInventoryDriver = (DefaultInventoryDriver) driver;
+        defaultInventoryDriver.updateLocale(player, event.getLocale());
+    }
+
+    @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
@@ -153,19 +161,14 @@ public class CloudInventoryManager extends RPManager implements Listener {
             InventoryDriver applied = generate(crudable, serializerType, driverType);
             if (!hasPlayedBefore) {
                 if (welcomeMessage != null) {
-                    welcomeMessage.modder()
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage(welcomeMessage, player)
+                            .modder()
                             .replace("%player%", player.getName())
                             .get()
                             .handle(player);
-                    if (!isConverted) {
-                        isConverted = true;
-                        InventoryBuilderCarrier<MetaInventoryButton> x = BlobLibInventoryAPI
-                                .getInstance()
-                                .getMetaInventoryBuilderCarrier("WelcomeInventory", player.getLocale());
-                        ButtonManager<MetaInventoryButton> buttonManager = RPShortcut.getInstance().rewriteShopArticles(x.buttonManager());
-                        this.carrier = new InventoryBuilderCarrier<>(x.title(), x.size(), buttonManager,
-                                x.type(), x.reference(), x.locale());
-                    }
+                    InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
+                            .getInstance().getMetaInventoryBuilderCarrier(reference, player);
                     MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                             (carrier, player.getUniqueId());
                     if (soulInventory)

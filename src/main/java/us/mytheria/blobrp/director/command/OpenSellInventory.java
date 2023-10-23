@@ -27,7 +27,9 @@ public class OpenSellInventory {
                     String playerName = args[1];
                     Player input = Bukkit.getPlayer(playerName);
                     if (input == null) {
-                        BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found").toCommandSender(sender);
+                        BlobLibMessageAPI.getInstance()
+                                .getMessage("Player.Not-Found", sender)
+                                .toCommandSender(sender);
                         return true;
                     }
                     ShopArticle.openSellInventory(input);

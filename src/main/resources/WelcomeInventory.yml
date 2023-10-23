@@ -1,21 +1,6 @@
 Size: 36
 Buttons:
-  WoodenAxe:
+  0:
     ItemStack:
-      Material: WOODEN_AXE
-      ShowAllItemFlags: true
+      Material: AIR
     Slot: 0
-  WoodenPickaxe:
-    ItemStack:
-      Material: WOODEN_PICKAXE
-      ShowAllItemFlags: true
-    Slot: 1
-  Apple:
-    ItemStack:
-      Material: APPLE
-      DisplayName: '&cPresent Apple'
-      Lore:
-        - '&7&oGiven as a present to new players'
-      Amount: 12
-      ShowAllItemFlags: true
-    Slot: 2

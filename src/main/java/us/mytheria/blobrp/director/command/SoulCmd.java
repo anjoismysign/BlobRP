@@ -44,9 +44,13 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 ItemStack itemStack = inventory.getItemInMainHand();
                 boolean success = SoulAPI.getInstance().setSoul(itemStack);
                 if (success)
-                    BlobLibMessageAPI.getInstance().getMessage("Soul.Hand-Success").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("Soul.Hand-Success", player)
+                            .toCommandSender(sender);
                 else
-                    BlobLibMessageAPI.getInstance().getMessage("Soul.Fail").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("Soul.Fail", player)
+                            .toCommandSender(sender);
                 return true;
             }
             case "offhand" -> {
@@ -56,9 +60,13 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 ItemStack itemStack = inventory.getItemInOffHand();
                 boolean success = SoulAPI.getInstance().setSoul(itemStack);
                 if (success)
-                    BlobLibMessageAPI.getInstance().getMessage("Soul.Offhand-Success").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("Soul.Offhand-Success", sender)
+                            .toCommandSender(sender);
                 else
-                    BlobLibMessageAPI.getInstance().getMessage("Soul.Fail").toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("Soul.Fail", sender)
+                            .toCommandSender(sender);
                 return true;
             }
             case "inventory" -> {
@@ -68,7 +76,9 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 for (ItemStack itemStack : inventory.getContents()) {
                     SoulAPI.getInstance().setSoul(itemStack);
                 }
-                BlobLibMessageAPI.getInstance().getMessage("Soul.Inventory").toCommandSender(sender);
+                BlobLibMessageAPI.getInstance()
+                        .getMessage("Soul.Inventory", sender)
+                        .toCommandSender(sender);
                 return true;
             }
             default -> {

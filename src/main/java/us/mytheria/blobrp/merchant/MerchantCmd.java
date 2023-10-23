@@ -28,7 +28,9 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!sender.hasPermission("blobrp.admin")) {
-            BlobLibMessageAPI.getInstance().getMessage("System.No-Permission").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance()
+                    .getMessage("System.No-Permission", sender)
+                    .toCommandSender(sender);
             return true;
         }
         if (args.length < 1) {
@@ -46,7 +48,9 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
         }
         String key = args[1];
         if (!director.getMerchantManager().getMerchants().containsKey(key)) {
-            BlobLibMessageAPI.getInstance().getMessage("Merchant.Not-Found").toCommandSender(sender);
+            BlobLibMessageAPI.getInstance()
+                    .getMessage("Merchant.Not-Found", sender)
+                    .toCommandSender(sender);
             return true;
         }
         MerchantInventory inventory = director.getMerchantManager().getMerchants().get(key);
@@ -59,7 +63,9 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
         } else {
             player = Bukkit.getPlayer(args[2]);
             if (player == null) {
-                BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found").toCommandSender(sender);
+                BlobLibMessageAPI.getInstance()
+                        .getMessage("Player.Not-Found", sender)
+                        .toCommandSender(sender);
                 return true;
             }
         }

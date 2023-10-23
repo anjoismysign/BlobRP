@@ -7,7 +7,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerJoinEvent;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
 public class OnJoinMessage extends RPListener {
@@ -30,12 +29,8 @@ public class OnJoinMessage extends RPListener {
         Player player = event.getPlayer();
         event.setJoinMessage(null);
         if (onJoinMessage.value() != null) {
-            ReferenceBlobMessage message = BlobLibMessageAPI.getInstance().getMessage(onJoinMessage.value());
-            Bukkit.getOnlinePlayers().forEach(player1 -> {
-                message.modder()
-                        .replace("%player%", player.getName())
-                        .get()
-                        .handle(player1);
+            BlobLibMessageAPI.getInstance().broadcast(onJoinMessage.value(), modder -> {
+                modder.replace("%player%", player.getName());
             });
         }
     }

@@ -48,7 +48,7 @@ Builder:
 Reward:
   Cash:
     Type: ACTIONBAR
-    Message: '&7You have found &6%cash% coins'
+    Message: '&7You have found &6%cash%'
     BlobSound: Reward.Cash
   Permission:
     Type: ACTIONBAR
@@ -63,6 +63,13 @@ Merchant:
     Type: TITLE
     Title: '&c&lNOT FOUND'
     Subtitle: '&7Merchant not found'
+Event:
+  PlayerDeathEvent:
+    Type: CHAT
+    Message: '&c☠ %victim%'
+  PlayerKillPlayer:
+    Type: CHAT
+    Message: '&7%attacker% &c☠ %victim%'
 Spectator:
   Oof:
     Type: TITLE

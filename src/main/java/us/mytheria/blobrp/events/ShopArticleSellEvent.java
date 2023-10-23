@@ -4,12 +4,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.entities.message.BlobMessage;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.entities.ShopArticleTransaction;
 
 public class ShopArticleSellEvent extends ShopArticleTransactionEvent {
-    private final ReferenceBlobMessage referenceSuccessMessage;
-    private final ReferenceBlobMessage referenceNotEnoughMessage;
+    private final String referenceSuccessMessage;
+    private final String referenceNotEnoughMessage;
     private BlobMessage notEnoughMessage;
     private BlobMessage successMessage;
     private final double price;
@@ -19,8 +18,8 @@ public class ShopArticleSellEvent extends ShopArticleTransactionEvent {
                                 TransactionType transactionType,
                                 TransactionStatus transactionStatus,
                                 boolean isAsync,
-                                ReferenceBlobMessage referenceSuccessMessage,
-                                ReferenceBlobMessage referenceNotEnoughMessage,
+                                String referenceSuccessMessage,
+                                String referenceNotEnoughMessage,
                                 BlobMessage notEnoughMessage,
                                 BlobMessage successMessage,
                                 double price) {
@@ -87,14 +86,14 @@ public class ShopArticleSellEvent extends ShopArticleTransactionEvent {
     /**
      * @return message that's set inside config.yml to be used as default success message.
      */
-    public ReferenceBlobMessage getReferenceSuccessMessage() {
+    public String getReferenceSuccessMessage() {
         return referenceSuccessMessage;
     }
 
     /**
      * @return the default message to be used as not enough money message.
      */
-    public ReferenceBlobMessage getReferenceNotEnoughMessage() {
+    public String getReferenceNotEnoughMessage() {
         return referenceNotEnoughMessage;
     }
 }

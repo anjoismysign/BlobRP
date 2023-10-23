@@ -1,0 +1,19 @@
+Locale: es_es
+Title: ''
+Size: 36
+Buttons:
+  White-Background:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+      Lore: [ ]
+    Slot: 9-26
+  Donor-Info:
+    ItemStack:
+      Material: WHITE_STAINED_GLASS_PANE
+      CustomModelData: 1
+      DisplayName: "&fBloqueado"
+      Lore:
+        - "&7Exclusivo para contribuyentes de eventos"
+    Slot: 27-31

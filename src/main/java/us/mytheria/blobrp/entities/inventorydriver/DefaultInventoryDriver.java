@@ -2,6 +2,8 @@ package us.mytheria.blobrp.entities.inventorydriver;
 
 import org.bson.Document;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
@@ -37,14 +39,38 @@ public class DefaultInventoryDriver extends InventoryDriver {
         return inventoryHolder;
     }
 
+    private void updateInventoryHolder(Player player, @Nullable String locale) {
+        locale = locale == null ? player.getLocale() : locale;
+        if (isUpgraded) {
+            InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
+                    .getInstance()
+                    .getMetaInventoryBuilderCarrier("EventPlayerInventory", locale);
+            this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
+        } else {
+            InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
+                    .getInstance()
+                    .getMetaInventoryBuilderCarrier("PlayerInventory", locale);
+            this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
+        }
+    }
+
     public void rebuildInventory() {
+        inventoryHolder.buildInventory();
+    }
+
+    /**
+     * Will update the locale of the inventory.
+     *
+     * @param player The player
+     */
+    public void updateLocale(Player player, @NotNull String locale) {
+        updateInventoryHolder(player, locale);
         inventoryHolder.buildInventory();
     }
 
     private void upgrade(Player player) {
         isUpgraded = true;
-        InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("EventPlayerInventory");
-        this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
+        updateInventoryHolder(player, null);
         cache = new HashSet<>();
         inventoryHolder.getKeys().forEach(key -> cache.addAll(inventoryHolder.getButton(key).getSlots()));
         Set<Integer> slots = new HashSet<>();
@@ -60,8 +86,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
 
     private void downgrade(Player player) {
         isUpgraded = false;
-        InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI.getInstance().getMetaInventoryBuilderCarrier("PlayerInventory");
-        this.inventoryHolder = MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier(carrier, player.getUniqueId());
+        updateInventoryHolder(player, null);
         cache = new HashSet<>();
         for (String key : inventoryHolder.getKeys()) {
             cache.addAll(inventoryHolder.getButton(key).getSlots());

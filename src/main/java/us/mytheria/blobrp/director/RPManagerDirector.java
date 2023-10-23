@@ -33,9 +33,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public RPManagerDirector(BlobRP plugin) {
         super(plugin);
-        registerMetaBlobInventory("WelcomeInventory");
-        registerMetaBlobInventory("PlayerInventory");
-        registerMetaBlobInventory("EventPlayerInventory");
+        registerMetaBlobInventory("WelcomeInventory", "PlayerInventory", "EventPlayerInventory");
+        registerMetaBlobInventory("es_es/PlayerInventory", "es_es/EventPlayerInventory");
+        registerBlobMessage("es_es/blobrp_lang");
+        registerBlobInventory("es_es/CashRewardBuilder", "es_es/ItemStackRewardBuilder", "es_es/PermissionRewardBuilder", "es_es/ShopArticleBuilder");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));

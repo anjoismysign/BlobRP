@@ -1,0 +1,90 @@
+Locale: es_es
+System:
+  Welcome:
+    Type: CHAT
+    Message: '&7Bienvenido, &f%player%'
+    BlobSound: System.Welcome
+  Join:
+    Type: CHAT
+    Message: '&7%player% &fse ha unido'
+  Quit:
+    Type: CHAT
+    Message: '&7%player% &fse ha ido'
+Soul:
+  Fail:
+    Type: TITLE
+    Title: '&c&lERROR'
+    Subtitle: "&7No se puede proceder"
+  Hand-Success:
+    Type: TITLE
+    Title: '&a&lEXITOSO'
+    Subtitle: '&7El item en tu &fmano &7ahora tiene fidelidad'
+  Offhand-Success:
+    Type: TITLE
+    Title: '&a&lEXITOSO'
+    Subtitle: '&7El item en tu &fmano secundaria &7ahora tiene fidelidad'
+  Inventory:
+    Type: TITLE
+    Title: '&f&lLISTO'
+    Subtitle: '&7Se realizó fidelidad a todos los items en tu inventario'
+Builder:
+  CashValue:
+    Type: TITLE
+    Title: '&f&lCASH'
+    Subtitle: '&7Digite cash (número)'
+  CashValue-Timeout:
+    Type: TITLE
+    Title: '&c&lMUY LENTO'
+    Subtitle: '&7Le tomó demasiado digitar Cash'
+    BlobSound: Builder.Timeout
+  PermissionValue:
+    Type: TITLE
+    Title: '&f&lPERMISO'
+    Subtitle: '&7Escriba el permiso'
+  PermissionValue-Timeout:
+    Type: TITLE
+    Title: '&c&lMUY LENTO'
+    Subtitle: '&7Le tomó demasiado escribir el permiso'
+    BlobSound: Builder.Timeout
+Reward:
+  Cash:
+    Type: ACTIONBAR
+    Message: '&7Has encontrado &6%cash%'
+    BlobSound: Reward.Cash
+  Permission:
+    Type: ACTIONBAR
+    Message: '&7Has desbloqueado una característica oculta...'
+    BlobSound: Reward.Permission
+  ItemStack:
+    Type: ACTIONBAR
+    Message: '&7Has encontrado &6%itemStack%'
+    BlobSound: Reward.Item
+Merchant:
+  Not-Found:
+    Type: TITLE
+    Title: '&c&lNO ENCONTRADO'
+    Subtitle: '&7Merchant no encontrado'
+Event:
+  PlayerDeathEvent:
+    Type: CHAT
+    Message: '&c☠ %victim%'
+  PlayerKillPlayer:
+    Type: CHAT
+    Message: '&7%attacker% &c☠ %victim%'
+Spectator:
+  Oof:
+    Type: TITLE
+    Title: '&c&lOOF'
+    Subtitle: '&7Eras, fuiste :O'
+  Wasted:
+    Type: TITLE
+    Title: '&c&lDEMACRADO'
+    Subtitle: '&7Probablemente la próxima'
+  Dead:
+    Type: TITLE
+    Title: '&c&lFALLECIDO'
+    Subtitle: '&7Embalsamado por Allays'
+  Keep-Alive:
+    Type: TITLE
+    Title: '&c&lCADUCADO'
+    Subtitle: '&7Tu keep alive ha caducado'

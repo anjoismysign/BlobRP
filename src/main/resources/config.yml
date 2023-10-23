@@ -85,8 +85,8 @@ Listeners:
       Message: System.Quit
     Kill-Message-Weapon:
       Register: false
-      Message: '&7%attacker% &c☠ %victim%'
+      Message: Event.PlayerKillPlayer
     Player-Death-Message:
       Register: false
       # If you wish to remove the message, leave it as ''
-      Message: '&c☠ %victim%'
+      Message: Event.PlayerDeathEvent

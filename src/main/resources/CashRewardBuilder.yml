@@ -27,7 +27,7 @@ Buttons:
     ItemStack:
       Material: BOOK
       CustomModelData: 0
-      DisplayName: "&6ReferenceBlobMessage"
+      DisplayName: "&6BlobMessage"
       Lore:
         - "&7Selected: &f%message%"
     Slot: 2

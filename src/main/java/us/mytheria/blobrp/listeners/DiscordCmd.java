@@ -41,7 +41,8 @@ public class DiscordCmd extends RPListener implements CommandExecutor {
         int length = args.length;
         if (length < 1) {
             if (!(sender instanceof Player player)) {
-                BlobLibMessageAPI.getInstance().getMessage("System.Console-Not-Allowed-Command")
+                BlobLibMessageAPI.getInstance()
+                        .getMessage("System.Console-Not-Allowed-Command", sender)
                         .toCommandSender(sender);
                 return true;
             }
@@ -50,7 +51,8 @@ public class DiscordCmd extends RPListener implements CommandExecutor {
         }
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found")
+            BlobLibMessageAPI.getInstance()
+                    .getMessage("Player.Not-Found", sender)
                     .toCommandSender(sender);
             return true;
         }

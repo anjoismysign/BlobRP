@@ -1,0 +1,25 @@
+Locale: es_es
+Sell-Articles:
+  Title: '&lVENDER BASURA'
+  Size: 27
+  Buttons:
+    Background:
+      ItemStack:
+        Material: BLACK_STAINED_GLASS_PANE
+        CustomModelData: 0
+        DisplayName: " "
+        Lore: [ ]
+      Slot: 18-26
+    Available:
+      ItemStack:
+        Material: AIR
+      Slot: 0-17
+    Key:
+      ItemStack:
+        Material: BOOK
+        CustomModelData: 0
+        DisplayName: "&eInformación"
+        Lore:
+          - '&7Arrastra los items que quieras vender'
+          - '&7Cierra el inventario para recibir el dinero'
+      Slot: 22

@@ -5,14 +5,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
-import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class PlayerDeathMessage extends RPListener {
-    private @Nullable BlobMessage message;
+    private @Nullable String message;
+    private boolean isValid;
 
     public PlayerDeathMessage(ConfigManager configManager) {
         super(configManager);
@@ -24,8 +23,14 @@ public class PlayerDeathMessage extends RPListener {
             String value = getConfigManager().playerDeathMessage().value();
             if (value.isEmpty())
                 message = null;
-            else
-                message = Objects.requireNonNull(BlobLibMessageAPI.getInstance().getMessage(value), "Message not found: " + value);
+            else {
+                message = value;
+                isValid = true;
+                if (BlobLibMessageAPI.getInstance().getMessage(value, "en_us") == null) {
+                    getConfigManager().getPlugin().getAnjoLogger().singleError("BlobMessage '" + value + "' doesn't exist");
+                    isValid = false;
+                }
+            }
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
         }
     }
@@ -33,12 +38,9 @@ public class PlayerDeathMessage extends RPListener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        if (message == null)
-            event.setDeathMessage(null);
-        else
-            message.modder()
-                    .replace("%victim%", event.getEntity().getName())
-                    .get()
-                    .broadcast();
+        event.setDeathMessage(null);
+        if (isValid)
+            BlobLibMessageAPI.getInstance().broadcast(message, modder ->
+                    modder.replace("%victim%", event.getEntity().getName()));
     }
 }
