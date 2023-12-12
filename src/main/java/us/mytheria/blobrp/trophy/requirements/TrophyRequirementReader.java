@@ -1,6 +1,6 @@
 package us.mytheria.blobrp.trophy.requirements;
 
-import global.warming.commons.io.FilenameUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;

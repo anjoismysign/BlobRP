@@ -1,7 +1,7 @@
 package us.mytheria.blobrp.entities;
 
-import global.warming.commons.io.FilenameUtils;
 import net.md_5.bungee.api.chat.TranslatableComponent;
+import org.apache.commons.io.FilenameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,11 +11,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.api.BlobLibInventoryAPI;
+import us.mytheria.bloblib.api.BlobLibTranslatableAPI;
 import us.mytheria.bloblib.entities.BlobObject;
-import us.mytheria.bloblib.entities.inventory.BlobInventory;
-import us.mytheria.bloblib.utilities.ItemStackSerializer;
+import us.mytheria.bloblib.entities.inventory.BlobInventoryTracker;
+import us.mytheria.bloblib.entities.translatable.TranslatableItem;
+import us.mytheria.bloblib.exception.ConfigurationFieldException;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ShopArticle implements BlobObject {
@@ -25,7 +28,7 @@ public class ShopArticle implements BlobObject {
     private final int customModelData;
     private final double buyPrice;
     private final double sellPrice;
-    private final ItemStack display;
+    private final TranslatableItem display;
     private final String key;
     private final boolean isDefault;
     private final boolean isTransient;
@@ -33,47 +36,52 @@ public class ShopArticle implements BlobObject {
     private Optional<String> buyingCurrency;
 
     /**
-     * Creates a ShopArticle from an ItemStack.
+     * Creates a ShopArticle from a TranslatableItem.
      * Sell price is 10% of the buy price.
      *
-     * @param display  The ItemStack to create the ShopArticle from
-     * @param buyPrice The buy price
+     * @param display     The TranslatableItem to create the ShopArticle from
+     * @param buyPrice    The buy price
+     * @param key         The key
+     * @param isTransient Whether the article is transient
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
-                                            boolean isTransient) {
-        return fromItemStack(display, buyPrice, key, buyPrice / 10, isTransient, null, null);
+    public static ShopArticle fromTranslatableItem(TranslatableItem display, double buyPrice, String key,
+                                                   boolean isTransient) {
+        return fromTranslatableItem(display, buyPrice, key, buyPrice / 10, isTransient, null, null);
     }
 
     /**
-     * Creates a ShopArticle from an ItemStack
+     * Creates a ShopArticle from a TranslatableItem
      *
-     * @param display         The ItemStack to create the ShopArticle from
+     * @param display         The TranslatableItem to create the ShopArticle from
      * @param buyPrice        The buy price
+     * @param key             The key
      * @param sellPrice       The sell price
+     * @param isTransient     Whether the article is transient
      * @param buyingCurrency  The buying currency. if null, the default currency is used.
      * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromItemStack(ItemStack display, double buyPrice, String key,
-                                            double sellPrice, boolean isTransient,
-                                            @Nullable String buyingCurrency,
-                                            @Nullable String sellingCurrency) {
+    public static ShopArticle fromTranslatableItem(TranslatableItem display, double buyPrice, String key,
+                                                   double sellPrice, boolean isTransient,
+                                                   @Nullable String buyingCurrency,
+                                                   @Nullable String sellingCurrency) {
         if (display == null) {
             return null;
         }
         Optional<String> buyingCurrencyOptional = Optional.ofNullable(buyingCurrency);
         Optional<String> sellingCurrencyOptional = Optional.ofNullable(sellingCurrency);
-        ItemMeta itemMeta = display.getItemMeta();
+        ItemStack clone = display.getClone();
+        ItemMeta itemMeta = clone.getItemMeta();
         if (itemMeta == null) {
-            return new ShopArticle(display.getType(), false,
+            return new ShopArticle(clone.getType(), false,
                     0, buyPrice, sellPrice, display,
                     key, false, isTransient,
                     buyingCurrencyOptional, sellingCurrencyOptional);
         }
-        return new ShopArticle(display.getType(), itemMeta.hasCustomModelData(),
+        return new ShopArticle(clone.getType(), itemMeta.hasCustomModelData(),
                 itemMeta.hasCustomModelData() ? itemMeta.getCustomModelData() : 0, buyPrice,
                 sellPrice, display, key, false, isTransient,
                 buyingCurrencyOptional, sellingCurrencyOptional);
@@ -82,6 +90,8 @@ public class ShopArticle implements BlobObject {
     public static ShopArticle fromFile(File file) {
         String fileName = file.getName();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        if (!config.isString("Material"))
+            throw new ConfigurationFieldException("'Material' is missing or not valid");
         String inputMaterial = config.getString("Material");
         Material material;
         try {
@@ -95,11 +105,13 @@ public class ShopArticle implements BlobObject {
         boolean hasCustomModelData = config.getBoolean("HasCustomModelData",
                 false);
         int customModelData = config.getInt("CustomModelData", 0);
-        ItemStack display = ItemStackSerializer.deserialize(config, "Display");
-        if (display == null) {
-            Bukkit.getLogger().severe("Display is null! Inside file " + fileName);
-            return null;
-        }
+        if (!config.isString("Display"))
+            throw new ConfigurationFieldException("'Display' is missing or not valid");
+        String displayKey = config.getString("Display");
+        TranslatableItem display = BlobLibTranslatableAPI.getInstance()
+                .getTranslatableItem(displayKey);
+        if (display == null)
+            throw new NullPointerException("Display '" + displayKey + "' doesn't point to a TranslatableItem!");
         Optional<String> buyingCurrency = Optional.empty();
         if (config.isString("Buying-Currency"))
             buyingCurrency = Optional.ofNullable(config.getString("Buying-Currency"));
@@ -113,7 +125,7 @@ public class ShopArticle implements BlobObject {
     }
 
     public ShopArticle(Material material, boolean hasCustomModelData, int customModelData,
-                       double buyPrice, double sellPrice, ItemStack display, String key,
+                       double buyPrice, double sellPrice, TranslatableItem display, String key,
                        boolean isDefault, boolean isTransient,
                        Optional<String> buyingCurrency, Optional<String> sellingCurrency) {
         this.material = material;
@@ -144,7 +156,7 @@ public class ShopArticle implements BlobObject {
             config.set("Buying-Currency", buyingCurrency.get());
         if (sellingCurrency.isPresent())
             config.set("Selling-Currency", sellingCurrency.get());
-        ItemStackSerializer.serialize(getDisplay(), config, "Display");
+        config.set("Display", getDisplay().getReference());
         try {
             config.save(file);
         } catch (Exception exception) {
@@ -189,14 +201,19 @@ public class ShopArticle implements BlobObject {
         return itemMeta.getCustomModelData() == getCustomModelData();
     }
 
-    public ItemStack cloneDisplay(int amount) {
-        ItemStack clone = cloneDisplay();
+    public ItemStack cloneDisplay(Player player, int amount) {
+        return cloneDisplay(player.getLocale(), amount);
+    }
+
+    public ItemStack cloneDisplay(@NotNull String locale, int amount) {
+        Objects.requireNonNull(locale);
+        ItemStack clone = display.localize(locale).getClone();
         clone.setAmount(amount);
         return clone;
     }
 
     public ItemStack cloneDisplay() {
-        return new ItemStack(getDisplay());
+        return cloneDisplay("en_us", 1);
     }
 
     public Material getMaterial() {
@@ -219,7 +236,7 @@ public class ShopArticle implements BlobObject {
         return sellPrice;
     }
 
-    public ItemStack getDisplay() {
+    public TranslatableItem getDisplay() {
         return display;
     }
 
@@ -233,13 +250,13 @@ public class ShopArticle implements BlobObject {
     }
 
     public static void openSellInventory(Player player) {
-        BlobInventory sellInventory = BlobLibInventoryAPI.getInstance().getBlobInventory("Sell-Articles");
-        sellInventory = sellInventory.copy();
-        player.openInventory(sellInventory.getInventory());
+        BlobInventoryTracker tracker = BlobLibInventoryAPI.getInstance()
+                .trackInventory(player, "Sell-Articles");
+        tracker.getInventory().open(player);
     }
 
     public String display() {
-        ItemStack display = getDisplay();
+        ItemStack display = cloneDisplay();
         String defaultDisplay = new TranslatableComponent(display.getTranslationKey()).toPlainText();
         if (!display.hasItemMeta())
             return defaultDisplay;

@@ -3,8 +3,7 @@ package us.mytheria.blobrp.reward;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import us.mytheria.bloblib.entities.BlobMessageModder;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.PlayerUtil;
 
@@ -24,7 +23,7 @@ public class ItemStackReward extends Reward<ItemStack> {
      */
     public static ItemStackReward build(String key, boolean shouldDelay, ItemStack itemStack,
                                         Optional<Long> delay, boolean runAsync,
-                                        Optional<ReferenceBlobMessage> message) {
+                                        Optional<String> message) {
         return new ItemStackReward(key, shouldDelay, itemStack, delay, runAsync, message);
     }
 
@@ -40,7 +39,7 @@ public class ItemStackReward extends Reward<ItemStack> {
      */
     protected ItemStackReward(String key, boolean shouldDelay, ItemStack itemStack,
                               Optional<Long> delay, boolean runAsync,
-                              Optional<ReferenceBlobMessage> message) {
+                              Optional<String> message) {
         super(key, shouldDelay, itemStack, delay, runAsync, message);
     }
 
@@ -56,12 +55,12 @@ public class ItemStackReward extends Reward<ItemStack> {
      * @param player
      */
     public void applyAndMessage(Player player) {
-        message.ifPresent(blobMessage -> {
-            BlobMessageModder<ReferenceBlobMessage> modder = BlobMessageModder.mod(blobMessage);
-            modder.replace("%itemStack%", ItemStackUtil.display(getValue()));
-            blobMessage = modder.get();
-            blobMessage.handle(player);
-        });
+        message.ifPresent(key -> BlobLibMessageAPI.getInstance()
+                .getMessage(key, player)
+                .modder()
+                .replace("%itemStack%", ItemStackUtil.display(getValue()))
+                .get()
+                .handle(player));
         apply(player);
     }
 
@@ -76,7 +75,7 @@ public class ItemStackReward extends Reward<ItemStack> {
             config.set("RunAsynchronously", runAsync);
         }
         if (message.isPresent()) {
-            config.set("Message", message.get().getReference());
+            config.set("Message", message.get());
         }
         try {
             config.save(file);

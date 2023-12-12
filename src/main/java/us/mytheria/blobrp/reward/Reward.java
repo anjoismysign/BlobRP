@@ -3,8 +3,8 @@ package us.mytheria.blobrp.reward;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.BlobObject;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.BlobRPAPI;
 
@@ -47,7 +47,7 @@ public abstract class Reward<T> implements BlobObject {
     protected final boolean runAsync;
 
     // The message to send to the player when the reward is given
-    protected final Optional<ReferenceBlobMessage> message;
+    protected final Optional<String> message;
 
     /**
      * Constructs a new Reward with the given values.
@@ -60,7 +60,7 @@ public abstract class Reward<T> implements BlobObject {
      */
     public Reward(String key,
                   boolean shouldDelay, T value, Optional<Long> delay,
-                  boolean runAsync, Optional<ReferenceBlobMessage> message) {
+                  boolean runAsync, Optional<String> message) {
         this.key = key;
         this.shouldDelay = shouldDelay;
         this.value = value;
@@ -84,7 +84,8 @@ public abstract class Reward<T> implements BlobObject {
      */
     public void applyAndMessage(Player player) {
         apply(player);
-        message.ifPresent(blobMessage -> blobMessage.handle(player));
+        message.ifPresent(key -> BlobLibMessageAPI.getInstance()
+                .getMessage(key, player).handle(player));
     }
 
     public String getKey() {

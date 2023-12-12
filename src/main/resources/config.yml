@@ -35,7 +35,11 @@ Listeners:
     Drop-Non-Soul-On-Death: false
     Player-Keep-Experience-On-Death: false
     Entities-Clear-Drops-On-Death: false
-    Cancel-Entity-Drop-Item: true
+    Cancel-Entity-Drop-Item: false
+    Translate-On-Pickup: false
+    Translate-On-Locale-Switch: false
+    Translate-On-Join: false
+    Translate-On-Alternative-Saving-Join: false
   SimpleListeners:
     Prevent-Ice-Formation:
       Register: true
@@ -62,9 +66,7 @@ Listeners:
       Bought-Message: Economy.Received-Withdrawal
     Merchants-View:
       Register: true
-      Add:
-        - ''
-        - '&7Price &r%format%'
+      Add: BlobRP.Merchants-View
     Welcome-Players:
       Register: true
       # If you wish to remove the message, leave it as ''

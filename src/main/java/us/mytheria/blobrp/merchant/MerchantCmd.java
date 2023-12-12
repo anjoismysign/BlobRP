@@ -47,13 +47,12 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
             return true;
         }
         String key = args[1];
-        if (!director.getMerchantManager().getMerchants().containsKey(key)) {
+        if (!director.getMerchantManager().getMerchantKeys().contains(key)) {
             BlobLibMessageAPI.getInstance()
                     .getMessage("Merchant.Not-Found", sender)
                     .toCommandSender(sender);
             return true;
         }
-        MerchantInventory inventory = director.getMerchantManager().getMerchants().get(key);
         Player player;
         if (args.length < 3) {
             player = instanceOfPlayer(sender);
@@ -69,7 +68,10 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
                 return true;
             }
         }
-        player.openInventory(inventory.getInventory());
+        MerchantInventory inventory = director.getMerchantManager().getMerchant(key, player);
+        if (inventory == null)
+            throw new NullPointerException("MerchantInventory is null");
+        inventory.open(player);
         return true;
     }
 
@@ -93,7 +95,7 @@ public class MerchantCmd implements CommandExecutor, TabCompleter {
             if (sender.hasPermission("blobrp.admin")) {
                 switch (args.length) {
                     case 1 -> l.add("open");
-                    case 2 -> l.addAll(director.getMerchantManager().getMerchants().keySet());
+                    case 2 -> l.addAll(director.getMerchantManager().getMerchantKeys());
                     case 3 -> {
                         return null;
                     }

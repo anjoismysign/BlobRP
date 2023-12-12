@@ -6,11 +6,11 @@
 
     <groupId>us.mytheria</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.5.4</version>
+    <version>0.5.7</version>
     <packaging>jar</packaging>
 
     <properties>
-        <testServer>/Users/lbenav8095/Documents/Dev/Java/anjoismysign/1.19.2 Wild North</testServer>
+        <testServer>/Users/lbenav8095/Documents/Dev/Java/anjoismysign/Formiga Simulator</testServer>
         <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.697.24</version>
+            <version>1.697.35</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

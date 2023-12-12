@@ -11,7 +11,7 @@ import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
+import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
 public class WelcomePlayer extends RPListener {
@@ -39,7 +39,7 @@ public class WelcomePlayer extends RPListener {
                         .getMetaInventoryBuilderCarrier(reference, player);
         if (player.hasPlayedBefore())
             return;
-        ReferenceBlobMessage message = BlobLibMessageAPI.getInstance()
+        BlobMessage message = BlobLibMessageAPI.getInstance()
                 .getMessage(welcomePlayers.value(), player);
         message.modder()
                 .replace("%player%", player.getName())

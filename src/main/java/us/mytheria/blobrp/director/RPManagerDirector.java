@@ -16,7 +16,6 @@ import us.mytheria.blobrp.events.AsyncShopArticleReloadEvent;
 import us.mytheria.blobrp.inventories.CashRewardBuilder;
 import us.mytheria.blobrp.inventories.ItemStackRewardBuilder;
 import us.mytheria.blobrp.inventories.PermissionRewardBuilder;
-import us.mytheria.blobrp.inventories.ShopArticleBuilder;
 import us.mytheria.blobrp.merchant.MerchantManager;
 import us.mytheria.blobrp.reward.CashReward;
 import us.mytheria.blobrp.reward.ItemStackReward;
@@ -43,9 +42,13 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
-        getShopArticleDirector().getBuilderManager().setBuilderBiFunction((uuid, shopArticleObjectDirector) ->
-                ShopArticleBuilder.build(uuid, shopArticleObjectDirector, this));
-        getShopArticleDirector().whenObjectManagerFilesLoad(manager -> addManager("MerchantManager", new MerchantManager(this)));
+        getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
+            try {
+                addManager("MerchantManager", new MerchantManager(this));
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
         getShopArticleDirector().addAdminChildCommand(OpenSellInventory::command);
         // Reward \\
         addManager("RewardDirectorManager", new ObjectDirectorManager(this,

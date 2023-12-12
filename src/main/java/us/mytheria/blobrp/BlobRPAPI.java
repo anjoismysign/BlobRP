@@ -1,16 +1,16 @@
 package us.mytheria.blobrp;
 
 import com.mongodb.lang.Nullable;
-import global.warming.commons.io.FilenameUtils;
 import me.anjoismysign.anjo.entities.Result;
+import org.apache.commons.io.FilenameUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.ObjectDirector;
+import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
@@ -52,7 +52,7 @@ public class BlobRPAPI {
     /**
      * Adds a transient ShopArticle to the shop.
      *
-     * @param display         The ItemStack to create the ShopArticle from
+     * @param display         The TranslatableItem to create the ShopArticle from
      * @param buyPrice        The buy price
      * @param key             The key
      * @param sellPrice       The sell price
@@ -60,10 +60,10 @@ public class BlobRPAPI {
      * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return Whether the ShopArticle was added successfully
      */
-    public boolean addComplexShopArticle(ItemStack display, double buyPrice, NamespacedKey key,
+    public boolean addComplexShopArticle(TranslatableItem display, double buyPrice, NamespacedKey key,
                                          double sellPrice, @Nullable String buyingCurrency,
                                          @Nullable String sellingCurrency) {
-        ShopArticle shopArticle = ShopArticle.fromItemStack(display, buyPrice, key.toString(),
+        ShopArticle shopArticle = ShopArticle.fromTranslatableItem(display, buyPrice, key.toString(),
                 sellPrice, true, buyingCurrency, sellingCurrency);
         if (shopArticle == null)
             return false;
@@ -75,12 +75,12 @@ public class BlobRPAPI {
      * Adds a transient ShopArticle to the shop.
      * Sell price is 10% of the buy price.
      *
-     * @param display  The ItemStack to create the ShopArticle from
+     * @param display  The TranslatableItem to create the ShopArticle from
      * @param buyPrice The buy price
      * @param key      The key
      * @return Whether the ShopArticle was added successfully
      */
-    public boolean addComplexShopArticle(ItemStack display, double buyPrice, NamespacedKey key) {
+    public boolean addComplexShopArticle(TranslatableItem display, double buyPrice, NamespacedKey key) {
         return addComplexShopArticle(display, buyPrice, key, buyPrice / 10,
                 null, null);
     }
@@ -92,27 +92,22 @@ public class BlobRPAPI {
         if (director.getMerchantManager() == null) {
             return;
         }
-        director.getMerchantManager().getMerchants()
-                .forEach((x, y) ->
-                        y.loadShopArticles());
+        director.getMerchantManager().reload();
     }
 
     /**
      * Will get a MerchantInventory by its key.
-     * It will fail fast if the MerchantManager is not enabled
-     * or if key doesn't point to a tracked MerchantInventory.
+     * It will fail fast if the MerchantManager is not enabled.
      *
      * @param key The key
      * @return The MerchantInventory
      */
-    @NotNull
-    public MerchantInventory getMerchantInventory(String key) {
+    @Nullable
+    public MerchantInventory getMerchantInventory(@NotNull String key, @NotNull Player player) {
         MerchantManager manager = director.getMerchantManager();
         if (manager == null)
-            throw new IllegalStateException("MerchantManager is not enabled.");
-        if (!manager.getMerchants().containsKey(key))
-            throw new NullPointerException("Merchant with key " + key + " does not exist.");
-        return manager.getMerchants().get(key);
+            throw new NullPointerException("MerchantManager is not enabled.");
+        return manager.getMerchant(key, player);
     }
 
     public BlobCrudable serialize(Player player, PlayerSerializerType type) {

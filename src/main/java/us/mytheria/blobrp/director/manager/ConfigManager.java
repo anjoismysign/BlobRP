@@ -18,14 +18,18 @@ public class ConfigManager extends RPManager {
 
     private TinyEventListener dropNonSoulOnDeath;
     private TinyEventListener playerKeepExperienceOnDeath;
-    private SimpleEventListener<Integer> playerDropExperienceOnDeath;
-    private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
     private TinyEventListener entitiesClearDropsOnDeath;
     private TinyEventListener entityDropItem;
+    private TinyEventListener translateOnPickup;
+    private TinyEventListener translateOnLocaleSwitch;
+    private TinyEventListener translateOnJoin;
+    private TinyEventListener translateOnAlternativeSavingJoin;
+    private SimpleEventListener<Integer> playerDropExperienceOnDeath;
+    private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
     private SimpleEventListener<Double> sellArticlesEvent;
     private SimpleEventListener<Boolean> sellArticlesListener;
     private SimpleEventListener<String> merchants;
-    private SimpleEventListener<List<String>> merchantsView;
+    private SimpleEventListener<String> merchantsView;
     private SimpleEventListener<String> welcomePlayers;
     private SimpleEventListener<Boolean> playerHunger;
     private SimpleEventListener<List<String>> iceFormation;
@@ -53,13 +57,17 @@ public class ConfigManager extends RPManager {
         playerKeepExperienceOnDeath = listenersSection.tinyEventListener("Player-Keep-Experience-On-Death");
         entitiesClearDropsOnDeath = listenersSection.tinyEventListener("Entities-Clear-Drops-On-Death");
         entityDropItem = listenersSection.tinyEventListener("Cancel-Entity-Drop-Item");
+        translateOnPickup = listenersSection.tinyEventListener("Translate-On-Pickup");
+        translateOnLocaleSwitch = listenersSection.tinyEventListener("Translate-On-Locale-Switch");
+        translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
+        translateOnAlternativeSavingJoin = listenersSection.tinyEventListener("Translate-On-Alternative-Saving-Join");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
         sellArticlesEvent = listenersSection.simpleEventListenerDouble("Sell-Articles-Event", "Default-Price");
         sellArticlesListener = listenersSection.simpleEventListenerBoolean("Manage-Sell-Articles", "Permission-Multiplier");
         merchants = listenersSection.simpleEventListenerString("Merchants", "Bought-Message");
-        merchantsView = listenersSection.simpleEventListenerStringList("Merchants-View", "Add");
+        merchantsView = listenersSection.simpleEventListenerString("Merchants-View", "Add");
         welcomePlayers = listenersSection.simpleEventListenerString("Welcome-Players", "Message");
         playerHunger = listenersSection.simpleEventListenerBoolean("Remove-Player-Hunger", "Requires-Permission");
         iceFormation = listenersSection.simpleEventListenerStringList("Prevent-Ice-Formation", "World-Whitelist");
@@ -87,20 +95,36 @@ public class ConfigManager extends RPManager {
         return playerKeepExperienceOnDeath;
     }
 
-    public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
-        return playerDropExperienceOnDeath;
-    }
-
-    public SimpleEventListener<Integer> entitiesDropExperienceOnDeath() {
-        return entitiesDropExperienceOnDeath;
-    }
-
     public TinyEventListener entitiesClearDropsOnDeath() {
         return entitiesClearDropsOnDeath;
     }
 
     public TinyEventListener entityDropItem() {
         return entityDropItem;
+    }
+
+    public TinyEventListener translateOnPickup() {
+        return translateOnPickup;
+    }
+
+    public TinyEventListener translateOnLocaleSwitch() {
+        return translateOnLocaleSwitch;
+    }
+
+    public TinyEventListener translateOnJoin() {
+        return translateOnJoin;
+    }
+
+    public TinyEventListener translateOnAlternativeSavingJoin() {
+        return translateOnAlternativeSavingJoin;
+    }
+
+    public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
+        return playerDropExperienceOnDeath;
+    }
+
+    public SimpleEventListener<Integer> entitiesDropExperienceOnDeath() {
+        return entitiesDropExperienceOnDeath;
     }
 
     public SimpleEventListener<Double> sellArticlesEvent() {
@@ -115,7 +139,7 @@ public class ConfigManager extends RPManager {
         return merchants;
     }
 
-    public SimpleEventListener<List<String>> merchantsView() {
+    public SimpleEventListener<String> merchantsView() {
         return merchantsView;
     }
 

@@ -1,0 +1,5 @@
+BlobRP:
+  Merchants-View:
+    Block:
+      - ''
+      - '&7Price &r%format%'

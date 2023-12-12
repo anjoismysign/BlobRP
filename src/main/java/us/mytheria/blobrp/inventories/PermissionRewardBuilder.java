@@ -7,7 +7,6 @@ import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.reward.PermissionReward;
 
@@ -32,7 +31,7 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
                                     RPManagerDirector managerDirector) {
         super(blobInventory, builderId, objectDirector, managerDirector);
         addQuickStringButton("Key", 300)
-                .addQuickMessageButton("Message", 300)
+                .addQuickStringButton("Message", 300)
                 .addQuickLongButton("Delay", 300)
                 .addQuickStringButton("PermissionValue", 300)
                 .addQuickStringButton("World", 300)
@@ -57,7 +56,7 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
     @Override
     public PermissionReward construct() {
         ObjectBuilderButton<String> keyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Key");
-        ObjectBuilderButton<ReferenceBlobMessage> messageButton = (ObjectBuilderButton<ReferenceBlobMessage>) getObjectBuilderButton("Message");
+        ObjectBuilderButton<String> messageButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Message");
         ObjectBuilderButton<Long> delayButton = (ObjectBuilderButton<Long>) getObjectBuilderButton("Delay");
         ObjectBuilderButton<String> permissionValueButton = (ObjectBuilderButton<String>) getObjectBuilderButton("PermissionValue");
         ObjectBuilderButton<String> worldButton = (ObjectBuilderButton<String>) getObjectBuilderButton("World");
@@ -66,7 +65,7 @@ public class PermissionRewardBuilder extends RPObjectBuilder<PermissionReward> {
             return null;
 
         String key = keyButton.get().get();
-        Optional<ReferenceBlobMessage> message = messageButton.get();
+        Optional<String> message = messageButton.get();
         Optional<Long> delay = delayButton.get();
         String permission = permissionValueButton.get().get();
         Optional<String> world = worldButton.get();

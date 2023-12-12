@@ -7,7 +7,6 @@ import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.reward.CashReward;
 
@@ -33,7 +32,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
         super(blobInventory, builderId, objectDirector, managerDirector);
         try {
             addQuickStringButton("Key", 300)
-                    .addQuickMessageButton("Message", 300)
+                    .addQuickStringButton("Message", 300)
                     .addQuickStringButton("Currency", 300)
                     .addQuickLongButton("Delay", 300)
                     .addQuickDoubleButton("CashValue", 300)
@@ -61,7 +60,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
     public CashReward construct() {
         ObjectBuilderButton<String> keyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Key");
         ObjectBuilderButton<String> currencyButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Currency");
-        ObjectBuilderButton<ReferenceBlobMessage> messageButton = (ObjectBuilderButton<ReferenceBlobMessage>) getObjectBuilderButton("Message");
+        ObjectBuilderButton<String> messageButton = (ObjectBuilderButton<String>) getObjectBuilderButton("Message");
         ObjectBuilderButton<Long> delayButton = (ObjectBuilderButton<Long>) getObjectBuilderButton("Delay");
         ObjectBuilderButton<Double> cashValueButton = (ObjectBuilderButton<Double>) getObjectBuilderButton("CashValue");
 
@@ -69,7 +68,7 @@ public class CashRewardBuilder extends RPObjectBuilder<CashReward> {
             return null;
 
         String key = keyButton.get().get();
-        Optional<ReferenceBlobMessage> message = messageButton.get();
+        Optional<String> message = messageButton.get();
         Optional<Long> delay = delayButton.get();
         boolean shouldDelay = delay.isPresent();
         Double cashValue = cashValueButton.get().get();

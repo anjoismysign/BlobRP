@@ -12,6 +12,7 @@ import us.mytheria.bloblib.entities.inventory.ItemMaterialSelector;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.DefaultShopArticle;
 import us.mytheria.blobrp.entities.ShopArticle;
 
 import java.util.Optional;
@@ -104,7 +105,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
         ItemStack display = displayButton.get().get();
 
         return new ShopArticle(material, hasCustomModelData, customModelData.orElse(0),
-                buyPrice, sellPrice, display, key, true, false,
+                buyPrice, sellPrice, DefaultShopArticle.of(display), key, true, false,
                 buyingCurrencyButton.get(), sellingCurrencyButton.get());
     }
 }

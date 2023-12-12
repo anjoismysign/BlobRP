@@ -3,7 +3,6 @@ package us.mytheria.blobrp.reward;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import us.mytheria.bloblib.BlobLibAPI;
-import us.mytheria.bloblib.entities.message.ReferenceBlobMessage;
 
 import java.io.File;
 import java.util.Optional;
@@ -22,7 +21,7 @@ public class PermissionReward extends Reward<String> {
      * @param message     the message to send to the player when the reward is given
      */
     public static PermissionReward build(String key, boolean shouldDelay, String permission, Optional<Long> delay,
-                                         boolean runAsync, Optional<ReferenceBlobMessage> message, Optional<String> world) {
+                                         boolean runAsync, Optional<String> message, Optional<String> world) {
         return new PermissionReward(key, shouldDelay, permission, delay, runAsync, message, world);
     }
 
@@ -38,7 +37,7 @@ public class PermissionReward extends Reward<String> {
      */
     protected PermissionReward(String key, boolean shouldDelay, String permission,
                                Optional<Long> delay, boolean runAsync,
-                               Optional<ReferenceBlobMessage> message, Optional<String> world) {
+                               Optional<String> message, Optional<String> world) {
         super(key, shouldDelay, permission, delay, runAsync, message);
         this.world = world;
     }
@@ -62,7 +61,7 @@ public class PermissionReward extends Reward<String> {
             config.set("RunAsynchronously", runAsync);
         }
         if (message.isPresent()) {
-            config.set("Message", message.get().getReference());
+            config.set("Message", message.get());
         }
         if (world.isPresent()) {
             config.set("World", world.get());

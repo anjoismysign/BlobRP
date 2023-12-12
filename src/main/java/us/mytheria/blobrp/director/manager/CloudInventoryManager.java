@@ -185,12 +185,12 @@ public class CloudInventoryManager extends RPManager implements Listener {
             Bukkit.getPluginManager().callEvent(deserializeEvent);
             deserializeEvent.fetchAsynchronous().forEach(consumer ->
                     consumer.accept(player));
-            deserializeEvent.fetch().forEach(consumer ->
-                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                        if (player == null || !player.isOnline())
-                            return;
-                        consumer.accept(player);
-                    }));
+            Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                if (player == null || !player.isOnline())
+                    return;
+                deserializeEvent.fetch().forEach(consumer ->
+                        consumer.accept(player));
+            });
         });
     }
 

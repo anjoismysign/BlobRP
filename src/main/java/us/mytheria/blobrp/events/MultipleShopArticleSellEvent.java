@@ -6,11 +6,11 @@ import us.mytheria.blobrp.entities.ShopArticleTransaction;
 
 import java.util.Collection;
 
-public class AsyncMultipleShopArticleSellEvent extends AsyncMultipleShopArticleTransactionEvent {
-    public AsyncMultipleShopArticleSellEvent(Collection<ShopArticleTransaction> transaction,
-                                             Player player,
-                                             TransactionType transactionType) {
-        super(transaction, player, transactionType);
+public class MultipleShopArticleSellEvent extends MultipleShopArticleTransactionEvent {
+    public MultipleShopArticleSellEvent(Collection<ShopArticleTransaction> transaction,
+                                        Player player,
+                                        TransactionType transactionType) {
+        super(transaction, player, transactionType, false);
     }
 
     private static final HandlerList HANDLERS_LIST = new HandlerList();

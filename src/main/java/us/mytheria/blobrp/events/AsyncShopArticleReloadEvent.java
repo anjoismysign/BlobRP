@@ -4,7 +4,7 @@ import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
+import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.BlobRPAPI;
 
 public class AsyncShopArticleReloadEvent extends Event {
@@ -35,7 +35,7 @@ public class AsyncShopArticleReloadEvent extends Event {
      * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return Whether the article was added successfully or not
      */
-    public boolean addComplexShopArticle(ItemStack display, double buyPrice, double sellPrice,
+    public boolean addComplexShopArticle(TranslatableItem display, double buyPrice, double sellPrice,
                                          NamespacedKey key,
                                          @Nullable String buyingCurrency,
                                          @Nullable String sellingCurrency) {
@@ -53,7 +53,7 @@ public class AsyncShopArticleReloadEvent extends Event {
      * @param key      The NamespacedKey of the article
      * @return Whether the article was added successfully or not
      */
-    public boolean addShopArticle(ItemStack display, double buyPrice, NamespacedKey key) {
+    public boolean addShopArticle(TranslatableItem display, double buyPrice, NamespacedKey key) {
         return BlobRPAPI.getInstance().addComplexShopArticle(display, buyPrice, key);
     }
 }
