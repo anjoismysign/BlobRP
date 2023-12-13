@@ -1,0 +1,16 @@
+BlobRP:
+  #Elements in this TagSet will be considered junk and
+  #removed/destroyed whenever dropped on ground
+  Junk:
+    #All elements inside this collection will be considered of this Set
+    #In this case, elements are TranslatableItem keys
+    Inclusions: [ ]
+    #Will merge all specified Sets into Inclusion
+    #In this case, Sets are TagSets keys
+    Include-Set: [ ]
+    #All elements inside this collection will be considered outside this Set, ignoring if inside Inclusion
+    #In this case, elements are TranslatableItem keys
+    Exclusions: [ ]
+    #Will merge all specified Sets into Exclusion
+    #In this case, Sets are TagSets keys
+    Exclude-Set: [ ]

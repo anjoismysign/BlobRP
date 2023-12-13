@@ -41,8 +41,15 @@ Listeners:
     Translate-On-Join: false
     Translate-On-Alternative-Saving-Join: false
   SimpleListeners:
+    Remove-Junk:
+      Register: false
+      #TagSet that considers items as junk
+      TagSet: BlobRP.Junk
+    Respawn-Inventory:
+      Register: false
+      MetaBlobInventory: WelcomeInventory
     Prevent-Ice-Formation:
-      Register: true
+      Register: false
       World-Whitelist:
         - world
     Remove-Player-Hunger:
@@ -68,7 +75,7 @@ Listeners:
       Register: true
       Add: BlobRP.Merchants-View
     Welcome-Players:
-      Register: true
+      Register: false
       # If you wish to remove the message, leave it as ''
       Message: System.Welcome
     Force-Gamemode:
@@ -78,11 +85,11 @@ Listeners:
       Register: false
       Level: 1
     On-Join-Message:
-      Register: true
+      Register: false
       # If you wish to remove the message, leave it as ''
       Message: System.Join
     On-Quit-Message:
-      Register: true
+      Register: false
       # If you wish to remove the message, leave it as ''
       Message: System.Quit
     Kill-Message-Weapon:

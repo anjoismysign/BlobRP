@@ -26,21 +26,8 @@ public class TranslateOnJoin extends RPListener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         String locale = player.getLocale();
-        for (ItemStack stack : player.getInventory().getArmorContents()) {
-            TranslatableItem translatableItem = TranslatableItem.isInstance(stack);
-            if (translatableItem == null)
-                continue;
-            ItemStack to = translatableItem.localize(locale).getClone();
-            stack.setType(to.getType());
-            stack.setItemMeta(to.getItemMeta());
-        }
         for (ItemStack stack : player.getInventory().getContents()) {
-            TranslatableItem translatableItem = TranslatableItem.isInstance(stack);
-            if (translatableItem == null)
-                continue;
-            ItemStack to = translatableItem.localize(locale).getClone();
-            stack.setType(to.getType());
-            stack.setItemMeta(to.getItemMeta());
+            TranslatableItem.localize(stack, locale);
         }
     }
 }

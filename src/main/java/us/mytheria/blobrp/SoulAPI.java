@@ -85,7 +85,8 @@ public class SoulAPI {
         PersistentDataContainer container = holder.getPersistentDataContainer();
         if (!container.has(soulItemKey, PersistentDataType.BYTE))
             return false;
-        return container.get(soulItemKey, PersistentDataType.BYTE) == 1;
+        Byte b = container.get(soulItemKey, PersistentDataType.BYTE);
+        return b != null && b == 1;
     }
 
     /**

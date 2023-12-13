@@ -30,11 +30,7 @@ public class TranslateOnPickup extends RPListener {
             return;
         Player player = (Player) event.getEntity();
         Item item = event.getItem();
-        ItemStack itemStack = item.getItemStack();
-        TranslatableItem translatableItem = TranslatableItem.isInstance(itemStack);
-        if (translatableItem == null)
-            return;
-        ItemStack clone = translatableItem.localize(player.getLocale()).getClone();
-        item.setItemStack(clone);
+        ItemStack stack = item.getItemStack();
+        TranslatableItem.localize(stack, player.getLocale());
     }
 }

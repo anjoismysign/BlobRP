@@ -1,6 +1,2 @@
 Size: 36
-Buttons:
-  0:
-    ItemStack:
-      Material: AIR
-    Slot: 0
+Buttons: [ ]

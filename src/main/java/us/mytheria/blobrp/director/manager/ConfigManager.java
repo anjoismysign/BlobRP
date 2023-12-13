@@ -24,6 +24,7 @@ public class ConfigManager extends RPManager {
     private TinyEventListener translateOnLocaleSwitch;
     private TinyEventListener translateOnJoin;
     private TinyEventListener translateOnAlternativeSavingJoin;
+
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
     private SimpleEventListener<Double> sellArticlesEvent;
@@ -39,6 +40,8 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> onQuitMessage;
     private SimpleEventListener<String> killWeaponMessage;
     private SimpleEventListener<String> playerDeathMessage;
+    private SimpleEventListener<String> removeJunk;
+    private SimpleEventListener<String> respawnInventory;
 
     private ComplexEventListener playerSpectateOnDeath;
     private ComplexEventListener alternativeSaving;
@@ -77,6 +80,8 @@ public class ConfigManager extends RPManager {
         onQuitMessage = listenersSection.simpleEventListenerString("On-Quit-Message", "Message");
         killWeaponMessage = listenersSection.simpleEventListenerString("Kill-Message-Weapon", "Message");
         playerDeathMessage = listenersSection.simpleEventListenerString("Player-Death-Message", "Message");
+        removeJunk = listenersSection.simpleEventListenerString("Remove-Junk", "TagSet");
+        respawnInventory = listenersSection.simpleEventListenerString("Respawn-Inventory", "MetaBlobInventory");
 
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
         alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
@@ -153,6 +158,14 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<List<String>> iceFormation() {
         return iceFormation;
+    }
+
+    public SimpleEventListener<String> removeJunk() {
+        return removeJunk;
+    }
+
+    public SimpleEventListener<String> respawnInventory() {
+        return respawnInventory;
     }
 
     public ComplexEventListener playerSpectateOnDeath() {

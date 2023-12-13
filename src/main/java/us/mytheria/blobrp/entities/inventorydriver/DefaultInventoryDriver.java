@@ -66,6 +66,13 @@ public class DefaultInventoryDriver extends InventoryDriver {
     public void updateLocale(Player player, @NotNull String locale) {
         updateInventoryHolder(player, locale);
         inventoryHolder.buildInventory();
+        Set<Integer> slots = new HashSet<>();
+        for (String key : getInventoryBuilder().getKeys()) {
+            slots.addAll(getInventoryBuilder().getButton(key).getSlots());
+        }
+        for (int slot : slots) {
+            SoulAPI.getInstance().setSoul(player.getInventory().getItem(slot));
+        }
     }
 
     private void upgrade(Player player) {

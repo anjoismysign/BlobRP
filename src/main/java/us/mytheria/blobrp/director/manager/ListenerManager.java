@@ -27,6 +27,8 @@ public class ListenerManager extends RPManager {
     private final DiscordCmd discordCmd;
     private final KillMessageWeapon killMessageWeapon;
     private final PlayerDeathMessage playerDeathMessage;
+    private final RemoveJunk removeJunk;
+    private final RespawnInventory respawnInventory;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -53,6 +55,8 @@ public class ListenerManager extends RPManager {
         discordCmd = new DiscordCmd(configManager);
         killMessageWeapon = new KillMessageWeapon(configManager);
         playerDeathMessage = new PlayerDeathMessage(configManager);
+        removeJunk = new RemoveJunk(configManager);
+        respawnInventory = new RespawnInventory(configManager);
         reload();
     }
 
@@ -80,5 +84,7 @@ public class ListenerManager extends RPManager {
         discordCmd.reload();
         killMessageWeapon.reload();
         playerDeathMessage.reload();
+        removeJunk.reload();
+        respawnInventory.reload();
     }
 }

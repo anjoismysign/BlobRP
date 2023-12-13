@@ -26,21 +26,8 @@ public class TranslateOnLocaleSwitch extends RPListener {
     public void onSwitch(PlayerLocaleChangeEvent event) {
         Player player = event.getPlayer();
         String locale = event.getLocale();
-        for (ItemStack stack : player.getInventory().getArmorContents()) {
-            TranslatableItem translatableItem = TranslatableItem.isInstance(stack);
-            if (translatableItem == null)
-                continue;
-            ItemStack to = translatableItem.localize(locale).getClone();
-            stack.setType(to.getType());
-            stack.setItemMeta(to.getItemMeta());
-        }
         for (ItemStack stack : player.getInventory().getContents()) {
-            TranslatableItem translatableItem = TranslatableItem.isInstance(stack);
-            if (translatableItem == null)
-                continue;
-            ItemStack to = translatableItem.localize(locale).getClone();
-            stack.setType(to.getType());
-            stack.setItemMeta(to.getItemMeta());
+            TranslatableItem.localize(stack, locale);
         }
     }
 }
