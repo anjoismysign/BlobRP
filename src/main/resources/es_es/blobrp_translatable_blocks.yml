@@ -1,0 +1,6 @@
+Locale: es_es
+BlobRP:
+  Merchants-View:
+    Block:
+      - ''
+      - '&7Precio &r%format%'
