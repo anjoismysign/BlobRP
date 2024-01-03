@@ -13,7 +13,6 @@ import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.inventory.InventoryDataRegistry;
 import us.mytheria.bloblib.entities.inventory.MetaBlobInventoryTracker;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
-import us.mytheria.bloblib.entities.inventory.ReferenceMetaBlobInventory;
 import us.mytheria.bloblib.entities.message.BlobMessage;
 import us.mytheria.bloblib.managers.MetaInventoryShard;
 import us.mytheria.bloblib.utilities.PlayerUtil;
@@ -30,16 +29,17 @@ import java.util.*;
 
 public class MerchantManager extends RPManager {
     private String boughtMessage;
-    private Map<String, ReferenceMetaBlobInventory> cache;
+    private final Set<String> cache;
 
     public MerchantManager(RPManagerDirector director) {
         super(director);
+        cache = new HashSet<>();
         reload();
         new MerchantCmd(director);
     }
 
     public Set<String> getMerchantKeys() {
-        return cache.keySet();
+        return Collections.unmodifiableSet(cache);
     }
 
     @Nullable
@@ -62,16 +62,17 @@ public class MerchantManager extends RPManager {
             return;
         }
         MetaInventoryShard shard = optional.get();
-        cache = new HashMap<>();
+        cache.clear();
         shard.allInventories().forEach(merchantInventory -> {
             String key = merchantInventory.getKey();
-            if (cache.containsKey(key))
+            if (cache.contains(key))
                 return;
             InventoryDataRegistry<MetaInventoryButton> registry =
                     BlobLibInventoryAPI.getInstance()
                             .getMetaInventoryDataRegistry(merchantInventory.getKey());
             if (registry == null)
                 throw new NullPointerException("No Registry found for " + key);
+            cache.add(key);
             registry.onClick("BlobRP", (clickEvent, button) -> {
                 int slot = clickEvent.getRawSlot();
                 Result<MetaInventoryButton> result = merchantInventory.belongsToAMetaButton(slot);
@@ -131,7 +132,7 @@ public class MerchantManager extends RPManager {
                     }
                     default -> {
                         BlobLibMessageAPI.getInstance().getMessage("System.Error").handle(player);
-                        Bukkit.getLogger().info("Unknown meta " + meta);
+                        throw new IllegalStateException("Unknown meta " + meta);
                     }
                 }
             });

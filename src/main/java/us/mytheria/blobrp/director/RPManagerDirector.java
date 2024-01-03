@@ -1,7 +1,10 @@
 package us.mytheria.blobrp.director;
 
 import org.bukkit.Bukkit;
-import us.mytheria.bloblib.entities.*;
+import us.mytheria.bloblib.entities.GenericManagerDirector;
+import us.mytheria.bloblib.entities.ObjectDirector;
+import us.mytheria.bloblib.entities.ObjectDirectorData;
+import us.mytheria.bloblib.entities.ObjectDirectorManager;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.command.OpenSellInventory;
 import us.mytheria.blobrp.director.manager.CloudInventoryManager;
@@ -29,10 +32,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public RPManagerDirector(BlobRP plugin) {
         super(plugin);
-        detachAsset("es_es/blobrp_translatable_blocks.yml", false, getFileManager().getDirectory(DataAssetType.TRANSLATABLE_BLOCK));
         registerMetaBlobInventory("WelcomeInventory", "PlayerInventory", "EventPlayerInventory");
         registerMetaBlobInventory("es_es/PlayerInventory", "es_es/EventPlayerInventory");
         registerBlobMessage("es_es/blobrp_lang");
+        registerTranslatableBlock("es_es/blobrp_translatable_blocks");
         registerBlobInventory("es_es/CashRewardBuilder", "es_es/ItemStackRewardBuilder", "es_es/PermissionRewardBuilder", "es_es/ShopArticleBuilder");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));

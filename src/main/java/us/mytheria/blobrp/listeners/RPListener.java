@@ -4,7 +4,7 @@ import org.bukkit.event.Listener;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 
-public class RPListener implements Listener {
+public abstract class RPListener implements Listener {
     private final ConfigManager configManager;
 
     public RPListener(ConfigManager manager) {
@@ -18,4 +18,6 @@ public class RPListener implements Listener {
     public RPManagerDirector getManagerDirector() {
         return configManager.getManagerDirector();
     }
+
+    abstract void reload();
 }

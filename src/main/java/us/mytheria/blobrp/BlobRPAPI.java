@@ -26,6 +26,7 @@ import us.mytheria.blobrp.trophy.requirements.TrophyRequirement;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class BlobRPAPI {
@@ -60,9 +61,14 @@ public class BlobRPAPI {
      * @param sellingCurrency The selling currency. if null, the default currency is used.
      * @return Whether the ShopArticle was added successfully
      */
-    public boolean addComplexShopArticle(TranslatableItem display, double buyPrice, NamespacedKey key,
-                                         double sellPrice, @Nullable String buyingCurrency,
+    public boolean addComplexShopArticle(@NotNull TranslatableItem display,
+                                         double buyPrice,
+                                         @NotNull NamespacedKey key,
+                                         double sellPrice,
+                                         @Nullable String buyingCurrency,
                                          @Nullable String sellingCurrency) {
+        Objects.requireNonNull(display);
+        Objects.requireNonNull(key);
         ShopArticle shopArticle = ShopArticle.fromTranslatableItem(display, buyPrice, key.toString(),
                 sellPrice, true, buyingCurrency, sellingCurrency);
         if (shopArticle == null)
@@ -80,7 +86,9 @@ public class BlobRPAPI {
      * @param key      The key
      * @return Whether the ShopArticle was added successfully
      */
-    public boolean addComplexShopArticle(TranslatableItem display, double buyPrice, NamespacedKey key) {
+    public boolean addComplexShopArticle(@NotNull TranslatableItem display,
+                                         double buyPrice,
+                                         @NotNull NamespacedKey key) {
         return addComplexShopArticle(display, buyPrice, key, buyPrice / 10,
                 null, null);
     }

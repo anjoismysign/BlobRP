@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class PlayerSpectateOnDeath extends RPListener {
     private int length;
-    private HashMap<Short, BlobMessage> repository;
+    private HashMap<Short, String> repository;
 
     public PlayerSpectateOnDeath(ConfigManager configManager) {
         super(configManager);
@@ -44,7 +44,7 @@ public class PlayerSpectateOnDeath extends RPListener {
                     return;
                 }
                 short current = uber.thanks();
-                repository.put(current, message);
+                repository.put(current, key);
                 current++;
                 uber.talk(current);
             });
@@ -70,11 +70,11 @@ public class PlayerSpectateOnDeath extends RPListener {
         Bukkit.getPluginManager().callEvent(spectatorStartEvent);
         if (spectatorStartEvent.isCancelled()) return;
         new Spectator(player, length, repawnLocation);
-        randomMessage().handle(player);
+        randomMessage().localize(player.getLocale()).handle(player);
     }
 
     private BlobMessage randomMessage() {
         short random = (short) new Random().nextInt(repository.size());
-        return repository.get(random);
+        return BlobLibMessageAPI.getInstance().getMessage(repository.get(random));
     }
 }
