@@ -161,12 +161,16 @@ public class CloudInventoryManager extends RPManager implements Listener {
             InventoryDriver applied = generate(crudable, serializerType, driverType);
             if (!hasPlayedBefore) {
                 if (welcomeMessage != null) {
-                    BlobLibMessageAPI.getInstance()
-                            .getMessage(welcomeMessage, player)
-                            .modder()
-                            .replace("%player%", player.getName())
-                            .get()
-                            .handle(player);
+                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                        if (player == null || !player.isOnline())
+                            return;
+                        BlobLibMessageAPI.getInstance()
+                                .getMessage(welcomeMessage, player)
+                                .modder()
+                                .replace("%player%", player.getName())
+                                .get()
+                                .handle(player);
+                    });
                     InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
                             .getInstance().getMetaInventoryBuilderCarrier(reference, player);
                     MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
