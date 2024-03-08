@@ -4,6 +4,10 @@ main: us.mytheria.blobrp.BlobRP
 api-version: 1.16
 depend: [ BlobLib ]
 authors: [ anjoismysign ]
+softdepend:
+  - WeaponMechanics
+  - DecentHolograms
+  - PhatLoots
 commands:
   discord:
     description: discordcmd

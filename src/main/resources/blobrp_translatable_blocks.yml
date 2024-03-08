@@ -3,3 +3,11 @@ BlobRP:
     Block:
       - ''
       - '&7Price &r%format%'
+  PhatLoots-Hologram-Looted:
+    Block:
+      - '&e&lLOOT CRATE'
+      - '&7Restocks in &f%time%'
+  PhatLoots-Hologram-Restocked:
+    Block:
+      - '&e&lLOOT CRATE'
+      - '&7Restocked!'

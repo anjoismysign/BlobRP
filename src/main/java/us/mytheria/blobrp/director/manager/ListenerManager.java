@@ -1,90 +1,61 @@
 package us.mytheria.blobrp.director.manager;
 
+import org.bukkit.Bukkit;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.listeners.*;
+import us.mytheria.blobrp.phatloots.PhatLootChestSmoothBreakAnimation;
+import us.mytheria.blobrp.phatloots.PhatLootsHolograms;
+import us.mytheria.blobrp.phatloots.TranslateOnPhatLoot;
+import us.mytheria.blobrp.weaponmechanics.ApplyTranslatableItemsToWeaponMechanics;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListenerManager extends RPManager {
-    private final DropNonSoulOnDeath dropNonSoulOnDeath;
-    private final EntitiesClearDropsOnDeath entitiesClearDropsOnDeath;
-    private final EntitiesDropExperienceOnDeath entitiesDropExperienceOnDeath;
-    private final EntityDropItem entityDropItem;
-    private final TranslateOnPickup translateOnPickup;
-    private final TranslateOnLocaleSwitch translateOnLocaleSwitch;
-    private final TranslateOnJoin translateOnJoin;
-    private final TranslateOnAlternativeSavingJoin translateOnAlternativeSavingJoin;
-    private final KeepExperienceOnDeath keepExperienceOnDeath;
-    private final PlayerDropExperienceOnDeath playerDropExperienceOnDeath;
-    private final ShopArticleSell shopArticleSell;
-    private final WelcomePlayer welcomePlayer;
-    private final PlayerHunger playerHunger;
-    private final IceFormation iceFormation;
-    private final PlayerSpectateOnDeath playerSpectateOnDeath;
-    private final ForceGamemodeOnJoin forceGamemodeOnJoin;
-    private final GlobalSlowDigging globalSlowDigging;
-    private final OnJoinMessage onJoinMessage;
-    private final OnQuitMessage onQuitMessage;
-    private final DiscordCmd discordCmd;
-    private final KillMessageWeapon killMessageWeapon;
-    private final PlayerDeathMessage playerDeathMessage;
-    private final RemoveJunk removeJunk;
-    private final RespawnInventory respawnInventory;
+    private final List<RPListener> listeners;
 
     public ListenerManager(RPManagerDirector managerDirector) {
         super(managerDirector);
+        listeners = new ArrayList<>();
         ConfigManager configManager = managerDirector.getConfigManager();
-        dropNonSoulOnDeath = new DropNonSoulOnDeath(configManager);
-        entitiesClearDropsOnDeath = new EntitiesClearDropsOnDeath(configManager);
-        entitiesDropExperienceOnDeath = new EntitiesDropExperienceOnDeath(configManager);
-        entityDropItem = new EntityDropItem(configManager);
-        translateOnPickup = new TranslateOnPickup(configManager);
-        translateOnLocaleSwitch = new TranslateOnLocaleSwitch(configManager);
-        translateOnJoin = new TranslateOnJoin(configManager);
-        translateOnAlternativeSavingJoin = new TranslateOnAlternativeSavingJoin(configManager);
-        keepExperienceOnDeath = new KeepExperienceOnDeath(configManager);
-        playerDropExperienceOnDeath = new PlayerDropExperienceOnDeath(configManager);
-        shopArticleSell = new ShopArticleSell(configManager);
-        welcomePlayer = new WelcomePlayer(configManager);
-        playerHunger = new PlayerHunger(configManager);
-        iceFormation = new IceFormation(configManager);
-        playerSpectateOnDeath = new PlayerSpectateOnDeath(configManager);
-        forceGamemodeOnJoin = new ForceGamemodeOnJoin(configManager);
-        globalSlowDigging = new GlobalSlowDigging(configManager);
-        onJoinMessage = new OnJoinMessage(configManager);
-        onQuitMessage = new OnQuitMessage(configManager);
-        discordCmd = new DiscordCmd(configManager);
-        killMessageWeapon = new KillMessageWeapon(configManager);
-        playerDeathMessage = new PlayerDeathMessage(configManager);
-        removeJunk = new RemoveJunk(configManager);
-        respawnInventory = new RespawnInventory(configManager);
+        listeners.add(new DropNonSoulOnDeath(configManager));
+        listeners.add(new EntitiesClearDropsOnDeath(configManager));
+        listeners.add(new EntitiesDropExperienceOnDeath(configManager));
+        listeners.add(new EntityDropItem(configManager));
+        listeners.add(new TranslateOnPickup(configManager));
+        listeners.add(new TranslateOnLocaleSwitch(configManager));
+        listeners.add(new TranslateOnJoin(configManager));
+        listeners.add(new TranslateOnAlternativeSavingJoin(configManager));
+        listeners.add(new KeepExperienceOnDeath(configManager));
+        listeners.add(new PlayerDropExperienceOnDeath(configManager));
+        listeners.add(new ShopArticleSell(configManager));
+        listeners.add(new WelcomePlayer(configManager));
+        listeners.add(new PlayerHunger(configManager));
+        listeners.add(new IceFormation(configManager));
+        listeners.add(new PlayerSpectateOnDeath(configManager));
+        listeners.add(new ForceGamemodeOnJoin(configManager));
+        listeners.add(new GlobalSlowDigging(configManager));
+        listeners.add(new OnJoinMessage(configManager));
+        listeners.add(new OnQuitMessage(configManager));
+        listeners.add(new DiscordCmd(configManager));
+        listeners.add(new KillMessageWeapon(configManager));
+        listeners.add(new PlayerDeathMessage(configManager));
+        listeners.add(new RemoveJunk(configManager));
+        listeners.add(new RespawnInventory(configManager));
+        if (Bukkit.getPluginManager().isPluginEnabled("WeaponMechanics")) {
+            listeners.add(new ApplyTranslatableItemsToWeaponMechanics(configManager));
+        }
+        if (Bukkit.getPluginManager().isPluginEnabled("PhatLoots")) {
+            listeners.add(new PhatLootsHolograms(configManager));
+            listeners.add(new TranslateOnPhatLoot(configManager));
+            listeners.add(new PhatLootChestSmoothBreakAnimation(configManager));
+        }
         reload();
     }
 
     @Override
     public void reload() {
-        dropNonSoulOnDeath.reload();
-        entitiesClearDropsOnDeath.reload();
-        entitiesDropExperienceOnDeath.reload();
-        entityDropItem.reload();
-        translateOnPickup.reload();
-        translateOnLocaleSwitch.reload();
-        translateOnJoin.reload();
-        translateOnAlternativeSavingJoin.reload();
-        keepExperienceOnDeath.reload();
-        playerDropExperienceOnDeath.reload();
-        shopArticleSell.reload();
-        welcomePlayer.reload();
-        playerHunger.reload();
-        iceFormation.reload();
-        playerSpectateOnDeath.reload();
-        forceGamemodeOnJoin.reload();
-        globalSlowDigging.reload();
-        onJoinMessage.reload();
-        onQuitMessage.reload();
-        discordCmd.reload();
-        killMessageWeapon.reload();
-        playerDeathMessage.reload();
-        removeJunk.reload();
-        respawnInventory.reload();
+        listeners.forEach(RPListener::reload);
     }
 }

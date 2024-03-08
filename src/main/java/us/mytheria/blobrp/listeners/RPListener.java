@@ -19,5 +19,5 @@ public abstract class RPListener implements Listener {
         return configManager.getManagerDirector();
     }
 
-    abstract void reload();
+    public abstract void reload();
 }

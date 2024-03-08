@@ -14,6 +14,8 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
@@ -38,8 +40,9 @@ public class CloudInventoryManager extends RPManager implements Listener {
     private String welcomeMessage;
     private boolean soulInventory;
     private final Map<UUID, InventoryDriver> map;
+    private final Map<UUID, BukkitTask> autoSave;
     private final HashSet<UUID> saving;
-    private String reference;
+    private final String reference;
     protected CrudManager<BlobCrudable> crudManager;
     private PlayerSerializerType serializerType;
     private InventoryDriverType driverType;
@@ -49,6 +52,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
         this.reference = "WelcomeInventory";
         this.map = new HashMap<>();
         this.saving = new HashSet<>();
+        this.autoSave = new HashMap<>();
         this.crudManager = BlobCrudManagerFactory.PLAYER(getPlugin(), "alternativesaving", crudable -> crudable, true);
         reload();
     }
@@ -170,6 +174,9 @@ public class CloudInventoryManager extends RPManager implements Listener {
                                 .replace("%player%", player.getName())
                                 .get()
                                 .handle(player);
+                        BlobCrudable serialized = applied.serializeAllAttributes();
+                        Bukkit.getScheduler().runTaskAsynchronously(getPlugin(),
+                                () -> crudManager.update(serialized));
                     });
                     InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
                             .getInstance().getMetaInventoryBuilderCarrier(reference, player);
@@ -195,6 +202,19 @@ public class CloudInventoryManager extends RPManager implements Listener {
                 deserializeEvent.fetch().forEach(consumer ->
                         consumer.accept(player));
             });
+            autoSave.put(uuid, new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (player == null || !player.isOnline()) {
+                        cancel();
+                        return;
+                    }
+                    BlobCrudable serialized = applied.serializeAllAttributes();
+                    Bukkit.getScheduler().runTaskAsynchronously(getPlugin(),
+                            () -> crudManager.update(serialized));
+                }
+            }.runTaskTimer(getPlugin(), 20 * 60 * 5,
+                    20 * 60 * 5));
         });
     }
 
@@ -209,6 +229,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
         CloudInventorySerializeEvent quitEvent = new CloudInventorySerializeEvent(serializable, driverType, serializable.getInventoryBuilder());
         Bukkit.getPluginManager().callEvent(quitEvent);
         saving.add(uuid);
+        autoSave.remove(uuid);
         BlobCrudable crudable = serializable.serializeAllAttributes();
         Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
             crudManager.update(crudable);

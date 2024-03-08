@@ -20,10 +20,13 @@ public class ConfigManager extends RPManager {
     private TinyEventListener playerKeepExperienceOnDeath;
     private TinyEventListener entitiesClearDropsOnDeath;
     private TinyEventListener entityDropItem;
+    private TinyEventListener applyTranslatableItemsToWeaponMechanics;
+    private TinyEventListener phatLootChestSmoothBreakAnimation;
     private TinyEventListener translateOnPickup;
     private TinyEventListener translateOnLocaleSwitch;
     private TinyEventListener translateOnJoin;
     private TinyEventListener translateOnAlternativeSavingJoin;
+    private TinyEventListener translateOnPhatLoot;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -46,6 +49,7 @@ public class ConfigManager extends RPManager {
     private ComplexEventListener playerSpectateOnDeath;
     private ComplexEventListener alternativeSaving;
     private ComplexEventListener discordCmd;
+    private ComplexEventListener phatLootsHolograms;
 
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
@@ -60,10 +64,13 @@ public class ConfigManager extends RPManager {
         playerKeepExperienceOnDeath = listenersSection.tinyEventListener("Player-Keep-Experience-On-Death");
         entitiesClearDropsOnDeath = listenersSection.tinyEventListener("Entities-Clear-Drops-On-Death");
         entityDropItem = listenersSection.tinyEventListener("Cancel-Entity-Drop-Item");
+        applyTranslatableItemsToWeaponMechanics = listenersSection.tinyEventListener("Apply-TranslatableItems-To-WeaponMechanics");
+        phatLootChestSmoothBreakAnimation = listenersSection.tinyEventListener("PhatLootChest-Smooth-Break-Animation");
         translateOnPickup = listenersSection.tinyEventListener("Translate-On-Pickup");
         translateOnLocaleSwitch = listenersSection.tinyEventListener("Translate-On-Locale-Switch");
         translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
         translateOnAlternativeSavingJoin = listenersSection.tinyEventListener("Translate-On-Alternative-Saving-Join");
+        translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -86,6 +93,7 @@ public class ConfigManager extends RPManager {
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
         alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
         discordCmd = listenersSection.complexEventListener("Discord-Cmd");
+        phatLootsHolograms = listenersSection.complexEventListener("PhatLoots-Holograms");
     }
 
     public FileConfiguration getConfiguration() {
@@ -106,6 +114,18 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener entityDropItem() {
         return entityDropItem;
+    }
+
+    public TinyEventListener applyTranslatableItemsToWeaponMechanics() {
+        return applyTranslatableItemsToWeaponMechanics;
+    }
+
+    public TinyEventListener phatLootChestSmoothBreakAnimation() {
+        return phatLootChestSmoothBreakAnimation;
+    }
+
+    public TinyEventListener translateOnPhatLoot() {
+        return translateOnPhatLoot;
     }
 
     public TinyEventListener translateOnPickup() {
@@ -168,16 +188,8 @@ public class ConfigManager extends RPManager {
         return respawnInventory;
     }
 
-    public ComplexEventListener playerSpectateOnDeath() {
-        return playerSpectateOnDeath;
-    }
-
     public SimpleEventListener<String> forceGamemode() {
         return forceGamemode;
-    }
-
-    public ComplexEventListener alternativeSaving() {
-        return alternativeSaving;
     }
 
     public SimpleEventListener<Integer> globalSlowDigging() {
@@ -200,7 +212,19 @@ public class ConfigManager extends RPManager {
         return playerDeathMessage;
     }
 
+    public ComplexEventListener playerSpectateOnDeath() {
+        return playerSpectateOnDeath;
+    }
+
+    public ComplexEventListener alternativeSaving() {
+        return alternativeSaving;
+    }
+
     public ComplexEventListener discordCmd() {
         return discordCmd;
+    }
+
+    public ComplexEventListener phatLootsHolograms() {
+        return phatLootsHolograms;
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>us.mytheria</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.5.8</version>
+    <version>0.5.9</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -88,19 +88,35 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jeff-media-public</id>
+            <url>https://repo.jeff-media.com/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.1-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.697.41</version>
+            <version>1.698.08</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.cjcrafter</groupId>
+            <artifactId>weaponmechanics</artifactId>
+            <version>3.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.codisimus.plugins</groupId>
+            <artifactId>phatloots</artifactId>
+            <version>5.5.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
