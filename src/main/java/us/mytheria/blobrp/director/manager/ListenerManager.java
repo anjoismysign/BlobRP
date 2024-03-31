@@ -23,6 +23,7 @@ public class ListenerManager extends RPManager {
         listeners.add(new EntitiesClearDropsOnDeath(configManager));
         listeners.add(new EntitiesDropExperienceOnDeath(configManager));
         listeners.add(new EntityDropItem(configManager));
+        listeners.add(new BlockFade(configManager));
         listeners.add(new TranslateOnPickup(configManager));
         listeners.add(new TranslateOnLocaleSwitch(configManager));
         listeners.add(new TranslateOnJoin(configManager));

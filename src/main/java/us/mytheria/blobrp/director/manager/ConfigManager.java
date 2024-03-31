@@ -1,6 +1,5 @@
 package us.mytheria.blobrp.director.manager;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import us.mytheria.bloblib.entities.ComplexEventListener;
 import us.mytheria.bloblib.entities.ListenersSection;
 import us.mytheria.bloblib.entities.SimpleEventListener;
@@ -14,12 +13,12 @@ import java.util.List;
 
 public class ConfigManager extends RPManager {
     private final BlobPlugin main;
-    private FileConfiguration configuration;
 
     private TinyEventListener dropNonSoulOnDeath;
     private TinyEventListener playerKeepExperienceOnDeath;
     private TinyEventListener entitiesClearDropsOnDeath;
     private TinyEventListener entityDropItem;
+    private TinyEventListener blockFade;
     private TinyEventListener applyTranslatableItemsToWeaponMechanics;
     private TinyEventListener phatLootChestSmoothBreakAnimation;
     private TinyEventListener translateOnPickup;
@@ -64,6 +63,7 @@ public class ConfigManager extends RPManager {
         playerKeepExperienceOnDeath = listenersSection.tinyEventListener("Player-Keep-Experience-On-Death");
         entitiesClearDropsOnDeath = listenersSection.tinyEventListener("Entities-Clear-Drops-On-Death");
         entityDropItem = listenersSection.tinyEventListener("Cancel-Entity-Drop-Item");
+        blockFade = listenersSection.tinyEventListener("Cancel-Block-Fade");
         applyTranslatableItemsToWeaponMechanics = listenersSection.tinyEventListener("Apply-TranslatableItems-To-WeaponMechanics");
         phatLootChestSmoothBreakAnimation = listenersSection.tinyEventListener("PhatLootChest-Smooth-Break-Animation");
         translateOnPickup = listenersSection.tinyEventListener("Translate-On-Pickup");
@@ -96,10 +96,6 @@ public class ConfigManager extends RPManager {
         phatLootsHolograms = listenersSection.complexEventListener("PhatLoots-Holograms");
     }
 
-    public FileConfiguration getConfiguration() {
-        return configuration;
-    }
-
     public TinyEventListener dropNonSoulOnDeath() {
         return dropNonSoulOnDeath;
     }
@@ -114,6 +110,10 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener entityDropItem() {
         return entityDropItem;
+    }
+
+    public TinyEventListener blockFade() {
+        return blockFade;
     }
 
     public TinyEventListener applyTranslatableItemsToWeaponMechanics() {

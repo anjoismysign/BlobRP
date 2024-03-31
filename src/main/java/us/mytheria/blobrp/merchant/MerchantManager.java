@@ -54,15 +54,14 @@ public class MerchantManager extends RPManager {
     }
 
     public void reload() {
+        cache.clear();
         boughtMessage = getManagerDirector().getConfigManager().merchants().value();
         Optional<MetaInventoryShard> optional = BlobLibInventoryAPI.getInstance()
                 .hasMetaInventoryShard("MERCHANT");
         if (optional.isEmpty()) {
-            getPlugin().getAnjoLogger().singleError("There are no MERCHANT inventories to load.");
             return;
         }
         MetaInventoryShard shard = optional.get();
-        cache.clear();
         shard.allInventories().forEach(merchantInventory -> {
             String key = merchantInventory.getKey();
             if (cache.contains(key))

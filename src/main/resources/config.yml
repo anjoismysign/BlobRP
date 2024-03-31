@@ -38,16 +38,29 @@ Listeners:
         Y: 1.5
         Z: 0.5
   TinyListeners:
+    # If true, drops non 'Soul' items on death, even if keepInventory is true
     Drop-Non-Soul-On-Death: false
+    # If true, players will keep their experience on death, similar to keepInventory gamerule
     Player-Keep-Experience-On-Death: false
+    # If true, entities drops will be cleared on death
     Entities-Clear-Drops-On-Death: false
+    # If true, it will cancel entities from dropping items, like eggs from chickens
     Cancel-Entity-Drop-Item: false
+    # Examples: Snow melting due to being near a light source, ice melting due to being near a light source, fire burning out after time, without destroying fuel block, coral fading to dead coral due to lack of water, Turtle Egg bursting when a turtle hatches
+    Cancel-Block-Fade: false
+    # Tries to apply translatable items to weapon mechanics items
     Apply-TranslatableItems-To-WeaponMechanics: false
+    # If true, when opening a PhatLootChest, it will play a smooth break animation
     PhatLootChest-Smooth-Break-Animation: false
+    # Translates all translatable items from a PhatLoot
     Translate-On-PhatLoot: false
+    # Translates a translatable item on pickup
     Translate-On-Pickup: false
+    # Translates all translatable items in inventory when changing locale
     Translate-On-Locale-Switch: false
+    # Translates all translatable items on join
     Translate-On-Join: false
+    # Translates all translatable items on alternative saving join
     Translate-On-Alternative-Saving-Join: false
   SimpleListeners:
     Remove-Junk:
