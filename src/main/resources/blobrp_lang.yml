@@ -9,6 +9,19 @@ System:
   Quit:
     Type: CHAT
     Message: '&7%player% &fleft the game'
+RoleplayRecipe:
+  Not-Enough:
+    Type: TITLE
+    Title: '&c&lNOT ENOUGH'
+    Subtitle: '&7You do not have enough items'
+  Crafted:
+    Type: TITLE
+    Title: ' '
+    Subtitle: '&7You have crafted &f%item%'
+  Not-Found:
+    Type: TITLE
+    Title: '&c&lNOT FOUND'
+    Subtitle: '&7Recipe not found'
 Soul:
   Fail:
     Type: TITLE

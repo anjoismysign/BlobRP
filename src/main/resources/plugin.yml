@@ -27,3 +27,6 @@ commands:
   blobmerchant:
     description: info merchant
     aliases: [ merchant ]
+  roleplayrecipe:
+    description: info recipe
+    aliases: [ rprecipe, recipe ]

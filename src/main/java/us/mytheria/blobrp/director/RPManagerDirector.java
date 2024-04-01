@@ -7,10 +7,12 @@ import us.mytheria.bloblib.entities.ObjectDirectorData;
 import us.mytheria.bloblib.entities.ObjectDirectorManager;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.command.OpenSellInventory;
+import us.mytheria.blobrp.director.command.RoleplayRecipeCmd;
 import us.mytheria.blobrp.director.manager.CloudInventoryManager;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.director.manager.ListenerManager;
+import us.mytheria.blobrp.entities.RoleplayRecipe;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.events.AsyncShopArticleReloadEvent;
 import us.mytheria.blobrp.inventories.CashRewardBuilder;
@@ -74,11 +76,15 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
                 TrophyRequirementReader.read(file).build());
         getTrophyRequirementDirector().getBuilderManager().setBuilderBiFunction(
                 (uuid, trophyRequirementObjectDirector) -> TrophyRequirementUIBuilder.build(uuid, trophyRequirementObjectDirector, this));
+        // RoleplayRecipe \\
+        addDirector("RoleplayRecipe", file ->
+                RoleplayRecipe.of(this, file), false);
         // Trophy \\
 //        ObjectDirectorData trophyDirectorData = ObjectDirectorData.simple(getFileManager(), "Trophy");
 //        addManager("TrophyDirector", new ObjectDirector<>(this,
 //                trophyDirectorData,
 //                TrophyReader::read));
+        RoleplayRecipeCmd.of(this);
     }
 
     /**
@@ -99,6 +105,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         getItemStackRewardDirector().reload();
         getPermissionRewardDirector().reload();
         getTrophyRequirementDirector().reload();
+        getRoleplayRecipeDirector().reload();
     }
 
     @Override
@@ -144,6 +151,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public final ObjectDirector<PermissionReward> getPermissionRewardDirector() {
         return getRewardDirectorManager().getObjectDirector(PermissionReward.class);
+    }
+
+    public final ObjectDirector<RoleplayRecipe> getRoleplayRecipeDirector() {
+        return getDirector("RoleplayRecipe", RoleplayRecipe.class);
     }
 
     public final ObjectDirector<TrophyRequirement> getTrophyRequirementDirector() {

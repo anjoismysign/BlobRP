@@ -104,7 +104,7 @@
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.698.08</version>
+            <version>1.698.12</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

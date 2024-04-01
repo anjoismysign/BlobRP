@@ -27,10 +27,13 @@ public class MerchantInventory {
         return META;
     }
 
+    @NotNull
     private final RPManagerDirector director;
+    @NotNull
     private final MetaBlobInventoryTracker tracker;
 
-    public MerchantInventory(RPManagerDirector director, MetaBlobInventoryTracker tracker) {
+    public MerchantInventory(@NotNull RPManagerDirector director,
+                             @NotNull MetaBlobInventoryTracker tracker) {
         this.director = director;
         this.tracker = tracker;
         String locale = tracker.getLocale();
