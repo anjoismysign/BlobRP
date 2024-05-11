@@ -104,6 +104,16 @@ public class BlobRPAPI {
     }
 
     /**
+     * Reloads all recipes.
+     */
+    public void reloadRecipes() {
+        if (director.getRoleplayRecipeDirector() == null) {
+            return;
+        }
+        director.getRoleplayRecipeDirector().reload();
+    }
+
+    /**
      * Will get a MerchantInventory by its key.
      * It will fail fast if the MerchantManager is not enabled.
      *

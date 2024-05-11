@@ -48,8 +48,10 @@ public record RoleplayRecipe(@NotNull String getKey,
         if (carrier == null)
             throw new ConfigurationFieldException("'BlobInventory' is doesn't point to a valid inventory");
         TranslatableItem translatableItem = TranslatableItem.by(resultKey);
-        if (translatableItem == null)
-            throw new ConfigurationFieldException("'Result' doesn't point to a valid TranslatableItem");
+        if (translatableItem == null) {
+            director.getPlugin().getLogger().warning("'Result' doesn't point to a valid TranslatableItem. At: " + file.getPath());
+            return null;
+        }
         ConfigurationSection ingredientsSection = config.getConfigurationSection("Ingredients");
         if (ingredientsSection == null)
             throw new ConfigurationFieldException("'Ingredients' is not set or valid");
