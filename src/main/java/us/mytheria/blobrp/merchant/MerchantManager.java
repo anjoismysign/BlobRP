@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import us.mytheria.bloblib.BlobLibAPI;
 import us.mytheria.bloblib.api.BlobLibEconomyAPI;
 import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
@@ -94,9 +93,10 @@ public class MerchantManager extends RPManager {
                                 .getMessage("Economy.Not-Enough", player);
                         IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(article.getBuyingCurrency());
                         if (!economy.has(player.getUniqueId(), price)) {
+                            double missing = price - economy.getBalance(player);
                             BlobMessage message = notEnough
                                     .modder()
-                                    .replace("%display%", BlobLibAPI.getCash(player) - price + "")
+                                    .replace("%display%", economy.format(missing))
                                     .get();
                             ShopArticleSellEvent event = new ShopArticleSellEvent(
                                     new ShopArticleTransaction(article, 1),
@@ -115,7 +115,7 @@ public class MerchantManager extends RPManager {
                         BlobMessage message =
                                 BlobLibMessageAPI.getInstance().getMessage(boughtMessage, player)
                                         .modder()
-                                        .replace("%display%", price + "")
+                                        .replace("%display%", economy.format(price))
                                         .get();
                         ShopArticleSellEvent event = new ShopArticleSellEvent(
                                 new ShopArticleTransaction(article, 1),

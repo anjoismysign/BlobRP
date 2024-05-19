@@ -2,8 +2,6 @@ package us.mytheria.blobrp.entities;
 
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.apache.commons.io.FilenameUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,18 +20,17 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class ShopArticle implements BlobObject {
-
-    private final Material material;
-    private final boolean hasCustomModelData;
-    private final int customModelData;
     private final double buyPrice;
     private final double sellPrice;
+    @NotNull
     private final TranslatableItem display;
     private final String key;
     private final boolean isDefault;
     private final boolean isTransient;
-    private Optional<String> sellingCurrency;
-    private Optional<String> buyingCurrency;
+    @NotNull
+    private final Optional<String> sellingCurrency;
+    @NotNull
+    private final Optional<String> buyingCurrency;
 
     /**
      * Creates a ShopArticle from a TranslatableItem.
@@ -46,7 +43,8 @@ public class ShopArticle implements BlobObject {
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromTranslatableItem(TranslatableItem display, double buyPrice, String key,
+    public static ShopArticle fromTranslatableItem(@Nullable TranslatableItem display,
+                                                   double buyPrice, String key,
                                                    boolean isTransient) {
         return fromTranslatableItem(display, buyPrice, key, buyPrice / 10, isTransient, null, null);
     }
@@ -64,8 +62,11 @@ public class ShopArticle implements BlobObject {
      * @return The ShopArticle
      */
     @Nullable
-    public static ShopArticle fromTranslatableItem(TranslatableItem display, double buyPrice, String key,
-                                                   double sellPrice, boolean isTransient,
+    public static ShopArticle fromTranslatableItem(@Nullable TranslatableItem display,
+                                                   double buyPrice,
+                                                   @NotNull String key,
+                                                   double sellPrice,
+                                                   boolean isTransient,
                                                    @Nullable String buyingCurrency,
                                                    @Nullable String sellingCurrency) {
         if (display == null) {
@@ -73,18 +74,8 @@ public class ShopArticle implements BlobObject {
         }
         Optional<String> buyingCurrencyOptional = Optional.ofNullable(buyingCurrency);
         Optional<String> sellingCurrencyOptional = Optional.ofNullable(sellingCurrency);
-        ItemStack clone = display.getClone();
-        ItemMeta itemMeta = clone.getItemMeta();
-        if (itemMeta == null) {
-            return new ShopArticle(clone.getType(), false,
-                    0, buyPrice, sellPrice, display,
-                    key, false, isTransient,
-                    buyingCurrencyOptional, sellingCurrencyOptional);
-        }
-        return new ShopArticle(clone.getType(), itemMeta.hasCustomModelData(),
-                itemMeta.hasCustomModelData() ? itemMeta.getCustomModelData() : 0, buyPrice,
-                sellPrice, display, key, false, isTransient,
-                buyingCurrencyOptional, sellingCurrencyOptional);
+        return new ShopArticle(buyPrice, sellPrice, display, key, false,
+                isTransient, buyingCurrencyOptional, sellingCurrencyOptional);
     }
 
     public static ShopArticle fromFile(File file) {
@@ -92,19 +83,8 @@ public class ShopArticle implements BlobObject {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         if (!config.isString("Material"))
             throw new ConfigurationFieldException("'Material' is missing or not valid");
-        String inputMaterial = config.getString("Material");
-        Material material;
-        try {
-            material = Material.valueOf(inputMaterial);
-        } catch (IllegalArgumentException exception) {
-            Bukkit.getLogger().severe("Material " + inputMaterial + " is not a valid material! Inside file " + fileName);
-            return null;
-        }
         double buyPrice = config.getDouble("BuyPrice", 0);
         double sellPrice = config.getDouble("SellPrice", 0);
-        boolean hasCustomModelData = config.getBoolean("HasCustomModelData",
-                false);
-        int customModelData = config.getInt("CustomModelData", 0);
         if (!config.isString("Display"))
             throw new ConfigurationFieldException("'Display' is missing or not valid");
         String displayKey = config.getString("Display");
@@ -119,18 +99,13 @@ public class ShopArticle implements BlobObject {
         if (config.isString("Selling-Currency"))
             sellingCurrency = Optional.ofNullable(config.getString("Selling-Currency"));
         String key = FilenameUtils.removeExtension(fileName);
-        return new ShopArticle(material, hasCustomModelData, customModelData, buyPrice,
-                sellPrice, display, key, false, false,
-                buyingCurrency, sellingCurrency);
+        return new ShopArticle(buyPrice, sellPrice, display, key, false,
+                false, buyingCurrency, sellingCurrency);
     }
 
-    public ShopArticle(Material material, boolean hasCustomModelData, int customModelData,
-                       double buyPrice, double sellPrice, TranslatableItem display, String key,
+    public ShopArticle(double buyPrice, double sellPrice, TranslatableItem display, String key,
                        boolean isDefault, boolean isTransient,
                        Optional<String> buyingCurrency, Optional<String> sellingCurrency) {
-        this.material = material;
-        this.hasCustomModelData = hasCustomModelData;
-        this.customModelData = customModelData;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
         this.display = display;
@@ -146,16 +121,10 @@ public class ShopArticle implements BlobObject {
             return null;
         File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("Material", getMaterial().name());
         config.set("BuyPrice", getBuyPrice());
         config.set("SellPrice", getSellPrice());
-        config.set("HasCustomModelData", hasCustomModelData());
-        if (hasCustomModelData())
-            config.set("CustomModelData", getCustomModelData());
-        if (buyingCurrency.isPresent())
-            config.set("Buying-Currency", buyingCurrency.get());
-        if (sellingCurrency.isPresent())
-            config.set("Selling-Currency", sellingCurrency.get());
+        buyingCurrency.ifPresent(s -> config.set("Buying-Currency", s));
+        sellingCurrency.ifPresent(s -> config.set("Selling-Currency", s));
         config.set("Display", getDisplay().getReference());
         try {
             config.save(file);
@@ -163,42 +132,6 @@ public class ShopArticle implements BlobObject {
             exception.printStackTrace();
         }
         return file;
-    }
-
-    public boolean matches(ItemStack itemStack) {
-        if (itemStack == null) {
-            return false;
-            //Null itemStacks are not allowed to match.
-        }
-        if (itemStack.getType() != getMaterial()) {
-            return false;
-        }
-        //Both display & itemStack match material type.
-        if (!itemStack.hasItemMeta() && !hasCustomModelData)
-            return true;
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        if (itemMeta == null) {
-            return false;
-            /*
-            ShopArticle has customModelData, but itemStack doesn't have ItemMeta.
-            Cannot match.
-             */
-        }
-        if (!itemMeta.hasCustomModelData() && hasCustomModelData()) {
-            return false;
-            /*
-            ShopArticle has customModelData, but itemStack doesn't have customModelData.
-            Cannot match.
-             */
-        }
-        if (!hasCustomModelData() && !itemMeta.hasCustomModelData()) {
-            return true;
-            /*
-            ShopArticle doesn't have customModelData, and itemStack doesn't have customModelData.
-            Match.
-             */
-        }
-        return itemMeta.getCustomModelData() == getCustomModelData();
     }
 
     public ItemStack cloneDisplay(Player player, int amount) {
@@ -214,18 +147,6 @@ public class ShopArticle implements BlobObject {
 
     public ItemStack cloneDisplay() {
         return cloneDisplay("en_us", 1);
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public boolean hasCustomModelData() {
-        return hasCustomModelData;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
     }
 
     public double getBuyPrice() {

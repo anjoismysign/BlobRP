@@ -13,6 +13,7 @@ import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.SimpleEventListener;
 import us.mytheria.bloblib.entities.inventory.InventoryButton;
 import us.mytheria.bloblib.entities.inventory.InventoryDataRegistry;
+import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.entities.DefaultShopArticle;
 import us.mytheria.blobrp.entities.ShopArticle;
@@ -51,9 +52,12 @@ public class ShopArticleSell extends RPListener {
                 boolean matches = false;
                 for (ShopArticle shopArticle : getConfigManager().getManagerDirector().getShopArticleDirector()
                         .getObjectManager().values()) {
-                    if (!shopArticle.matches(itemStack)) {
+                    TranslatableItem display = shopArticle.getDisplay();
+                    TranslatableItem instance = TranslatableItem.isInstance(itemStack);
+                    if (instance == null)
                         continue;
-                    }
+                    if (!display.getReference().equals(instance.getReference()))
+                        continue;
                     transactionList.add(new ShopArticleTransaction(shopArticle, amount));
                     matches = true;
                     break;
