@@ -63,6 +63,10 @@ Listeners:
     # Translates all translatable items on alternative saving join
     Translate-On-Alternative-Saving-Join: false
   SimpleListeners:
+    Disable-Natural-Spawn:
+      Register: false
+      Mobs:
+        - CREEPER
     Remove-Junk:
       Register: false
       #TagSet that considers items as junk

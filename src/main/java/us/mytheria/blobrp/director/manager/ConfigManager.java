@@ -44,6 +44,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> playerDeathMessage;
     private SimpleEventListener<String> removeJunk;
     private SimpleEventListener<String> respawnInventory;
+    private SimpleEventListener<List<String>> disableNaturalSpawn;
 
     private ComplexEventListener playerSpectateOnDeath;
     private ComplexEventListener alternativeSaving;
@@ -89,6 +90,7 @@ public class ConfigManager extends RPManager {
         playerDeathMessage = listenersSection.simpleEventListenerString("Player-Death-Message", "Message");
         removeJunk = listenersSection.simpleEventListenerString("Remove-Junk", "TagSet");
         respawnInventory = listenersSection.simpleEventListenerString("Respawn-Inventory", "MetaBlobInventory");
+        disableNaturalSpawn = listenersSection.simpleEventListenerStringList("Disable-Natural-Spawn", "Mobs");
 
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
         alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
@@ -178,6 +180,10 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<List<String>> iceFormation() {
         return iceFormation;
+    }
+
+    public SimpleEventListener<List<String>> disableNaturalSpawn() {
+        return disableNaturalSpawn;
     }
 
     public SimpleEventListener<String> removeJunk() {

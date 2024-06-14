@@ -34,6 +34,7 @@ public class ListenerManager extends RPManager {
         listeners.add(new WelcomePlayer(configManager));
         listeners.add(new PlayerHunger(configManager));
         listeners.add(new IceFormation(configManager));
+        listeners.add(new DisableNaturalSpawn(configManager));
         listeners.add(new PlayerSpectateOnDeath(configManager));
         listeners.add(new ForceGamemodeOnJoin(configManager));
         listeners.add(new GlobalSlowDigging(configManager));
