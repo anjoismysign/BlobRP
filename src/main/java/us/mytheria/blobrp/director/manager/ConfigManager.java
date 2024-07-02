@@ -26,6 +26,7 @@ public class ConfigManager extends RPManager {
     private TinyEventListener translateOnJoin;
     private TinyEventListener translateOnAlternativeSavingJoin;
     private TinyEventListener translateOnPhatLoot;
+    private TinyEventListener blobTycoonShopArticleTransferFunds;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -46,6 +47,7 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> respawnInventory;
     private SimpleEventListener<List<String>> disableNaturalSpawn;
 
+    private ComplexEventListener blobDesignCustomMining;
     private ComplexEventListener playerSpectateOnDeath;
     private ComplexEventListener alternativeSaving;
     private ComplexEventListener discordCmd;
@@ -72,6 +74,7 @@ public class ConfigManager extends RPManager {
         translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
         translateOnAlternativeSavingJoin = listenersSection.tinyEventListener("Translate-On-Alternative-Saving-Join");
         translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
+        blobTycoonShopArticleTransferFunds = listenersSection.tinyEventListener("BlobTycoon-ShopArticle-Transfer-Funds");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -92,6 +95,7 @@ public class ConfigManager extends RPManager {
         respawnInventory = listenersSection.simpleEventListenerString("Respawn-Inventory", "MetaBlobInventory");
         disableNaturalSpawn = listenersSection.simpleEventListenerStringList("Disable-Natural-Spawn", "Mobs");
 
+        blobDesignCustomMining = listenersSection.complexEventListener("BlobDesign-Custom-Mining");
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
         alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
         discordCmd = listenersSection.complexEventListener("Discord-Cmd");
@@ -144,6 +148,10 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener translateOnAlternativeSavingJoin() {
         return translateOnAlternativeSavingJoin;
+    }
+
+    public TinyEventListener blobTycoonShopArticleTransferFunds() {
+        return blobTycoonShopArticleTransferFunds;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
@@ -216,6 +224,10 @@ public class ConfigManager extends RPManager {
 
     public SimpleEventListener<String> playerDeathMessage() {
         return playerDeathMessage;
+    }
+
+    public ComplexEventListener blobDesignCustomMining() {
+        return blobDesignCustomMining;
     }
 
     public ComplexEventListener playerSpectateOnDeath() {

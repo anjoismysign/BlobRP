@@ -1,13 +1,15 @@
 name: BlobRP
 version: ${project.version}
 main: us.mytheria.blobrp.BlobRP
-api-version: 1.16
+api-version: 1.17
 depend: [ BlobLib ]
 authors: [ anjoismysign ]
 softdepend:
   - WeaponMechanics
   - DecentHolograms
   - PhatLoots
+loadbefore:
+  - BlobTycoon
 commands:
   discord:
     description: discordcmd

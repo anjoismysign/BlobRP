@@ -1,6 +1,7 @@
 package us.mytheria.blobrp.director.manager;
 
 import org.bukkit.Bukkit;
+import us.mytheria.blobrp.blobtycoon.ShopArticleTransferFundsListener;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.listeners.*;
@@ -19,6 +20,7 @@ public class ListenerManager extends RPManager {
         super(managerDirector);
         listeners = new ArrayList<>();
         ConfigManager configManager = managerDirector.getConfigManager();
+        listeners.add(new BlobDesignCustomMining(configManager));
         listeners.add(new DropNonSoulOnDeath(configManager));
         listeners.add(new EntitiesClearDropsOnDeath(configManager));
         listeners.add(new EntitiesDropExperienceOnDeath(configManager));
@@ -53,6 +55,13 @@ public class ListenerManager extends RPManager {
             listeners.add(new TranslateOnPhatLoot(configManager));
             listeners.add(new PhatLootChestSmoothBreakAnimation(configManager));
         }
+        Bukkit.getScheduler().runTask(getPlugin(), () -> {
+            if (Bukkit.getPluginManager().isPluginEnabled("BlobTycoon")) {
+                RPListener listener = new ShopArticleTransferFundsListener(configManager);
+                listeners.add(listener);
+                listener.reload();
+            }
+        });
         reload();
     }
 

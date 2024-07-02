@@ -19,6 +19,7 @@ import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.ShopArticleTransaction;
+import us.mytheria.blobrp.events.ShopArticleSaleFailEvent;
 import us.mytheria.blobrp.events.ShopArticleSellEvent;
 import us.mytheria.blobrp.events.TransactionStatus;
 import us.mytheria.blobrp.events.TransactionType;
@@ -91,8 +92,16 @@ public class MerchantManager extends RPManager {
                         double price = article.getBuyPrice();
                         BlobMessage notEnough = BlobLibMessageAPI.getInstance()
                                 .getMessage("Economy.Not-Enough", player);
-                        IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(article.getBuyingCurrency());
+                        Optional<String> buyingCurrency = article.getBuyingCurrency();
+                        IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(buyingCurrency);
                         if (!economy.has(player.getUniqueId(), price)) {
+                            ShopArticleSaleFailEvent saleFailEvent = new ShopArticleSaleFailEvent(
+                                    article, player, buyingCurrency.orElse(null), price);
+                            Bukkit.getPluginManager().callEvent(saleFailEvent);
+                            if (saleFailEvent.isFixed()) {
+                                handleSale(economy, player, price, article);
+                                return;
+                            }
                             double missing = price - economy.getBalance(player);
                             BlobMessage message = notEnough
                                     .modder()
@@ -111,23 +120,7 @@ public class MerchantManager extends RPManager {
                             player.closeInventory();
                             return;
                         }
-                        economy.withdraw(player.getUniqueId(), price);
-                        BlobMessage message =
-                                BlobLibMessageAPI.getInstance().getMessage(boughtMessage, player)
-                                        .modder()
-                                        .replace("%display%", economy.format(price))
-                                        .get();
-                        ShopArticleSellEvent event = new ShopArticleSellEvent(
-                                new ShopArticleTransaction(article, 1),
-                                player, TransactionType.SELL, TransactionStatus.SUCCESS,
-                                false, boughtMessage, "Economy.Not-Enough", null, message,
-                                price);
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (event.isCancelled())
-                            return;
-                        if (event.getSuccessMessage() != null)
-                            event.getSuccessMessage().handle(player);
-                        PlayerUtil.giveItemToInventoryOrDrop(player, article.cloneDisplay(player, 1));
+                        handleSale(economy, player, price, article);
                     }
                     default -> {
                         BlobLibMessageAPI.getInstance().getMessage("System.Error").handle(player);
@@ -136,6 +129,29 @@ public class MerchantManager extends RPManager {
                 }
             });
         });
+    }
+
+    private void handleSale(@NotNull IdentityEconomy economy,
+                            @NotNull Player player,
+                            double price,
+                            @NotNull ShopArticle article) {
+        economy.withdraw(player.getUniqueId(), price);
+        BlobMessage message =
+                BlobLibMessageAPI.getInstance().getMessage(boughtMessage, player)
+                        .modder()
+                        .replace("%display%", economy.format(price))
+                        .get();
+        ShopArticleSellEvent event = new ShopArticleSellEvent(
+                new ShopArticleTransaction(article, 1),
+                player, TransactionType.SELL, TransactionStatus.SUCCESS,
+                false, boughtMessage, "Economy.Not-Enough", null, message,
+                price);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        if (event.getSuccessMessage() != null)
+            event.getSuccessMessage().handle(player);
+        PlayerUtil.giveItemToInventoryOrDrop(player, article.cloneDisplay(player, 1));
     }
 
     @Nullable

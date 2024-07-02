@@ -104,7 +104,7 @@
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.698.12</version>
+            <version>1.698.24</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -117,6 +117,23 @@
             <groupId>com.codisimus.plugins</groupId>
             <artifactId>phatloots</artifactId>
             <version>5.5.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>us.mytheria</groupId>
+            <artifactId>BlobDesign</artifactId>
+            <version>1.2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>us.mytheria</groupId>
+            <artifactId>blms</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.anjoismysign.blobtycoon</groupId>
+            <artifactId>blobtycoon</artifactId>
+            <version>2.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
