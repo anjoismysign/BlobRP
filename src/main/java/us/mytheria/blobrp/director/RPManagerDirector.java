@@ -1,10 +1,12 @@
 package us.mytheria.blobrp.director;
 
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.entities.GenericManagerDirector;
 import us.mytheria.bloblib.entities.ObjectDirector;
 import us.mytheria.bloblib.entities.ObjectDirectorData;
 import us.mytheria.bloblib.entities.ObjectDirectorManager;
+import us.mytheria.bloblib.managers.Manager;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.command.OpenSellInventory;
 import us.mytheria.blobrp.director.command.RoleplayRecipeCmd;
@@ -12,6 +14,7 @@ import us.mytheria.blobrp.director.manager.CloudInventoryManager;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.director.manager.ListenerManager;
+import us.mytheria.blobrp.entities.BlockPhatLootDirector;
 import us.mytheria.blobrp.entities.RoleplayRecipe;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.events.AsyncShopArticleReloadEvent;
@@ -45,6 +48,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
+        if (Bukkit.getPluginManager().isPluginEnabled("PhatLoots")) {
+            // BlockPhatLoot \\
+            addManager("PhatLoot", new BlockPhatLootDirector(this));
+        }
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
             try {
                 addManager("MerchantManager", new MerchantManager(this));
@@ -96,6 +103,9 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         getConfigManager().reload();
         getListenerManager().reload();
         getShopArticleDirector().reload();
+        Manager phatLootManager = getBlockPhatLootManager();
+        if (phatLootManager != null)
+            phatLootManager.reload();
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
             AsyncShopArticleReloadEvent event = new AsyncShopArticleReloadEvent();
             Bukkit.getPluginManager().callEvent(event);
@@ -115,6 +125,11 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     @Override
     public void postWorld() {
+    }
+
+    @Nullable
+    public final Manager getBlockPhatLootManager() {
+        return getManager("PhatLoot");
     }
 
     public final CloudInventoryManager getCloudInventoryManager() {

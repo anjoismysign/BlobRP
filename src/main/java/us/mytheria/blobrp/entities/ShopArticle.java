@@ -81,8 +81,6 @@ public class ShopArticle implements BlobObject {
     public static ShopArticle fromFile(File file) {
         String fileName = file.getName();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (!config.isString("Material"))
-            throw new ConfigurationFieldException("'Material' is missing or not valid");
         double buyPrice = config.getDouble("BuyPrice", 0);
         double sellPrice = config.getDouble("SellPrice", 0);
         if (!config.isString("Display"))
