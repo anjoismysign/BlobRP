@@ -13,11 +13,6 @@ Listeners:
       Values:
         BLOCK_DISPLAY: { }
         ITEM_DISPLAY: { }
-    BlobDesign-Custom-Mining-Additions:
-      Register: false
-      Values:
-        BLOCK_DISPLAY: { }
-        ITEM_DISPLAY: { }
     Discord-Cmd:
       Register: false
       Values:

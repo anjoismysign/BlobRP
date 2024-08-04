@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.entities;
+package us.mytheria.blobrp.entities.customblock;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.entities.tag.TagSet;
 import us.mytheria.bloblib.entities.translatable.TranslatableItem;
+import us.mytheria.bloblib.exception.ConfigurationFieldException;
 
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public record CustomBlock(float getHardness,
     public static CustomBlock READ(@NotNull ConfigurationSection section) {
         Objects.requireNonNull(section, "'section' cannot be null");
         if (!section.isDouble("Hardness"))
-            throw new IllegalArgumentException("'Hardness' field is missing or not a Double");
+            throw new ConfigurationFieldException("'Hardness' field is missing or not a Double");
         float hardness = (float) section.getDouble("Hardness");
         String requiresToolKey = null;
         if (section.isString("Requires-Tool-TagSet"))

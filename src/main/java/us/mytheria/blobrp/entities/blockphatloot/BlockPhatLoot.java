@@ -1,15 +1,15 @@
-package us.mytheria.blobrp.entities;
+package us.mytheria.blobrp.entities.blockphatloot;
 
 import com.codisimus.plugins.phatloots.PhatLoot;
 import com.codisimus.plugins.phatloots.PhatLootsAPI;
 import com.codisimus.plugins.phatloots.loot.LootBundle;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.entities.BlobObject;
+import us.mytheria.blobrp.entities.RPBlockType;
 
 import java.io.File;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record BlockPhatLoot(@NotNull String getKey,
-                            @NotNull Material getMaterial,
+                            @NotNull RPBlockType getBlockType,
                             @NotNull String getPhatLootName,
                             boolean shouldCancel,
                             @Nullable Set<String> applicableOn,
@@ -27,7 +27,7 @@ public record BlockPhatLoot(@NotNull String getKey,
     public File saveToFile(File directory) {
         File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("Material", getMaterial.name());
+        getBlockType.serialize(config);
         config.set("PhatLootName", getPhatLootName);
         config.set("Should-Cancel", shouldCancel);
         config.set("Applicable-On", applicableOn.stream().toList());

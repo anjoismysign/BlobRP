@@ -1,4 +1,4 @@
-package us.mytheria.blobrp.entities;
+package us.mytheria.blobrp.entities.customblock;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -12,6 +12,7 @@ import org.joml.Vector3f;
 import us.mytheria.blobdesign.entities.presetblock.PresetBlock;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.events.CustomBlockBreakEvent;
+import us.mytheria.blobrp.listeners.BlobDesignCustomMining;
 
 public class Breaker {
     private final Block block;
@@ -57,6 +58,8 @@ public class Breaker {
                         if (event.isCancelled())
                             return;
                         presetBlock.despawn(true);
+                        BlobDesignCustomMining.getInstance()
+                                .remove(block);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -33,7 +33,7 @@ public class ApplyTranslatableItemsToWeaponMechanics extends RPListener {
         if (TranslatableItem.isInstance(hand) != null)
             return;
         TranslatableItem translatableItem = TranslatableItem
-                .byMaterialAndCustomModelData(hand, "en_us");
+                .byItemStack(hand);
         if (translatableItem == null)
             return;
         Player player = (Player) shooter;

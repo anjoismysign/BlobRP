@@ -1,5 +1,6 @@
 package us.mytheria.blobrp.events;
 
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -40,6 +41,11 @@ public class CustomBlockBreakEvent extends Event implements Cancellable {
     @NotNull
     public Player getPlayer() {
         return player;
+    }
+
+    @NotNull
+    public Block getBlock() {
+        return presetBlock.getLocation().getBlock();
     }
 
     @Override
