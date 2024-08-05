@@ -1,6 +1,9 @@
 package us.mytheria.blobrp.listeners;
 
+import com.codisimus.plugins.phatloots.loot.LootBundle;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Display;
@@ -19,8 +22,14 @@ import us.mytheria.blobdesign.entities.element.DisplayElementType;
 import us.mytheria.blobdesign.entities.presetblock.PresetBlock;
 import us.mytheria.bloblib.utilities.MinecraftVersion;
 import us.mytheria.blobrp.director.manager.ConfigManager;
+import us.mytheria.blobrp.entities.blockphatloot.BlockPhatLoot;
+import us.mytheria.blobrp.entities.blockphatloot.BlockPhatLootDirector;
+import us.mytheria.blobrp.entities.blocktype.BlockTypeFactory;
 import us.mytheria.blobrp.entities.customblock.Breaker;
 import us.mytheria.blobrp.entities.customblock.CustomBlock;
+import us.mytheria.blobrp.entities.regenable.RegenableBlock;
+import us.mytheria.blobrp.entities.regenable.RegenableBlockData;
+import us.mytheria.blobrp.entities.regenable.RegenableBlockDirector;
 import us.mytheria.blobrp.events.CustomBlockBreakEvent;
 
 import java.util.HashMap;
@@ -29,6 +38,7 @@ import java.util.Objects;
 
 public class BlobDesignCustomMining extends RPListener {
     private static BlobDesignCustomMining instance;
+    private static final BlockTypeFactory factory = BlockTypeFactory.getInstance();
 
     @NotNull
     public static BlobDesignCustomMining getInstance() {
@@ -129,6 +139,36 @@ public class BlobDesignCustomMining extends RPListener {
         breaker.cancel();
         remove(block);
     }
+
+    @EventHandler
+    public void onPhatLoot(CustomBlockBreakEvent event) {
+        BlockPhatLoot blockPhatLoot = BlockPhatLootDirector.isLinked(factory.isBlockType(event.getPresetBlock()));
+        if (blockPhatLoot == null)
+            return;
+        Block block = event.getBlock();
+        World world = block.getWorld();
+        if (!blockPhatLoot.applies(world))
+            return;
+        Location location = block.getLocation();
+        LootBundle lootBundle = blockPhatLoot.rollForLoot();
+        lootBundle.getItemList().forEach(itemStack -> {
+            block.getWorld().dropItem(location, itemStack);
+        });
+        if (blockPhatLoot.shouldCancel())
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onRegenable(CustomBlockBreakEvent event) {
+        RegenableBlockData data = RegenableBlockDirector.isRegenableBlock(factory.isBlockType(event.getPresetBlock()));
+        if (data == null)
+            return;
+        Block block = event.getBlock();
+        RegenableBlockDirector regenableBlockDirector = getManagerDirector().getRegenableBlockDirector();
+        RegenableBlock regenableBlock = new RegenableBlock(block, data, regenableBlockDirector);
+        regenableBlockDirector.addRegenableBlock(regenableBlock);
+    }
+
 
     public void remove(@NotNull Block block) {
         Objects.requireNonNull(block, "'block' cannot be null");

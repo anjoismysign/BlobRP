@@ -20,7 +20,8 @@ public class ListenerManager extends RPManager {
         super(managerDirector);
         listeners = new ArrayList<>();
         ConfigManager configManager = managerDirector.getConfigManager();
-        listeners.add(new BlobDesignCustomMining(configManager));
+        if (Bukkit.getPluginManager().isPluginEnabled("BlobDesign"))
+            listeners.add(new BlobDesignCustomMining(configManager));
         listeners.add(new DropNonSoulOnDeath(configManager));
         listeners.add(new EntitiesClearDropsOnDeath(configManager));
         listeners.add(new EntitiesDropExperienceOnDeath(configManager));

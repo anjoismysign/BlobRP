@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.entities.BlobObject;
-import us.mytheria.blobrp.entities.RPBlockType;
+import us.mytheria.blobrp.entities.blocktype.BlockType;
 
 import java.io.File;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record BlockPhatLoot(@NotNull String getKey,
-                            @NotNull RPBlockType getBlockType,
+                            @NotNull BlockType getBlockType,
                             @NotNull String getPhatLootName,
                             boolean shouldCancel,
                             @Nullable Set<String> applicableOn,
@@ -27,7 +27,7 @@ public record BlockPhatLoot(@NotNull String getKey,
     public File saveToFile(File directory) {
         File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        getBlockType.serialize(config);
+        getBlockType.serializeDefault(config);
         config.set("PhatLootName", getPhatLootName);
         config.set("Should-Cancel", shouldCancel);
         config.set("Applicable-On", applicableOn.stream().toList());

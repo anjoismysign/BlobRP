@@ -17,6 +17,7 @@ import us.mytheria.blobrp.director.manager.ListenerManager;
 import us.mytheria.blobrp.entities.RoleplayRecipe;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.blockphatloot.BlockPhatLootDirector;
+import us.mytheria.blobrp.entities.regenable.RegenableBlockDirector;
 import us.mytheria.blobrp.events.AsyncShopArticleReloadEvent;
 import us.mytheria.blobrp.inventories.CashRewardBuilder;
 import us.mytheria.blobrp.inventories.ItemStackRewardBuilder;
@@ -52,6 +53,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
             // BlockPhatLoot \\
             addManager("PhatLoot", new BlockPhatLootDirector(this));
         }
+        addManager("RegenableBlock", new RegenableBlockDirector(this));
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
             try {
                 addManager("MerchantManager", new MerchantManager(this));
@@ -103,9 +105,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         getConfigManager().reload();
         getListenerManager().reload();
         getShopArticleDirector().reload();
-        Manager phatLootManager = getBlockPhatLootManager();
-        if (phatLootManager != null)
-            phatLootManager.reload();
+        Manager phatLootDirector = getBlockPhatLootDirector();
+        if (phatLootDirector != null)
+            phatLootDirector.reload();
+        getRegenableBlockDirector().reload();
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
             AsyncShopArticleReloadEvent event = new AsyncShopArticleReloadEvent();
             Bukkit.getPluginManager().callEvent(event);
@@ -121,6 +124,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
     @Override
     public void unload() {
         getCloudInventoryManager().unload();
+        getRegenableBlockDirector().unload();
     }
 
     @Override
@@ -128,8 +132,12 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
     }
 
     @Nullable
-    public final Manager getBlockPhatLootManager() {
+    public final Manager getBlockPhatLootDirector() {
         return getManager("PhatLoot");
+    }
+
+    public final RegenableBlockDirector getRegenableBlockDirector() {
+        return getManager("RegenableBlock", RegenableBlockDirector.class);
     }
 
     public final CloudInventoryManager getCloudInventoryManager() {

@@ -6,7 +6,7 @@
 
     <groupId>us.mytheria</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.5.11</version>
+    <version>0.6.01</version>
     <packaging>jar</packaging>
 
     <properties>
