@@ -14,8 +14,6 @@ public class BlobRP extends BlobPlugin {
     private IManagerDirector proxy;
     private PluginUpdater updater;
     protected SimplePlayerSerializer simplePlayerSerializer;
-    private SoulAPI soulAPI;
-    private UniqueAPI uniqueAPI;
     private BlobRPAPI api;
     private RPShortcut shortcut;
 
@@ -34,8 +32,6 @@ public class BlobRP extends BlobPlugin {
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
         shortcut = RPShortcut.getInstance(director);
-        soulAPI = SoulAPI.getInstance(director);
-        uniqueAPI = UniqueAPI.getInstance(director);
         Bukkit.getScheduler().runTask(this, () ->
                 director.postWorld());
     }
@@ -61,13 +57,5 @@ public class BlobRP extends BlobPlugin {
 
     public BlobRPAPI getApi() {
         return api;
-    }
-
-    public SoulAPI getSoulAPI() {
-        return soulAPI;
-    }
-
-    public UniqueAPI getUniqueAPI() {
-        return uniqueAPI;
     }
 }

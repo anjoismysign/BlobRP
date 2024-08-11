@@ -8,9 +8,9 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import us.mytheria.bloblib.SoulAPI;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
 import us.mytheria.blobrp.BlobRP;
-import us.mytheria.blobrp.SoulAPI;
 
 import java.util.ArrayList;
 import java.util.List;

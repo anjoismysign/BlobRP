@@ -4,13 +4,13 @@ import org.bson.Document;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import us.mytheria.bloblib.SoulAPI;
 import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.inventory.InventoryBuilderCarrier;
 import us.mytheria.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import us.mytheria.bloblib.entities.inventory.MetaInventoryButton;
 import us.mytheria.blobrp.BlobRPAPI;
-import us.mytheria.blobrp.SoulAPI;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 
 import java.util.HashSet;
