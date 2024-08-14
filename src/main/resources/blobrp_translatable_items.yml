@@ -1,0 +1,19 @@
+BlobRP:
+  Search-Warp:
+    ItemStack:
+      Material: OAK_SIGN
+      DisplayName: '&6Search'
+      Lore:
+        - '&7Find warps by name'
+  Reset-Search-Warp:
+    ItemStack:
+      Material: ANVIL
+      DisplayName: '&6Reset Search'
+      Lore:
+        - '&7Clear search results'
+  Warp:
+    ItemStack:
+      Material: ENDER_PEARL
+      DisplayName: '%display%'
+      Lore:
+        - '&7Click to teleport'

@@ -6,6 +6,14 @@ Database:
   Database: database
   Username: admin
   Password: password
+Settings:
+  RoleplayWarp:
+    # If disabled, the UI cannot be opened
+    Enabled: false
+    # If false, it will check for warmup on each RoleplayWarp individually
+    Use-Global-Warmup: true
+    # Warmup in ticks
+    Global-Warmup: 100
 Listeners:
   ComplexListeners:
     BlobDesign-Custom-Mining:

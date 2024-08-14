@@ -7,7 +7,9 @@ import us.mytheria.bloblib.entities.proxy.BlobProxifier;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.bloblib.managers.IManagerDirector;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.configuration.RoleplayConfiguration;
 import us.mytheria.blobrp.entities.playerserializer.SimplePlayerSerializer;
+import us.mytheria.blobrp.util.RoleplayMovementWarmup;
 
 public class BlobRP extends BlobPlugin {
     private RPManagerDirector director;
@@ -15,7 +17,9 @@ public class BlobRP extends BlobPlugin {
     private PluginUpdater updater;
     protected SimplePlayerSerializer simplePlayerSerializer;
     private BlobRPAPI api;
+    private RoleplayConfiguration configuration;
     private RPShortcut shortcut;
+    private RoleplayMovementWarmup movementWarmup;
 
     public static BlobRP instance;
 
@@ -26,6 +30,8 @@ public class BlobRP extends BlobPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        configuration = RoleplayConfiguration.getInstance();
+        movementWarmup = RoleplayMovementWarmup.initialize(this);
         updater = generateGitHubUpdater("anjoismysign", "BlobRP");
         simplePlayerSerializer = new SimplePlayerSerializer();
         director = new RPManagerDirector(this);

@@ -33,3 +33,6 @@ commands:
   roleplayrecipe:
     description: info recipe
     aliases: [ rprecipe, recipe ]
+  roleplaywarps:
+    description: info warps
+    aliases: [ rwarps, warps, warp ]

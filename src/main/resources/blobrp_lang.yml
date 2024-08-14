@@ -9,6 +9,18 @@ System:
   Quit:
     Type: CHAT
     Message: '&7%player% &fleft the game'
+BlobRP:
+  Warping:
+    Type: ACTIONBAR
+    Message: '&7Teleporting in &f%time%'
+  Warping-Failed:
+    Type: TITLE
+    Title: '&c&lCANCELLED'
+    Subtitle: '&7You moved'
+  Already-On-Warmup:
+    Type: TITLE
+    Title: '&c&lCANCELLED'
+    Subtitle: '&7You were already on warmup'
 RoleplayRecipe:
   Not-Enough:
     Type: TITLE
@@ -22,55 +34,6 @@ RoleplayRecipe:
     Type: TITLE
     Title: '&c&lNOT FOUND'
     Subtitle: '&7Recipe not found'
-Soul:
-  Fail:
-    Type: TITLE
-    Title: '&c&lUNSUCCESSFUL'
-    Subtitle: "&7Couldn't proceed"
-  Hand-Success:
-    Type: TITLE
-    Title: '&a&lSUCCESSFUL'
-    Subtitle: '&7Item in your &fhand &7is now soul'
-  Offhand-Success:
-    Type: TITLE
-    Title: '&a&lSUCCESSFUL'
-    Subtitle: '&7Item in your &foffhand &7is now soul'
-  Inventory:
-    Type: TITLE
-    Title: '&f&lDONE'
-    Subtitle: '&7Attempted to soul all items in your inventory'
-Builder:
-  CashValue:
-    Type: TITLE
-    Title: '&f&lCASH'
-    Subtitle: '&7Type in a Cash (number)'
-  CashValue-Timeout:
-    Type: TITLE
-    Title: '&c&lTIMEOUT'
-    Subtitle: '&7You took too long to type in Cash'
-    BlobSound: Builder.Timeout
-  PermissionValue:
-    Type: TITLE
-    Title: '&f&lPERMISSION'
-    Subtitle: '&7Type in a Permission'
-  PermissionValue-Timeout:
-    Type: TITLE
-    Title: '&c&lTIMEOUT'
-    Subtitle: '&7You took too long to type in Permission'
-    BlobSound: Builder.Timeout
-Reward:
-  Cash:
-    Type: ACTIONBAR
-    Message: '&7You have found &6%cash%'
-    BlobSound: Reward.Cash
-  Permission:
-    Type: ACTIONBAR
-    Message: '&7You have unlocked an unknown feature...'
-    BlobSound: Reward.Permission
-  ItemStack:
-    Type: ACTIONBAR
-    Message: '&7You have found &6%itemStack%'
-    BlobSound: Reward.Item
 Merchant:
   Not-Found:
     Type: TITLE

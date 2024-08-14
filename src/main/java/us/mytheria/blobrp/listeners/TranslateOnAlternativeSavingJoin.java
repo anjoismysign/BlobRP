@@ -8,6 +8,8 @@ import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.events.CloudInventoryDeserializeEvent;
 
+import java.util.UUID;
+
 public class TranslateOnAlternativeSavingJoin extends RPListener {
 
     public TranslateOnAlternativeSavingJoin(ConfigManager configManager) {
@@ -24,12 +26,13 @@ public class TranslateOnAlternativeSavingJoin extends RPListener {
     @EventHandler
     public void onDeserialize(CloudInventoryDeserializeEvent event) {
         event.ifStillOnline(player -> {
+            UUID uuid = player.getUniqueId();
             String locale = player.getLocale();
             for (ItemStack stack : player.getInventory().getContents()) {
                 TranslatableItem.localize(stack, locale);
             }
             Bukkit.getScheduler().runTask(getConfigManager().getPlugin(), () -> {
-                if (!player.isValid() || !player.isOnline())
+                if (player != Bukkit.getPlayer(uuid))
                     return;
                 player.updateInventory();
             });

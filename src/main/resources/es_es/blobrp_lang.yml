@@ -10,55 +10,18 @@ System:
   Quit:
     Type: CHAT
     Message: '&7%player% &fse ha ido'
-Soul:
-  Fail:
-    Type: TITLE
-    Title: '&c&lERROR'
-    Subtitle: "&7No se puede proceder"
-  Hand-Success:
-    Type: TITLE
-    Title: '&a&lEXITOSO'
-    Subtitle: '&7El item en tu &fmano &7ahora tiene fidelidad'
-  Offhand-Success:
-    Type: TITLE
-    Title: '&a&lEXITOSO'
-    Subtitle: '&7El item en tu &fmano secundaria &7ahora tiene fidelidad'
-  Inventory:
-    Type: TITLE
-    Title: '&f&lLISTO'
-    Subtitle: '&7Se realizó fidelidad a todos los items en tu inventario'
-Builder:
-  CashValue:
-    Type: TITLE
-    Title: '&f&lCASH'
-    Subtitle: '&7Digite cash (número)'
-  CashValue-Timeout:
-    Type: TITLE
-    Title: '&c&lMUY LENTO'
-    Subtitle: '&7Le tomó demasiado digitar Cash'
-    BlobSound: Builder.Timeout
-  PermissionValue:
-    Type: TITLE
-    Title: '&f&lPERMISO'
-    Subtitle: '&7Escriba el permiso'
-  PermissionValue-Timeout:
-    Type: TITLE
-    Title: '&c&lMUY LENTO'
-    Subtitle: '&7Le tomó demasiado escribir el permiso'
-    BlobSound: Builder.Timeout
-Reward:
-  Cash:
+BlobRP:
+  Warping:
     Type: ACTIONBAR
-    Message: '&7Has encontrado &6%cash%'
-    BlobSound: Reward.Cash
-  Permission:
-    Type: ACTIONBAR
-    Message: '&7Has desbloqueado una característica oculta...'
-    BlobSound: Reward.Permission
-  ItemStack:
-    Type: ACTIONBAR
-    Message: '&7Has encontrado &6%itemStack%'
-    BlobSound: Reward.Item
+    Message: '&7Teletransportando en &f%time%'
+  Warping-Failed:
+    Type: TITLE
+    Title: '&c&lCANCELADO'
+    Subtitle: '&7Te moviste'
+  Already-On-Warmup:
+    Type: TITLE
+    Title: '&c&lCANCELADO'
+    Subtitle: '&7Ya estabas preparándote'
 Merchant:
   Not-Found:
     Type: TITLE

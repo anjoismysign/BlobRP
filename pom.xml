@@ -122,7 +122,7 @@
         <dependency>
             <groupId>us.mytheria</groupId>
             <artifactId>BlobDesign</artifactId>
-            <version>1.2.5</version>
+            <version>1.2.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

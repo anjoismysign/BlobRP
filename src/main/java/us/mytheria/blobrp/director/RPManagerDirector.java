@@ -8,11 +8,13 @@ import us.mytheria.bloblib.managers.Manager;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.command.OpenSellInventory;
 import us.mytheria.blobrp.director.command.RoleplayRecipeCmd;
+import us.mytheria.blobrp.director.command.WarpCmd;
 import us.mytheria.blobrp.director.manager.CloudInventoryManager;
 import us.mytheria.blobrp.director.manager.CommandManager;
 import us.mytheria.blobrp.director.manager.ConfigManager;
 import us.mytheria.blobrp.director.manager.ListenerManager;
 import us.mytheria.blobrp.entities.RoleplayRecipe;
+import us.mytheria.blobrp.entities.RoleplayWarp;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.blockphatloot.BlockPhatLootDirector;
 import us.mytheria.blobrp.entities.regenable.RegenableBlockDirector;
@@ -27,6 +29,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         registerMetaBlobInventory("es_es/PlayerInventory", "es_es/EventPlayerInventory");
         registerBlobMessage("es_es/blobrp_lang");
         registerTranslatableBlock("es_es/blobrp_translatable_blocks");
+        registerBlobInventory("RoleplayWarps");
         registerBlobInventory("es_es/ShopArticleBuilder");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
@@ -34,6 +37,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
+        addDirector("RoleplayWarp", RoleplayWarp::fromFile, false);
         if (Bukkit.getPluginManager().isPluginEnabled("PhatLoots")) {
             // BlockPhatLoot \\
             addManager("PhatLoot", new BlockPhatLootDirector(this));
@@ -51,6 +55,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addDirector("RoleplayRecipe", file ->
                 RoleplayRecipe.of(this, file), false);
         RoleplayRecipeCmd.of(this);
+        WarpCmd.getInstance();
     }
 
     /**
@@ -62,6 +67,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         getConfigManager().reload();
         getListenerManager().reload();
         getShopArticleDirector().reload();
+        getRoleplayWarpDirector().reload();
         Manager phatLootDirector = getBlockPhatLootDirector();
         if (phatLootDirector != null)
             phatLootDirector.reload();
@@ -111,6 +117,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public final ObjectDirector<ShopArticle> getShopArticleDirector() {
         return getDirector("ShopArticle", ShopArticle.class);
+    }
+
+    public final ObjectDirector<RoleplayWarp> getRoleplayWarpDirector() {
+        return getDirector("RoleplayWarp", RoleplayWarp.class);
     }
 
     public final ObjectDirector<RoleplayRecipe> getRoleplayRecipeDirector() {

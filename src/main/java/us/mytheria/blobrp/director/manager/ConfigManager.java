@@ -1,18 +1,19 @@
 package us.mytheria.blobrp.director.manager;
 
-import us.mytheria.bloblib.entities.ComplexEventListener;
-import us.mytheria.bloblib.entities.ListenersSection;
-import us.mytheria.bloblib.entities.SimpleEventListener;
-import us.mytheria.bloblib.entities.TinyEventListener;
+import org.bukkit.configuration.ConfigurationSection;
+import us.mytheria.bloblib.entities.*;
 import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.blobrp.BlobRP;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.configuration.RoleplayConfiguration;
+import us.mytheria.blobrp.ui.RoleplayUI;
 
 import java.util.List;
 
 public class ConfigManager extends RPManager {
     private final BlobPlugin main;
+    private final RoleplayConfiguration configuration;
 
     private TinyEventListener dropNonSoulOnDeath;
     private TinyEventListener playerKeepExperienceOnDeath;
@@ -56,12 +57,17 @@ public class ConfigManager extends RPManager {
     public ConfigManager(RPManagerDirector managerDirector) {
         super(managerDirector);
         main = BlobRP.getInstance();
+        configuration = RoleplayConfiguration.getInstance();
         reload();
     }
 
     @Override
     public void reload() {
-        ListenersSection listenersSection = main.getConfigDecorator().reloadAndGetListeners();
+        ConfigDecorator configDecorator = main.getConfigDecorator();
+        ListenersSection listenersSection = configDecorator.reloadAndGetListeners();
+        ConfigurationSection settingsSection = configDecorator.reloadAndGetSection("Settings");
+        configuration.reload(settingsSection);
+        RoleplayUI.getInstance().reload();
         dropNonSoulOnDeath = listenersSection.tinyEventListener("Drop-Non-Soul-On-Death");
         playerKeepExperienceOnDeath = listenersSection.tinyEventListener("Player-Keep-Experience-On-Death");
         entitiesClearDropsOnDeath = listenersSection.tinyEventListener("Entities-Clear-Drops-On-Death");

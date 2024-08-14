@@ -13,6 +13,7 @@ import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.SerializationLib;
 import us.mytheria.blobrp.BlobRP;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class SimplePlayerSerializer implements PlayerSerializer {
@@ -66,8 +67,9 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         ItemStack[] inventory = crudable.hasString("Inventory").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
         ItemStack[] armor = crudable.hasString("Armor").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
         int heldItemSlot = crudable.hasInteger("HeldItemSlot").orElse(player.getInventory().getHeldItemSlot());
+        UUID uuid = player.getUniqueId();
         Bukkit.getScheduler().runTask(BlobRP.getInstance(), () -> {
-            if (player == null || !player.isOnline())
+            if (player != Bukkit.getPlayer(uuid))
                 return;
             player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
             player.setHealth(health);

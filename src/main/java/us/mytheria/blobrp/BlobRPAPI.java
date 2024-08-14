@@ -3,15 +3,18 @@ package us.mytheria.blobrp;
 import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.RoleplayWarp;
 import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 import us.mytheria.blobrp.inventories.MerchantInventory;
 import us.mytheria.blobrp.merchant.MerchantManager;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -130,5 +133,12 @@ public class BlobRPAPI {
     public void deserialize(Player player, BlobCrudable crudable,
                             PlayerSerializerType type) {
         deserialize(player, crudable, type, null);
+    }
+
+    public List<RoleplayWarp> getWarps(@NotNull Permissible permissible) {
+        Objects.requireNonNull(permissible, "'permissible' cannot be null");
+        return director.getRoleplayWarpDirector().getObjectManager().values().stream()
+                .filter(warp -> warp.hasPermission(permissible))
+                .toList();
     }
 }

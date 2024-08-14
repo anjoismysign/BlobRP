@@ -158,7 +158,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
         Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
-            if (player == null || !player.isOnline())
+            if (player != Bukkit.getPlayer(uuid))
                 return;
             BlobCrudable crudable = crudManager.read(uuid.toString());
             boolean hasPlayedBefore = crudable.hasBoolean("HasPlayedBefore").orElse(false);
@@ -166,7 +166,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
             if (!hasPlayedBefore) {
                 if (welcomeMessage != null) {
                     Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                        if (player == null || !player.isOnline())
+                        if (player != Bukkit.getPlayer(uuid))
                             return;
                         BlobLibMessageAPI.getInstance()
                                 .getMessage(welcomeMessage, player)
@@ -184,7 +184,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
                             (carrier, player.getUniqueId());
                     if (soulInventory)
                         Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                            if (player == null || !player.isOnline())
+                            if (player != Bukkit.getPlayer(uuid))
                                 return;
                             SoulAPI.getInstance().setSoul(player);
                         });
@@ -197,7 +197,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
             deserializeEvent.fetchAsynchronous().forEach(consumer ->
                     consumer.accept(player));
             Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                if (player == null || !player.isOnline())
+                if (player != Bukkit.getPlayer(uuid))
                     return;
                 deserializeEvent.fetch().forEach(consumer ->
                         consumer.accept(player));
@@ -205,7 +205,7 @@ public class CloudInventoryManager extends RPManager implements Listener {
             autoSave.put(uuid, new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (player == null || !player.isOnline()) {
+                    if (player != Bukkit.getPlayer(uuid)) {
                         cancel();
                         return;
                     }

@@ -4,19 +4,8 @@ System:
     Volume: 1.0
     Pitch: 1.25
     Audience: WORLD
-Reward:
-  Cash:
-    Sound: BLOCK_NOTE_BLOCK_PLING
+BlobRP:
+  Warp:
+    Sound: ENTITY_ENDERMAN_TELEPORT
     Volume: 1.0
-    Pitch: 2.0
-    Audience: PLAYER
-  Permission:
-    Sound: BLOCK_NOTE_BLOCK_PLING
-    Volume: 1.0
-    Pitch: 2.0
-    Audience: PLAYER
-  Item:
-    Sound: UI_TOAST_CHALLENGE_COMPLETE
-    Volume: 1.0
-    Pitch: 2.0
-    Audience: PLAYER
+    Pitch: 1.0
