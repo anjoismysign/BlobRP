@@ -13,6 +13,7 @@ import us.mytheria.blobrp.BlobRPAPI;
 import us.mytheria.blobrp.entities.RoleplayWarp;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -77,8 +78,8 @@ public class RoleplayWarpsUI implements ReloadableUI {
                     input -> {
                         open(player, BlobRPAPI.getInstance().getWarps(player).stream()
                                 .filter(warp -> {
-                                    String display = ChatColor.stripColor(warp.getPositionable().localize(player).getDisplay()).toLowerCase();
-                                    return display.contains(input.toLowerCase());
+                                    String display = ChatColor.stripColor(warp.getPositionable().localize(player).getDisplay()).toLowerCase(Locale.ROOT);
+                                    return display.contains(input.toLowerCase(Locale.ROOT));
                                 })
                                 .toList());
                     },

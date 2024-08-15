@@ -105,12 +105,12 @@ public class CloudInventoryManager extends RPManager implements Listener {
             if (inventoryButton == null) {
                 return;
             }
-            String meta = inventoryButton.getMeta().toLowerCase();
+            String meta = inventoryButton.getMeta().toLowerCase(Locale.ROOT);
             String subMeta = inventoryButton.getSubMeta();
             if (subMeta == null) {
                 return;
             }
-            subMeta = subMeta.toLowerCase();
+            subMeta = subMeta.toLowerCase(Locale.ROOT);
             switch (meta) {
                 case "blobrp#player" -> {
                     player.closeInventory();

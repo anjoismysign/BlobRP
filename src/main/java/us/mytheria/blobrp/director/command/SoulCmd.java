@@ -14,6 +14,7 @@ import us.mytheria.blobrp.BlobRP;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SoulCmd implements CommandExecutor, TabCompleter {
     private final BlobRP main;
@@ -35,7 +36,7 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
             return true;
         }
         String arg1 = args[0];
-        String lowercased = arg1.toLowerCase();
+        String lowercased = arg1.toLowerCase(Locale.ROOT);
         switch (lowercased) {
             case "hand" -> {
                 Player player = instanceOfPlayer(sender);
