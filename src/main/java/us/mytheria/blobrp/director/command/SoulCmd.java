@@ -43,7 +43,7 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 if (player == null) return true;
                 PlayerInventory inventory = player.getInventory();
                 ItemStack itemStack = inventory.getItemInMainHand();
-                boolean success = SoulAPI.getInstance().setSoul(itemStack);
+                boolean success = SoulAPI.getInstance().set(itemStack);
                 if (success)
                     BlobLibMessageAPI.getInstance()
                             .getMessage("Soul.Hand-Success", player)
@@ -59,7 +59,7 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 if (player == null) return true;
                 PlayerInventory inventory = player.getInventory();
                 ItemStack itemStack = inventory.getItemInOffHand();
-                boolean success = SoulAPI.getInstance().setSoul(itemStack);
+                boolean success = SoulAPI.getInstance().set(itemStack);
                 if (success)
                     BlobLibMessageAPI.getInstance()
                             .getMessage("Soul.Offhand-Success", sender)
@@ -75,7 +75,7 @@ public class SoulCmd implements CommandExecutor, TabCompleter {
                 if (player == null) return true;
                 PlayerInventory inventory = player.getInventory();
                 for (ItemStack itemStack : inventory.getContents()) {
-                    SoulAPI.getInstance().setSoul(itemStack);
+                    SoulAPI.getInstance().set(itemStack);
                 }
                 BlobLibMessageAPI.getInstance()
                         .getMessage("Soul.Inventory", sender)

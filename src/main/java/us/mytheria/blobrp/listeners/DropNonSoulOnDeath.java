@@ -23,6 +23,6 @@ public class DropNonSoulOnDeath extends RPListener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        SoulAPI.getInstance().dropNonSouls(player);
+        SoulAPI.getInstance().dropAll(player);
     }
 }

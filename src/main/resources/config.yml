@@ -7,6 +7,11 @@ Database:
   Username: admin
   Password: password
 Settings:
+  Pressure:
+    Enabled: false
+    Health-To-Pressure: 14.6959
+    Tolerance: 29.3918
+    Worlds: { }
   RoleplayWarp:
     # If disabled, the UI cannot be opened
     Enabled: false

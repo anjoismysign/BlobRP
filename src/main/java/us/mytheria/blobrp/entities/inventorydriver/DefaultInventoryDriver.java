@@ -71,7 +71,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
             slots.addAll(getInventoryBuilder().getButton(key).getSlots());
         }
         for (int slot : slots) {
-            SoulAPI.getInstance().setSoul(player.getInventory().getItem(slot));
+            SoulAPI.getInstance().set(player.getInventory().getItem(slot));
         }
     }
 
@@ -84,7 +84,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
         getInventoryBuilder().getKeys().forEach(key ->
                 slots.addAll(getInventoryBuilder().getButton(key)
                         .getSlots()));
-        slots.forEach(slot -> SoulAPI.getInstance().setSoul(player.getInventory().getItem(slot)));
+        slots.forEach(slot -> SoulAPI.getInstance().set(player.getInventory().getItem(slot)));
     }
 
     public void upgrade() {
@@ -103,7 +103,7 @@ public class DefaultInventoryDriver extends InventoryDriver {
             slots.addAll(getInventoryBuilder().getButton(key).getSlots());
         }
         for (int slot : slots) {
-            SoulAPI.getInstance().setSoul(player.getInventory().getItem(slot));
+            SoulAPI.getInstance().set(player.getInventory().getItem(slot));
         }
     }
 

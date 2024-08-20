@@ -13,9 +13,11 @@ import us.mytheria.blobrp.entities.ShopArticle;
 import us.mytheria.blobrp.entities.playerserializer.PlayerSerializerType;
 import us.mytheria.blobrp.inventories.MerchantInventory;
 import us.mytheria.blobrp.merchant.MerchantManager;
+import us.mytheria.blobrp.pressure.PlayerPressure;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class BlobRPAPI {
@@ -140,5 +142,10 @@ public class BlobRPAPI {
         return director.getRoleplayWarpDirector().getObjectManager().values().stream()
                 .filter(warp -> warp.hasPermission(permissible))
                 .toList();
+    }
+
+    @Nullable
+    public PlayerPressure getPressure(@NotNull UUID uuid) {
+        return director.getPressureManager().getPlayerPressure(uuid);
     }
 }

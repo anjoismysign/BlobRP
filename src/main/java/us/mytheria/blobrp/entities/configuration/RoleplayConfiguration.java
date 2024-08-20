@@ -13,16 +13,23 @@ public class RoleplayConfiguration {
     }
 
     private RoleplayWarpConfiguration roleplayWarpConfiguration;
+    private PressureConfiguration pressureConfiguration;
 
     private RoleplayConfiguration() {
     }
 
     public void reload(@NotNull ConfigurationSection settingsSection) {
         roleplayWarpConfiguration = RoleplayWarpConfiguration.READ(settingsSection);
+        pressureConfiguration = PressureConfiguration.READ(settingsSection);
     }
 
     @NotNull
     public RoleplayWarpConfiguration getRoleplayWarpConfiguration() {
         return roleplayWarpConfiguration;
+    }
+
+    @NotNull
+    public PressureConfiguration getPressureConfiguration() {
+        return pressureConfiguration;
     }
 }

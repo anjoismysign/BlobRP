@@ -20,6 +20,8 @@ import us.mytheria.blobrp.entities.blockphatloot.BlockPhatLootDirector;
 import us.mytheria.blobrp.entities.regenable.RegenableBlockDirector;
 import us.mytheria.blobrp.events.AsyncShopArticleReloadEvent;
 import us.mytheria.blobrp.merchant.MerchantManager;
+import us.mytheria.blobrp.placeholderapi.PressurePH;
+import us.mytheria.blobrp.pressure.PressureManager;
 
 public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
@@ -54,6 +56,8 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         // RoleplayRecipe \\
         addDirector("RoleplayRecipe", file ->
                 RoleplayRecipe.of(this, file), false);
+        // Pressure \\
+        addManager("Pressure", new PressureManager(this));
         RoleplayRecipeCmd.of(this);
         WarpCmd.getInstance();
     }
@@ -88,11 +92,17 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     @Override
     public void postWorld() {
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI"))
+            PressurePH.getInstance(getPlugin());
     }
 
     @Nullable
     public final Manager getBlockPhatLootDirector() {
         return getManager("PhatLoot");
+    }
+
+    public final PressureManager getPressureManager() {
+        return getManager("Pressure", PressureManager.class);
     }
 
     public final RegenableBlockDirector getRegenableBlockDirector() {

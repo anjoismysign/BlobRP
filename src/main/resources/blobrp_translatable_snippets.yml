@@ -1,0 +1,11 @@
+BlobRP:
+  Diving:
+    Snippet: Diving
+  Pressure-Is-Affected:
+    Snippet: '&c&lDANGER!'
+  Pressure-Is-Not-Affected:
+    Snippet: Stable
+  Pressure:
+    Snippet: Pressure
+  Depth-Rating:
+    Snippet: Depth Rating
