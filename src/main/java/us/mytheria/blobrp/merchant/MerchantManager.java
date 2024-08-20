@@ -159,9 +159,6 @@ public class MerchantManager extends RPManager {
         if (button.getSubMeta() == null)
             return null;
         String subMeta = button.getSubMeta();
-        ShopArticle article = getManagerDirector().getShopArticleDirector().getObjectManager().getObject(subMeta);
-        if (article == null)
-            return null;
-        return article;
+        return getManagerDirector().getShopArticleDirector().getObjectManager().getObject(subMeta);
     }
 }
