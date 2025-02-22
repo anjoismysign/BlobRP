@@ -1,6 +1,5 @@
 package us.mytheria.blobrp.entities.regenable;
 
-import org.apache.commons.io.FilenameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,7 +16,11 @@ import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.blocktype.BlockType;
 import us.mytheria.blobrp.entities.blocktype.BlockTypeFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class RegenableBlockDirector extends ObjectDirector<RegenableBlockData> {
     private static final Map<BlockType, RegenableBlockData> datas = new HashMap<>();
@@ -52,7 +55,7 @@ public class RegenableBlockDirector extends ObjectDirector<RegenableBlockData> {
                         throw new ConfigurationFieldException("'NewBlockType' didn't point to a valid BlockType");
                     RandomInterval delay = RandomInterval.READ(delaySection, false);
                     RegenableBlockData regenableBlock = new RegenableBlockData(
-                            FilenameUtils.removeExtension(fileName),
+                            fileName.replace(".yml", ""),
                             blockType,
                             newBlockType,
                             delay,

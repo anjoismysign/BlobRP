@@ -1,7 +1,6 @@
 package us.mytheria.blobrp.entities;
 
 import net.md_5.bungee.api.chat.TranslatableComponent;
-import org.apache.commons.io.FilenameUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -96,7 +95,7 @@ public class ShopArticle implements BlobObject {
         Optional<String> sellingCurrency = Optional.empty();
         if (config.isString("Selling-Currency"))
             sellingCurrency = Optional.ofNullable(config.getString("Selling-Currency"));
-        String key = FilenameUtils.removeExtension(fileName);
+        String key = fileName.replace(".yml", "");
         return new ShopArticle(buyPrice, sellPrice, display, key, false,
                 false, buyingCurrency, sellingCurrency);
     }
@@ -126,7 +125,7 @@ public class ShopArticle implements BlobObject {
         config.set("Display", getDisplay().getReference());
         try {
             config.save(file);
-        } catch (Exception exception) {
+        } catch ( Exception exception ) {
             exception.printStackTrace();
         }
         return file;

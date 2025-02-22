@@ -1,7 +1,6 @@
 package us.mytheria.blobrp.entities.blockphatloot;
 
 import com.codisimus.plugins.phatloots.loot.LootBundle;
-import org.apache.commons.io.FilenameUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -16,7 +15,11 @@ import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.blocktype.BlockType;
 import us.mytheria.blobrp.entities.blocktype.BlockTypeFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class BlockPhatLootDirector extends ObjectDirector<BlockPhatLoot> {
     private static final Map<BlockType, BlockPhatLoot> uniques = new HashMap<>();
@@ -44,7 +47,7 @@ public class BlockPhatLootDirector extends ObjectDirector<BlockPhatLoot> {
                     if (config.isList("Applicable-On"))
                         applicableOn.addAll(config.getStringList("Applicable-On"));
                     boolean isGlobal = config.getBoolean("Is-Global", true);
-                    BlockPhatLoot blockPhatLoot = new BlockPhatLoot(FilenameUtils.removeExtension(fileName), blockType, phatLootName, shouldCancel, applicableOn, isGlobal);
+                    BlockPhatLoot blockPhatLoot = new BlockPhatLoot(fileName.replace(".yml", ""), blockType, phatLootName, shouldCancel, applicableOn, isGlobal);
                     uniques.put(blockType, blockPhatLoot);
                     return blockPhatLoot;
                 }, false);

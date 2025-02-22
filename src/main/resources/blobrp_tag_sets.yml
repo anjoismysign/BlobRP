@@ -14,3 +14,9 @@ BlobRP:
     #Will merge all specified Sets into Exclusion
     #In this case, Sets are TagSets keys
     Exclude-Set: [ ]
+  #Elements in this TagSet will be considered as PhatLootChests that supports Telekinesis
+  PhatLootChest-Telekinesis:
+    Inclusions: [ ]
+    Include-Set: [ ]
+    Exclusions: [ ]
+    Exclude-Set: [ ]

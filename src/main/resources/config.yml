@@ -21,6 +21,9 @@ Settings:
     Global-Warmup: 100
 Listeners:
   ComplexListeners:
+    PhatLootChest-Requires-Key:
+      Register: false
+      Values: [ ]
     BlobDesign-Custom-Mining:
       Register: false
       Values:
@@ -70,7 +73,7 @@ Listeners:
     Cancel-Block-Fade: false
     # Tries to apply translatable items to weapon mechanics items
     Apply-TranslatableItems-To-WeaponMechanics: false
-    # If true, when opening a PhatLootChest, it will play a smooth break animation
+    # If true, when opening a PhatLootChest, it will play a smooth break animation.
     PhatLootChest-Smooth-Break-Animation: false
     # Translates all translatable items from a PhatLoot
     Translate-On-PhatLoot: false

@@ -3,6 +3,7 @@ package us.mytheria.blobrp.pressure;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.blobrp.director.RPManager;
 import us.mytheria.blobrp.director.RPManagerDirector;
+import us.mytheria.blobrp.entities.configuration.PressureConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +23,14 @@ public class PressureManager extends RPManager implements Listener {
     public PressureManager(RPManagerDirector managerDirector) {
         super(managerDirector);
         pressures = new HashMap<>();
-        Bukkit.getPluginManager().registerEvents(this, managerDirector.getPlugin());
+        reload();
+    }
+
+    public void reload() {
+        HandlerList.unregisterAll(this);
+        if (!PressureConfiguration.getInstance().isEnabled())
+            return;
+        Bukkit.getPluginManager().registerEvents(this, getPlugin());
     }
 
     @EventHandler

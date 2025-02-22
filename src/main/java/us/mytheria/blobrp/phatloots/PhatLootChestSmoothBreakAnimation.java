@@ -25,8 +25,8 @@ public class PhatLootChestSmoothBreakAnimation extends RPListener {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
     }
 
-    @EventHandler
-    public void onUnrestock(ChestOpenEvent event) {
+    @EventHandler(ignoreCancelled = true)
+    public void onOpen(ChestOpenEvent event) {
         event.setCancelled(true);
         Block block = event.getChest().getBlock();
         World world = block.getWorld();

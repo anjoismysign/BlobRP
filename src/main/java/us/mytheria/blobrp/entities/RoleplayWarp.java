@@ -1,6 +1,5 @@
 package us.mytheria.blobrp.entities;
 
-import org.apache.commons.io.FilenameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -36,7 +35,7 @@ public record RoleplayWarp(
 
     public static RoleplayWarp fromFile(File file) {
         String fileName = file.getName();
-        String key = FilenameUtils.removeExtension(fileName);
+        String key = fileName.replace(".yml", "");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         if (!config.isString("Positionable"))
             throw new ConfigurationFieldException("'Positionable' is not valid or set");
@@ -66,7 +65,7 @@ public record RoleplayWarp(
             config.set("Warmup", getWarmup);
         try {
             config.save(file);
-        } catch (Exception exception) {
+        } catch ( Exception exception ) {
             exception.printStackTrace();
         }
         return file;

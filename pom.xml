@@ -11,7 +11,7 @@
 
     <properties>
         <testServer>/Users/lbenav8095/Documents/Dev/Java/anjoismysign/Formiga Simulator</testServer>
-        <java.version>16</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -53,8 +53,6 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>${testServer}/plugins/BlobRP-${project.version}.jar
-                            </outputFile>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>

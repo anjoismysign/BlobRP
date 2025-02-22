@@ -1,9 +1,9 @@
 package us.mytheria.blobrp.events;
 
-import com.mongodb.lang.Nullable;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.Nullable;
 import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.BlobRPAPI;
 
