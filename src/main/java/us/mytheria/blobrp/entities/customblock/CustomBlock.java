@@ -73,7 +73,7 @@ public record CustomBlock(float getHardness,
         TranslatableItem translatableItem = TranslatableItem.isInstance(itemStack);
         if (translatableItem == null)
             return getRequiresTool().contains(itemStack.getType().toString());
-        return getRequiresTool().contains(translatableItem.getReference());
+        return getRequiresTool().contains(translatableItem.identifier());
     }
 
     /**
@@ -89,6 +89,6 @@ public record CustomBlock(float getHardness,
         TranslatableItem translatableItem = TranslatableItem.isInstance(itemStack);
         if (translatableItem == null)
             return getPreferredTool().contains(itemStack.getType().toString());
-        return getPreferredTool().contains(translatableItem.getReference());
+        return getPreferredTool().contains(translatableItem.identifier());
     }
 }

@@ -31,7 +31,7 @@ public class RemoveJunk extends RPListener {
         TranslatableItem translatableItem = TranslatableItem.isInstance(stack);
         if (translatableItem == null)
             return;
-        String key = translatableItem.getReference();
+        String key = translatableItem.identifier();
         TagSet tagSet = TagSet.by(removeJunk.value());
         if (!tagSet.contains(key))
             return;

@@ -56,11 +56,11 @@ public record RoleplayWarp(
     public File saveToFile(File directory) {
         File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("Positionable", getPositionable.getReference());
+        config.set("Positionable", getPositionable.identifier());
         if (requiresPermission)
             config.set("Permission", getPermission);
         if (getTeleportSound != null)
-            config.set("Teleport-Sound", getTeleportSound.getReference());
+            config.set("Teleport-Sound", getTeleportSound.identifier());
         if (hasWarmup)
             config.set("Warmup", getWarmup);
         try {

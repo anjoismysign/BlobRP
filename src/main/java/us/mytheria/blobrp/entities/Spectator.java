@@ -19,7 +19,7 @@ public class Spectator {
             SpectatorEndEvent event = new SpectatorEndEvent(spectator, false);
             Bukkit.getPluginManager().callEvent(event);
             spectator.setGameMode(getGameMode());
-            spectator.teleport(respawnLocation);
+            player.teleport(respawnLocation);
         });
     }
 

@@ -23,7 +23,13 @@ import us.mytheria.bloblib.utilities.PlayerUtil;
 import us.mytheria.blobrp.director.RPManagerDirector;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public record RoleplayRecipe(@NotNull String getKey,
@@ -150,7 +156,7 @@ public record RoleplayRecipe(@NotNull String getKey,
                 continue;
             TranslatableItem item = TranslatableItem.isInstance(itemStack);
             String key = item != null ?
-                    IngredientType.TRANSLATABLE_ITEM.getStartsWith() + item.getReference() :
+                    IngredientType.TRANSLATABLE_ITEM.getStartsWith() + item.identifier() :
                     IngredientType.MATERIAL.getStartsWith() + itemStack.getType().name();
             ItemStack clone = new ItemStack(itemStack);
             Integer requiredAmount = getIngredients.get(key);
@@ -247,14 +253,14 @@ public record RoleplayRecipe(@NotNull String getKey,
         File file = instanceFile(directory);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         config.set("BlobInventory", getCarrier.reference());
-        config.set("Result", getResult.getReference());
+        config.set("Result", getResult.identifier());
         ConfigurationSection ingredientsSection = config.createSection("Ingredients");
         getIngredients.forEach(ingredientsSection::set);
         if (getPickUpSound != null)
-            config.set("PickUp-Sound", getPickUpSound.getReference());
+            config.set("PickUp-Sound", getPickUpSound.identifier());
         try {
             config.save(file);
-        } catch (Exception exception) {
+        } catch ( Exception exception ) {
             exception.printStackTrace();
         }
         return file;

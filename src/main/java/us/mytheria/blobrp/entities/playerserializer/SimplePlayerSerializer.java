@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import us.mytheria.bloblib.entities.BlobCrudable;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
-import us.mytheria.bloblib.utilities.SerializationLib;
 import us.mytheria.blobrp.BlobRP;
 
 import java.util.UUID;
@@ -19,6 +18,7 @@ import java.util.function.Consumer;
 public class SimplePlayerSerializer implements PlayerSerializer {
     @Override
     public BlobCrudable serialize(Player player) {
+        Location location = player.getLocation();
         BlobCrudable crudable = new BlobCrudable(player.getUniqueId().toString());
         Document document = crudable.getDocument();
         document.put("Name", player.getName());
@@ -38,7 +38,7 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         document.put("AllowFlight", player.getAllowFlight());
         document.put("Flying", player.isFlying());
         document.put("Gamemode", player.getGameMode().name());
-        document.put("Location", SerializationLib.serialize(player.getLocation()));
+        document.put("Location", location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ() + "," + location.getYaw() + "," + location.getPitch());
         document.put("Inventory", ItemStackUtil.itemStackArrayToBase64(player.getInventory().getContents()));
         document.put("Armor", ItemStackUtil.itemStackArrayToBase64(player.getInventory().getArmorContents()));
         document.put("HeldItemSlot", player.getInventory().getHeldItemSlot());
@@ -63,7 +63,12 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         boolean allowFlight = crudable.hasBoolean("AllowFlight").orElse(false);
         boolean flying = crudable.hasBoolean("Flying").orElse(false);
         GameMode gamemode = crudable.hasString("Gamemode").map(GameMode::valueOf).orElse(player.getGameMode());
-        Location location = crudable.hasString("Location").map(SerializationLib::deserializeLocation).orElse(null);
+        Location location = crudable.hasString("Location").map(serialLocation -> {
+            String[] split = serialLocation.split(",");
+            if (split.length != 6)
+                throw new RuntimeException("Does world name contains a comma? '" + serialLocation + "'");
+            return new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]), Float.parseFloat(split[4]), Float.parseFloat(split[5]));
+        }).orElse(null);
         ItemStack[] inventory = crudable.hasString("Inventory").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
         ItemStack[] armor = crudable.hasString("Armor").map(ItemStackUtil::itemStackArrayFromBase64).orElse(null);
         int heldItemSlot = crudable.hasInteger("HeldItemSlot").orElse(player.getInventory().getHeldItemSlot());
@@ -86,7 +91,7 @@ public class SimplePlayerSerializer implements PlayerSerializer {
             player.setAllowFlight(allowFlight);
             player.setFlying(flying);
             player.setGameMode(gamemode);
-            if (location != null) {
+            if (location != null && location.getWorld() != null) {
                 player.teleport(location);
             }
             PlayerInventory playerInventory = player.getInventory();

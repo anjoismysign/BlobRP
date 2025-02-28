@@ -2,7 +2,6 @@ package us.mytheria.blobrp.entities;
 
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import us.mytheria.bloblib.entities.DataAssetType;
 import us.mytheria.bloblib.entities.translatable.Translatable;
 import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 
@@ -29,16 +28,12 @@ public class DefaultShopArticle implements TranslatableItem {
         throw new UnsupportedOperationException("DefaultShopArticle does not support modification");
     }
 
-    public String getReference() {
+    public String identifier() {
         throw new UnsupportedOperationException("DefaultShopArticle does not have a reference");
     }
 
-    public DataAssetType getType() {
-        return DataAssetType.TRANSLATABLE_ITEM;
-    }
-
     @NotNull
-    public String getLocale() {
+    public String locale() {
         return "en_us";
     }
 }

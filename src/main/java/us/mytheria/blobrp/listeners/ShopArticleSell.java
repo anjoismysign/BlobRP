@@ -56,7 +56,7 @@ public class ShopArticleSell extends RPListener {
                     TranslatableItem instance = TranslatableItem.isInstance(itemStack);
                     if (instance == null)
                         continue;
-                    if (!display.getReference().equals(instance.getReference()))
+                    if (!display.identifier().equals(instance.identifier()))
                         continue;
                     transactionList.add(new ShopArticleTransaction(shopArticle, amount));
                     matches = true;

@@ -122,7 +122,7 @@ public class ShopArticle implements BlobObject {
         config.set("SellPrice", getSellPrice());
         buyingCurrency.ifPresent(s -> config.set("Buying-Currency", s));
         sellingCurrency.ifPresent(s -> config.set("Selling-Currency", s));
-        config.set("Display", getDisplay().getReference());
+        config.set("Display", getDisplay().identifier());
         try {
             config.save(file);
         } catch ( Exception exception ) {

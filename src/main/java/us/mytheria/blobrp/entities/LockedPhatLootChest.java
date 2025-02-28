@@ -33,7 +33,7 @@ public record LockedPhatLootChest(
         Objects.requireNonNull(translatableItem, "'translatableItem' cannot be null");
         Objects.requireNonNull(translatableItem, "'translatableItem' cannot be null");
         String name = phatLoot.getName();
-        String key = translatableItem.getReference();
+        String key = translatableItem.identifier();
         return getAllowedKeys.contains(key);
     }
 }

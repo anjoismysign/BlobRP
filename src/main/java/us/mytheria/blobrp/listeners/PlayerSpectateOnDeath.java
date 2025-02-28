@@ -64,12 +64,12 @@ public class PlayerSpectateOnDeath extends RPListener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        Location repawnLocation = event.getRespawnLocation().clone();
+        Location respawnLocation = event.getRespawnLocation();
         event.setRespawnLocation(player.getLocation());
         SpectatorStartEvent spectatorStartEvent = new SpectatorStartEvent(player, false);
         Bukkit.getPluginManager().callEvent(spectatorStartEvent);
         if (spectatorStartEvent.isCancelled()) return;
-        new Spectator(player, length, repawnLocation);
+        new Spectator(player, length, respawnLocation);
         randomMessage().localize(player.getLocale()).handle(player);
     }
 
