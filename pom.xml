@@ -10,7 +10,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <testServer>/Users/lbenav8095/Documents/Dev/Java/anjoismysign/Formiga Simulator</testServer>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -31,6 +30,7 @@
     </distributionManagement>
 
     <build>
+        <finalName>${project.name}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
