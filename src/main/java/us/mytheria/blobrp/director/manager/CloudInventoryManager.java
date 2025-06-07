@@ -179,7 +179,8 @@ public class CloudInventoryManager extends RPManager implements Listener {
                                 () -> crudManager.update(serialized));
                     });
                     InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
-                            .getInstance().getMetaInventoryBuilderCarrier(reference, player);
+                            .getInstance().getMetaInventoryBuilderCarrier(reference, player.getLocale());
+                    Objects.requireNonNull(carrier, "'"+reference+"' cannot be null");
                     MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                             (carrier, player.getUniqueId());
                     if (soulInventory)

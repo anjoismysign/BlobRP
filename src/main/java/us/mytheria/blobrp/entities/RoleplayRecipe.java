@@ -154,7 +154,7 @@ public record RoleplayRecipe(@NotNull String getKey,
                 continue;
             if (itemStack.getType() == Material.AIR)
                 continue;
-            TranslatableItem item = TranslatableItem.isInstance(itemStack);
+            TranslatableItem item = TranslatableItem.byItemStack(itemStack);
             String key = item != null ?
                     IngredientType.TRANSLATABLE_ITEM.getStartsWith() + item.identifier() :
                     IngredientType.MATERIAL.getStartsWith() + itemStack.getType().name();

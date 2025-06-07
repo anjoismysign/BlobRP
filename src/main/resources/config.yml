@@ -59,8 +59,6 @@ Listeners:
         Y: 1.5
         Z: 0.5
   TinyListeners:
-    # If true, it will transfer funds from BlobTycoon to Economy plugin if a sale failed and had funds
-    BlobTycoon-ShopArticle-Transfer-Funds: false
     # If true, drops non 'Soul' items on death, even if keepInventory is true
     Drop-Non-Soul-On-Death: false
     # If true, players will keep their experience on death, similar to keepInventory gamerule

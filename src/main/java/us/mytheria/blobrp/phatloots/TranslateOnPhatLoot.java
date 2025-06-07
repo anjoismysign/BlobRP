@@ -30,7 +30,7 @@ public class TranslateOnPhatLoot extends RPListener {
         ItemStack[] contents = inventory.getContents();
         for (int i = 0; i < contents.length; i++) {
             ItemStack itemStack = contents[i];
-            TranslatableItem translatableItem = TranslatableItem.isInstance(itemStack);
+            TranslatableItem translatableItem = TranslatableItem.byItemStack(itemStack);
             if (translatableItem == null)
                 continue;
             translatableItem = translatableItem.localize(player);

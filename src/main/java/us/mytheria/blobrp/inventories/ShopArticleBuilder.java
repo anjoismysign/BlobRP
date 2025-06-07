@@ -13,6 +13,7 @@ import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
@@ -22,8 +23,12 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                                            ObjectDirector<ShopArticle> objectDirector,
                                            RPManagerDirector managerDirector) {
         Player player = Bukkit.getPlayer(builderId);
+        var carrier = BlobLibInventoryAPI.getInstance().getInventoryBuilderCarrier("ShopArticleBuilder", player.getLocale());
+        Objects.requireNonNull(carrier, "ShopArticleBuilder cannot be null");
+        var inventory = BlobInventory.fromInventoryBuilderCarrier(carrier);
         return new ShopArticleBuilder(
-                BlobLibInventoryAPI.getInstance().buildInventory("ShopArticleBuilder", player.getLocale()), builderId,
+                inventory,
+                builderId,
                 objectDirector,
                 managerDirector);
     }
@@ -40,7 +45,7 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                 "SellPrice", 300, this);
         ObjectBuilderButton<ItemStack> itemStackButton = ObjectBuilderButtonBuilder.QUICK_ACTION_ITEM(
                 "Display", this, itemStack -> {
-                    TranslatableItem instance = TranslatableItem.isInstance(itemStack);
+                    TranslatableItem instance = TranslatableItem.byItemStack(itemStack);
                     if (instance != null)
                         this.display = instance;
                 });

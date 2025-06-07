@@ -27,7 +27,6 @@ public class ConfigManager extends RPManager {
     private TinyEventListener translateOnJoin;
     private TinyEventListener translateOnAlternativeSavingJoin;
     private TinyEventListener translateOnPhatLoot;
-    private TinyEventListener blobTycoonShopArticleTransferFunds;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -80,7 +79,6 @@ public class ConfigManager extends RPManager {
         translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
         translateOnAlternativeSavingJoin = listenersSection.tinyEventListener("Translate-On-Alternative-Saving-Join");
         translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
-        blobTycoonShopArticleTransferFunds = listenersSection.tinyEventListener("BlobTycoon-ShopArticle-Transfer-Funds");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -154,10 +152,6 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener translateOnAlternativeSavingJoin() {
         return translateOnAlternativeSavingJoin;
-    }
-
-    public TinyEventListener blobTycoonShopArticleTransferFunds() {
-        return blobTycoonShopArticleTransferFunds;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {

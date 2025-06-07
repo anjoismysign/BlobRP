@@ -70,7 +70,7 @@ public record CustomBlock(float getHardness,
         if (requiresToolKey == null)
             return true;
         Objects.requireNonNull(itemStack, "'itemStack' cannot be null");
-        TranslatableItem translatableItem = TranslatableItem.isInstance(itemStack);
+        TranslatableItem translatableItem = TranslatableItem.byItemStack(itemStack);
         if (translatableItem == null)
             return getRequiresTool().contains(itemStack.getType().toString());
         return getRequiresTool().contains(translatableItem.identifier());
@@ -86,7 +86,7 @@ public record CustomBlock(float getHardness,
         if (preferredToolKey == null)
             return false;
         Objects.requireNonNull(itemStack, "'itemStack' cannot be null");
-        TranslatableItem translatableItem = TranslatableItem.isInstance(itemStack);
+        TranslatableItem translatableItem = TranslatableItem.byItemStack(itemStack);
         if (translatableItem == null)
             return getPreferredTool().contains(itemStack.getType().toString());
         return getPreferredTool().contains(translatableItem.identifier());

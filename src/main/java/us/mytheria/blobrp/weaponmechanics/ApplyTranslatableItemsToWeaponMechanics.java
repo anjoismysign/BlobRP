@@ -30,7 +30,7 @@ public class ApplyTranslatableItemsToWeaponMechanics extends RPListener {
         if (shooter.getType() != EntityType.PLAYER)
             return;
         ItemStack hand = event.getWeaponStack();
-        if (TranslatableItem.isInstance(hand) != null)
+        if (TranslatableItem.byItemStack(hand) != null)
             return;
         TranslatableItem translatableItem = TranslatableItem
                 .byItemStack(hand);

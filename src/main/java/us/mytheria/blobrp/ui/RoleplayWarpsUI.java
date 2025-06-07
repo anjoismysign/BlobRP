@@ -57,8 +57,10 @@ public class RoleplayWarpsUI implements ReloadableUI {
                                 .replace("%display%", roleplayWarp.getPositionable().localize(player).getDisplay())
                                 .get()
                                 .get();
-                    }
-            );
+                    },
+                    null,
+                    null,
+                    null);
         });
     }
 
@@ -83,8 +85,8 @@ public class RoleplayWarpsUI implements ReloadableUI {
                                 })
                                 .toList());
                     },
-                    "BlobTycoon.PlotHelper-Search-Timeout",
-                    "BlobTycoon.PlotHelper-Search");
+                    "System.Search-Timeout",
+                    "System.Search");
         });
     }
 }

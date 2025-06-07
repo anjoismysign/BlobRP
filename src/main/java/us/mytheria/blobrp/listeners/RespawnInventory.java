@@ -34,7 +34,7 @@ public class RespawnInventory extends RPListener {
         Player player = event.getPlayer();
         InventoryBuilderCarrier<MetaInventoryButton> carrier =
                 BlobLibInventoryAPI.getInstance()
-                        .getMetaInventoryBuilderCarrier(respawnInventory.value(), player);
+                        .getMetaInventoryBuilderCarrier(respawnInventory.value(), player.getLocale());
         MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
                 (carrier, player.getUniqueId());
     }

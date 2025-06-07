@@ -53,7 +53,7 @@ public class ShopArticleSell extends RPListener {
                 for (ShopArticle shopArticle : getConfigManager().getManagerDirector().getShopArticleDirector()
                         .getObjectManager().values()) {
                     TranslatableItem display = shopArticle.getDisplay();
-                    TranslatableItem instance = TranslatableItem.isInstance(itemStack);
+                    TranslatableItem instance = TranslatableItem.byItemStack(itemStack);
                     if (instance == null)
                         continue;
                     if (!display.identifier().equals(instance.identifier()))

@@ -36,7 +36,7 @@ public class WelcomePlayer extends RPListener {
         Player player = event.getPlayer();
         InventoryBuilderCarrier<MetaInventoryButton> carrier =
                 BlobLibInventoryAPI.getInstance()
-                        .getMetaInventoryBuilderCarrier(reference, player);
+                        .getMetaInventoryBuilderCarrier(reference, player.getLocale());
         if (player.hasPlayedBefore())
             return;
         BlobMessage message = BlobLibMessageAPI.getInstance()

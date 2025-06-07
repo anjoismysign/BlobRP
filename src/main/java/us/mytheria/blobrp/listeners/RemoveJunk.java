@@ -28,7 +28,7 @@ public class RemoveJunk extends RPListener {
     @EventHandler
     public void onSpawn(ItemSpawnEvent event) {
         ItemStack stack = event.getEntity().getItemStack();
-        TranslatableItem translatableItem = TranslatableItem.isInstance(stack);
+        TranslatableItem translatableItem = TranslatableItem.byItemStack(stack);
         if (translatableItem == null)
             return;
         String key = translatableItem.identifier();

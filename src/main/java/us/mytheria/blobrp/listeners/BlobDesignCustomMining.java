@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.util.Transformation;
 import org.jetbrains.annotations.NotNull;
 import us.mytheria.blbi.Breaking;
-import us.mytheria.blbi.Breaking_1_20_5;
+import us.mytheria.blbi.R_1_20_5;
 import us.mytheria.blobdesign.BlobDesignAPI;
 import us.mytheria.blobdesign.entities.PresetData;
 import us.mytheria.blobdesign.entities.element.DisplayElementType;
@@ -59,7 +59,7 @@ public class BlobDesignCustomMining extends RPListener {
                 .compareTo(MinecraftVersion.of("1.20.5")) < 0)
             breaking = null;
         else
-            breaking = Breaking_1_20_5.getInstance();
+            breaking = R_1_20_5.getInstance();
     }
 
     public void reload() {
