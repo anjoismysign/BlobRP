@@ -21,8 +21,8 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
                                            ObjectDirector<ShopArticle> objectDirector,
                                            RPManagerDirector managerDirector) {
         BlobInventory inventory = BlobInventory
-                .fromBlobInventoryOrFail("ShopArticleBuilder", PlayerAddress.builder()
-                        .setUuid(builderId).build());
+                .ofKeyAddressOrThrow("ShopArticleBuilder", PlayerAddress.builder()
+                        .setUUID(builderId).build());
         return new ShopArticleBuilder(
                 inventory,
                 builderId,
