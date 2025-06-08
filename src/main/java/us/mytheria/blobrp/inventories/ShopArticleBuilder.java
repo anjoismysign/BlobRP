@@ -1,11 +1,10 @@
 package us.mytheria.blobrp.inventories;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.ObjectDirector;
+import us.mytheria.bloblib.entities.PlayerAddress;
 import us.mytheria.bloblib.entities.inventory.BlobInventory;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButton;
 import us.mytheria.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
@@ -13,7 +12,6 @@ import us.mytheria.bloblib.entities.translatable.TranslatableItem;
 import us.mytheria.blobrp.director.RPManagerDirector;
 import us.mytheria.blobrp.entities.ShopArticle;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
@@ -22,10 +20,9 @@ public class ShopArticleBuilder extends RPObjectBuilder<ShopArticle> {
     public static ShopArticleBuilder build(UUID builderId,
                                            ObjectDirector<ShopArticle> objectDirector,
                                            RPManagerDirector managerDirector) {
-        Player player = Bukkit.getPlayer(builderId);
-        var carrier = BlobLibInventoryAPI.getInstance().getInventoryBuilderCarrier("ShopArticleBuilder", player.getLocale());
-        Objects.requireNonNull(carrier, "ShopArticleBuilder cannot be null");
-        var inventory = BlobInventory.fromInventoryBuilderCarrier(carrier);
+        BlobInventory inventory = BlobInventory
+                .fromBlobInventoryOrFail("ShopArticleBuilder", PlayerAddress.builder()
+                        .setUuid(builderId).build());
         return new ShopArticleBuilder(
                 inventory,
                 builderId,
