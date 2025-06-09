@@ -25,28 +25,38 @@ public class BlockPhatLootDirector extends ObjectDirector<BlockPhatLoot> {
     private static final Map<BlockType, BlockPhatLoot> uniques = new HashMap<>();
     private static final BlockTypeFactory factory = BlockTypeFactory.getInstance();
 
+    @Nullable
+    public static BlockPhatLoot isLinked(@Nullable BlockType other) {
+        Objects.requireNonNull(other, "'other' cannot be null");
+        return uniques.entrySet().stream()
+                .filter(entry -> entry.getKey().matches(other))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElse(null);
+    }
+
     public BlockPhatLootDirector(RPManagerDirector managerDirector) {
         super(managerDirector, ObjectDirectorData
                         .simple(managerDirector.getRealFileManager(), "BlockPhatLoot"),
                 file -> {
                     String fileName = file.getName();
-                    YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-                    if (!config.isString("PhatLootName"))
+                    YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+                    if (!configuration.isString("PhatLootName"))
                         throw new ConfigurationFieldException("'PhatLootName' is missing or not valid");
-                    BlockType blockType = factory.readDefault(config);
+                    BlockType blockType = factory.readDefault(configuration);
                     if (blockType == null)
                         throw new ConfigurationFieldException("'BlockType' didn't point to a valid BlockType");
                     BlockPhatLoot duplicate = isLinked(blockType);
                     if (duplicate != null)
                         throw new ConfigurationFieldException("'BlockType' is already registered in '" + duplicate.getKey() + "'");
-                    String phatLootName = config.getString("PhatLootName");
+                    String phatLootName = configuration.getString("PhatLootName");
                     if (phatLootName == null)
                         throw new ConfigurationFieldException("'PhatLootName' is not valid or set");
-                    boolean shouldCancel = config.getBoolean("Should-Cancel", false);
+                    boolean shouldCancel = configuration.getBoolean("Should-Cancel", false);
                     Set<String> applicableOn = new HashSet<>();
-                    if (config.isList("Applicable-On"))
-                        applicableOn.addAll(config.getStringList("Applicable-On"));
-                    boolean isGlobal = config.getBoolean("Is-Global", true);
+                    if (configuration.isList("Applicable-On"))
+                        applicableOn.addAll(configuration.getStringList("Applicable-On"));
+                    boolean isGlobal = configuration.getBoolean("Is-Global", true);
                     BlockPhatLoot blockPhatLoot = new BlockPhatLoot(fileName.replace(".yml", ""), blockType, phatLootName, shouldCancel, applicableOn, isGlobal);
                     uniques.put(blockType, blockPhatLoot);
                     return blockPhatLoot;
@@ -75,15 +85,5 @@ public class BlockPhatLootDirector extends ObjectDirector<BlockPhatLoot> {
     public void reload() {
         uniques.clear();
         super.reload();
-    }
-
-    @Nullable
-    public static BlockPhatLoot isLinked(@Nullable BlockType other) {
-        Objects.requireNonNull(other, "'other' cannot be null");
-        return uniques.entrySet().stream()
-                .filter(entry -> entry.getKey().matches(other))
-                .map(Map.Entry::getValue)
-                .findFirst()
-                .orElse(null);
     }
 }

@@ -33,12 +33,6 @@ public class VanillaProvider implements BlockTypeProvider {
     public BlockType read(@NotNull ConfigurationSection section,
                           boolean isDefault) {
         Objects.requireNonNull(section, "'section' cannot be null");
-        if (isDefault) {
-            ConfigurationSection blockTypeSection = section.getConfigurationSection("BlockType");
-            if (blockTypeSection == null)
-                throw new ConfigurationFieldException("'BlockType' is not set or valid");
-            return read(blockTypeSection, false);
-        }
         String readMaterial = section.getString("Material");
         if (readMaterial == null)
             return null;
