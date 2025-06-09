@@ -24,10 +24,6 @@ public class BlobRPAPI {
     private static BlobRPAPI instance;
     private final RPManagerDirector director;
 
-    private BlobRPAPI(RPManagerDirector director) {
-        this.director = director;
-    }
-
     public static BlobRPAPI getInstance(RPManagerDirector director) {
         if (instance == null) {
             if (director == null)
@@ -39,6 +35,10 @@ public class BlobRPAPI {
 
     public static BlobRPAPI getInstance() {
         return getInstance(null);
+    }
+
+    private BlobRPAPI(RPManagerDirector director) {
+        this.director = director;
     }
 
     /**
@@ -62,8 +62,6 @@ public class BlobRPAPI {
         Objects.requireNonNull(key);
         ShopArticle shopArticle = ShopArticle.fromTranslatableItem(display, buyPrice, key.toString(),
                 sellPrice, true, buyingCurrency, sellingCurrency);
-        if (shopArticle == null)
-            return false;
         director.getShopArticleDirector().getObjectManager().addObject(shopArticle.getKey(), shopArticle, null);
         return true;
     }

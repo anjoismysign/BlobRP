@@ -81,7 +81,7 @@ public record RoleplayRecipe(@NotNull String getKey,
                 translatableItem,
                 ingredients,
                 sound);
-        NamespacedKey namespacedKey = director.createNamespacedKey("RoleplayRecipe");
+        NamespacedKey namespacedKey = director.getNamespacedKey("RoleplayRecipe");
         InventoryDataRegistry<InventoryButton> registry = BlobLibInventoryAPI.getInstance()
                 .getInventoryDataRegistry(carrier.reference());
         registry.onClick("Crafting", inventoryClickEvent ->
@@ -218,12 +218,33 @@ public record RoleplayRecipe(@NotNull String getKey,
         return CraftResponse.SUCCESSFUL(canCraft);
     }
 
+    @Override
+    public File saveToFile(File directory) {
+        File file = instanceFile(directory);
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set("BlobInventory", getCarrier.reference());
+        config.set("Result", getResult.identifier());
+        ConfigurationSection ingredientsSection = config.createSection("Ingredients");
+        getIngredients.forEach(ingredientsSection::set);
+        if (getPickUpSound != null)
+            config.set("PickUp-Sound", getPickUpSound.identifier());
+        try {
+            config.save(file);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return file;
+    }
+
+    public enum CraftStatus {
+        SUCCESSFUL,
+        NOT_ENOUGH,
+        NO_ACTION,
+        ERROR
+    }
+
     public record CraftResponse(@NotNull CraftStatus getStatus,
                                 int getAmount) {
-        public boolean isSuccessful() {
-            return getStatus == CraftStatus.SUCCESSFUL;
-        }
-
         public static CraftResponse ERROR() {
             return new CraftResponse(CraftStatus.ERROR, 0);
         }
@@ -239,30 +260,9 @@ public record RoleplayRecipe(@NotNull String getKey,
         public static CraftResponse SUCCESSFUL(int amount) {
             return new CraftResponse(CraftStatus.SUCCESSFUL, amount);
         }
-    }
 
-    public enum CraftStatus {
-        SUCCESSFUL,
-        NOT_ENOUGH,
-        NO_ACTION,
-        ERROR;
-    }
-
-    @Override
-    public File saveToFile(File directory) {
-        File file = instanceFile(directory);
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("BlobInventory", getCarrier.reference());
-        config.set("Result", getResult.identifier());
-        ConfigurationSection ingredientsSection = config.createSection("Ingredients");
-        getIngredients.forEach(ingredientsSection::set);
-        if (getPickUpSound != null)
-            config.set("PickUp-Sound", getPickUpSound.identifier());
-        try {
-            config.save(file);
-        } catch ( Exception exception ) {
-            exception.printStackTrace();
+        public boolean isSuccessful() {
+            return getStatus == CraftStatus.SUCCESSFUL;
         }
-        return file;
     }
 }
