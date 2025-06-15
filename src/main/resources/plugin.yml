@@ -1,6 +1,6 @@
 name: BlobRP
 version: ${project.version}
-main: us.mytheria.blobrp.BlobRP
+main: io.github.anjoismysign.blobrp.BlobRP
 api-version: 1.17
 depend: [ BlobLib ]
 authors: [ anjoismysign ]
