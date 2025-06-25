@@ -1,5 +1,7 @@
 package io.github.anjoismysign.blobrp.listeners;
 
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import io.github.anjoismysign.blobrp.events.SpectatorEndEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,16 +11,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.events.SpectatorEndEvent;
 
-public class GlobalSlowDigging extends RPListener {
-    private int level;
-    private boolean isSpectatorRegistered;
+public class GlobalMiningFatigue extends RPListener {
     private final SpectatorRegistered registered;
     private final SpectatorNotRegistered notRegistered;
+    private int level;
+    private boolean isSpectatorRegistered;
 
-    public GlobalSlowDigging(ConfigManager configManager) {
+    public GlobalMiningFatigue(ConfigManager configManager) {
         super(configManager);
         registered = new SpectatorRegistered();
         notRegistered = new SpectatorNotRegistered();
@@ -45,7 +45,7 @@ public class GlobalSlowDigging extends RPListener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE,
+        player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, Integer.MAX_VALUE,
                 level - 1, false, false, false));
     }
 
@@ -53,7 +53,7 @@ public class GlobalSlowDigging extends RPListener {
         @EventHandler
         public void onRespawn(PlayerRespawnEvent event) {
             Player player = event.getPlayer();
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE,
+            player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, Integer.MAX_VALUE,
                     level - 1, false, false, false));
         }
     }
@@ -62,7 +62,7 @@ public class GlobalSlowDigging extends RPListener {
         @EventHandler
         public void onRespawn(SpectatorEndEvent event) {
             Player player = event.getPlayer();
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE,
+            player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, Integer.MAX_VALUE,
                     level - 1, false, false, false));
         }
     }

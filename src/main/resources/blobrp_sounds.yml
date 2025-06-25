@@ -1,11 +1,11 @@
 System:
   Welcome:
-    Sound: BLOCK_NOTE_BLOCK_BELL
+    Sound: block.note_block.bell
     Volume: 1.0
     Pitch: 1.25
     Audience: WORLD
 BlobRP:
   Warp:
-    Sound: ENTITY_ENDERMAN_TELEPORT
+    Sound: entity.enderman.teleport
     Volume: 1.0
     Pitch: 1.0

@@ -1,5 +1,8 @@
 package io.github.anjoismysign.blobrp.entities.playerserializer;
 
+import io.github.anjoismysign.bloblib.entities.BlobCrudable;
+import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
+import io.github.anjoismysign.blobrp.BlobRP;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -8,9 +11,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import io.github.anjoismysign.bloblib.entities.BlobCrudable;
-import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
-import io.github.anjoismysign.blobrp.BlobRP;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -24,7 +24,7 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         document.put("Name", player.getName());
         document.put("UniqueId", player.getUniqueId().toString());
         document.put("Health", player.getHealth());
-        document.put("MaxHealth", player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        document.put("MaxHealth", player.getAttribute(Attribute.MAX_HEALTH).getValue());
         document.put("FoodLevel", player.getFoodLevel());
         document.put("Saturation", player.getSaturation());
         document.put("Exhaustion", player.getExhaustion());
@@ -76,7 +76,7 @@ public class SimplePlayerSerializer implements PlayerSerializer {
         Bukkit.getScheduler().runTask(BlobRP.getInstance(), () -> {
             if (player != Bukkit.getPlayer(uuid))
                 return;
-            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(maxHealth);
+            player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(maxHealth);
             player.setHealth(health);
             player.setFoodLevel(foodLevel);
             player.setSaturation(saturation);
