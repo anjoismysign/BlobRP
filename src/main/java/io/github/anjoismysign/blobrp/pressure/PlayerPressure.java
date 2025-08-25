@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
 import io.github.anjoismysign.bloblib.FluidPressureAPI;
 import io.github.anjoismysign.blobrp.BlobRP;
-import io.github.anjoismysign.blobrp.entities.configuration.PressureConfiguration;
+import io.github.anjoismysign.blobrp.entity.configuration.PressureConfiguration;
 
 import java.util.UUID;
 

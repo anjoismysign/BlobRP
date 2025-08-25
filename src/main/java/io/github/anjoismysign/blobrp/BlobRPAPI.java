@@ -8,10 +8,10 @@ import org.jetbrains.annotations.Nullable;
 import io.github.anjoismysign.bloblib.entities.BlobCrudable;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.RoleplayWarp;
-import io.github.anjoismysign.blobrp.entities.ShopArticle;
-import io.github.anjoismysign.blobrp.entities.playerserializer.PlayerSerializerType;
-import io.github.anjoismysign.blobrp.inventories.MerchantInventory;
+import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
+import io.github.anjoismysign.blobrp.entity.ShopArticle;
+import io.github.anjoismysign.blobrp.entity.playerserializer.PlayerSerializerType;
+import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 import io.github.anjoismysign.blobrp.merchant.MerchantManager;
 import io.github.anjoismysign.blobrp.pressure.PlayerPressure;
 

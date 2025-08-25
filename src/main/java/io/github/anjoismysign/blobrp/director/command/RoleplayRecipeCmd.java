@@ -2,7 +2,7 @@ package io.github.anjoismysign.blobrp.director.command;
 
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.RoleplayRecipe;
+import io.github.anjoismysign.blobrp.entity.RoleplayRecipe;
 import io.github.anjoismysign.skeramidcommands.command.Command;
 import io.github.anjoismysign.skeramidcommands.command.CommandBuilder;
 import io.github.anjoismysign.skeramidcommands.command.CommandTarget;

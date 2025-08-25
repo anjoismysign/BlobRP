@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.listeners.RPListener;
+import io.github.anjoismysign.blobrp.listener.RPListener;
 
 public class ApplyTranslatableItemsToWeaponMechanics extends RPListener {
 

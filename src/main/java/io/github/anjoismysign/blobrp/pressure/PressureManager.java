@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.configuration.PressureConfiguration;
+import io.github.anjoismysign.blobrp.entity.configuration.PressureConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -5,8 +5,8 @@ import io.github.anjoismysign.bloblib.entities.inventory.ButtonManager;
 import io.github.anjoismysign.bloblib.entities.inventory.MetaBlobButtonManager;
 import io.github.anjoismysign.bloblib.entities.inventory.MetaInventoryButton;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.ShopArticle;
-import io.github.anjoismysign.blobrp.inventories.MerchantInventory;
+import io.github.anjoismysign.blobrp.entity.ShopArticle;
+import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 
 import java.util.Map;
 

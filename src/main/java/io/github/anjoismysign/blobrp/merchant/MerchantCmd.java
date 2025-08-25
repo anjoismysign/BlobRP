@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
 import io.github.anjoismysign.bloblib.managers.BlobPlugin;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.inventories.MerchantInventory;
+import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 
 import java.util.ArrayList;
 import java.util.List;

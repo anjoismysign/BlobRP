@@ -10,7 +10,7 @@ import io.github.anjoismysign.bloblib.managers.BlobPlugin;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.configuration.RoleplayConfiguration;
+import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
 import io.github.anjoismysign.blobrp.ui.RoleplayUI;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package io.github.anjoismysign.blobrp.director.command;
 
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
 import io.github.anjoismysign.bloblib.utilities.TextColor;
-import io.github.anjoismysign.blobrp.entities.configuration.RoleplayWarpConfiguration;
+import io.github.anjoismysign.blobrp.entity.configuration.RoleplayWarpConfiguration;
 import io.github.anjoismysign.blobrp.ui.RoleplayWarpsUI;
 import io.github.anjoismysign.skeramidcommands.command.Command;
 import io.github.anjoismysign.skeramidcommands.command.CommandBuilder;

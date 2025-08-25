@@ -12,7 +12,7 @@ import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
 import io.github.anjoismysign.bloblib.entities.ComplexEventListener;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableBlock;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.listeners.RPListener;
+import io.github.anjoismysign.blobrp.listener.RPListener;
 
 import java.util.HashMap;
 import java.util.List;

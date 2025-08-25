@@ -7,8 +7,8 @@ import io.github.anjoismysign.bloblib.entities.proxy.BlobProxifier;
 import io.github.anjoismysign.bloblib.managers.BlobPlugin;
 import io.github.anjoismysign.bloblib.managers.IManagerDirector;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.configuration.RoleplayConfiguration;
-import io.github.anjoismysign.blobrp.entities.playerserializer.SimplePlayerSerializer;
+import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
+import io.github.anjoismysign.blobrp.entity.playerserializer.SimplePlayerSerializer;
 import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
 
 public class BlobRP extends BlobPlugin {
