@@ -10,7 +10,6 @@ import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
 import io.github.anjoismysign.blobrp.entity.ShopArticle;
-import io.github.anjoismysign.blobrp.entity.playerserializer.PlayerSerializerType;
 import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 import io.github.anjoismysign.blobrp.merchant.MerchantManager;
 import io.github.anjoismysign.blobrp.pressure.PlayerPressure;
@@ -115,24 +114,6 @@ public class BlobRPAPI {
         if (manager == null)
             throw new NullPointerException("MerchantManager is not enabled.");
         return manager.getMerchant(key, player);
-    }
-
-    public BlobCrudable serialize(Player player, PlayerSerializerType type) {
-        if (type != PlayerSerializerType.SIMPLE)
-            throw new IllegalArgumentException("Only PlayerSerializerType.SIMPLE is supported at the moment.");
-        return BlobRP.getInstance().simplePlayerSerializer.serialize(player);
-    }
-
-    public void deserialize(Player player, BlobCrudable crudable,
-                            PlayerSerializerType type, Consumer<Player> consumer) {
-        if (type != PlayerSerializerType.SIMPLE)
-            throw new IllegalArgumentException("Only PlayerSerializerType.SIMPLE is supported at the moment.");
-        BlobRP.getInstance().simplePlayerSerializer.deserialize(player, crudable, consumer);
-    }
-
-    public void deserialize(Player player, BlobCrudable crudable,
-                            PlayerSerializerType type) {
-        deserialize(player, crudable, type, null);
     }
 
     public List<RoleplayWarp> getWarps(@NotNull Permissible permissible) {

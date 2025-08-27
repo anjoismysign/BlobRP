@@ -9,7 +9,7 @@ import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.command.OpenSellInventory;
 import io.github.anjoismysign.blobrp.director.command.RoleplayRecipeCmd;
 import io.github.anjoismysign.blobrp.director.command.WarpCmd;
-import io.github.anjoismysign.blobrp.director.manager.CloudInventoryManager;
+import io.github.anjoismysign.blobrp.director.manager.AlternativeSaving;
 import io.github.anjoismysign.blobrp.director.manager.CommandManager;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.director.manager.ListenerManager;
@@ -36,7 +36,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
-        addManager("CloudInventoryManager", new CloudInventoryManager(this));
+        addManager("AlternativeSaving", new AlternativeSaving(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
         addDirector("RoleplayWarp", RoleplayWarp::fromFile, false);
@@ -86,7 +86,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     @Override
     public void unload() {
-        getCloudInventoryManager().unload();
+        getAlternativeSaving().unload();
         getRegenableBlockDirector().unload();
     }
 
@@ -109,8 +109,8 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         return getManager("RegenableBlock", RegenableBlockDirector.class);
     }
 
-    public final CloudInventoryManager getCloudInventoryManager() {
-        return getManager("CloudInventoryManager", CloudInventoryManager.class);
+    public final AlternativeSaving getAlternativeSaving() {
+        return getManager("AlternativeSaving", AlternativeSaving.class);
     }
 
     public final MerchantManager getMerchantManager() {

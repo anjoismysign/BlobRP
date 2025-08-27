@@ -6,7 +6,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.event.CloudInventoryDeserializeEvent;
 
 import java.util.UUID;
 

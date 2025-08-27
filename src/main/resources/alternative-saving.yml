@@ -1,0 +1,14 @@
+# If alternative saving should be enabled
+enabled: false
+# Where a profile name is randomly chosen.
+profileNames: []
+welcomePlayers:
+  # Whether we should welcome players.
+  enabled: true
+  # The BlobMessage that's sent when a player joins for the first time.
+  message: System.Welcome
+  inventory:
+    # If enabled, will give "WelcomeInventory" BlobInventory to players when joined for the first time.
+    enabled: false
+    # If inventory should be treated as soul, which means that it's not lost on death
+    soul: false

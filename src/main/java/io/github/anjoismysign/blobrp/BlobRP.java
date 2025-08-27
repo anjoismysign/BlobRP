@@ -8,12 +8,10 @@ import io.github.anjoismysign.bloblib.managers.BlobPlugin;
 import io.github.anjoismysign.bloblib.managers.IManagerDirector;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
-import io.github.anjoismysign.blobrp.entity.playerserializer.SimplePlayerSerializer;
 import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
 
 public class BlobRP extends BlobPlugin {
     public static BlobRP instance;
-    protected SimplePlayerSerializer simplePlayerSerializer;
     private RPManagerDirector director;
     private IManagerDirector proxy;
     private PluginUpdater updater;
@@ -32,7 +30,6 @@ public class BlobRP extends BlobPlugin {
         configuration = RoleplayConfiguration.getInstance();
         movementWarmup = RoleplayMovementWarmup.initialize(this);
         updater = generateGitHubUpdater("anjoismysign", "BlobRP");
-        simplePlayerSerializer = new SimplePlayerSerializer();
         director = new RPManagerDirector(this);
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
@@ -54,10 +51,6 @@ public class BlobRP extends BlobPlugin {
     @NotNull
     public PluginUpdater getPluginUpdater() {
         return updater;
-    }
-
-    public SimplePlayerSerializer getSimplePlayerSerializer() {
-        return simplePlayerSerializer;
     }
 
     public BlobRPAPI getApi() {

@@ -29,7 +29,6 @@ public class ConfigManager extends RPManager {
     private TinyEventListener translateOnPickup;
     private TinyEventListener translateOnLocaleSwitch;
     private TinyEventListener translateOnJoin;
-    private TinyEventListener translateOnAlternativeSavingJoin;
     private TinyEventListener translateOnPhatLoot;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
@@ -53,7 +52,6 @@ public class ConfigManager extends RPManager {
 
     private ComplexEventListener blobDesignCustomMining;
     private ComplexEventListener playerSpectateOnDeath;
-    private ComplexEventListener alternativeSaving;
     private ComplexEventListener discordCmd;
     private ComplexEventListener phatLootsHolograms;
 
@@ -81,7 +79,6 @@ public class ConfigManager extends RPManager {
         translateOnPickup = listenersSection.tinyEventListener("Translate-On-Pickup");
         translateOnLocaleSwitch = listenersSection.tinyEventListener("Translate-On-Locale-Switch");
         translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
-        translateOnAlternativeSavingJoin = listenersSection.tinyEventListener("Translate-On-Alternative-Saving-Join");
         translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
@@ -105,7 +102,6 @@ public class ConfigManager extends RPManager {
 
         blobDesignCustomMining = listenersSection.complexEventListener("BlobDesign-Custom-Mining");
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
-        alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
         discordCmd = listenersSection.complexEventListener("Discord-Cmd");
         phatLootsHolograms = listenersSection.complexEventListener("PhatLoots-Holograms");
     }
@@ -152,10 +148,6 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener translateOnJoin() {
         return translateOnJoin;
-    }
-
-    public TinyEventListener translateOnAlternativeSavingJoin() {
-        return translateOnAlternativeSavingJoin;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
@@ -236,10 +228,6 @@ public class ConfigManager extends RPManager {
 
     public ComplexEventListener playerSpectateOnDeath() {
         return playerSpectateOnDeath;
-    }
-
-    public ComplexEventListener alternativeSaving() {
-        return alternativeSaving;
     }
 
     public ComplexEventListener discordCmd() {

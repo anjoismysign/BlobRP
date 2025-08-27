@@ -24,7 +24,7 @@ public class AsyncShopArticleReloadEvent extends Event {
     }
 
     /**
-     * Will add/register a ShopArticle to the plugin.
+     * Will add/enable a ShopArticle to the plugin.
      * It's not needed to reload merchants because
      * it is automatically done after this event.
      *
@@ -43,7 +43,7 @@ public class AsyncShopArticleReloadEvent extends Event {
     }
 
     /**
-     * Will add/register a ShopArticle to the plugin.
+     * Will add/enable a ShopArticle to the plugin.
      * It's not needed to reload merchants because
      * it is automatically done after this event.
      * Sell price will be set to the 10% of the buy price.
