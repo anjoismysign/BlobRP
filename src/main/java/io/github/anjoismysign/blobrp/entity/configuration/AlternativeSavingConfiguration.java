@@ -13,6 +13,8 @@ public class AlternativeSavingConfiguration {
 
     private List<String> profileNames;
 
+    private int defaultSlots;
+
     public WelcomePlayersConfiguration getWelcomePlayers() {
         return welcomePlayers;
     }
@@ -55,4 +57,11 @@ public class AlternativeSavingConfiguration {
         return random;
     }
 
+    public int getDefaultSlots() {
+        return defaultSlots;
+    }
+
+    public void setDefaultSlots(int defaultSlots) {
+        this.defaultSlots = defaultSlots;
+    }
 }

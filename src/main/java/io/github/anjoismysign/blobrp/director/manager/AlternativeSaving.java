@@ -34,6 +34,7 @@ public class AlternativeSaving extends RPManager implements Listener {
 
     public AlternativeSaving(RPManagerDirector director) {
         super(director);
+        reload();
         serialPlayerCruder = new BukkitCruderBuilder<SerialPlayer>()
                 .crudableClass(SerialPlayer.class)
                 .plugin(BlobRP.getInstance())
@@ -81,13 +82,15 @@ public class AlternativeSaving extends RPManager implements Listener {
                     serialPlayer.saveCurrentProfile(player, true);
                 })
                 .build();
-        reload();
     }
 
     @Override
     public void reload() {
         HandlerList.unregisterAll(this);
         AlternativeSavingConfiguration configuration = RoleplayConfiguration.getInstance().getAlternativeSavingConfiguration();
+        if (configuration.getDefaultSlots() < 1){
+            throw new RuntimeException("alternative-saving.yml 'defaultSlots' cannot be less than one");
+        }
         if (configuration.isEnabled()){
             Bukkit.getPluginManager().registerEvents(this, getPlugin());
         }

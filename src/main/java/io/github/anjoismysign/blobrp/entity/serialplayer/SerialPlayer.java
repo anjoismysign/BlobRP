@@ -19,9 +19,12 @@ public final class SerialPlayer implements Crudable {
     public SerialPlayer(@NotNull String identification){
         this.identification = identification;
         this.profiles = new ArrayList<>();
-        this.profiles.add(new SerialProfile(RoleplayConfiguration.getInstance()
-                .getAlternativeSavingConfiguration().getRandomProfileName(profiles.stream().map(profile->profile.getProfileName()).toList()),
-                ""));
+        int defaultSlots = RoleplayConfiguration.getInstance().getAlternativeSavingConfiguration().getDefaultSlots();
+        for (int index = 0; index < defaultSlots; index++) {
+            this.profiles.add(new SerialProfile(RoleplayConfiguration.getInstance()
+                    .getAlternativeSavingConfiguration().getRandomProfileName(profiles.stream().map(profile->profile.getProfileName()).toList()),
+                    ""));
+        }
     }
 
     public SerialPlayer(@NotNull String identification, @NotNull List<SerialProfile> profiles) {

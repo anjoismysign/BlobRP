@@ -2,6 +2,8 @@
 enabled: false
 # Where a profile name is randomly chosen.
 profileNames: []
+# The default unlocked profile slots
+defaultSlots: 2
 welcomePlayers:
   # Whether we should welcome players.
   enabled: true
