@@ -23,11 +23,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLocaleChangeEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class AlternativeSaving extends RPManager implements Listener {
     private final String reference = "WelcomeInventory";
@@ -50,29 +52,47 @@ public class AlternativeSaving extends RPManager implements Listener {
                 .plugin(BlobRP.getInstance())
                 .onJoin(serialPlayer -> {
                     Bukkit.getScheduler().runTask(BlobRP.getInstance(), ()->{
-                        @Nullable Player player = serialPlayer.getPlayer();
-                        if (player == null){
+                        @Nullable Player joined = serialPlayer.getPlayer();
+                        if (joined == null){
+                            return;
+                        }
+                        if (serialPlayer.hasPlayedBefore()){
+                            ConfigManager configManager = director.getConfigManager();
+                            if (configManager.translateOnJoin().register()){
+                                String locale = joined.getLocale();
+                                PlayerInventory inventory = joined.getInventory();
+                                ItemStack[] contents = inventory.getContents();
+                                ItemStack[] armorContents = inventory.getArmorContents();
+                                for (ItemStack content : contents) {
+                                    TranslatableItem.localize(content, locale);
+                                }
+                                for (ItemStack content : armorContents) {
+                                    TranslatableItem.localize(content, locale);
+                                }
+                            }
                             return;
                         }
                         WelcomePlayersConfiguration configuration = RoleplayConfiguration.getInstance().getAlternativeSavingConfiguration().getWelcomePlayers();
-                        serialPlayer.loadProfile(player, serialPlayer.getSelectedProfile());
+                        serialPlayer.loadProfile(joined, serialPlayer.getSelectedProfile());
                         if (configuration.isEnabled()) {
-                            BlobLibMessageAPI.getInstance()
-                                    .getMessage(configuration.getMessage(), player)
-                                    .modder()
-                                    .replace("%player%", player.getName())
-                                    .get()
-                                    .handle(player);
+                            Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+                                BlobLibMessageAPI.getInstance()
+                                        .getMessage(configuration.getMessage(), onlinePlayer)
+                                        .modder()
+                                        .replace("%player%", joined.getName())
+                                        .get()
+                                        .handle(onlinePlayer);
+                            });
                         }
                         WelcomeInventoryConfiguration inventoryConfiguration = configuration.getInventory();
                         if (inventoryConfiguration.isEnabled()) {
                             InventoryBuilderCarrier<MetaInventoryButton> carrier = BlobLibInventoryAPI
-                                    .getInstance().getMetaInventoryBuilderCarrier(reference, player.getLocale());
+                                    .getInstance().getMetaInventoryBuilderCarrier(reference, joined.getLocale());
                             Objects.requireNonNull(carrier, "'" + reference + "' cannot be null");
                             MetaBlobPlayerInventoryBuilder.fromInventoryBuilderCarrier
-                                    (carrier, player.getUniqueId());
+                                    (carrier, joined.getUniqueId());
                             if (inventoryConfiguration.isSoul()){
-                                SoulAPI.getInstance().set(player);
+                                SoulAPI.getInstance().set(joined);
                             }
                         }
                     });
@@ -82,7 +102,7 @@ public class AlternativeSaving extends RPManager implements Listener {
                     if (player == null){
                         return;
                     }
-                    serialPlayer.saveCurrentProfile(player, true);
+                    serialPlayer.saveCurrentProfile(player, serialPlayer.hasPlayedBefore());
                 })
                 .onQuit(serialPlayer -> {
                     @Nullable Player player = serialPlayer.getPlayer();

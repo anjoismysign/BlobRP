@@ -25,7 +25,6 @@ import io.github.anjoismysign.blobrp.listener.RPListener;
 import io.github.anjoismysign.blobrp.listener.RemoveJunk;
 import io.github.anjoismysign.blobrp.listener.RespawnInventory;
 import io.github.anjoismysign.blobrp.listener.ShopArticleSell;
-import io.github.anjoismysign.blobrp.listener.TranslateOnAlternativeSavingJoin;
 import io.github.anjoismysign.blobrp.listener.TranslateOnJoin;
 import io.github.anjoismysign.blobrp.listener.TranslateOnLocaleSwitch;
 import io.github.anjoismysign.blobrp.listener.TranslateOnPickup;
@@ -56,7 +55,6 @@ public class ListenerManager extends RPManager {
         listeners.add(new TranslateOnPickup(configManager));
         listeners.add(new TranslateOnLocaleSwitch(configManager));
         listeners.add(new TranslateOnJoin(configManager));
-        listeners.add(new TranslateOnAlternativeSavingJoin(configManager));
         listeners.add(new KeepExperienceOnDeath(configManager));
         listeners.add(new PlayerDropExperienceOnDeath(configManager));
         listeners.add(new ShopArticleSell(configManager));

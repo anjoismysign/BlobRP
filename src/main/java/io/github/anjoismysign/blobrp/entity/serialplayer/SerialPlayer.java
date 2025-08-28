@@ -14,11 +14,13 @@ import java.util.UUID;
 public final class SerialPlayer implements Crudable {
     private final @NotNull String identification;
     private final @NotNull List<SerialProfile> profiles;
+    private boolean playedBefore;
     private int selectedProfile = 0;
 
     public SerialPlayer(@NotNull String identification){
         this.identification = identification;
         this.profiles = new ArrayList<>();
+        this.playedBefore = false;
         int defaultSlots = RoleplayConfiguration.getInstance().getAlternativeSavingConfiguration().getDefaultSlots();
         for (int index = 0; index < defaultSlots; index++) {
             this.profiles.add(new SerialProfile(RoleplayConfiguration.getInstance()
@@ -41,6 +43,10 @@ public final class SerialPlayer implements Crudable {
         return profiles;
     }
 
+    public boolean hasPlayedBefore() {
+        return playedBefore;
+    }
+
     public int getSelectedProfile() {
         return selectedProfile;
     }
@@ -59,6 +65,7 @@ public final class SerialPlayer implements Crudable {
         if (size <= selectedProfile){
             throw new RuntimeException("Selected profile is '"+selectedProfile+"' but there are only "+size+" profiles");
         }
+        playedBefore = hasPlayedBefore;
         profiles.get(selectedProfile).json = PlayerProfile.fromPlayer(player,hasPlayedBefore).toJson();
     }
 
