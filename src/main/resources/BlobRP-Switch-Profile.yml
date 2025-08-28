@@ -1,0 +1,26 @@
+Title: '&lPROFILE MANAGEMENT'
+Size: 36
+Buttons:
+  Background:
+    ItemStack: BlobLib.Background
+    Slot: 0-35
+  Profiles:
+    ItemStack:
+      Material: BEDROCK
+      DisplayName: '&cLocked profile slot'
+      Lore:
+        - '&7Unavailable'
+    Slot: 11-15
+  Info:
+    ItemStack:
+      Material: BOOK
+      DisplayName: '&fInfo'
+      Lore:
+        - '&7Switches to an existent profile'
+    Slot: 31
+  Previous-Page:
+    ItemStack: BlobLib.Previous-Page
+    Slot: 30
+  Next-Page:
+    ItemStack: BlobLib.Next-Page
+    Slot: 32

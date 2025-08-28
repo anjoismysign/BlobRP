@@ -1,5 +1,6 @@
 package io.github.anjoismysign.blobrp;
 
+import io.github.anjoismysign.blobrp.command.RoleplayCommand;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import io.github.anjoismysign.bloblib.entities.PluginUpdater;
@@ -34,8 +35,10 @@ public class BlobRP extends BlobPlugin {
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
         shortcut = RPShortcut.getInstance(director);
-        Bukkit.getScheduler().runTask(this, () ->
-                director.postWorld());
+        Bukkit.getScheduler().runTask(this, () -> {
+                director.postWorld();
+        });
+        RoleplayCommand.INSTANCE.load();
     }
 
     @Override

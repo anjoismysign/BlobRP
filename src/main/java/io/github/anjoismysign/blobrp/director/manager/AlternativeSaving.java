@@ -24,6 +24,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -32,8 +33,17 @@ public class AlternativeSaving extends RPManager implements Listener {
     private final String reference = "WelcomeInventory";
     private final BukkitCruder<SerialPlayer> serialPlayerCruder;
 
+    private static AlternativeSaving INSTANCE;
+
+    @Nullable
+    public static SerialPlayer getSerialPlayer(@NotNull Player player){
+        Objects.requireNonNull(player, "'player' cannot be null");
+        return INSTANCE.serialPlayerCruder.get(player);
+    }
+
     public AlternativeSaving(RPManagerDirector director) {
         super(director);
+        INSTANCE = this;
         reload();
         serialPlayerCruder = new BukkitCruderBuilder<SerialPlayer>()
                 .crudableClass(SerialPlayer.class)
