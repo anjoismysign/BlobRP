@@ -19,17 +19,14 @@ import io.github.anjoismysign.blobrp.entity.configuration.WelcomePlayersConfigur
 import io.github.anjoismysign.blobrp.entity.serialplayer.SerialPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 public class AlternativeSaving extends RPManager implements Listener {
     private final String reference = "WelcomeInventory";
@@ -129,14 +126,5 @@ public class AlternativeSaving extends RPManager implements Listener {
     @Override
     public void unload() {
         serialPlayerCruder.saveAll();
-    }
-
-    @EventHandler
-    public void onLocale(PlayerLocaleChangeEvent event) {
-        Player player = event.getPlayer();
-        PlayerInventory inventory = player.getInventory();
-        for (int index = 0; index < inventory.getSize(); index++) {
-            TranslatableItem.localize(inventory.getItem(index), player.getLocale());
-        }
     }
 }

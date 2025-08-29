@@ -18,7 +18,6 @@ public class BlobRP extends BlobPlugin {
     private PluginUpdater updater;
     private BlobRPAPI api;
     private RoleplayConfiguration configuration;
-    private RPShortcut shortcut;
     private RoleplayMovementWarmup movementWarmup;
 
     public static BlobRP getInstance() {
@@ -34,7 +33,6 @@ public class BlobRP extends BlobPlugin {
         director = new RPManagerDirector(this);
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
-        shortcut = RPShortcut.getInstance(director);
         Bukkit.getScheduler().runTask(this, () -> {
                 director.postWorld();
         });
