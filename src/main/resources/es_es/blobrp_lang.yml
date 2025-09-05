@@ -1,15 +1,4 @@
 Locale: es_es
-System:
-  Welcome:
-    Type: CHAT
-    Message: '&7Bienvenido, &f%player%'
-    BlobSound: System.Welcome
-  Join:
-    Type: CHAT
-    Message: '&7%player% &fse ha unido'
-  Quit:
-    Type: CHAT
-    Message: '&7%player% &fse ha ido'
 BlobRP:
   Warping:
     Type: ACTIONBAR

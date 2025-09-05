@@ -17,9 +17,3 @@ BlobRP:
       DisplayName: '%display%'
       Lore:
         - '&7Click to teleport'
-  Switch-Profile-Element:
-    ItemStack:
-      Material: PAPER
-      DisplayName: '&f%profile%'
-      Lore:
-        - '&7Click to switch'
