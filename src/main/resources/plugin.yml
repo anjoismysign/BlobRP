@@ -1,7 +1,7 @@
 name: BlobRP
 version: ${project.version}
 main: io.github.anjoismysign.blobrp.BlobRP
-api-version: 1.17
+api-version: 1.21
 depend: [ BlobLib ]
 authors: [ anjoismysign ]
 softdepend:
