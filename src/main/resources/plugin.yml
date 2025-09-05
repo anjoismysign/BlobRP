@@ -28,6 +28,3 @@ commands:
   roleplaywarps:
     description: info warps
     aliases: [ rwarps, warps, warp ]
-  rprofile:
-    description: info profile
-    aliases: [ profile ]
