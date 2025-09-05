@@ -3,13 +3,13 @@ package io.github.anjoismysign.blobrp.entity.blockphatloot;
 import com.codisimus.plugins.phatloots.PhatLoot;
 import com.codisimus.plugins.phatloots.PhatLootsAPI;
 import com.codisimus.plugins.phatloots.loot.LootBundle;
+import io.github.anjoismysign.bloblib.entities.BlobObject;
+import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.entities.BlobObject;
-import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
 
 import java.io.File;
 import java.util.Objects;

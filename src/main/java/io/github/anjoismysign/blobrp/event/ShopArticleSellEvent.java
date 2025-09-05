@@ -1,10 +1,10 @@
 package io.github.anjoismysign.blobrp.event;
 
+import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
+import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
-import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 
 public class ShopArticleSellEvent extends ShopArticleTransactionEvent {
     private static final HandlerList HANDLERS_LIST = new HandlerList();

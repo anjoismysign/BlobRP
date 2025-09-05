@@ -1,5 +1,6 @@
 package io.github.anjoismysign.blobrp.entity;
 
+import io.github.anjoismysign.blobrp.BlobRP;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -7,7 +8,6 @@ import org.bukkit.entity.Shulker;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
-import io.github.anjoismysign.blobrp.BlobRP;
 
 import java.util.Collection;
 import java.util.HashMap;

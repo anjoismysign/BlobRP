@@ -1,14 +1,14 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
+import io.github.anjoismysign.bloblib.entities.tag.TagSet;
+import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemStack;
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.entities.tag.TagSet;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 public class RemoveJunk extends RPListener {
     private SimpleEventListener<String> removeJunk;

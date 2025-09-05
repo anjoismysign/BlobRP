@@ -1,10 +1,5 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerJoinEvent;
 import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
 import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
@@ -13,6 +8,11 @@ import io.github.anjoismysign.bloblib.entities.inventory.MetaBlobPlayerInventory
 import io.github.anjoismysign.bloblib.entities.inventory.MetaInventoryButton;
 import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 public class WelcomePlayer extends RPListener {
     private SimpleEventListener<String> welcomePlayers;

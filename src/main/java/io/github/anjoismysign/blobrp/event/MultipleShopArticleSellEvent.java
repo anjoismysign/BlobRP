@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.event;
 
+import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 
 import java.util.Collection;
 

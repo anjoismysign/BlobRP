@@ -1,9 +1,9 @@
 package io.github.anjoismysign.blobrp.entity.blocktype.providers;
 
+import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
 
 public interface BlockTypeProvider {
     /**

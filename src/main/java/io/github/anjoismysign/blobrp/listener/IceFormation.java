@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockFormEvent;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 import java.util.HashSet;
 import java.util.Set;

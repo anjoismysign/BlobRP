@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.phatloots;
 
 import com.codisimus.plugins.phatloots.events.PrePlayerLootEvent;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import io.github.anjoismysign.blobrp.listener.RPListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.listener.RPListener;
 
 public class PhatLootChestRequiresKey extends RPListener {
 

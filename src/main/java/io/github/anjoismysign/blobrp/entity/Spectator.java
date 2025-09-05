@@ -1,12 +1,12 @@
 package io.github.anjoismysign.blobrp.entity;
 
+import io.github.anjoismysign.bloblib.entities.PlayerTask;
+import io.github.anjoismysign.blobrp.BlobRP;
+import io.github.anjoismysign.blobrp.event.SpectatorEndEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import io.github.anjoismysign.bloblib.entities.PlayerTask;
-import io.github.anjoismysign.blobrp.BlobRP;
-import io.github.anjoismysign.blobrp.event.SpectatorEndEvent;
 
 public class Spectator {
     private final GameMode gameMode;

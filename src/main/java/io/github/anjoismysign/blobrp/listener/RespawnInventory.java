@@ -1,16 +1,16 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
 import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
 import io.github.anjoismysign.bloblib.entities.inventory.InventoryBuilderCarrier;
 import io.github.anjoismysign.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
 import io.github.anjoismysign.bloblib.entities.inventory.MetaInventoryButton;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class RespawnInventory extends RPListener {
     private SimpleEventListener<String> respawnInventory;

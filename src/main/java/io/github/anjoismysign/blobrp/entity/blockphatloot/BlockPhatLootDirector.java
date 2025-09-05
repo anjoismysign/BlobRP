@@ -1,6 +1,12 @@
 package io.github.anjoismysign.blobrp.entity.blockphatloot;
 
 import com.codisimus.plugins.phatloots.loot.LootBundle;
+import io.github.anjoismysign.bloblib.entities.ObjectDirector;
+import io.github.anjoismysign.bloblib.entities.ObjectDirectorData;
+import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import io.github.anjoismysign.blobrp.director.RPManagerDirector;
+import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
+import io.github.anjoismysign.blobrp.entity.blocktype.BlockTypeFactory;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -8,12 +14,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.entities.ObjectDirector;
-import io.github.anjoismysign.bloblib.entities.ObjectDirectorData;
-import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
-import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
-import io.github.anjoismysign.blobrp.entity.blocktype.BlockTypeFactory;
 
 import java.util.HashMap;
 import java.util.HashSet;

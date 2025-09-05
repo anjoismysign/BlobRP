@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.entity;
 
 import com.codisimus.plugins.phatloots.PhatLoot;
-import org.bukkit.configuration.ConfigurationSection;
-import org.jetbrains.annotations.NotNull;
 import io.github.anjoismysign.bloblib.entities.tag.TagSet;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import org.bukkit.configuration.ConfigurationSection;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 

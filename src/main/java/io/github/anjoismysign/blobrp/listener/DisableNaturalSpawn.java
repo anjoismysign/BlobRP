@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 import java.util.Set;
 import java.util.stream.Collectors;

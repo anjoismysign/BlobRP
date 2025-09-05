@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import org.bukkit.event.Listener;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import org.bukkit.event.Listener;
 
 public abstract class RPListener implements Listener {
     private final ConfigManager configManager;

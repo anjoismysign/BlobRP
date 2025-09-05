@@ -1,8 +1,5 @@
 package io.github.anjoismysign.blobrp;
 
-import io.github.anjoismysign.blobrp.command.RoleplayCommand;
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
 import io.github.anjoismysign.bloblib.entities.PluginUpdater;
 import io.github.anjoismysign.bloblib.entities.proxy.BlobProxifier;
 import io.github.anjoismysign.bloblib.managers.BlobPlugin;
@@ -10,6 +7,8 @@ import io.github.anjoismysign.bloblib.managers.IManagerDirector;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
 import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
+import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 
 public class BlobRP extends BlobPlugin {
     public static BlobRP instance;
@@ -36,7 +35,6 @@ public class BlobRP extends BlobPlugin {
         Bukkit.getScheduler().runTask(this, () -> {
                 director.postWorld();
         });
-        RoleplayCommand.INSTANCE.load();
     }
 
     @Override

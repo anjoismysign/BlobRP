@@ -1,5 +1,7 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -8,8 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 public class TranslateOnPickup extends RPListener {
 
@@ -26,8 +26,9 @@ public class TranslateOnPickup extends RPListener {
 
     @EventHandler
     public void onPickup(EntityPickupItemEvent event) {
-        if (event.getEntityType() != EntityType.PLAYER)
+        if (event.getEntityType() != EntityType.PLAYER) {
             return;
+        }
         Player player = (Player) event.getEntity();
         Item item = event.getItem();
         ItemStack stack = item.getItemStack();

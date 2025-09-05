@@ -1,5 +1,8 @@
 package io.github.anjoismysign.blobrp.weaponmechanics;
 
+import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import io.github.anjoismysign.blobrp.listener.RPListener;
 import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponEquipEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
@@ -8,9 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.listener.RPListener;
 
 public class ApplyTranslatableItemsToWeaponMechanics extends RPListener {
 

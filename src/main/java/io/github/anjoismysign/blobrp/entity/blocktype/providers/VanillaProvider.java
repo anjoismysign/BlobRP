@@ -1,12 +1,12 @@
 package io.github.anjoismysign.blobrp.entity.blocktype.providers;
 
+import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
+import io.github.anjoismysign.blobrp.entity.blocktype.VanillaBlockType;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
-import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
-import io.github.anjoismysign.blobrp.entity.blocktype.VanillaBlockType;
 
 import java.util.Objects;
 

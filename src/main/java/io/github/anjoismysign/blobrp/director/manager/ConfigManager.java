@@ -1,6 +1,5 @@
 package io.github.anjoismysign.blobrp.director.manager;
 
-import org.bukkit.configuration.ConfigurationSection;
 import io.github.anjoismysign.bloblib.entities.ComplexEventListener;
 import io.github.anjoismysign.bloblib.entities.ConfigDecorator;
 import io.github.anjoismysign.bloblib.entities.ListenersSection;
@@ -12,6 +11,7 @@ import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
 import io.github.anjoismysign.blobrp.ui.RoleplayUI;
+import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
 

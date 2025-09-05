@@ -1,12 +1,12 @@
 package io.github.anjoismysign.blobrp.entity.regenable;
 
+import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.blobrp.entity.blocktype.BlockTypeFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
-import io.github.anjoismysign.blobrp.entity.blocktype.BlockTypeFactory;
 
 public class RegenableBlock {
     private final Block block;

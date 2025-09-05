@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.event;
 
+import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 
 public abstract class ShopArticleTransactionEvent extends Event implements Cancellable {
     private boolean cancelled;

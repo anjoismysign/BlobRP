@@ -1,9 +1,5 @@
 package io.github.anjoismysign.blobrp.placeholderapi;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import io.github.anjoismysign.bloblib.BlobLib;
 import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
 import io.github.anjoismysign.bloblib.entities.BlobPHExpansion;
@@ -11,6 +7,10 @@ import io.github.anjoismysign.bloblib.utilities.Formatter;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.pressure.PlayerPressure;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.UUID;

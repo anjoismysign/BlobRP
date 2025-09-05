@@ -1,7 +1,5 @@
 package io.github.anjoismysign.blobrp.director;
 
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.Nullable;
 import io.github.anjoismysign.bloblib.entities.GenericManagerDirector;
 import io.github.anjoismysign.bloblib.entities.ObjectDirector;
 import io.github.anjoismysign.bloblib.managers.Manager;
@@ -9,7 +7,6 @@ import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.command.OpenSellInventory;
 import io.github.anjoismysign.blobrp.director.command.RoleplayRecipeCmd;
 import io.github.anjoismysign.blobrp.director.command.WarpCmd;
-import io.github.anjoismysign.blobrp.director.manager.AlternativeSaving;
 import io.github.anjoismysign.blobrp.director.manager.CommandManager;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.director.manager.ListenerManager;
@@ -22,6 +19,8 @@ import io.github.anjoismysign.blobrp.event.AsyncShopArticleReloadEvent;
 import io.github.anjoismysign.blobrp.merchant.MerchantManager;
 import io.github.anjoismysign.blobrp.placeholderapi.PressurePH;
 import io.github.anjoismysign.blobrp.pressure.PressureManager;
+import org.bukkit.Bukkit;
+import org.jetbrains.annotations.Nullable;
 
 public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
@@ -38,7 +37,6 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
-        addManager("AlternativeSaving", new AlternativeSaving(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
         addDirector("RoleplayWarp", RoleplayWarp::fromFile, false);
@@ -88,7 +86,6 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     @Override
     public void unload() {
-        getAlternativeSaving().unload();
         getRegenableBlockDirector().unload();
     }
 
@@ -109,10 +106,6 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public final RegenableBlockDirector getRegenableBlockDirector() {
         return getManager("RegenableBlock", RegenableBlockDirector.class);
-    }
-
-    public final AlternativeSaving getAlternativeSaving() {
-        return getManager("AlternativeSaving", AlternativeSaving.class);
     }
 
     public final MerchantManager getMerchantManager() {

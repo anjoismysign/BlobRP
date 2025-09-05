@@ -1,13 +1,13 @@
 package io.github.anjoismysign.blobrp.entity.blocktype;
 
+import io.github.anjoismysign.blobrp.entity.blocktype.providers.BlobDesignProvider;
+import io.github.anjoismysign.blobrp.entity.blocktype.providers.BlockTypeProvider;
+import io.github.anjoismysign.blobrp.entity.blocktype.providers.VanillaProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.blobrp.entity.blocktype.providers.BlobDesignProvider;
-import io.github.anjoismysign.blobrp.entity.blocktype.providers.BlockTypeProvider;
-import io.github.anjoismysign.blobrp.entity.blocktype.providers.VanillaProvider;
 
 import java.util.ArrayList;
 import java.util.List;

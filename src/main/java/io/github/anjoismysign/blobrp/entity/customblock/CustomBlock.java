@@ -1,12 +1,12 @@
 package io.github.anjoismysign.blobrp.entity.customblock;
 
+import io.github.anjoismysign.bloblib.entities.tag.TagSet;
+import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.entities.tag.TagSet;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
-import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
 
 import java.util.Objects;
 

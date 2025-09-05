@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 import javax.annotation.Nullable;
 

@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.event;
 
+import io.github.anjoismysign.blobrp.entity.ShopArticle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.blobrp.entity.ShopArticle;
 
 public class ShopArticleSaleFailEvent extends Event {
     @NotNull

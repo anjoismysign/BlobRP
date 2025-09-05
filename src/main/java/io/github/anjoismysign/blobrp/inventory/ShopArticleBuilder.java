@@ -1,7 +1,5 @@
 package io.github.anjoismysign.blobrp.inventory;
 
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import io.github.anjoismysign.bloblib.api.BlobLibSoundAPI;
 import io.github.anjoismysign.bloblib.entities.ObjectDirector;
 import io.github.anjoismysign.bloblib.entities.PlayerAddress;
@@ -11,6 +9,8 @@ import io.github.anjoismysign.bloblib.entities.inventory.ObjectBuilderButtonBuil
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.ShopArticle;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 

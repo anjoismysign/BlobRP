@@ -1,5 +1,9 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
+import io.github.anjoismysign.bloblib.entities.ComplexEventListener;
+import io.github.anjoismysign.bloblib.utilities.TextColor;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -9,10 +13,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.ComplexEventListener;
-import io.github.anjoismysign.bloblib.utilities.TextColor;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 public class DiscordCmd extends RPListener implements CommandExecutor {
     private ComplexEventListener discordCmd;

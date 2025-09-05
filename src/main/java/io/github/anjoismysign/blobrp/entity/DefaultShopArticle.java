@@ -1,9 +1,9 @@
 package io.github.anjoismysign.blobrp.entity;
 
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import io.github.anjoismysign.bloblib.entities.translatable.Translatable;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.function.Function;

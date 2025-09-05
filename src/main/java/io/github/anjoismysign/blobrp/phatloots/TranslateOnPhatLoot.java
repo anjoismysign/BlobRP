@@ -1,15 +1,15 @@
 package io.github.anjoismysign.blobrp.phatloots;
 
 import com.codisimus.plugins.phatloots.events.ChestOpenEvent;
+import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import io.github.anjoismysign.blobrp.listener.RPListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import io.github.anjoismysign.blobrp.listener.RPListener;
 
 public class TranslateOnPhatLoot extends RPListener {
 

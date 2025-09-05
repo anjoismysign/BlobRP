@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.event;
 
+import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.blobrp.BlobRPAPI;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
-import io.github.anjoismysign.blobrp.BlobRPAPI;
 
 public class AsyncShopArticleReloadEvent extends Event {
     private static final HandlerList HANDLERS_LIST = new HandlerList();

@@ -1,10 +1,10 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockFadeEvent;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 public class BlockFade extends RPListener {
 

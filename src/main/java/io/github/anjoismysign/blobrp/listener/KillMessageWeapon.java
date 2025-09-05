@@ -1,5 +1,9 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
+import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
+import io.github.anjoismysign.bloblib.utilities.TextColor;
+import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,10 +17,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
-import io.github.anjoismysign.bloblib.utilities.TextColor;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 
 import java.util.List;
 

@@ -1,5 +1,9 @@
 package io.github.anjoismysign.blobrp.merchant;
 
+import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
+import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.blobrp.director.RPManagerDirector;
+import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,10 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
-import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
 package io.github.anjoismysign.blobrp.entity.configuration;
 
+import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import io.github.anjoismysign.blobrp.pressure.WorldPressure;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
-import io.github.anjoismysign.blobrp.pressure.WorldPressure;
 
 import java.util.HashMap;
 import java.util.Map;
