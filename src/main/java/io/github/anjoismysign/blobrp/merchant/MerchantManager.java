@@ -47,11 +47,11 @@ public class MerchantManager extends RPManager {
     }
 
     @Nullable
-    public MerchantInventory getMerchant(@NotNull String key, @NotNull Player player) {
-        Objects.requireNonNull(key);
+    public MerchantInventory getMerchant(@NotNull String identifier, @NotNull Player player) {
+        Objects.requireNonNull(identifier);
         Objects.requireNonNull(player);
         MetaBlobInventoryTracker tracker = BlobLibInventoryAPI.getInstance()
-                .trackMetaInventory(player, key);
+                .trackMetaInventory(player, identifier);
         if (tracker == null)
             return null;
         return new MerchantInventory(getManagerDirector(), tracker);

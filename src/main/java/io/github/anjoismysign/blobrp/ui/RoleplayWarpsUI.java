@@ -30,7 +30,7 @@ public class RoleplayWarpsUI implements ReloadableUI {
     }
 
     public void open(@NotNull Player player) {
-        open(player, BlobRPAPI.getInstance().getWarps(player));
+        open(player, BlobRPAPI.getInstance().getWarpsForPermissible(player));
     }
 
     private void open(@NotNull Player player,
@@ -68,7 +68,7 @@ public class RoleplayWarpsUI implements ReloadableUI {
         var roleplayWarpsRegistry = inventoryAPI.getInventoryDataRegistry("RoleplayWarps");
         roleplayWarpsRegistry.onClick("Reset-Search", blobInventoryClickEvent -> {
             Player player = (Player) blobInventoryClickEvent.getWhoClicked();
-            open(player, BlobRPAPI.getInstance().getWarps(player));
+            open(player, BlobRPAPI.getInstance().getWarpsForPermissible(player));
         });
         roleplayWarpsRegistry.onClick("Search", blobInventoryClickEvent -> {
             Player player = (Player) blobInventoryClickEvent.getWhoClicked();
@@ -77,7 +77,7 @@ public class RoleplayWarpsUI implements ReloadableUI {
                     player,
                     300,
                     input -> {
-                        open(player, BlobRPAPI.getInstance().getWarps(player).stream()
+                        open(player, BlobRPAPI.getInstance().getWarpsForPermissible(player).stream()
                                 .filter(warp -> {
                                     String display = ChatColor.stripColor(warp.getPositionable().localize(player).getDisplay()).toLowerCase(Locale.ROOT);
                                     return display.contains(input.toLowerCase(Locale.ROOT));

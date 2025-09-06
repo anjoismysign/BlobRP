@@ -103,24 +103,59 @@ public class BlobRPAPI {
      * Will get a MerchantInventory by its key.
      * It will fail fast if the MerchantManager is not enabled.
      *
-     * @param key The key
+     * @param identifier How this MerchantInventory is identified
      * @return The MerchantInventory
      */
     @Nullable
-    public MerchantInventory getMerchantInventory(@NotNull String key, @NotNull Player player) {
+    public MerchantInventory getMerchantInventory(@NotNull String identifier, @NotNull Player player) {
         MerchantManager manager = director.getMerchantManager();
         if (manager == null)
             throw new NullPointerException("MerchantManager is not enabled.");
-        return manager.getMerchant(key, player);
+        return manager.getMerchant(identifier, player);
     }
 
-    public List<RoleplayWarp> getWarps(@NotNull Permissible permissible) {
+    
+    /**
+     * Retrieves a list of RoleplayWarp objects that the given Permissible has permission to use.
+     *
+     * @param permissible The Permissible to check permissions for (e.g., a Player or CommandSender)
+     * @return A list of accessible RoleplayWarps
+     */
+    @NotNull
+    public List<RoleplayWarp> getWarpsForPermissible(@NotNull Permissible permissible) {
         Objects.requireNonNull(permissible, "'permissible' cannot be null");
         return director.getRoleplayWarpDirector().getObjectManager().values().stream()
                 .filter(warp -> warp.hasPermission(permissible))
                 .toList();
     }
 
+    /**
+     * Retrieves a list of all available RoleplayWarp objects.
+     *
+     * @return A list of all RoleplayWarps
+     */
+    @NotNull
+    public List<RoleplayWarp> getWarps(){
+        return director.getRoleplayWarpDirector().getObjectManager().values().stream().toList();
+    }
+
+    /**
+     * Retrieves a specific RoleplayWarp by its identifier.
+     *
+     * @param identifier How this RoleplayWarp is identified
+     * @return The RoleplayWarp if found, null otherwise
+     */
+    @Nullable
+    public RoleplayWarp getWarp(@NotNull String identifier){
+        return director.getRoleplayWarpDirector().getObjectManager().getObject(identifier);
+    }
+
+    /**
+     * Retrieves the PlayerPressure for the given UUID.
+     *
+     * @param uuid The UUID of the player
+     * @return The PlayerPressure if exists, null otherwise
+     */
     @Nullable
     public PlayerPressure getPressure(@NotNull UUID uuid) {
         return director.getPressureManager().getPlayerPressure(uuid);
