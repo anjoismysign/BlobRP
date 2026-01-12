@@ -55,8 +55,9 @@ public class PlayerSpectateOnDeath extends RPListener {
     public void onDeath(PlayerDeathEvent event) {
         GameRule<Boolean> immediateRespawn = GameRule.DO_IMMEDIATE_RESPAWN;
         Player player = event.getEntity();
-        if (Boolean.TRUE.equals(player.getWorld().getGameRuleValue(immediateRespawn)))
+        if (Boolean.TRUE.equals(player.getWorld().getGameRuleValue(immediateRespawn))) {
             return;
+        }
         Bukkit.getScheduler().runTask(getConfigManager().getPlugin(), () ->
                 player.spigot().respawn());
     }
@@ -68,7 +69,9 @@ public class PlayerSpectateOnDeath extends RPListener {
         event.setRespawnLocation(player.getLocation());
         SpectatorStartEvent spectatorStartEvent = new SpectatorStartEvent(player, false);
         Bukkit.getPluginManager().callEvent(spectatorStartEvent);
-        if (spectatorStartEvent.isCancelled()) return;
+        if (spectatorStartEvent.isCancelled()) {
+            return;
+        }
         new Spectator(player, length, respawnLocation);
         randomMessage().localize(player.getLocale()).handle(player);
     }
