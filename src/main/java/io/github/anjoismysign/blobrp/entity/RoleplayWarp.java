@@ -37,15 +37,10 @@ public record RoleplayWarp(
         String fileName = file.getName();
         String key = fileName.replace(".yml", "");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (!config.isString("Positionable"))
-            throw new ConfigurationFieldException("'Positionable' is not valid or set");
-        String positionableReference = config.getString("Positionable");
+        String positionableReference = config.getString("Positionable", key);
         TranslatablePositionable positionable = TranslatablePositionable.by(positionableReference);
         if (positionable == null) {
-            positionable = TranslatablePositionable.by(key);
-            if (positionable == null){
-                throw new ConfigurationFieldException("'Positionable' doesn't point to a TranslatablePositionable");
-            }
+            throw new ConfigurationFieldException("'Positionable' doesn't point to a TranslatablePositionable");
         }
         String permission = config.getString("Permission", "");
         boolean requiresPermission = !permission.trim().isEmpty();
@@ -82,7 +77,7 @@ public record RoleplayWarp(
         return permissible.hasPermission(permission);
     }
 
-    private void teleport(@NotNull Entity entity) {
+    public void teleport(@NotNull Entity entity) {
         Positionable positionable = getPositionable.get();
         Location location = positionable.getPositionableType().isLocatable() ? positionable.toLocation() : positionable.toLocation(entity.getWorld());
         entity.teleport(location);
