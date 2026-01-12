@@ -25,6 +25,8 @@ import io.github.anjoismysign.blobrp.listener.RPListener;
 import io.github.anjoismysign.blobrp.listener.RemoveJunk;
 import io.github.anjoismysign.blobrp.listener.RespawnInventory;
 import io.github.anjoismysign.blobrp.listener.ShopArticleSell;
+import io.github.anjoismysign.blobrp.listener.SpawnOnNewProfile;
+import io.github.anjoismysign.blobrp.listener.SpawnOnRespawn;
 import io.github.anjoismysign.blobrp.listener.TranslateOnJoin;
 import io.github.anjoismysign.blobrp.listener.TranslateOnLocaleSwitch;
 import io.github.anjoismysign.blobrp.listener.TranslateOnPickup;
@@ -34,6 +36,7 @@ import io.github.anjoismysign.blobrp.phatloots.PhatLootsHolograms;
 import io.github.anjoismysign.blobrp.phatloots.TranslateOnPhatLoot;
 import io.github.anjoismysign.blobrp.weaponmechanics.ApplyTranslatableItemsToWeaponMechanics;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +48,12 @@ public class ListenerManager extends RPManager {
         super(managerDirector);
         listeners = new ArrayList<>();
         ConfigManager configManager = managerDirector.getConfigManager();
-        if (Bukkit.getPluginManager().isPluginEnabled("BlobDesign"))
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        if (pluginManager.isPluginEnabled("BlobDesign")) {
             listeners.add(new BlobDesignCustomMining(configManager));
+        }
+        listeners.add(new SpawnOnNewProfile(configManager));
+        listeners.add(new SpawnOnRespawn(configManager));
         listeners.add(new DropNonSoulOnDeath(configManager));
         listeners.add(new EntitiesClearDropsOnDeath(configManager));
         listeners.add(new EntitiesDropExperienceOnDeath(configManager));

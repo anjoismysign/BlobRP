@@ -72,6 +72,8 @@ Listeners:
     Translate-On-Locale-Switch: false
     # Translates all translatable items on join
     Translate-On-Join: false
+    Spawn-On-New-Profile: false
+    Spawn-On-Respawn: false
   SimpleListeners:
     Disable-Natural-Spawn:
       Register: false

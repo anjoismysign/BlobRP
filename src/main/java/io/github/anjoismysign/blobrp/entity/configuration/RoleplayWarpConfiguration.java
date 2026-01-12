@@ -3,11 +3,13 @@ package io.github.anjoismysign.blobrp.entity.configuration;
 import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public record RoleplayWarpConfiguration(
         boolean isEnabled,
         boolean useGlobalWarmup,
-        long getGlobalWarmup
+        long getGlobalWarmup,
+        @Nullable String roleplayWarpAsSpawn
 ) {
 
     @NotNull
@@ -22,6 +24,7 @@ public record RoleplayWarpConfiguration(
         boolean isEnabled = roleplayWarpSection.getBoolean("Enabled", true);
         boolean useGlobalCooldown = roleplayWarpSection.getBoolean("Use-Global-Warmup", true);
         long globalCooldown = roleplayWarpSection.getLong("Global-Warmup", 100);
-        return new RoleplayWarpConfiguration(isEnabled, useGlobalCooldown, globalCooldown);
+        @Nullable String rolePlayWarpAsSpawn = roleplayWarpSection.getString("Spawn", null);
+        return new RoleplayWarpConfiguration(isEnabled, useGlobalCooldown, globalCooldown, rolePlayWarpAsSpawn);
     }
 }

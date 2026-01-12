@@ -30,6 +30,8 @@ public class ConfigManager extends RPManager {
     private TinyEventListener translateOnLocaleSwitch;
     private TinyEventListener translateOnJoin;
     private TinyEventListener translateOnPhatLoot;
+    private TinyEventListener spawnOnNewProfile;
+    private TinyEventListener spawnOnRespawn;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -80,6 +82,8 @@ public class ConfigManager extends RPManager {
         translateOnLocaleSwitch = listenersSection.tinyEventListener("Translate-On-Locale-Switch");
         translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
         translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
+        spawnOnNewProfile = listenersSection.tinyEventListener("Spawn-On-New-Profile");
+        spawnOnRespawn = listenersSection.tinyEventListener("Spawn-On-Respawn");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -148,6 +152,14 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener translateOnJoin() {
         return translateOnJoin;
+    }
+
+    public TinyEventListener getSpawnOnNewProfile() {
+        return spawnOnNewProfile;
+    }
+
+    public TinyEventListener getSpawnOnRespawn() {
+        return spawnOnRespawn;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
