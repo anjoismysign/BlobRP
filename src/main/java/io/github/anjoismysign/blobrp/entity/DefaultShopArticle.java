@@ -1,5 +1,6 @@
 package io.github.anjoismysign.blobrp.entity;
 
+import io.github.anjoismysign.bloblib.entities.TranslatableRarity;
 import io.github.anjoismysign.bloblib.entities.translatable.Translatable;
 import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,7 @@ import java.util.function.Function;
 
 public class DefaultShopArticle implements TranslatableItem {
     private final ItemStack itemStack;
+    private final TranslatableRarity rarity;
 
     public static DefaultShopArticle of(@NotNull ItemStack itemStack) {
         Objects.requireNonNull(itemStack);
@@ -18,6 +20,7 @@ public class DefaultShopArticle implements TranslatableItem {
 
     private DefaultShopArticle(ItemStack itemStack) {
         this.itemStack = itemStack;
+        this.rarity = TranslatableRarity.of(itemStack);
     }
 
     public @NotNull ItemStack get() {
@@ -35,5 +38,10 @@ public class DefaultShopArticle implements TranslatableItem {
     @NotNull
     public String locale() {
         return "en_us";
+    }
+
+    @Override
+    public TranslatableRarity getRarity() {
+        return rarity;
     }
 }
