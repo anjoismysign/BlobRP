@@ -32,6 +32,6 @@ public class SpawnOnNewProfile extends RPListener {
         if (warpAsSpawn == null){
             return;
         }
-        BlobRPAPI.getInstance().getWarp(warpAsSpawn).warp(event.getPlayer());
+        BlobRPAPI.getInstance().getWarp(warpAsSpawn).teleport(event.getPlayer());
     }
 }
