@@ -41,8 +41,12 @@ public record RoleplayWarp(
             throw new ConfigurationFieldException("'Positionable' is not valid or set");
         String positionableReference = config.getString("Positionable");
         TranslatablePositionable positionable = TranslatablePositionable.by(positionableReference);
-        if (positionable == null)
-            throw new ConfigurationFieldException("'Positionable' doesn't point to a TranslatablePositionable");
+        if (positionable == null) {
+            positionable = TranslatablePositionable.by(key);
+            if (positionable == null){
+                throw new ConfigurationFieldException("'Positionable' doesn't point to a TranslatablePositionable");
+            }
+        }
         String permission = config.getString("Permission", "");
         boolean requiresPermission = !permission.trim().isEmpty();
         @Nullable String blobSoundKey = config.getString("Teleport-Sound");
