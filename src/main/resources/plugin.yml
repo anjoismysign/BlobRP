@@ -28,3 +28,6 @@ commands:
   roleplaywarps:
     description: info warps
     aliases: [ rwarps, warps, warp ]
+  kit:
+    description: info kits
+    aliases: [ rkits ]

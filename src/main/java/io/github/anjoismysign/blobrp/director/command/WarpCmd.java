@@ -11,17 +11,10 @@ import io.github.anjoismysign.skeramidcommands.server.bukkit.BukkitAdapter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class WarpCmd {
+public enum WarpCmd {
+    INSTANCE;
 
-    private static WarpCmd instance;
-
-    public static WarpCmd getInstance() {
-        if (instance == null)
-            instance = new WarpCmd();
-        return instance;
-    }
-
-    private WarpCmd() {
+    public void initialize() {
         Command warpsCommand = CommandBuilder.of("roleplaywarps")
                 .build();
         Command open = warpsCommand.child("open");

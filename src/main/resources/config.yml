@@ -72,8 +72,12 @@ Listeners:
     Translate-On-Locale-Switch: false
     # Translates all translatable items on join
     Translate-On-Join: false
+    # Teleport to spawn when starting on a new profile
     Spawn-On-New-Profile: false
+    # Teleports to spawn when respawning
     Spawn-On-Respawn: false
+    # Gives the highest kit priority the player has permission to, on respawn
+    Highest-Kit-Priority-On-Respawn: false
   SimpleListeners:
     Disable-Natural-Spawn:
       Register: false

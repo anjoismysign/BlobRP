@@ -22,8 +22,7 @@ public class RoleplayRecipeCmd {
     }
 
     private RoleplayRecipeCmd(@NotNull RPManagerDirector director) {
-        Command roleplayrecipe = CommandBuilder.of("roleplayrecipe")
-                .build();
+        Command roleplayrecipe = CommandBuilder.of("roleplayrecipe").build();
         Command open = roleplayrecipe.child("open");
         CommandTarget<RoleplayRecipe> roleplayTarget = director.getRoleplayRecipeDirector().getObjectManager();
         open.setParameters(BukkitCommandTarget.ONLINE_PLAYERS(), roleplayTarget);

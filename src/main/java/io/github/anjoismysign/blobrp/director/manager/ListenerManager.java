@@ -12,6 +12,7 @@ import io.github.anjoismysign.blobrp.listener.EntitiesDropExperienceOnDeath;
 import io.github.anjoismysign.blobrp.listener.EntityDropItem;
 import io.github.anjoismysign.blobrp.listener.ForceGamemodeOnJoin;
 import io.github.anjoismysign.blobrp.listener.GlobalMiningFatigue;
+import io.github.anjoismysign.blobrp.listener.HighestKitPriorityOnRespawn;
 import io.github.anjoismysign.blobrp.listener.IceFormation;
 import io.github.anjoismysign.blobrp.listener.KeepExperienceOnDeath;
 import io.github.anjoismysign.blobrp.listener.KillMessageWeapon;
@@ -52,6 +53,7 @@ public class ListenerManager extends RPManager {
         if (pluginManager.isPluginEnabled("BlobDesign")) {
             listeners.add(new BlobDesignCustomMining(configManager));
         }
+        listeners.add(new HighestKitPriorityOnRespawn(configManager));
         listeners.add(new SpawnOnNewProfile(configManager));
         listeners.add(new SpawnOnRespawn(configManager));
         listeners.add(new DropNonSoulOnDeath(configManager));

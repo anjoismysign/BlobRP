@@ -4,14 +4,17 @@ import io.github.anjoismysign.bloblib.entities.PluginUpdater;
 import io.github.anjoismysign.bloblib.entities.proxy.BlobProxifier;
 import io.github.anjoismysign.bloblib.managers.BlobPlugin;
 import io.github.anjoismysign.bloblib.managers.IManagerDirector;
+import io.github.anjoismysign.bloblib.managers.PluginManager;
+import io.github.anjoismysign.bloblib.managers.asset.BukkitIdentityManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
+import io.github.anjoismysign.blobrp.entity.RoleplayKit;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
 import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 public class BlobRP extends BlobPlugin {
-    public static BlobRP instance;
+    public static BlobRP INSTANCE;
     private RPManagerDirector director;
     private IManagerDirector proxy;
     private PluginUpdater updater;
@@ -19,19 +22,26 @@ public class BlobRP extends BlobPlugin {
     private RoleplayConfiguration configuration;
     private RoleplayMovementWarmup movementWarmup;
 
+    private BukkitIdentityManager<RoleplayKit> kitManager;
+
     public static BlobRP getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
         configuration = RoleplayConfiguration.getInstance();
         movementWarmup = RoleplayMovementWarmup.initialize(this);
         updater = generateGitHubUpdater("anjoismysign", "BlobRP");
+
+        PluginManager pluginManager = PluginManager.getInstance();
+        kitManager = pluginManager.addIdentityManager(RoleplayKit.Info.class, this, "kits", true);
+
         director = new RPManagerDirector(this);
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
+
         Bukkit.getScheduler().runTask(this, () -> {
                 director.postWorld();
         });
@@ -54,5 +64,9 @@ public class BlobRP extends BlobPlugin {
 
     public BlobRPAPI getApi() {
         return api;
+    }
+
+    public BukkitIdentityManager<RoleplayKit> getKitManager() {
+        return kitManager;
     }
 }
