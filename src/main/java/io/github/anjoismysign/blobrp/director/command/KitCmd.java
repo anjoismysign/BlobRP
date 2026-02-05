@@ -20,7 +20,7 @@ public enum KitCmd {
         var players = BukkitCommandTarget.ONLINE_PLAYERS();
         var kitManager = BlobRP.getInstance().getKitManager();
 
-        Command kit = BukkitAdapter.getInstance().ofBukkitCommand("kit");
+        Command kit = BukkitAdapter.getInstance().ofBukkitCommand("roleplaykit");
         Command example = kit.child("example");
         example.onExecute((permissionMessenger, args) -> {
             CommandSender commandSender = BukkitAdapter.getInstance().of(permissionMessenger);
