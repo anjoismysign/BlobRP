@@ -101,7 +101,7 @@ public class ShopArticleSell extends RPListener {
                 IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy()
                         .map(shopArticle.getSellingCurrency());
                 economy.deposit(player.getUniqueId(), money);
-                BlobLibSoundAPI.getInstance().getSound("Reward.Cash").play(player);
+                BlobLibSoundAPI.getInstance().getSound("Economy.Received-Deposit").play(player);
             });
         });
         HandlerList.unregisterAll(this);
