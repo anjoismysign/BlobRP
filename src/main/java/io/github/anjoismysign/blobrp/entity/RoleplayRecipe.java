@@ -84,8 +84,6 @@ public record RoleplayRecipe(@NotNull String getKey,
         NamespacedKey namespacedKey = director.getNamespacedKey("RoleplayRecipe");
         InventoryDataRegistry<InventoryButton> registry = BlobLibInventoryAPI.getInstance()
                 .getInventoryDataRegistry(carrier.reference());
-        registry.onClick("Crafting", inventoryClickEvent ->
-                inventoryClickEvent.setCancelled(false));
         registry.onClose(namespacedKey.toString(), (event, inventory) -> {
             Player player = (Player) event.getPlayer();
             CraftResponse status = rolePlayRecipe.craft(player, inventory);
