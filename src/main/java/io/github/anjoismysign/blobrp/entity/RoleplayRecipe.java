@@ -65,7 +65,7 @@ public record RoleplayRecipe(@NotNull String getKey,
         HashMap<String, Integer> ingredients = new HashMap<>();
         ingredientsSection.getKeys(false).forEach(ingredient -> {
             if (!ingredientsSection.isInt(ingredient))
-                logger.severe("Invalid ingredient getAmount for " + ingredient + " in " + key + ".yml");
+                logger.severe("Invalid ingredient getAmount for " + ingredient + " in " + key + ".yml RoleplayRecipe");
             int amount = ingredientsSection.getInt(ingredient);
             ingredients.put(ingredient, amount);
         });
@@ -73,7 +73,7 @@ public record RoleplayRecipe(@NotNull String getKey,
         if (config.isString("PickUp-Sound")) {
             sound = BlobSound.by(config.getString("PickUp-Sound"));
             if (sound == null)
-                logger.severe("Invalid 'PickUp-Sound' in " + key + ".yml");
+                logger.severe("Invalid 'PickUp-Sound' in " + key + ".yml RoleplayRecipe");
         }
         RoleplayRecipe rolePlayRecipe = new RoleplayRecipe(
                 key,
