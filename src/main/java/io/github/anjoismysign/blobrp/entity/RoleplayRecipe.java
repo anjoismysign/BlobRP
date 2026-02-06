@@ -62,7 +62,7 @@ public record RoleplayRecipe(@NotNull String getKey,
         if (ingredientsSection == null)
             throw new ConfigurationFieldException("'Ingredients' is not set or valid");
         Logger logger = director.getPlugin().getLogger();
-        HashMap<String, Integer> ingredients = new HashMap<>();
+        Map<String, Integer> ingredients = new HashMap<>();
         ingredientsSection.getKeys(false).forEach(ingredient -> {
             if (!ingredientsSection.isInt(ingredient))
                 logger.severe("Invalid ingredient getAmount for " + ingredient + " in " + key + ".yml RoleplayRecipe");
