@@ -43,6 +43,7 @@ Listeners:
           - Spectator.Wasted
           - Spectator.Dead
           - Spectator.Keep-Alive
+        Respawn-At-Spawn-Warp: false
     PhatLoots-Holograms:
       Register: false
       Values:

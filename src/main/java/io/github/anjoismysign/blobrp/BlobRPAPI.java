@@ -13,7 +13,9 @@ import org.bukkit.permissions.Permissible;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -137,6 +139,13 @@ public class BlobRPAPI {
     @NotNull
     public List<RoleplayWarp> getWarps(){
         return director.getRoleplayWarpDirector().getObjectManager().values().stream().toList();
+    }
+
+    @NotNull
+    public Map<String, RoleplayWarp> mapWarps(){
+        Map<String, RoleplayWarp> warps = new HashMap<>();
+        director.getRoleplayWarpDirector().getObjectManager().values().forEach(warp->warps.put(warp.getKey(), warp));
+        return warps;
     }
 
     /**

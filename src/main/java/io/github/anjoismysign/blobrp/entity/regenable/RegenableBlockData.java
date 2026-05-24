@@ -34,7 +34,6 @@ public record RegenableBlockData(
 
     public void regen(@NotNull Block block) {
         getBlockType.set(block);
-
     }
 
     public void setNew(@NotNull Block block) {

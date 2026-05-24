@@ -38,13 +38,16 @@ public class MerchantInventory {
         String locale = tracker.getLocale();
         MetaBlobInventory inventory = tracker.getInventory();
         inventory.getButtonManager().getAllButtons().forEach(button -> {
-            if (!button.hasMeta())
+            if (!button.hasMeta()) {
                 return;
-            if (!button.getMeta().equals(META))
+            }
+            if (!button.getMeta().equals(META)) {
                 return;
+            }
             Result<ShopArticle> result = isLinked(button);
-            if (!result.isValid())
+            if (!result.isValid()) {
                 return;
+            }
             ShopArticle article = result.value();
             ItemStack itemStack = article.cloneDisplay(locale, 1);
             Optional<String> buyingCurrency = article.getBuyingCurrency();
@@ -60,8 +63,9 @@ public class MerchantInventory {
                                         .format(price)))
                         .toList();
                 ItemMeta itemMeta = itemStack.getItemMeta();
-                if (itemMeta == null)
+                if (itemMeta == null) {
                     button.setDisplay(itemStack, inventory);
+                }
                 if (itemMeta.hasLore()) {
                     List<String> lore = itemMeta.getLore();
                     lore.addAll(parseLore);
@@ -85,12 +89,14 @@ public class MerchantInventory {
     }
 
     public Result<ShopArticle> isLinked(MetaInventoryButton button) {
-        if (button.getSubMeta() == null)
+        if (button.getSubMeta() == null) {
             return Result.invalidBecauseNull();
+        }
         String subMeta = button.getSubMeta();
         ShopArticle article = director.getShopArticleDirector().getObjectManager().getObject(subMeta);
-        if (article == null)
+        if (article == null) {
             return Result.invalidBecauseNull();
+        }
         return Result.valid(article);
     }
 }
