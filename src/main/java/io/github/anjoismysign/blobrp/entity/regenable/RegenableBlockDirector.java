@@ -16,15 +16,15 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RegenableBlockDirector extends ObjectDirector<RegenableBlockData> {
-    private static final Map<BlockType, RegenableBlockData> datas = new HashMap<>();
-    private static final Map<BlockType, Integer> priority = new HashMap<>();
+    private static final Map<BlockType, RegenableBlockData> datas = new ConcurrentHashMap<>();
+    private static final Map<BlockType, Integer> priority = new ConcurrentHashMap<>();
     private static final BlockTypeFactory factory = BlockTypeFactory.getInstance();
 
     private final Set<RegenableBlock> regenableBlocks = new HashSet<>();

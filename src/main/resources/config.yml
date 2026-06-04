@@ -79,6 +79,8 @@ Listeners:
     Spawn-On-Respawn: false
     # Gives the highest kit priority the player has permission to, on respawn
     Highest-Kit-Priority-On-Respawn: false
+    # Gives the highest kit priority the player has permission to, on joining a new profile
+    Default-Kit-On-New-Profile: false
   SimpleListeners:
     Disable-Natural-Spawn:
       Register: false

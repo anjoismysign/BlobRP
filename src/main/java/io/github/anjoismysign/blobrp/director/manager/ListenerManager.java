@@ -4,6 +4,7 @@ import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.listener.BlobDesignCustomMining;
 import io.github.anjoismysign.blobrp.listener.BlockFade;
+import io.github.anjoismysign.blobrp.listener.DefaultKitOnNewProfile;
 import io.github.anjoismysign.blobrp.listener.DisableNaturalSpawn;
 import io.github.anjoismysign.blobrp.listener.DiscordCmd;
 import io.github.anjoismysign.blobrp.listener.DropNonSoulOnDeath;
@@ -53,6 +54,7 @@ public class ListenerManager extends RPManager {
         if (pluginManager.isPluginEnabled("BlobDesign")) {
             listeners.add(new BlobDesignCustomMining(configManager));
         }
+        listeners.add(new DefaultKitOnNewProfile(configManager));
         listeners.add(new HighestKitPriorityOnRespawn(configManager));
         listeners.add(new SpawnOnNewProfile(configManager));
         listeners.add(new SpawnOnRespawn(configManager));
