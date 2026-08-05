@@ -6,7 +6,7 @@
 
     <groupId>io.github.anjoismysign</groupId>
     <artifactId>blobrp</artifactId>
-    <version>0.6.01</version>
+    <version>0.7.0</version>
     <packaging>jar</packaging>
 
     <name>BlobRP</name>

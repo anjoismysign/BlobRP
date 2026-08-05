@@ -14,7 +14,6 @@ import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.ShopArticle;
 import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
-import io.github.anjoismysign.blobrp.event.ShopArticleSaleFailEvent;
 import io.github.anjoismysign.blobrp.event.ShopArticleSellEvent;
 import io.github.anjoismysign.blobrp.event.TransactionStatus;
 import io.github.anjoismysign.blobrp.event.TransactionType;
@@ -99,15 +98,9 @@ public class MerchantManager extends RPManager {
                                     .getMessage("Economy.Not-Enough", player);
                             Optional<String> buyingCurrency = article.getBuyingCurrency();
                             IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(buyingCurrency);
-                            if (!economy.has(player.getUniqueId(), price)) {
-                                ShopArticleSaleFailEvent saleFailEvent = new ShopArticleSaleFailEvent(
-                                        article, player, buyingCurrency.orElse(null), price);
-                                Bukkit.getPluginManager().callEvent(saleFailEvent);
-                                if (saleFailEvent.isFixed()) {
-                                    handleSale(economy, player, price, article);
-                                    return;
-                                }
-                                double missing = price - economy.getBalance(player);
+                            double balance = economy.getBalance(player);
+                            if (balance < price) {
+                                double missing = price - balance;
                                 BlobMessage message = notEnough
                                         .modder()
                                         .replace("%display%", economy.format(missing))
@@ -118,8 +111,9 @@ public class MerchantManager extends RPManager {
                                         false, boughtMessage, "Economy.Not-Enough", message, null,
                                         price);
                                 Bukkit.getPluginManager().callEvent(event);
-                                if (event.isCancelled())
+                                if (event.isCancelled()) {
                                     return;
+                                }
                                 if (event.getNotEnoughMessage() != null)
                                     event.getNotEnoughMessage().handle(player);
                                 player.closeInventory();
