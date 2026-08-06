@@ -1,5 +1,8 @@
 package io.github.anjoismysign.blobrp.pressure;
 
+import io.github.anjoismysign.bloblib.FluidPressureAPI;
+import io.github.anjoismysign.blobrp.BlobRP;
+import io.github.anjoismysign.blobrp.entity.configuration.PressureConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
@@ -7,9 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.FluidPressureAPI;
-import io.github.anjoismysign.blobrp.BlobRP;
-import io.github.anjoismysign.blobrp.entities.configuration.PressureConfiguration;
 
 import java.util.UUID;
 

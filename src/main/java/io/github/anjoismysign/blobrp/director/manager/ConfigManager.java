@@ -1,17 +1,17 @@
 package io.github.anjoismysign.blobrp.director.manager;
 
-import org.bukkit.configuration.ConfigurationSection;
-import io.github.anjoismysign.bloblib.entities.ComplexEventListener;
-import io.github.anjoismysign.bloblib.entities.ConfigDecorator;
-import io.github.anjoismysign.bloblib.entities.ListenersSection;
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.entities.TinyEventListener;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.bloblib.domain.ConfigDecorator;
+import io.github.anjoismysign.bloblib.listener.ComplexEventListener;
+import io.github.anjoismysign.bloblib.listener.ListenersSection;
+import io.github.anjoismysign.bloblib.listener.SimpleEventListener;
+import io.github.anjoismysign.bloblib.listener.TinyEventListener;
+import io.github.anjoismysign.bloblib.manager.BlobPlugin;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.configuration.RoleplayConfiguration;
+import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
 import io.github.anjoismysign.blobrp.ui.RoleplayUI;
+import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
 
@@ -29,8 +29,11 @@ public class ConfigManager extends RPManager {
     private TinyEventListener translateOnPickup;
     private TinyEventListener translateOnLocaleSwitch;
     private TinyEventListener translateOnJoin;
-    private TinyEventListener translateOnAlternativeSavingJoin;
     private TinyEventListener translateOnPhatLoot;
+    private TinyEventListener spawnOnNewProfile;
+    private TinyEventListener spawnOnRespawn;
+    private TinyEventListener highestKitPriorityOnRespawn;
+    private TinyEventListener defaultKitOnNewProfile;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -53,7 +56,6 @@ public class ConfigManager extends RPManager {
 
     private ComplexEventListener blobDesignCustomMining;
     private ComplexEventListener playerSpectateOnDeath;
-    private ComplexEventListener alternativeSaving;
     private ComplexEventListener discordCmd;
     private ComplexEventListener phatLootsHolograms;
 
@@ -81,8 +83,11 @@ public class ConfigManager extends RPManager {
         translateOnPickup = listenersSection.tinyEventListener("Translate-On-Pickup");
         translateOnLocaleSwitch = listenersSection.tinyEventListener("Translate-On-Locale-Switch");
         translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
-        translateOnAlternativeSavingJoin = listenersSection.tinyEventListener("Translate-On-Alternative-Saving-Join");
         translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
+        spawnOnNewProfile = listenersSection.tinyEventListener("Spawn-On-New-Profile");
+        spawnOnRespawn = listenersSection.tinyEventListener("Spawn-On-Respawn");
+        highestKitPriorityOnRespawn = listenersSection.tinyEventListener("Highest-Kit-Priority-On-Respawn");
+        defaultKitOnNewProfile = listenersSection.tinyEventListener("Default-Kit-On-New-Profile");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -105,7 +110,6 @@ public class ConfigManager extends RPManager {
 
         blobDesignCustomMining = listenersSection.complexEventListener("BlobDesign-Custom-Mining");
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
-        alternativeSaving = listenersSection.complexEventListener("Alternative-Saving");
         discordCmd = listenersSection.complexEventListener("Discord-Cmd");
         phatLootsHolograms = listenersSection.complexEventListener("PhatLoots-Holograms");
     }
@@ -154,8 +158,20 @@ public class ConfigManager extends RPManager {
         return translateOnJoin;
     }
 
-    public TinyEventListener translateOnAlternativeSavingJoin() {
-        return translateOnAlternativeSavingJoin;
+    public TinyEventListener getSpawnOnNewProfile() {
+        return spawnOnNewProfile;
+    }
+
+    public TinyEventListener getSpawnOnRespawn() {
+        return spawnOnRespawn;
+    }
+
+    public TinyEventListener getHighestKitPriorityOnRespawn() {
+        return highestKitPriorityOnRespawn;
+    }
+
+    public TinyEventListener getDefaultKitOnNewProfile() {
+        return defaultKitOnNewProfile;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
@@ -236,10 +252,6 @@ public class ConfigManager extends RPManager {
 
     public ComplexEventListener playerSpectateOnDeath() {
         return playerSpectateOnDeath;
-    }
-
-    public ComplexEventListener alternativeSaving() {
-        return alternativeSaving;
     }
 
     public ComplexEventListener discordCmd() {

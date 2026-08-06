@@ -1,44 +1,50 @@
 package io.github.anjoismysign.blobrp;
 
+import io.github.anjoismysign.bloblib.manager.BlobPlugin;
+import io.github.anjoismysign.bloblib.manager.IManagerDirector;
+import io.github.anjoismysign.bloblib.manager.PluginManager;
+import io.github.anjoismysign.bloblib.manager.asset.BukkitIdentityManager;
+import io.github.anjoismysign.bloblib.proxy.BlobProxifier;
+import io.github.anjoismysign.bloblib.updater.PluginUpdater;
+import io.github.anjoismysign.blobrp.director.RPManagerDirector;
+import io.github.anjoismysign.blobrp.entity.RoleplayKit;
+import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;
+import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import io.github.anjoismysign.bloblib.entities.PluginUpdater;
-import io.github.anjoismysign.bloblib.entities.proxy.BlobProxifier;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
-import io.github.anjoismysign.bloblib.managers.IManagerDirector;
-import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.configuration.RoleplayConfiguration;
-import io.github.anjoismysign.blobrp.entities.playerserializer.SimplePlayerSerializer;
-import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
 
 public class BlobRP extends BlobPlugin {
-    public static BlobRP instance;
-    protected SimplePlayerSerializer simplePlayerSerializer;
+    public static BlobRP INSTANCE;
     private RPManagerDirector director;
     private IManagerDirector proxy;
     private PluginUpdater updater;
     private BlobRPAPI api;
     private RoleplayConfiguration configuration;
-    private RPShortcut shortcut;
     private RoleplayMovementWarmup movementWarmup;
 
+    private BukkitIdentityManager<RoleplayKit> kitManager;
+
     public static BlobRP getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
         configuration = RoleplayConfiguration.getInstance();
         movementWarmup = RoleplayMovementWarmup.initialize(this);
         updater = generateGitHubUpdater("anjoismysign", "BlobRP");
-        simplePlayerSerializer = new SimplePlayerSerializer();
+
+        PluginManager pluginManager = PluginManager.getInstance();
+        kitManager = pluginManager.addIdentityManager(RoleplayKit.Info.class, this, "kits", true);
+
         director = new RPManagerDirector(this);
         proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
-        shortcut = RPShortcut.getInstance(director);
-        Bukkit.getScheduler().runTask(this, () ->
-                director.postWorld());
+
+        Bukkit.getScheduler().runTask(this, () -> {
+                director.postWorld();
+        });
     }
 
     @Override
@@ -56,11 +62,11 @@ public class BlobRP extends BlobPlugin {
         return updater;
     }
 
-    public SimplePlayerSerializer getSimplePlayerSerializer() {
-        return simplePlayerSerializer;
-    }
-
     public BlobRPAPI getApi() {
         return api;
+    }
+
+    public BukkitIdentityManager<RoleplayKit> getKitManager() {
+        return kitManager;
     }
 }

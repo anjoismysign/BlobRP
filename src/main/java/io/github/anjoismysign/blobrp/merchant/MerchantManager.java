@@ -4,21 +4,20 @@ import io.github.anjoismysign.anjo.entities.Result;
 import io.github.anjoismysign.bloblib.api.BlobLibEconomyAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.inventory.InventoryDataRegistry;
-import io.github.anjoismysign.bloblib.entities.inventory.MetaBlobInventoryTracker;
-import io.github.anjoismysign.bloblib.entities.inventory.MetaInventoryButton;
-import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
-import io.github.anjoismysign.bloblib.managers.MetaInventoryShard;
-import io.github.anjoismysign.bloblib.utilities.PlayerUtil;
+import io.github.anjoismysign.bloblib.inventory.InventoryDataRegistry;
+import io.github.anjoismysign.bloblib.inventory.MetaBlobInventoryTracker;
+import io.github.anjoismysign.bloblib.inventory.MetaInventoryButton;
+import io.github.anjoismysign.bloblib.manager.MetaInventoryShard;
+import io.github.anjoismysign.bloblib.message.BlobMessage;
+import io.github.anjoismysign.bloblib.utility.PlayerUtil;
 import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.ShopArticle;
-import io.github.anjoismysign.blobrp.entities.ShopArticleTransaction;
-import io.github.anjoismysign.blobrp.events.ShopArticleSaleFailEvent;
-import io.github.anjoismysign.blobrp.events.ShopArticleSellEvent;
-import io.github.anjoismysign.blobrp.events.TransactionStatus;
-import io.github.anjoismysign.blobrp.events.TransactionType;
-import io.github.anjoismysign.blobrp.inventories.MerchantInventory;
+import io.github.anjoismysign.blobrp.entity.ShopArticle;
+import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
+import io.github.anjoismysign.blobrp.event.ShopArticleSellEvent;
+import io.github.anjoismysign.blobrp.event.TransactionStatus;
+import io.github.anjoismysign.blobrp.event.TransactionType;
+import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 import net.milkbowl.vault.economy.IdentityEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -47,11 +46,11 @@ public class MerchantManager extends RPManager {
     }
 
     @Nullable
-    public MerchantInventory getMerchant(@NotNull String key, @NotNull Player player) {
-        Objects.requireNonNull(key);
+    public MerchantInventory getMerchant(@NotNull String identifier, @NotNull Player player) {
+        Objects.requireNonNull(identifier);
         Objects.requireNonNull(player);
         MetaBlobInventoryTracker tracker = BlobLibInventoryAPI.getInstance()
-                .trackMetaInventory(player, key);
+                .trackMetaInventory(player, identifier);
         if (tracker == null)
             return null;
         return new MerchantInventory(getManagerDirector(), tracker);
@@ -60,77 +59,74 @@ public class MerchantManager extends RPManager {
     public void reload() {
         cache.clear();
         boughtMessage = getManagerDirector().getConfigManager().merchants().value();
-        Optional<MetaInventoryShard> optional = BlobLibInventoryAPI.getInstance()
-                .hasMetaInventoryShard("MERCHANT");
-        if (optional.isEmpty()) {
-            return;
-        }
-        MetaInventoryShard shard = optional.get();
-        shard.allInventories().forEach(merchantInventory -> {
-            String key = merchantInventory.getKey();
-            if (cache.contains(key))
+        Bukkit.getScheduler().runTask(getPlugin(), ()->{
+            Optional<MetaInventoryShard> optional = BlobLibInventoryAPI.getInstance()
+                    .hasMetaInventoryShard("MERCHANT");
+            if (optional.isEmpty()) {
                 return;
-            InventoryDataRegistry<MetaInventoryButton> registry =
-                    BlobLibInventoryAPI.getInstance()
-                            .getMetaInventoryDataRegistry(merchantInventory.getKey());
-            if (registry == null)
-                throw new NullPointerException("No Registry found for " + key);
-            cache.add(key);
-            registry.onClick("BlobRP", (clickEvent, button) -> {
-                int slot = clickEvent.getRawSlot();
-                Result<MetaInventoryButton> result = merchantInventory.belongsToAMetaButton(slot);
-                if (!result.isValid())
+            }
+            MetaInventoryShard shard = optional.get();
+            shard.allInventories().forEach(merchantInventory -> {
+                String key = merchantInventory.getKey();
+                if (cache.contains(key))
                     return;
-                if (!button.hasMeta())
-                    return;
-                Player player = (Player) clickEvent.getWhoClicked();
-                String meta = button.getMeta();
-                switch (meta) {
-                    case "CLOSEINVENTORY" -> {
-                        player.closeInventory();
-                    }
-                    case "BLOBRP_SHOPARTICLE" -> {
-                        ShopArticle article = isLinked(button);
-                        if (article == null)
-                            return;
-                        double price = article.getBuyPrice();
-                        BlobMessage notEnough = BlobLibMessageAPI.getInstance()
-                                .getMessage("Economy.Not-Enough", player);
-                        Optional<String> buyingCurrency = article.getBuyingCurrency();
-                        IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(buyingCurrency);
-                        if (!economy.has(player.getUniqueId(), price)) {
-                            ShopArticleSaleFailEvent saleFailEvent = new ShopArticleSaleFailEvent(
-                                    article, player, buyingCurrency.orElse(null), price);
-                            Bukkit.getPluginManager().callEvent(saleFailEvent);
-                            if (saleFailEvent.isFixed()) {
-                                handleSale(economy, player, price, article);
+                InventoryDataRegistry<MetaInventoryButton> registry =
+                        BlobLibInventoryAPI.getInstance()
+                                .getMetaInventoryDataRegistry(merchantInventory.getKey());
+                if (registry == null)
+                    throw new NullPointerException("No Registry found for " + key);
+                cache.add(key);
+                registry.onClick("BlobRP", (clickEvent, button) -> {
+                    int slot = clickEvent.getRawSlot();
+                    Result<MetaInventoryButton> result = merchantInventory.belongsToAMetaButton(slot);
+                    if (!result.isValid())
+                        return;
+                    if (!button.hasMeta())
+                        return;
+                    Player player = (Player) clickEvent.getWhoClicked();
+                    String meta = button.getMeta();
+                    switch (meta) {
+                        case "CLOSEINVENTORY" -> {
+                            player.closeInventory();
+                        }
+                        case "BLOBRP_SHOPARTICLE" -> {
+                            ShopArticle article = isLinked(button);
+                            if (article == null)
+                                return;
+                            double price = article.getBuyPrice();
+                            BlobMessage notEnough = BlobLibMessageAPI.getInstance()
+                                    .getMessage("Economy.Not-Enough", player);
+                            Optional<String> buyingCurrency = article.getBuyingCurrency();
+                            IdentityEconomy economy = BlobLibEconomyAPI.getInstance().getElasticEconomy().map(buyingCurrency);
+                            double balance = economy.getBalance(player);
+                            if (balance < price) {
+                                double missing = price - balance;
+                                BlobMessage message = notEnough
+                                        .modder()
+                                        .replace("%display%", economy.format(missing))
+                                        .get();
+                                ShopArticleSellEvent event = new ShopArticleSellEvent(
+                                        new ShopArticleTransaction(article, 1),
+                                        player, TransactionType.SELL, TransactionStatus.NOT_ENOUGH_MONEY,
+                                        false, boughtMessage, "Economy.Not-Enough", message, null,
+                                        price);
+                                Bukkit.getPluginManager().callEvent(event);
+                                if (event.isCancelled()) {
+                                    return;
+                                }
+                                if (event.getNotEnoughMessage() != null)
+                                    event.getNotEnoughMessage().handle(player);
+                                player.closeInventory();
                                 return;
                             }
-                            double missing = price - economy.getBalance(player);
-                            BlobMessage message = notEnough
-                                    .modder()
-                                    .replace("%display%", economy.format(missing))
-                                    .get();
-                            ShopArticleSellEvent event = new ShopArticleSellEvent(
-                                    new ShopArticleTransaction(article, 1),
-                                    player, TransactionType.SELL, TransactionStatus.NOT_ENOUGH_MONEY,
-                                    false, boughtMessage, "Economy.Not-Enough", message, null,
-                                    price);
-                            Bukkit.getPluginManager().callEvent(event);
-                            if (event.isCancelled())
-                                return;
-                            if (event.getNotEnoughMessage() != null)
-                                event.getNotEnoughMessage().handle(player);
-                            player.closeInventory();
-                            return;
+                            handleSale(economy, player, price, article);
                         }
-                        handleSale(economy, player, price, article);
+                        default -> {
+                            BlobLibMessageAPI.getInstance().getMessage("System.Error").handle(player);
+                            throw new IllegalStateException("Unknown meta " + meta);
+                        }
                     }
-                    default -> {
-                        BlobLibMessageAPI.getInstance().getMessage("System.Error").handle(player);
-                        throw new IllegalStateException("Unknown meta " + meta);
-                    }
-                }
+                });
             });
         });
     }

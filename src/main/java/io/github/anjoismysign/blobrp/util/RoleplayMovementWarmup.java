@@ -2,8 +2,8 @@ package io.github.anjoismysign.blobrp.util;
 
 import io.github.anjoismysign.anjo.entities.Uber;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.MinecraftTimeUnit;
-import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
+import io.github.anjoismysign.bloblib.message.BlobMessage;
+import io.github.anjoismysign.bloblib.utility.MinecraftTimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

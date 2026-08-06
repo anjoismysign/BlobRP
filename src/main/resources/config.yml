@@ -43,15 +43,7 @@ Listeners:
           - Spectator.Wasted
           - Spectator.Dead
           - Spectator.Keep-Alive
-    Alternative-Saving:
-      Register: false
-      Values:
-        Player-Serializer: SIMPLE
-        Inventory-Driver: DEFAULT
-        Welcome-Players:
-          Register: true
-          Message: System.Welcome
-          Inventory-Is-Soul: false
+        Respawn-At-Spawn-Warp: false
     PhatLoots-Holograms:
       Register: false
       Values:
@@ -81,8 +73,14 @@ Listeners:
     Translate-On-Locale-Switch: false
     # Translates all translatable items on join
     Translate-On-Join: false
-    # Translates all translatable items on alternative saving join
-    Translate-On-Alternative-Saving-Join: false
+    # Teleport to spawn when starting on a new profile
+    Spawn-On-New-Profile: false
+    # Teleports to spawn when respawning
+    Spawn-On-Respawn: false
+    # Gives the highest kit priority the player has permission to, on respawn
+    Highest-Kit-Priority-On-Respawn: false
+    # Gives the highest kit priority the player has permission to, on joining a new profile
+    Default-Kit-On-New-Profile: false
   SimpleListeners:
     Disable-Natural-Spawn:
       Register: false

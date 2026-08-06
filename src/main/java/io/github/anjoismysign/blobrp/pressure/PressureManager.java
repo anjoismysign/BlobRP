@@ -1,5 +1,8 @@
 package io.github.anjoismysign.blobrp.pressure;
 
+import io.github.anjoismysign.blobrp.director.RPManager;
+import io.github.anjoismysign.blobrp.director.RPManagerDirector;
+import io.github.anjoismysign.blobrp.entity.configuration.PressureConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,9 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.blobrp.director.RPManager;
-import io.github.anjoismysign.blobrp.director.RPManagerDirector;
-import io.github.anjoismysign.blobrp.entities.configuration.PressureConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;

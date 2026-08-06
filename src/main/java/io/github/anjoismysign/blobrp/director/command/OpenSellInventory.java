@@ -2,10 +2,10 @@ package io.github.anjoismysign.blobrp.director.command;
 
 import io.github.anjoismysign.anjo.entities.Result;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.BlobChildCommand;
-import io.github.anjoismysign.bloblib.entities.BlobExecutor;
-import io.github.anjoismysign.bloblib.entities.ExecutorData;
-import io.github.anjoismysign.blobrp.entities.ShopArticle;
+import io.github.anjoismysign.bloblib.command.BlobChildCommand;
+import io.github.anjoismysign.bloblib.command.BlobExecutor;
+import io.github.anjoismysign.bloblib.command.ExecutorData;
+import io.github.anjoismysign.blobrp.entity.ShopArticle;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

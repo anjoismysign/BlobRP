@@ -1,34 +1,36 @@
 package io.github.anjoismysign.blobrp.director;
 
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.Nullable;
-import io.github.anjoismysign.bloblib.entities.GenericManagerDirector;
-import io.github.anjoismysign.bloblib.entities.ObjectDirector;
-import io.github.anjoismysign.bloblib.managers.Manager;
+import io.github.anjoismysign.bloblib.manager.GenericManagerDirector;
+import io.github.anjoismysign.bloblib.manager.Manager;
+import io.github.anjoismysign.bloblib.manager.ObjectDirector;
 import io.github.anjoismysign.blobrp.BlobRP;
+import io.github.anjoismysign.blobrp.director.command.KitCmd;
 import io.github.anjoismysign.blobrp.director.command.OpenSellInventory;
 import io.github.anjoismysign.blobrp.director.command.RoleplayRecipeCmd;
 import io.github.anjoismysign.blobrp.director.command.WarpCmd;
-import io.github.anjoismysign.blobrp.director.manager.CloudInventoryManager;
 import io.github.anjoismysign.blobrp.director.manager.CommandManager;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.director.manager.ListenerManager;
-import io.github.anjoismysign.blobrp.entities.RoleplayRecipe;
-import io.github.anjoismysign.blobrp.entities.RoleplayWarp;
-import io.github.anjoismysign.blobrp.entities.ShopArticle;
-import io.github.anjoismysign.blobrp.entities.blockphatloot.BlockPhatLootDirector;
-import io.github.anjoismysign.blobrp.entities.regenable.RegenableBlockDirector;
-import io.github.anjoismysign.blobrp.events.AsyncShopArticleReloadEvent;
+import io.github.anjoismysign.blobrp.entity.RoleplayKit;
+import io.github.anjoismysign.blobrp.entity.RoleplayRecipe;
+import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
+import io.github.anjoismysign.blobrp.entity.ShopArticle;
+import io.github.anjoismysign.blobrp.entity.blockphatloot.BlockPhatLootDirector;
+import io.github.anjoismysign.blobrp.entity.regenable.RegenableBlockDirector;
+import io.github.anjoismysign.blobrp.event.AsyncShopArticleReloadEvent;
 import io.github.anjoismysign.blobrp.merchant.MerchantManager;
 import io.github.anjoismysign.blobrp.placeholderapi.PressurePH;
 import io.github.anjoismysign.blobrp.pressure.PressureManager;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+import org.jetbrains.annotations.Nullable;
 
 public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
+    private final PluginManager pluginManager = Bukkit.getPluginManager();
+
     public RPManagerDirector(BlobRP plugin) {
         super(plugin);
-        registerMetaBlobInventory("WelcomeInventory", "PlayerInventory", "EventPlayerInventory");
-        registerMetaBlobInventory("es_es/PlayerInventory", "es_es/EventPlayerInventory");
         registerBlobMessage("es_es/blobrp_lang");
         registerTranslatableBlock("es_es/blobrp_translatable_blocks");
         registerBlobInventory("RoleplayWarps");
@@ -36,11 +38,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
-        addManager("CloudInventoryManager", new CloudInventoryManager(this));
         // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
         addDirector("RoleplayWarp", RoleplayWarp::fromFile, false);
-        if (Bukkit.getPluginManager().isPluginEnabled("PhatLoots")) {
+        if (pluginManager.isPluginEnabled("PhatLoots")) {
             // BlockPhatLoot \\
             addManager("PhatLoot", new BlockPhatLootDirector(this));
         }
@@ -59,7 +60,8 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         // Pressure \\
         addManager("Pressure", new PressureManager(this));
         RoleplayRecipeCmd.of(this);
-        WarpCmd.getInstance();
+        WarpCmd.INSTANCE.initialize();
+        KitCmd.INSTANCE.initialize();
     }
 
     /**
@@ -69,6 +71,9 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
     public void reload() {
         getCommandManager().reload();
         getConfigManager().reload();
+        var kitManager = getPlugin().getKitManager();
+        kitManager.stream().map(RoleplayKit::permission).forEach(pluginManager::removePermission);
+        kitManager.reload();
         getListenerManager().reload();
         getShopArticleDirector().reload();
         getRoleplayWarpDirector().reload();
@@ -78,7 +83,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         getRegenableBlockDirector().reload();
         getShopArticleDirector().whenObjectManagerFilesLoad(manager -> {
             AsyncShopArticleReloadEvent event = new AsyncShopArticleReloadEvent();
-            Bukkit.getPluginManager().callEvent(event);
+            pluginManager.callEvent(event);
             getMerchantManager().reload();
         });
         getRoleplayRecipeDirector().reload();
@@ -86,13 +91,12 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     @Override
     public void unload() {
-        getCloudInventoryManager().unload();
         getRegenableBlockDirector().unload();
     }
 
     @Override
     public void postWorld() {
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI"))
+        if (pluginManager.isPluginEnabled("PlaceholderAPI"))
             PressurePH.getInstance(getPlugin());
     }
 
@@ -107,10 +111,6 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public final RegenableBlockDirector getRegenableBlockDirector() {
         return getManager("RegenableBlock", RegenableBlockDirector.class);
-    }
-
-    public final CloudInventoryManager getCloudInventoryManager() {
-        return getManager("CloudInventoryManager", CloudInventoryManager.class);
     }
 
     public final MerchantManager getMerchantManager() {

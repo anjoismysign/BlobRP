@@ -1,0 +1,47 @@
+package io.github.anjoismysign.blobrp.entity;
+
+import io.github.anjoismysign.bloblib.domain.TranslatableRarity;
+import io.github.anjoismysign.bloblib.translatable.Translatable;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+import java.util.function.Function;
+
+public class DefaultShopArticle implements TranslatableItem {
+    private final ItemStack itemStack;
+    private final TranslatableRarity rarity;
+
+    public static DefaultShopArticle of(@NotNull ItemStack itemStack) {
+        Objects.requireNonNull(itemStack);
+        return new DefaultShopArticle(itemStack);
+    }
+
+    private DefaultShopArticle(ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.rarity = TranslatableRarity.of(itemStack);
+    }
+
+    public @NotNull ItemStack get() {
+        return itemStack;
+    }
+
+    public @NotNull Translatable<ItemStack> modify(Function<String, String> function) {
+        throw new UnsupportedOperationException("DefaultShopArticle does not support modification");
+    }
+
+    public String identifier() {
+        throw new UnsupportedOperationException("DefaultShopArticle does not have a reference");
+    }
+
+    @NotNull
+    public String locale() {
+        return "en_us";
+    }
+
+    @Override
+    public TranslatableRarity getRarity() {
+        return rarity;
+    }
+}

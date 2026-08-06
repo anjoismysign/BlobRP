@@ -13,6 +13,7 @@ Sell-Articles:
       ItemStack:
         Material: AIR
       Slot: 0-17
+      Cancel-Interaction: false
     Key:
       ItemStack:
         Material: BOOK

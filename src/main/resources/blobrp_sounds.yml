@@ -1,11 +1,11 @@
-System:
-  Welcome:
-    Sound: block.note_block.bell
-    Volume: 1.0
-    Pitch: 1.25
-    Audience: WORLD
 BlobRP:
   Warp:
     Sound: entity.enderman.teleport
     Volume: 1.0
     Pitch: 1.0
+RoleplayRecipe:
+  Craft:
+    Sound: entity.item.pickup
+    Volume: 0.25
+    Pitch: 1.85
+    Audience: WORLD
