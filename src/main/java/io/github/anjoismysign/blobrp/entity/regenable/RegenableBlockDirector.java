@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.entity.regenable;
 
-import io.github.anjoismysign.bloblib.entities.ObjectDirector;
-import io.github.anjoismysign.bloblib.entities.ObjectDirectorData;
 import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import io.github.anjoismysign.bloblib.manager.ObjectDirector;
+import io.github.anjoismysign.bloblib.manager.ObjectDirectorData;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
 import io.github.anjoismysign.blobrp.entity.blocktype.BlockTypeFactory;

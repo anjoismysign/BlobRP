@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp;
 
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
 import io.github.anjoismysign.blobrp.entity.ShopArticle;

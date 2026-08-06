@@ -2,10 +2,10 @@ package io.github.anjoismysign.blobrp.entity;
 
 import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
-import io.github.anjoismysign.bloblib.entities.BlobObject;
-import io.github.anjoismysign.bloblib.entities.inventory.BlobInventoryTracker;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.domain.BlobObject;
 import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import io.github.anjoismysign.bloblib.inventory.BlobInventoryTracker;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp.event;
 
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Event;

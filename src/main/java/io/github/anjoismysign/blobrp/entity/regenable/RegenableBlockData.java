@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp.entity.regenable;
 
-import io.github.anjoismysign.bloblib.entities.BlobObject;
+import io.github.anjoismysign.bloblib.domain.BlobObject;
 import io.github.anjoismysign.blobrp.entity.blocktype.BlobDesignBlockType;
 import io.github.anjoismysign.blobrp.entity.blocktype.BlockType;
 import org.bukkit.block.Block;

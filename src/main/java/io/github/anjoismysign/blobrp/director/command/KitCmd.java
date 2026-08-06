@@ -1,7 +1,7 @@
 package io.github.anjoismysign.blobrp.director.command;
 
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.entity.RoleplayKit;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayWarpConfiguration;

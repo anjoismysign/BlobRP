@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp.entity;
 
-import io.github.anjoismysign.bloblib.entities.PlayerTask;
+import io.github.anjoismysign.bloblib.scheduler.PlayerTask;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.event.SpectatorEndEvent;
 import org.bukkit.Bukkit;

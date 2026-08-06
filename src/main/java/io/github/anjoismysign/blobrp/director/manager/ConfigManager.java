@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp.director.manager;
 
-import io.github.anjoismysign.bloblib.entities.ComplexEventListener;
-import io.github.anjoismysign.bloblib.entities.ConfigDecorator;
-import io.github.anjoismysign.bloblib.entities.ListenersSection;
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.entities.TinyEventListener;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.bloblib.domain.ConfigDecorator;
+import io.github.anjoismysign.bloblib.listener.ComplexEventListener;
+import io.github.anjoismysign.bloblib.listener.ListenersSection;
+import io.github.anjoismysign.bloblib.listener.SimpleEventListener;
+import io.github.anjoismysign.bloblib.listener.TinyEventListener;
+import io.github.anjoismysign.bloblib.manager.BlobPlugin;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.RPManager;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;

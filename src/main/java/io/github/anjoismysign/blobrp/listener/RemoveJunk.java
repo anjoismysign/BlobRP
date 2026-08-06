@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.entities.tag.TagSet;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.listener.SimpleEventListener;
+import io.github.anjoismysign.bloblib.tag.TagSet;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

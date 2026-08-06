@@ -2,8 +2,8 @@ package io.github.anjoismysign.blobrp.ui;
 
 import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibListenerAPI;
-import io.github.anjoismysign.bloblib.entities.ReloadableUI;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.domain.ReloadableUI;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
 import org.bukkit.Bukkit;

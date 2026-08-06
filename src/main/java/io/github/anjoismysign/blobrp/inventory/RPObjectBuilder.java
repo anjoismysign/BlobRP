@@ -1,9 +1,9 @@
 package io.github.anjoismysign.blobrp.inventory;
 
-import io.github.anjoismysign.bloblib.entities.BlobObject;
-import io.github.anjoismysign.bloblib.entities.ObjectDirector;
-import io.github.anjoismysign.bloblib.entities.inventory.BlobInventory;
-import io.github.anjoismysign.bloblib.entities.inventory.ObjectBuilder;
+import io.github.anjoismysign.bloblib.domain.BlobObject;
+import io.github.anjoismysign.bloblib.inventory.BlobInventory;
+import io.github.anjoismysign.bloblib.inventory.ObjectBuilder;
+import io.github.anjoismysign.bloblib.manager.ObjectDirector;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 

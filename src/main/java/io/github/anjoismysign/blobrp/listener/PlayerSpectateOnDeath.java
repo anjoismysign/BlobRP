@@ -2,8 +2,8 @@ package io.github.anjoismysign.blobrp.listener;
 
 import io.github.anjoismysign.anjo.entities.Uber;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.logger.BlobPluginLogger;
-import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
+import io.github.anjoismysign.bloblib.logger.BlobPluginLogger;
+import io.github.anjoismysign.bloblib.message.BlobMessage;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.entity.RoleplayWarp;

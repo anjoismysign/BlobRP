@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp.event;
 
-import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
+import io.github.anjoismysign.bloblib.message.BlobMessage;
 import io.github.anjoismysign.blobrp.entity.ShopArticleTransaction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;

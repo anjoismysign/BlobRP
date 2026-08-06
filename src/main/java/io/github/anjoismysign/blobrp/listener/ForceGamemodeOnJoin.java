@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.bloblib.manager.BlobPlugin;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

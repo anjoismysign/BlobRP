@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.director;
 
-import io.github.anjoismysign.bloblib.entities.GenericManagerDirector;
-import io.github.anjoismysign.bloblib.entities.ObjectDirector;
-import io.github.anjoismysign.bloblib.managers.Manager;
+import io.github.anjoismysign.bloblib.manager.GenericManagerDirector;
+import io.github.anjoismysign.bloblib.manager.Manager;
+import io.github.anjoismysign.bloblib.manager.ObjectDirector;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.command.KitCmd;
 import io.github.anjoismysign.blobrp.director.command.OpenSellInventory;

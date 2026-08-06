@@ -1,10 +1,10 @@
 package io.github.anjoismysign.blobrp.entity;
 
-import io.github.anjoismysign.bloblib.entities.BlobObject;
-import io.github.anjoismysign.bloblib.entities.message.BlobSound;
-import io.github.anjoismysign.bloblib.entities.positionable.Positionable;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatablePositionable;
+import io.github.anjoismysign.bloblib.domain.BlobObject;
 import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
+import io.github.anjoismysign.bloblib.message.BlobSound;
+import io.github.anjoismysign.bloblib.positionable.Positionable;
+import io.github.anjoismysign.bloblib.translatable.TranslatablePositionable;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayWarpConfiguration;
 import io.github.anjoismysign.blobrp.util.RoleplayMovementWarmup;
 import org.bukkit.Bukkit;

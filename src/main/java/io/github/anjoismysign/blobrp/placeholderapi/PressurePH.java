@@ -2,8 +2,8 @@ package io.github.anjoismysign.blobrp.placeholderapi;
 
 import io.github.anjoismysign.bloblib.BlobLib;
 import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
-import io.github.anjoismysign.bloblib.entities.BlobPHExpansion;
-import io.github.anjoismysign.bloblib.utilities.Formatter;
+import io.github.anjoismysign.bloblib.placeholderapi.BlobPHExpansion;
+import io.github.anjoismysign.bloblib.utility.Formatter;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.pressure.PlayerPressure;

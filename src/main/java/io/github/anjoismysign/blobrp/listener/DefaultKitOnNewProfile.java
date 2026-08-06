@@ -1,9 +1,10 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.bloblib.events.ProfileLoadEvent;
+import io.github.anjoismysign.bloblib.api.BlobLibProfileAPI;
 import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.entity.RoleplayKit;
+import net.milkbowl.vault.profile.ProfileLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,11 +28,11 @@ public class DefaultKitOnNewProfile extends RPListener {
 
     @EventHandler
     public void onLoad(ProfileLoadEvent event) {
-        var profile = event.getProfile();
-        if (profile.hasPlayedBefore()) {
+        Player player = event.getPlayer();
+        var provider = BlobLibProfileAPI.getInstance().getProvider();
+        if (provider.hasProfilePlayedBefore(player, provider.getCurrentProfileIndex(player))) {
             return;
         }
-        Player player = event.getPlayer();
         var kitManager = getManagerDirector().getPlugin().getKitManager();
         Bukkit.getScheduler().runTaskLater(BlobRP.getInstance(), ()->{
             if (!player.isConnected()){

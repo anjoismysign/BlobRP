@@ -1,7 +1,7 @@
 package io.github.anjoismysign.blobrp.merchant;
 
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.bloblib.manager.BlobPlugin;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.inventory.MerchantInventory;
 import org.bukkit.Bukkit;

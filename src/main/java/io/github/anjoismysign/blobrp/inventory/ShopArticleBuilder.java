@@ -1,12 +1,12 @@
 package io.github.anjoismysign.blobrp.inventory;
 
+import io.github.anjoismysign.bloblib.address.PlayerAddress;
 import io.github.anjoismysign.bloblib.api.BlobLibSoundAPI;
-import io.github.anjoismysign.bloblib.entities.ObjectDirector;
-import io.github.anjoismysign.bloblib.entities.PlayerAddress;
-import io.github.anjoismysign.bloblib.entities.inventory.BlobInventory;
-import io.github.anjoismysign.bloblib.entities.inventory.ObjectBuilderButton;
-import io.github.anjoismysign.bloblib.entities.inventory.ObjectBuilderButtonBuilder;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.inventory.BlobInventory;
+import io.github.anjoismysign.bloblib.inventory.ObjectBuilderButton;
+import io.github.anjoismysign.bloblib.inventory.ObjectBuilderButtonBuilder;
+import io.github.anjoismysign.bloblib.manager.ObjectDirector;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.ShopArticle;
 import org.bukkit.entity.Player;

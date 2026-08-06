@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.entity;
 
-import io.github.anjoismysign.bloblib.entities.TranslatableRarity;
-import io.github.anjoismysign.bloblib.entities.translatable.Translatable;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.domain.TranslatableRarity;
+import io.github.anjoismysign.bloblib.translatable.Translatable;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 

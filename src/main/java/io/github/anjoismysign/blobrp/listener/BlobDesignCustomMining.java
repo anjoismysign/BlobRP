@@ -7,7 +7,7 @@ import io.github.anjoismysign.blobdesign.BlobDesignAPI;
 import io.github.anjoismysign.blobdesign.entities.PresetData;
 import io.github.anjoismysign.blobdesign.entities.element.DisplayElementType;
 import io.github.anjoismysign.blobdesign.entities.presetblock.PresetBlock;
-import io.github.anjoismysign.bloblib.utilities.MinecraftVersion;
+import io.github.anjoismysign.bloblib.utility.MinecraftVersion;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.entity.blockphatloot.BlockPhatLoot;
 import io.github.anjoismysign.blobrp.entity.blockphatloot.BlockPhatLootDirector;

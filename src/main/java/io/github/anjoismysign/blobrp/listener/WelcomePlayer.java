@@ -2,11 +2,11 @@ package io.github.anjoismysign.blobrp.listener;
 
 import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.entities.inventory.InventoryBuilderCarrier;
-import io.github.anjoismysign.bloblib.entities.inventory.MetaBlobPlayerInventoryBuilder;
-import io.github.anjoismysign.bloblib.entities.inventory.MetaInventoryButton;
-import io.github.anjoismysign.bloblib.entities.message.BlobMessage;
+import io.github.anjoismysign.bloblib.inventory.InventoryBuilderCarrier;
+import io.github.anjoismysign.bloblib.inventory.MetaBlobPlayerInventoryBuilder;
+import io.github.anjoismysign.bloblib.inventory.MetaInventoryButton;
+import io.github.anjoismysign.bloblib.listener.SimpleEventListener;
+import io.github.anjoismysign.bloblib.message.BlobMessage;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

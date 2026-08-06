@@ -1,11 +1,11 @@
 package io.github.anjoismysign.blobrp;
 
-import io.github.anjoismysign.bloblib.entities.PluginUpdater;
-import io.github.anjoismysign.bloblib.entities.proxy.BlobProxifier;
-import io.github.anjoismysign.bloblib.managers.BlobPlugin;
-import io.github.anjoismysign.bloblib.managers.IManagerDirector;
-import io.github.anjoismysign.bloblib.managers.PluginManager;
-import io.github.anjoismysign.bloblib.managers.asset.BukkitIdentityManager;
+import io.github.anjoismysign.bloblib.manager.BlobPlugin;
+import io.github.anjoismysign.bloblib.manager.IManagerDirector;
+import io.github.anjoismysign.bloblib.manager.PluginManager;
+import io.github.anjoismysign.bloblib.manager.asset.BukkitIdentityManager;
+import io.github.anjoismysign.bloblib.proxy.BlobProxifier;
+import io.github.anjoismysign.bloblib.updater.PluginUpdater;
 import io.github.anjoismysign.blobrp.director.RPManagerDirector;
 import io.github.anjoismysign.blobrp.entity.RoleplayKit;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayConfiguration;

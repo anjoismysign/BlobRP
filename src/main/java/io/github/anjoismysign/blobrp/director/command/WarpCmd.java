@@ -1,7 +1,7 @@
 package io.github.anjoismysign.blobrp.director.command;
 
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.utilities.TextColor;
+import io.github.anjoismysign.bloblib.utility.TextColor;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayWarpConfiguration;

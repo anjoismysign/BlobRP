@@ -1,7 +1,7 @@
 package io.github.anjoismysign.blobrp.phatloots;
 
 import com.codisimus.plugins.phatloots.events.ChestOpenEvent;
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.listener.RPListener;
 import org.bukkit.Bukkit;

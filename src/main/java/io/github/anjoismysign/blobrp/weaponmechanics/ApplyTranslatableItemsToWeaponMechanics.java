@@ -1,6 +1,6 @@
 package io.github.anjoismysign.blobrp.weaponmechanics;
 
-import io.github.anjoismysign.bloblib.entities.translatable.TranslatableItem;
+import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.listener.RPListener;
 import me.deecaad.weaponmechanics.weapon.weaponevents.WeaponEquipEvent;

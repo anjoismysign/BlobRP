@@ -1,8 +1,8 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.bloblib.entities.SimpleEventListener;
-import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
-import io.github.anjoismysign.bloblib.utilities.TextColor;
+import io.github.anjoismysign.bloblib.listener.SimpleEventListener;
+import io.github.anjoismysign.bloblib.utility.ItemStackUtil;
+import io.github.anjoismysign.bloblib.utility.TextColor;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;

@@ -1,9 +1,10 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.bloblib.events.ProfileLoadEvent;
+import io.github.anjoismysign.bloblib.api.BlobLibProfileAPI;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.entity.configuration.RoleplayWarpConfiguration;
+import net.milkbowl.vault.profile.ProfileLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -24,8 +25,9 @@ public class SpawnOnNewProfile extends RPListener {
 
     @EventHandler
     public void onLoad(ProfileLoadEvent event) {
-        var profile = event.getProfile();
-        if (profile.hasPlayedBefore()){
+        var player = event.getPlayer();
+        var provider = BlobLibProfileAPI.getInstance().getProvider();
+        if (provider.hasProfilePlayedBefore(player, provider.getCurrentProfileIndex(player))){
             return;
         }
         @Nullable var warpAsSpawn = RoleplayWarpConfiguration.getInstance().roleplayWarpAsSpawn();
