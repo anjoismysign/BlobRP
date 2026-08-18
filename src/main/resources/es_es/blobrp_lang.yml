@@ -1,42 +1,32 @@
 Locale: es_es
 BlobRP:
   Warping:
-    Type: ACTIONBAR
-    Message: '&7Teletransportando en &f%time%'
+    Actionbar: '&7Teletransportando en &f%time%'
   Warping-Failed:
-    Type: TITLE
     Title: '&c&lCANCELADO'
     Subtitle: '&7Te moviste'
   Already-On-Warmup:
-    Type: TITLE
     Title: '&c&lCANCELADO'
     Subtitle: '&7Ya estabas preparándote'
 Merchant:
   Not-Found:
-    Type: TITLE
     Title: '&c&lNO ENCONTRADO'
     Subtitle: '&7Merchant no encontrado'
 Event:
   PlayerDeathEvent:
-    Type: CHAT
-    Message: '&c☠ %victim%'
+    Chat: '&c☠ %victim%'
   PlayerKillPlayer:
-    Type: CHAT
-    Message: '&7%attacker% &c☠ %victim%'
+    Chat: '&7%attacker% &c☠ %victim%'
 Spectator:
   Oof:
-    Type: TITLE
     Title: '&c&lOOF'
     Subtitle: '&7Eras, fuiste :O'
   Wasted:
-    Type: TITLE
     Title: '&c&lDEMACRADO'
     Subtitle: '&7Probablemente la próxima'
   Dead:
-    Type: TITLE
     Title: '&c&lFALLECIDO'
     Subtitle: '&7Embalsamado por Allays'
   Keep-Alive:
-    Type: TITLE
     Title: '&c&lCADUCADO'
     Subtitle: '&7Tu keep alive ha caducado'
