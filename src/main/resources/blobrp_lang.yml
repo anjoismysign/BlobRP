@@ -1,54 +1,41 @@
 BlobRP:
   Warping:
-    Type: ACTIONBAR
-    Message: '&7Teleporting in &f%time%'
+    Actionbar: '&7Teleporting in &f%time%'
   Warping-Failed:
-    Type: TITLE
     Title: '&c&lCANCELLED'
     Subtitle: '&7You moved'
   Already-On-Warmup:
-    Type: TITLE
     Title: '&c&lCANCELLED'
     Subtitle: '&7You were already on warmup'
 RoleplayRecipe:
   Not-Enough:
-    Type: TITLE
     Title: '&c&lNOT ENOUGH'
     Subtitle: '&7You do not have enough items'
   Crafted:
-    Type: TITLE
     Title: ' '
     Subtitle: '&7You have crafted &f%item%'
   Not-Found:
-    Type: TITLE
     Title: '&c&lNOT FOUND'
     Subtitle: '&7Recipe not found'
 Merchant:
   Not-Found:
-    Type: TITLE
     Title: '&c&lNOT FOUND'
     Subtitle: '&7Merchant not found'
 Event:
   PlayerDeathEvent:
-    Type: CHAT
-    Message: '&c☠ %victim%'
+    Chat: '&c☠ %victim%'
   PlayerKillPlayer:
-    Type: CHAT
-    Message: '&7%attacker% &c☠ %victim%'
+    Chat: '&7%attacker% &c☠ %victim%'
 Spectator:
   Oof:
-    Type: TITLE
     Title: '&c&lOOF'
     Subtitle: '&7You are now a spectator'
   Wasted:
-    Type: TITLE
     Title: '&c&lWASTED'
     Subtitle: '&7Probably next time'
   Dead:
-    Type: TITLE
     Title: '&c&lDEAD'
     Subtitle: '&7Death reached you'
   Keep-Alive:
-    Type: TITLE
     Title: '&c&lTIMED OUT'
     Subtitle: '&7Your keep alive has timed out'
