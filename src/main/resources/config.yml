@@ -81,6 +81,8 @@ Listeners:
     Highest-Kit-Priority-On-Respawn: false
     # Gives the highest kit priority the player has permission to, on joining a new profile
     Default-Kit-On-New-Profile: false
+    # If true, will cancel death messages of tameable animals
+    Cancel-TameableDeathMessageEvent: false
   SimpleListeners:
     Disable-Natural-Spawn:
       Register: false

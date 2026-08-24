@@ -34,6 +34,7 @@ public class ConfigManager extends RPManager {
     private TinyEventListener spawnOnRespawn;
     private TinyEventListener highestKitPriorityOnRespawn;
     private TinyEventListener defaultKitOnNewProfile;
+    private TinyEventListener cancelTameableDeathMessageEvent;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -88,6 +89,7 @@ public class ConfigManager extends RPManager {
         spawnOnRespawn = listenersSection.tinyEventListener("Spawn-On-Respawn");
         highestKitPriorityOnRespawn = listenersSection.tinyEventListener("Highest-Kit-Priority-On-Respawn");
         defaultKitOnNewProfile = listenersSection.tinyEventListener("Default-Kit-On-New-Profile");
+        cancelTameableDeathMessageEvent = listenersSection.tinyEventListener("Cancel-TameableDeathMessageEvent");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -172,6 +174,10 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener getDefaultKitOnNewProfile() {
         return defaultKitOnNewProfile;
+    }
+
+    public TinyEventListener getCancelTameableDeathMessageEvent(){
+        return cancelTameableDeathMessageEvent;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {
