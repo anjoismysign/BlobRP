@@ -29,7 +29,7 @@ public class PhatLootsHolograms extends RPListener {
         holograms = new HashMap<>();
     }
 
-    private String parseTime(long milliseconds) {
+    public static String parseTime(long milliseconds) {
         long seconds = milliseconds / 1000;
         long minutes = seconds / 60;
         long hours = minutes / 60;

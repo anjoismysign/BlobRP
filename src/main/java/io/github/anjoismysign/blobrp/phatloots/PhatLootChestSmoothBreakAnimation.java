@@ -60,8 +60,8 @@ public class PhatLootChestSmoothBreakAnimation extends RPListener {
 
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-        boolean looted = simulateLoot(block, player);
-        if (!looted) {
+        boolean isPhatLootChest = simulateLoot(block, player);
+        if (!isPhatLootChest) {
             return;
         }
         event.setCancelled(true);
@@ -73,13 +73,16 @@ public class PhatLootChestSmoothBreakAnimation extends RPListener {
             return false;
         }
         if (!PhatLoots.plugin.getPluginHookManager().getWorldGuardManager().isRegionLootableIfOwnerOrMembers(block)) {
-            return false;
+            return true;
         }
         World world = block.getWorld();
         Location spawnLocation = block.getLocation().clone().add(0.5, 0.5, 0.5);
         PhatLootChest chest = PhatLootChest.getChest(block);
-        boolean looted = false;
         for (PhatLoot phatLoot : phatLoots) {
+            long remainingMillis = phatLoot.getTimeRemaining(player, chest);
+            if (remainingMillis != 0){
+                continue;
+            }
             PreLootEvent prePlayerLootEvent = new PrePlayerLootEvent(player, phatLoot, chest, 0);
             Bukkit.getPluginManager().callEvent(prePlayerLootEvent);
             if (prePlayerLootEvent.isCancelled()) {
@@ -122,11 +125,9 @@ public class PhatLootChestSmoothBreakAnimation extends RPListener {
                     world.playSound(spawnLocation, Sound.ENTITY_ITEM_PICKUP, 1f, 0.75f);
                 }, delay + 3);
             }
-
-            looted = true;
             phatLoot.setTime(player, chest);
         }
-        return looted;
+        return true;
     }
 
     private void spawnExperienceOrbs(World world, Location location, int experience) {
