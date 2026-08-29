@@ -19,6 +19,7 @@ import io.github.anjoismysign.blobrp.entity.blockphatloot.BlockPhatLootDirector;
 import io.github.anjoismysign.blobrp.entity.regenable.RegenableBlockDirector;
 import io.github.anjoismysign.blobrp.event.AsyncShopArticleReloadEvent;
 import io.github.anjoismysign.blobrp.merchant.MerchantManager;
+import io.github.anjoismysign.blobrp.placeholderapi.PhatLootsPH;
 import io.github.anjoismysign.blobrp.placeholderapi.PressurePH;
 import io.github.anjoismysign.blobrp.pressure.PressureManager;
 import org.bukkit.Bukkit;
@@ -31,18 +32,13 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public RPManagerDirector(BlobRP plugin) {
         super(plugin);
-        registerBlobMessage("es_es/blobrp_lang");
-        registerTranslatableBlock("es_es/blobrp_translatable_blocks");
         registerBlobInventory("RoleplayWarps");
-        registerBlobInventory("es_es/ShopArticleBuilder");
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
-        // ShopArticle \\
         addDirector("ShopArticle", ShopArticle::fromFile);
         addDirector("RoleplayWarp", RoleplayWarp::fromFile, false);
         if (pluginManager.isPluginEnabled("PhatLoots")) {
-            // BlockPhatLoot \\
             addManager("PhatLoot", new BlockPhatLootDirector(this));
         }
         addManager("RegenableBlock", new RegenableBlockDirector(this));
@@ -54,10 +50,8 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
             }
         });
         getShopArticleDirector().addAdminChildCommand(OpenSellInventory::command);
-        // RoleplayRecipe \\
         addDirector("RoleplayRecipe", file ->
                 RoleplayRecipe.of(this, file), false);
-        // Pressure \\
         addManager("Pressure", new PressureManager(this));
         RoleplayRecipeCmd.of(this);
         WarpCmd.INSTANCE.initialize();
@@ -96,8 +90,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     @Override
     public void postWorld() {
-        if (pluginManager.isPluginEnabled("PlaceholderAPI"))
+        if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
             PressurePH.getInstance(getPlugin());
+            PhatLootsPH.getInstance(getPlugin());
+        }
     }
 
     @Nullable

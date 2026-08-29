@@ -5,6 +5,7 @@ api-version: 1.21
 depend: [ BlobLib ]
 authors: [ anjoismysign ]
 softdepend:
+  - PlaceholderAPI
   - WeaponMechanics
   - DecentHolograms
   - FancyHolograms

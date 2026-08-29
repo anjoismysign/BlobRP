@@ -2,18 +2,26 @@ BlobRP:
   Search-Warp:
     ItemStack:
       Material: OAK_SIGN
-      DisplayName: '&6Search'
+      ItemName: '&6Search'
       Lore:
         - '&7Find warps by name'
   Reset-Search-Warp:
     ItemStack:
       Material: ANVIL
-      DisplayName: '&6Reset Search'
+      ItemName: '&6Reset Search'
       Lore:
         - '&7Clear search results'
   Warp:
     ItemStack:
       Material: ENDER_PEARL
-      DisplayName: '%display%'
+      ItemName: '%display%'
       Lore:
         - '&7Click to teleport'
+Sell-Articles:
+  Book:
+    ItemStack:
+      Material: BOOK
+      ItemName: "&6Information"
+      Lore:
+        - "&7Drag items here to sell them"
+        - '&7Close to get your money'

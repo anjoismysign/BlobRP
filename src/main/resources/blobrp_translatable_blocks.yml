@@ -3,11 +3,8 @@ BlobRP:
     Block:
       - ''
       - '&7Price &r%format%'
-  PhatLoots-Hologram-Looted:
+PhatLoots:
+  Loot:
     Block:
-      - '&e&lLOOT CRATE'
-      - '&7Restocks in &f%time%'
-  PhatLoots-Hologram-Restocked:
-    Block:
-      - '&e&lLOOT CRATE'
-      - '&7Restocked!'
+      - '%bloblibtranslatable_snippet_PhatLoots.Loot%'
+      - '%blobrpphatloots_timeRemaining_$phatLoot$%'

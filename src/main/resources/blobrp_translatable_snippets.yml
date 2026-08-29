@@ -9,3 +9,10 @@ BlobRP:
     Snippet: Pressure
   Depth-Rating:
     Snippet: Depth Rating
+PhatLoots:
+  Loot:
+    Snippet: '&e&lLOOT CRATE'
+  Loot-Looted:
+    Snippet: '&7Restocks in &f%time%'
+  Loot-Restocked:
+    Snippet: '&7Restocked!'

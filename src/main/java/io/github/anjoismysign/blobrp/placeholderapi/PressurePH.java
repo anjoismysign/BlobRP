@@ -34,8 +34,7 @@ public class PressurePH {
             BlobLib.getAnjoLogger().log("PlaceholderAPI not found, not registering Pressure PlaceholderAPI expansion");
             return;
         }
-        BlobPHExpansion expansion = new BlobPHExpansion(plugin, "pressure");
-        this.expansion = expansion;
+        expansion = new BlobPHExpansion(plugin, "pressure");
         expansion.putSimple("isAffected", offlinePlayer -> {
             Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
             if (player == null)

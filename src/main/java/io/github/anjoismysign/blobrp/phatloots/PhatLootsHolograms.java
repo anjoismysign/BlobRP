@@ -1,7 +1,5 @@
 package io.github.anjoismysign.blobrp.phatloots;
 
-import com.codisimus.plugins.phatloots.PhatLoot;
-import com.codisimus.plugins.phatloots.PhatLootChest;
 import com.codisimus.plugins.phatloots.PhatLootsAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibHologramAPI;
 import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
@@ -10,13 +8,14 @@ import io.github.anjoismysign.bloblib.translatable.TranslatableBlock;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.listener.RPListener;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.event.HandlerList;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PhatLootsHolograms extends RPListener {
@@ -67,30 +66,20 @@ public class PhatLootsHolograms extends RPListener {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
             PhatLootsAPI.getAllPhatLoots().forEach(phatLoot -> {
                 phatLoot.getChests().forEach(phatLootChest -> {
-                    long timeMillis = phatLoot.getTimeRemaining(null, phatLootChest);
-                    TranslatableBlock translatableBlock = timeMillis > 0
-                            ? translatableAPI.getTranslatableBlock("BlobRP.PhatLoots-Hologram-Looted")
-                            : translatableAPI.getTranslatableBlock("BlobRP.PhatLoots-Hologram-Restocked");
+                    Block block = phatLootChest.getBlock();
+                    String worldName = block.getWorld().getName();
+                    int x = block.getX();
+                    int y = block.getY();
+                    int z = block.getZ();
+                    TranslatableBlock translatableBlock = Objects.requireNonNull(TranslatableBlock.by("PhatLoots.Loot"), "'PhatLoots.Loot' is not a TranslatableBlock!");
                     UUID random = UUID.randomUUID();
                     String key = random.toString();
                     hologramAPI.createHologram(key,
                             phatLootChest.getBlock().getLocation().clone().add(pivot),
-                            translatableBlock.get(), false);
-                    add(key, phatLoot, phatLootChest);
+                            translatableBlock.modder().replace("$phatLoot$", phatLoot.getName()+"_"+worldName+"_"+x+"_"+y+"_"+z).get().get(),
+                            false);
                 });
             });
         }
-    }
-
-    private void add(String key, PhatLoot phatLoot, PhatLootChest chest) {
-        holograms.put(key, Bukkit.getScheduler().runTaskTimer(getConfigManager().getPlugin(), () -> {
-            long remainingMillis = phatLoot.getTimeRemaining(null, chest);
-            TranslatableBlock newTranslatableBlock = remainingMillis > 0
-                    ? translatableAPI.getTranslatableBlock("BlobRP.PhatLoots-Hologram-Looted")
-                    : translatableAPI.getTranslatableBlock("BlobRP.PhatLoots-Hologram-Restocked");
-            List<String> lines = newTranslatableBlock.modder().replace("%time%",
-                    parseTime(remainingMillis)).get().get();
-            hologramAPI.setHologramLines(key, lines);
-        }, 20L, 20L));
     }
 }
