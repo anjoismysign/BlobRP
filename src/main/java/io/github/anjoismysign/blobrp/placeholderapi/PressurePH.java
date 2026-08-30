@@ -37,34 +37,40 @@ public class PressurePH {
         expansion = new BlobPHExpansion(plugin, "pressure");
         expansion.putSimple("isAffected", offlinePlayer -> {
             Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
-            if (player == null)
+            if (player == null) {
                 return "Not online";
+            }
             UUID uuid = player.getUniqueId();
             @Nullable PlayerPressure pressure = BlobRPAPI.getInstance().getPressure(uuid);
-            if (pressure == null)
+            if (pressure == null) {
                 return "Not in cache";
+            }
             if (pressure.isAffected())
                 return BlobLibTranslatableAPI.getInstance().getTranslatableSnippet("BlobRP.Pressure-Is-Affected", player).get();
             return BlobLibTranslatableAPI.getInstance().getTranslatableSnippet("BlobRP.Pressure-Is-Not-Affected", player).get();
         });
         expansion.putSimple("pressure", offlinePlayer -> {
             Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
-            if (player == null)
+            if (player == null) {
                 return "Not online";
+            }
             UUID uuid = player.getUniqueId();
             @Nullable PlayerPressure pressure = BlobRPAPI.getInstance().getPressure(uuid);
-            if (pressure == null)
+            if (pressure == null) {
                 return "Not in cache";
+            }
             return Formatter.getInstance().formatAll("%psi%", pressure.getPressure());
         });
         expansion.putSimple("depthRating", offlinePlayer -> {
             Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
-            if (player == null)
+            if (player == null) {
                 return "Not online";
+            }
             UUID uuid = player.getUniqueId();
             @Nullable PlayerPressure pressure = BlobRPAPI.getInstance().getPressure(uuid);
-            if (pressure == null)
+            if (pressure == null) {
                 return "Not in cache";
+            }
             return Formatter.getInstance().formatAll("%psi%", pressure.getDepthRating());
         });
     }
