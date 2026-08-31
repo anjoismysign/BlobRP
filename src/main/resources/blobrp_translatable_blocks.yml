@@ -2,7 +2,7 @@ BlobRP:
   Merchants-View:
     Block:
       - ''
-      - '&7Price &r%format%'
+      - '&7Price &f%format%'
 PhatLoots:
   Loot:
     Block:
