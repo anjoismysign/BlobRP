@@ -2,7 +2,6 @@ package io.github.anjoismysign.blobrp.listener;
 
 import io.github.anjoismysign.anjo.entities.Uber;
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.logger.BlobPluginLogger;
 import io.github.anjoismysign.bloblib.message.BlobMessage;
 import io.github.anjoismysign.blobrp.BlobRPAPI;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
@@ -24,6 +23,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class PlayerSpectateOnDeath extends RPListener {
     private int length;
@@ -38,7 +38,7 @@ public class PlayerSpectateOnDeath extends RPListener {
     public void reload() {
         HandlerList.unregisterAll(this);
         messageRepository = new HashMap<>();
-        BlobPluginLogger logger = getConfigManager().getPlugin().getAnjoLogger();
+        Logger logger = getConfigManager().getPlugin().getLogger();
         Uber<Short> uber = Uber.drive((short) 0);
         getConfigManager().playerSpectateOnDeath().ifRegister(complexEventListener -> {
             Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
@@ -48,7 +48,7 @@ public class PlayerSpectateOnDeath extends RPListener {
             complexEventListener.getStringList("Blob-Messages").forEach(key -> {
                 BlobMessage message = BlobLibMessageAPI.getInstance().getMessage(key);
                 if (message == null) {
-                    logger.error("Message " + key + " not found.");
+                    logger.severe("Message " + key + " not found.");
                     return;
                 }
                 short current = uber.thanks();

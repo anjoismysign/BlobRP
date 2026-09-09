@@ -6,11 +6,9 @@ import io.github.anjoismysign.bloblib.domain.BlobObject;
 import io.github.anjoismysign.bloblib.exception.ConfigurationFieldException;
 import io.github.anjoismysign.bloblib.inventory.BlobInventoryTracker;
 import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
-import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -171,19 +169,6 @@ public class ShopArticle implements BlobObject {
 
     public boolean isDefault() {
         return isDefault;
-    }
-
-    public String display() {
-        ItemStack display = cloneDisplay();
-        String defaultDisplay = new TranslatableComponent(display.getTranslationKey()).toPlainText();
-        if (!display.hasItemMeta())
-            return defaultDisplay;
-        ItemMeta itemMeta = display.getItemMeta();
-        if (itemMeta == null)
-            return defaultDisplay;
-        if (!itemMeta.hasDisplayName())
-            return defaultDisplay;
-        return itemMeta.getDisplayName();
     }
 
     /**

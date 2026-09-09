@@ -3,7 +3,6 @@ package io.github.anjoismysign.blobrp.placeholderapi;
 import com.codisimus.plugins.phatloots.PhatLoot;
 import com.codisimus.plugins.phatloots.PhatLootChest;
 import com.codisimus.plugins.phatloots.PhatLootsAPI;
-import io.github.anjoismysign.bloblib.BlobLib;
 import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
 import io.github.anjoismysign.bloblib.placeholderapi.BlobPHExpansion;
 import io.github.anjoismysign.blobrp.BlobRP;
@@ -34,7 +33,7 @@ public class PhatLootsPH {
     private PhatLootsPH(@NotNull BlobRP plugin) {
         instance = this;
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
-            BlobLib.getAnjoLogger().log("PlaceholderAPI not found, not registering PhatLoots PlaceholderAPI expansion");
+            plugin.getLogger().info("PlaceholderAPI not found, not registering PhatLoots PlaceholderAPI expansion");
             return;
         }
         expansion = new BlobPHExpansion(plugin, "phatloots");

@@ -25,7 +25,7 @@ public class ForceGamemodeOnJoin extends RPListener {
                 gameMode = GameMode.valueOf(value);
                 Bukkit.getPluginManager().registerEvents(this, plugin);
             } catch (IllegalArgumentException e) {
-                plugin.getAnjoLogger().error("Invalid Gamemode '" + value + "' at " +
+                plugin.getLogger().severe("Invalid Gamemode '" + value + "' at " +
                         "BlobRP/config.yml#Listeners#ForceGamemode#Gamemode");
             }
         });

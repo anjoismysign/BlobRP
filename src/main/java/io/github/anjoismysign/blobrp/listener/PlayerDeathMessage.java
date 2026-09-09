@@ -27,7 +27,7 @@ public class PlayerDeathMessage extends RPListener {
                 message = value;
                 isValid = true;
                 if (BlobLibMessageAPI.getInstance().getMessage(value, "en_us") == null) {
-                    getConfigManager().getPlugin().getAnjoLogger().singleError("BlobMessage '" + value + "' doesn't exist");
+                    getConfigManager().getPlugin().getLogger().severe("BlobMessage '" + value + "' doesn't exist");
                     isValid = false;
                 }
             }

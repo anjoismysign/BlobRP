@@ -1,6 +1,5 @@
 package io.github.anjoismysign.blobrp.placeholderapi;
 
-import io.github.anjoismysign.bloblib.BlobLib;
 import io.github.anjoismysign.bloblib.api.BlobLibTranslatableAPI;
 import io.github.anjoismysign.bloblib.placeholderapi.BlobPHExpansion;
 import io.github.anjoismysign.bloblib.utility.Formatter;
@@ -31,7 +30,7 @@ public class PressurePH {
     private PressurePH(@NotNull BlobRP plugin) {
         instance = this;
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
-            BlobLib.getAnjoLogger().log("PlaceholderAPI not found, not registering Pressure PlaceholderAPI expansion");
+            plugin.getLogger().info("PlaceholderAPI not found, not registering Pressure PlaceholderAPI expansion");
             return;
         }
         expansion = new BlobPHExpansion(plugin, "pressure");
