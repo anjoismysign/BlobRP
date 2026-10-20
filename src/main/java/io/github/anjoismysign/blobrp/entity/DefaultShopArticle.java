@@ -44,4 +44,9 @@ public class DefaultShopArticle implements TranslatableItem {
     public TranslatableRarity getRarity() {
         return rarity;
     }
+
+    @Override
+    public boolean hideFromView() {
+        return true;
+    }
 }
