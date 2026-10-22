@@ -1,33 +1,21 @@
 package io.github.anjoismysign.blobrp.listener;
 
 import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
+import io.github.anjoismysign.blobrp.BlobRP;
 import io.github.anjoismysign.blobrp.entity.RoleplayKit;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 
-public class HighestKitPriorityOnRespawn extends RPListener {
-
-    public HighestKitPriorityOnRespawn(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().getHighestKitPriorityOnRespawn().register()) {
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-        }
-    }
+public class HighestKitPriorityOnRespawn implements SmartTinyListener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerPostRespawnEvent event) {
         Player player = event.getPlayer();
-        var kitManager = getManagerDirector().getPlugin().getKitManager();
+        var kitManager = BlobRP.getInstance().getKitManager();
         @Nullable var kit = kitManager
                 .stream()
                 .filter(roleplayKit -> player.hasPermission(roleplayKit.permission()))

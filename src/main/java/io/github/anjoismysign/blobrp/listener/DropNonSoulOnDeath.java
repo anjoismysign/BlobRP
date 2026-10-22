@@ -1,6 +1,7 @@
 package io.github.anjoismysign.blobrp.listener;
 
 import io.github.anjoismysign.bloblib.SoulAPI;
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
@@ -11,17 +12,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class DropNonSoulOnDeath extends RPListener {
-
-    public DropNonSoulOnDeath(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().dropNonSoulOnDeath().register())
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-    }
+public class DropNonSoulOnDeath implements SmartTinyListener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {

@@ -1,23 +1,11 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import org.bukkit.Bukkit;
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-public class EntitiesClearDropsOnDeath extends RPListener {
-
-    public EntitiesClearDropsOnDeath(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().entitiesClearDropsOnDeath().register())
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-    }
+public class EntitiesClearDropsOnDeath implements SmartTinyListener {
 
     @EventHandler
     public void onDeath(EntityDeathEvent event) {

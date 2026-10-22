@@ -19,22 +19,9 @@ public class ConfigManager extends RPManager {
     private final BlobPlugin main;
     private final RoleplayConfiguration configuration;
 
-    private TinyEventListener dropNonSoulOnDeath;
-    private TinyEventListener playerKeepExperienceOnDeath;
-    private TinyEventListener entitiesClearDropsOnDeath;
-    private TinyEventListener entityDropItem;
-    private TinyEventListener blockFade;
     private TinyEventListener applyTranslatableItemsToWeaponMechanics;
     private TinyEventListener phatLootChestSmoothBreakAnimation;
-    private TinyEventListener translateOnPickup;
-    private TinyEventListener translateOnLocaleSwitch;
-    private TinyEventListener translateOnJoin;
     private TinyEventListener translateOnPhatLoot;
-    private TinyEventListener spawnOnNewProfile;
-    private TinyEventListener spawnOnRespawn;
-    private TinyEventListener highestKitPriorityOnRespawn;
-    private TinyEventListener defaultKitOnNewProfile;
-    private TinyEventListener cancelTameableDeathMessageEvent;
 
     private SimpleEventListener<Integer> playerDropExperienceOnDeath;
     private SimpleEventListener<Integer> entitiesDropExperienceOnDeath;
@@ -74,22 +61,9 @@ public class ConfigManager extends RPManager {
         ConfigurationSection settingsSection = configDecorator.reloadAndGetSection("Settings");
         configuration.reload(settingsSection);
         RoleplayUI.getInstance().reload();
-        dropNonSoulOnDeath = listenersSection.tinyEventListener("Drop-Non-Soul-On-Death");
-        playerKeepExperienceOnDeath = listenersSection.tinyEventListener("Player-Keep-Experience-On-Death");
-        entitiesClearDropsOnDeath = listenersSection.tinyEventListener("Entities-Clear-Drops-On-Death");
-        entityDropItem = listenersSection.tinyEventListener("Cancel-Entity-Drop-Item");
-        blockFade = listenersSection.tinyEventListener("Cancel-Block-Fade");
         applyTranslatableItemsToWeaponMechanics = listenersSection.tinyEventListener("Apply-TranslatableItems-To-WeaponMechanics");
         phatLootChestSmoothBreakAnimation = listenersSection.tinyEventListener("PhatLootChest-Smooth-Break-Animation");
-        translateOnPickup = listenersSection.tinyEventListener("Translate-On-Pickup");
-        translateOnLocaleSwitch = listenersSection.tinyEventListener("Translate-On-Locale-Switch");
-        translateOnJoin = listenersSection.tinyEventListener("Translate-On-Join");
         translateOnPhatLoot = listenersSection.tinyEventListener("Translate-On-PhatLoot");
-        spawnOnNewProfile = listenersSection.tinyEventListener("Spawn-On-New-Profile");
-        spawnOnRespawn = listenersSection.tinyEventListener("Spawn-On-Respawn");
-        highestKitPriorityOnRespawn = listenersSection.tinyEventListener("Highest-Kit-Priority-On-Respawn");
-        defaultKitOnNewProfile = listenersSection.tinyEventListener("Default-Kit-On-New-Profile");
-        cancelTameableDeathMessageEvent = listenersSection.tinyEventListener("Cancel-TameableDeathMessageEvent");
 
         playerDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Player-Drop-Experience-On-Death", "Amount");
         entitiesDropExperienceOnDeath = listenersSection.simpleEventListenerInteger("Entities-Drop-Experience-On-Death", "Amount");
@@ -116,26 +90,6 @@ public class ConfigManager extends RPManager {
         phatLootsHolograms = listenersSection.complexEventListener("PhatLoots-Holograms");
     }
 
-    public TinyEventListener dropNonSoulOnDeath() {
-        return dropNonSoulOnDeath;
-    }
-
-    public TinyEventListener playerKeepExperienceOnDeath() {
-        return playerKeepExperienceOnDeath;
-    }
-
-    public TinyEventListener entitiesClearDropsOnDeath() {
-        return entitiesClearDropsOnDeath;
-    }
-
-    public TinyEventListener entityDropItem() {
-        return entityDropItem;
-    }
-
-    public TinyEventListener blockFade() {
-        return blockFade;
-    }
-
     public TinyEventListener applyTranslatableItemsToWeaponMechanics() {
         return applyTranslatableItemsToWeaponMechanics;
     }
@@ -146,38 +100,6 @@ public class ConfigManager extends RPManager {
 
     public TinyEventListener translateOnPhatLoot() {
         return translateOnPhatLoot;
-    }
-
-    public TinyEventListener translateOnPickup() {
-        return translateOnPickup;
-    }
-
-    public TinyEventListener translateOnLocaleSwitch() {
-        return translateOnLocaleSwitch;
-    }
-
-    public TinyEventListener translateOnJoin() {
-        return translateOnJoin;
-    }
-
-    public TinyEventListener getSpawnOnNewProfile() {
-        return spawnOnNewProfile;
-    }
-
-    public TinyEventListener getSpawnOnRespawn() {
-        return spawnOnRespawn;
-    }
-
-    public TinyEventListener getHighestKitPriorityOnRespawn() {
-        return highestKitPriorityOnRespawn;
-    }
-
-    public TinyEventListener getDefaultKitOnNewProfile() {
-        return defaultKitOnNewProfile;
-    }
-
-    public TinyEventListener getCancelTameableDeathMessageEvent(){
-        return cancelTameableDeathMessageEvent;
     }
 
     public SimpleEventListener<Integer> playerDropExperienceOnDeath() {

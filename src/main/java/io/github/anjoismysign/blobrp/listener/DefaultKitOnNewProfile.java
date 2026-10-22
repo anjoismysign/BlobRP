@@ -1,30 +1,18 @@
 package io.github.anjoismysign.blobrp.listener;
 
 import io.github.anjoismysign.bloblib.api.BlobLibProfileAPI;
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
 import io.github.anjoismysign.blobrp.BlobRP;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.entity.RoleplayKit;
 import net.milkbowl.vault.profile.ProfileLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 
-public class DefaultKitOnNewProfile extends RPListener {
-
-    public DefaultKitOnNewProfile(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().getDefaultKitOnNewProfile().register()) {
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-        }
-    }
+public class DefaultKitOnNewProfile implements SmartTinyListener {
 
     @EventHandler
     public void onLoad(ProfileLoadEvent event) {
@@ -33,7 +21,7 @@ public class DefaultKitOnNewProfile extends RPListener {
         if (provider.hasProfilePlayedBefore(player, provider.getCurrentProfileIndex(player))) {
             return;
         }
-        var kitManager = getManagerDirector().getPlugin().getKitManager();
+        var kitManager = BlobRP.getInstance().getKitManager();
         Bukkit.getScheduler().runTaskLater(BlobRP.getInstance(), ()->{
             if (!player.isConnected()){
                 return;

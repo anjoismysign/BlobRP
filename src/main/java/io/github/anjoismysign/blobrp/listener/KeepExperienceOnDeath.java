@@ -1,23 +1,10 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import org.bukkit.Bukkit;
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class KeepExperienceOnDeath extends RPListener {
-
-    public KeepExperienceOnDeath(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().playerKeepExperienceOnDeath().register()) {
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-        }
-    }
+public class KeepExperienceOnDeath implements SmartTinyListener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {

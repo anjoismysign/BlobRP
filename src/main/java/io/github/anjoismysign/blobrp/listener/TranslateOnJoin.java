@@ -1,26 +1,13 @@
 package io.github.anjoismysign.blobrp.listener;
 
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
 import io.github.anjoismysign.bloblib.translatable.TranslatableItem;
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class TranslateOnJoin extends RPListener {
-
-    public TranslateOnJoin(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().translateOnJoin().register()) {
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-        }
-    }
+public class TranslateOnJoin implements SmartTinyListener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {

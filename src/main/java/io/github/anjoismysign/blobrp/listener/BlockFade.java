@@ -1,23 +1,10 @@
 package io.github.anjoismysign.blobrp.listener;
 
-import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
-import org.bukkit.Bukkit;
+import io.github.anjoismysign.bloblib.listener.SmartTinyListener;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockFadeEvent;
 
-public class BlockFade extends RPListener {
-
-    public BlockFade(ConfigManager configManager) {
-        super(configManager);
-    }
-
-    public void reload() {
-        HandlerList.unregisterAll(this);
-        if (getConfigManager().blockFade().register()) {
-            Bukkit.getPluginManager().registerEvents(this, getConfigManager().getPlugin());
-        }
-    }
+public class BlockFade implements SmartTinyListener {
 
     @EventHandler
     public void onFade(BlockFadeEvent event) {

@@ -11,6 +11,7 @@ import io.github.anjoismysign.blobrp.director.command.WarpCmd;
 import io.github.anjoismysign.blobrp.director.manager.CommandManager;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import io.github.anjoismysign.blobrp.director.manager.ListenerManager;
+import io.github.anjoismysign.blobrp.director.manager.RPListenerManager;
 import io.github.anjoismysign.blobrp.entity.RoleplayKit;
 import io.github.anjoismysign.blobrp.entity.RoleplayRecipe;
 import io.github.anjoismysign.blobrp.entity.RoleplayWarp;
@@ -36,6 +37,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         addManager("CommandManager", new CommandManager(this));
         addManager("ConfigManager", new ConfigManager(this));
         addManager("ListenerManager", new ListenerManager(this));
+        addManager("SmartListenerManager", new RPListenerManager(this));
         addDirector("ShopArticle", ShopArticle::fromFile);
         addDirector("RoleplayWarp", RoleplayWarp::fromFile, false);
         if (pluginManager.isPluginEnabled("PhatLoots")) {
@@ -68,6 +70,7 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
         var kitManager = getPlugin().getKitManager();
         kitManager.stream().map(RoleplayKit::permission).forEach(pluginManager::removePermission);
         kitManager.reload();
+        getSmartListenerManager().reload();
         getListenerManager().reload();
         getShopArticleDirector().reload();
         getRoleplayWarpDirector().reload();
@@ -119,6 +122,10 @@ public class RPManagerDirector extends GenericManagerDirector<BlobRP> {
 
     public final ListenerManager getListenerManager() {
         return getManager("ListenerManager", ListenerManager.class);
+    }
+
+    public final RPListenerManager getSmartListenerManager(){
+        return getManager("SmartListenerManager", RPListenerManager.class);
     }
 
     public final ObjectDirector<ShopArticle> getShopArticleDirector() {

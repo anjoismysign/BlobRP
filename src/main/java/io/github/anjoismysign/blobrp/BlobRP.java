@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 public class BlobRP extends BlobPlugin {
     public static BlobRP INSTANCE;
     private RPManagerDirector director;
-    private IManagerDirector proxy;
     private PluginUpdater updater;
     private BlobRPAPI api;
     private RoleplayConfiguration configuration;
@@ -39,7 +38,6 @@ public class BlobRP extends BlobPlugin {
         kitManager = pluginManager.addIdentityManager(RoleplayKit.Info.class, this, "kits", true);
 
         director = new RPManagerDirector(this);
-        proxy = BlobProxifier.PROXY(director);
         api = BlobRPAPI.getInstance(director);
 
         Bukkit.getScheduler().runTask(this, () -> {
@@ -52,8 +50,8 @@ public class BlobRP extends BlobPlugin {
         director.unload();
     }
 
-    public IManagerDirector getManagerDirector() {
-        return proxy;
+    public RPManagerDirector getManagerDirector() {
+        return director;
     }
 
     @Override

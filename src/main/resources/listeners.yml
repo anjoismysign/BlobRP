@@ -1,0 +1,26 @@
+# If true, drops non 'Soul' items on death, even if keepInventory is true
+dropNonSoulOnDeath: false
+# If true, players will keep their experience on death, similar to keepInventory gamerule
+keepExperienceOnDeath: false
+# If true, entities drops will be cleared on death
+entitiesClearDropsOnDeath: false
+# If true, it will cancel entities from dropping items, like eggs from chickens
+entityDropItem: false
+# Examples: Snow melting due to being near a light source, ice melting due to being near a light source, fire burning out after time, without destroying fuel block, coral fading to dead coral due to lack of water, Turtle Egg bursting when a turtle hatches
+blockFade: false
+# Translates a translatable item on pickup
+translateOnPickup: false
+# Translates all translatable items in inventory when changing locale
+translateOnLocaleSwitch: false
+# Translates all translatable items on join
+translateOnJoin: false
+# Teleport to spawn when starting on a new profile
+spawnOnNewProfile: false
+# Teleports to spawn when respawning
+spawnOnRespawn: false
+# Gives the highest kit priority the player has permission to, on respawn
+highestKitPriorityOnRespawn: false
+# Gives the highest kit priority the player has permission to, on joining a new profile
+defaultKitOnNewProfile: false
+# If true, will cancel death messages of tameable animals
+cancelTameableDeathMessageEvent: false
