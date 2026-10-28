@@ -36,7 +36,7 @@ public class PhatLootsPH {
             plugin.getLogger().info("PlaceholderAPI not found, not registering PhatLoots PlaceholderAPI expansion");
             return;
         }
-        expansion = new BlobPHExpansion(plugin, "phatloots");
+        expansion = new BlobPHExpansion(plugin);
         expansion.putStartsWith("timeRemaining_", (offlinePlayer, identifier) -> {
             String[] split = identifier.split("_");
             if (split.length != 5) {
