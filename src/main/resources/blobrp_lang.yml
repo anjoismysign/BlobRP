@@ -7,6 +7,9 @@ BlobRP:
   Already-On-Warmup:
     Title: '&c&lCANCELLED'
     Subtitle: '&7You were already on warmup'
+  Discord:
+    Chat: '&7Click here to join our discord server!'
+    Hover: 'https://discord.gg/invite'
 RoleplayRecipe:
   Not-Enough:
     Title: '&c&lNOT ENOUGH'

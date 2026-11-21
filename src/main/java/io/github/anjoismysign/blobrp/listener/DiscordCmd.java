@@ -1,11 +1,9 @@
 package io.github.anjoismysign.blobrp.listener;
 
 import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
-import io.github.anjoismysign.bloblib.listener.ComplexEventListener;
-import io.github.anjoismysign.bloblib.utility.TextColor;
+import io.github.anjoismysign.bloblib.message.BlobMessage;
 import io.github.anjoismysign.blobrp.director.manager.ConfigManager;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,22 +13,15 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class DiscordCmd extends RPListener implements CommandExecutor {
-    private ComplexEventListener discordCmd;
-    private String message, url;
-    private TextComponent textComponent;
+    private String url;
 
     public DiscordCmd(ConfigManager configManager) {
         super(configManager);
     }
 
     public void reload() {
-        getConfigManager().discordCmd().ifRegister(complexEventListener -> {
-            message = complexEventListener.getString("Message");
-            url = complexEventListener.getString("URL");
-            message = TextColor.PARSE(message);
-            textComponent = new TextComponent(message);
-            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,
-                    ChatColor.stripColor(url)));
+        getConfigManager().discordCmd().ifRegister(simpleEventListener -> {
+            url = simpleEventListener.value();
             getConfigManager().getPlugin().getCommand("discord")
                     .setExecutor(DiscordCmd.this);
         });
@@ -46,7 +37,8 @@ public class DiscordCmd extends RPListener implements CommandExecutor {
                         .toCommandSender(sender);
                 return true;
             }
-            player.spigot().sendMessage(textComponent);
+            BlobMessage.by("BlobRP.Discord").localize(player.getLocale()).onClick(new ClickEvent(ClickEvent.Action.OPEN_URL,
+                    ChatColor.stripColor(url))).handle(player);
             return true;
         }
         Player target = Bukkit.getPlayer(args[0]);
@@ -56,7 +48,8 @@ public class DiscordCmd extends RPListener implements CommandExecutor {
                     .toCommandSender(sender);
             return true;
         }
-        target.spigot().sendMessage(textComponent);
+        BlobMessage.by("BlobRP.Discord").localize(target.getLocale()).onClick(new ClickEvent(ClickEvent.Action.OPEN_URL,
+                ChatColor.stripColor(url))).handle(target);
         return true;
     }
 }

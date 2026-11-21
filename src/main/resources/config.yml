@@ -21,11 +21,6 @@ Listeners:
       Values:
         BLOCK_DISPLAY: { }
         ITEM_DISPLAY: { }
-    Discord-Cmd:
-      Register: false
-      Values:
-        Message: '&7Click here to join our discord server!'
-        URL: 'https://discord.gg/invite'
     Player-Spectate-On-Death:
       Register: false
       Values:
@@ -50,6 +45,9 @@ Listeners:
     # Translates all translatable items from a PhatLoot
     Translate-On-PhatLoot: false
   SimpleListeners:
+    Discord-Cmd:
+      Register: false
+      URL: 'https://discord.gg/invite'
     Disable-Natural-Spawn:
       Register: false
       Mobs:

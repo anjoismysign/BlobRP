@@ -41,10 +41,10 @@ public class ConfigManager extends RPManager {
     private SimpleEventListener<String> removeJunk;
     private SimpleEventListener<String> respawnInventory;
     private SimpleEventListener<List<String>> disableNaturalSpawn;
+    private SimpleEventListener<String> discordCmd;
 
     private ComplexEventListener blobDesignCustomMining;
     private ComplexEventListener playerSpectateOnDeath;
-    private ComplexEventListener discordCmd;
     private ComplexEventListener phatLootsHolograms;
 
     public ConfigManager(RPManagerDirector managerDirector) {
@@ -83,10 +83,10 @@ public class ConfigManager extends RPManager {
         removeJunk = listenersSection.simpleEventListenerString("Remove-Junk", "TagSet");
         respawnInventory = listenersSection.simpleEventListenerString("Respawn-Inventory", "MetaBlobInventory");
         disableNaturalSpawn = listenersSection.simpleEventListenerStringList("Disable-Natural-Spawn", "Mobs");
+        discordCmd = listenersSection.simpleEventListenerString("Discord-Cmd", "URL");
 
         blobDesignCustomMining = listenersSection.complexEventListener("BlobDesign-Custom-Mining");
         playerSpectateOnDeath = listenersSection.complexEventListener("Player-Spectate-On-Death");
-        discordCmd = listenersSection.complexEventListener("Discord-Cmd");
         phatLootsHolograms = listenersSection.complexEventListener("PhatLoots-Holograms");
     }
 
@@ -182,7 +182,7 @@ public class ConfigManager extends RPManager {
         return playerSpectateOnDeath;
     }
 
-    public ComplexEventListener discordCmd() {
+    public SimpleEventListener<String> discordCmd() {
         return discordCmd;
     }
 
